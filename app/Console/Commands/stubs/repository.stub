@@ -1,0 +1,19 @@
+<?php
+
+namespace DummyNamespace;
+
+class DummyClass extends BaseRepository
+{
+
+    private $model;
+
+    /**
+     * Specify Model class name
+     *
+     * @return string
+     */
+    public function model(Model $model)
+    {
+        $this->model = $model;
+    }
+}
