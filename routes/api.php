@@ -31,22 +31,15 @@ Route::group(['namespace' => 'API'], function () {
             return '123';
         });
 
-
+        // 住宅房源
         Route::resource('dwelling_houses', 'DwellingHousesController');
 
+        // 商铺房源
+        Route::resource('shops_houses', 'ShopsHousesController');
 
-        /*
-        |--------------------------------------------------------------------------
-        | 租户
-        |--------------------------------------------------------------------------
-        */
-        Route::resource('user', 'UserController');
-        // 租户 我的设置
-        Route::get('/userSetting', 'UserController@userSetting');
-        // 修改用户姓名
-        Route::get('/updateRealName', 'UserController@updateRealName');
-        // 修改用户图像
-        Route::post('/updateUserHeaderPic', 'UserController@updateUserHeaderPic');
+        // 写字楼房源
+        Route::resource('office_building_houses', 'OfficeBuildingHousesController');
+
 
 //    });
 
