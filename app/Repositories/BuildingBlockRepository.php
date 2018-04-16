@@ -13,4 +13,13 @@ class BuildingBlockRepository extends BaseRepository
     {
         $this->model = $model;
     }
+
+    public function add($request)
+    {
+        $this->model->create([
+            '' => '',
+            '' => '',
+            '' => ''
+        ]);
+    }
 }

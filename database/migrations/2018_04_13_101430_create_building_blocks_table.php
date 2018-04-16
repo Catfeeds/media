@@ -16,7 +16,10 @@ class CreateBuildingBlocksTable extends Migration
         Schema::create('building_blocks', function (Blueprint $table) {
             $table->increments('id');
             $table->char('building_id', 32)->comment('所属楼盘id');
-            $table->string('name', 32)->comment('楼座名称');
+            $table->string('name', 32)->nullable()->comment('楼座名称');
+            $table->string('name_unit', 32)->nullable()->comment('楼座单位');
+            $table->string('unit', 32)->nullable()->comment('单元名称');
+            $table->string('unit_unit', 32)->nullable()->comment('单元单位');
             $table->integer('class')->nullable()->comment('等级 1：甲 2：乙 3：丙');
             $table->integer('structure')->nullable()->comment('房屋结构 1：钢筋混凝土结构 2：钢结构 3：砖混结构 4：砖木结构');
             $table->integer('total_floor')->nullable()->comment('楼层总数量');
