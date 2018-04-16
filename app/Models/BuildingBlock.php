@@ -1,8 +1,7 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
-use App\Models\BaseModel;
 
 class BuildingBlock extends BaseModel
 {

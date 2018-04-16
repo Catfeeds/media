@@ -49,6 +49,13 @@ Route::group(['domain' => 'admin.agency.com', 'namespace' => 'API'], function ()
         Route::post('/updateUserHeaderPic', 'UserController@updateUserHeaderPic');
 
 //    });
+
+    /*
+    |--------------------------------------------------------------------------
+    | 楼盘管理
+    |--------------------------------------------------------------------------
+    */
+    Route::resource('/buildings', 'BuildingController');
 });
 
 
