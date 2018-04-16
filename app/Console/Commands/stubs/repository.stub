@@ -7,7 +7,7 @@ class DummyClass extends BaseRepository
 
     private $model;
 
-    public function model(Model $model)
+    public function __construct(Model $model)
     {
         $this->model = $model;
     }

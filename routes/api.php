@@ -49,6 +49,13 @@ Route::group(['namespace' => 'API'], function () {
         Route::post('/updateUserHeaderPic', 'UserController@updateUserHeaderPic');
 
 //    });
+
+    /*
+    |--------------------------------------------------------------------------
+    | 楼盘管理
+    |--------------------------------------------------------------------------
+    */
+    Route::resource('/buildings', 'BuildingController');
 });
 
 

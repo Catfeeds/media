@@ -10,13 +10,6 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    \App\Models\Building::create([
-        'id' => 1
-    ]);
-});
-
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
