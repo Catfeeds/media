@@ -56,7 +56,11 @@ class AgentsRequest extends FormRequest
         switch ($this->method()) {
             case 'POST':
                 return [
-
+                    'building_blocks_id' => [
+                        'required',
+                        // TODO 楼座必须存在
+                    ],
+                    'house_number' => 'required|max:32',
                 ];
             case 'PUT':
             case 'PATCH':
