@@ -18,8 +18,8 @@ use Illuminate\Http\Request;
 //});
 
 
-Route::group(['domain' => 'admin.agency.com', 'namespace' => 'API'], function () {
-
+//Route::group(['domain' => 'admin.agency.com', 'namespace' => 'API'], function () {
+Route::group(['namespace' => 'API'], function () {
     /*
     |--------------------------------------------------------------------------
     | 登录后的操作
