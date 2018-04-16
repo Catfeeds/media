@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Repositories;
 
 use App\Models\DwellingHouse;
@@ -26,7 +25,7 @@ class DwellingHousesRepository extends BaseRepository
         return $this->model->create([
             'building_blocks_id' => $request->building_blocks_id,
             'house_number' => $request->house_number,
-            'owner_info' => json_encode($request->owner_info??null),
+            'owner_info' => json_encode($request->owner_info),
             'room' => $request->room,
             'hall' => $request->hall,
             'toilet' => $request->toilet,
@@ -37,28 +36,28 @@ class DwellingHousesRepository extends BaseRepository
             'actual_acreage' => $request->actual_acreage,
             'renovation' => $request->renovation,
             'orientation' => $request->orientation,
-            'feature_lable' => json_encode($request->feature_lable??null),
-            'support_facilities' => json_encode($request->support_facilities??null),
+            'feature_lable' => json_encode($request->feature_lable),
+            'support_facilities' => json_encode($request->support_facilities),
             'house_description' => $request->house_description,
             'rent_price' => $request->rent_price,
             'payment_type' => $request->payment_type,
-            'check_in_time' => strtotime($request->check_in_time??null),
+            'check_in_time' => strtotime($request->check_in_time),
             'shortest_lease' => $request->shortest_lease,
-            'cost_detail' => json_encode($request->cost_detail??null),
+            'cost_detail' => json_encode($request->cost_detail),
             'house_nature' => $request->house_nature,
             'source' => $request->source,
             'actuality' => $request->actuality,
             'payment' => $request->payment,
             'pay_commission' => $request->pay_commission,
-            'see_house_time' => strtotime($request->see_house_time??null),
-            'give_house_time' => strtotime($request->give_house_time??null),
+            'see_house_time' => strtotime($request->see_house_time),
+            'give_house_time' => strtotime($request->give_house_time),
             'certificate' => $request->certificate,
             'entrust_number' => $request->entrust_number,
             'house_key' => $request->house_key,
             'prospecting' => $request->prospecting,
             'guardian' => $request->guardian,
-            'house_type_img' => json_encode($request->house_type_img??null),
-            'indoor_img' => json_encode($request->indoor_img??null),
+            'house_type_img' => json_encode($request->house_type_img),
+            'indoor_img' => json_encode($request->indoor_img),
         ]);
     }
 

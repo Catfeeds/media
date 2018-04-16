@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\API;
 
+use App\Models\BuildingBlock;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class DwellingHousesRequest extends FormRequest
 {
@@ -30,7 +32,7 @@ class DwellingHousesRequest extends FormRequest
                     // 核心信息
                     'building_blocks_id.required' => '楼座id必须存在',
                     'building_blocks_id.integer' => '楼座id必须为整型数字',
-                    // TODO 楼座必须存在
+                    'building_blocks_id.in' => '楼座必须存在',
                     'house_number.required' => '房号必须存在',
                     'house_number.max' => '房号最大长度为32位',
                     'owner_info.required' => '业主信息必须存在',
@@ -116,7 +118,9 @@ class DwellingHousesRequest extends FormRequest
                     'building_blocks_id' => [
                         'required',
                         'integer',
-                        // TODO 楼座必须存在
+                        Rule::in(
+                            BuildingBlock::all()->pluck('id')->toArray()
+                        )
                     ],
                     'house_number' => 'required|max:32',
                     'owner_info' => 'required',
@@ -131,8 +135,6 @@ class DwellingHousesRequest extends FormRequest
                     'actual_acreage' => 'max:32',
                     'renovation' => 'nullable|numeric|max:9999',
                     'orientation' => 'max:32',
-//                    'feature_lable' => 'max:1024',
-//                    'support_facilities' => 'max:1024',
                     'house_description' => 'max:255',
                     // 租赁信息
                     'rent_price' => 'required|numeric|max:9999999999',
@@ -140,7 +142,6 @@ class DwellingHousesRequest extends FormRequest
                     'renting_style' => 'max:32',
                     'check_in_time' => 'date',
                     'shortest_lease' => 'max:32',
-//                    'cost_detail' => 'max:1024',
                     // 业务信息
                     'house_nature' => 'required|max:32',
                     'source' => 'max:32',
