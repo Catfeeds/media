@@ -63,6 +63,7 @@ class CreateDwellingHousesTable extends Migration
             $table->softDeletes();
             $table->timestamps();
         });
+        \DB::statement("alter table `dwelling_houses` comment'住宅房源'");
     }
 
     /**

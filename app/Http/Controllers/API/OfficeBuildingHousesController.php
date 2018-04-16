@@ -26,6 +26,7 @@ class OfficeBuildingHousesController extends APIBaseController
         OfficeBuildingHousesRepository $officeBuildingHousesRepository
     )
     {
-        return $this->sendResponse($officeBuildingHousesRepository->addOfficeBuildingHouses($request), '写字楼房源添加成功');
+        $result = $officeBuildingHousesRepository->addOfficeBuildingHouses($request);
+        return $this->sendResponse($result, '写字楼房源添加成功');
     }
 }

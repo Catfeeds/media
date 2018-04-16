@@ -62,6 +62,7 @@ class CreateOfficeBuildingHousesTable extends Migration
             $table->softDeletes();
             $table->timestamps();
         });
+        \DB::statement("alter table `office_building_houses` comment'写字楼房源'");
     }
 
     /**

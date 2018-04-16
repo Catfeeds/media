@@ -64,6 +64,7 @@ class CreateShopsHousesTable extends Migration
             $table->softDeletes();
             $table->timestamps();
         });
+        \DB::statement("alter table `shops_houses` comment'商铺房源'");
     }
 
     /**

@@ -6,7 +6,6 @@ use App\Models\Area;
 use App\Models\City;
 use App\Models\Street;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 
 class StreetController extends APIBaseController
 {

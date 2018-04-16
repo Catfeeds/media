@@ -6,10 +6,16 @@ use App\Models\Area;
 use App\Models\Block;
 use App\Models\City;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 
 class BlockController extends APIBaseController
 {
+    /**
+     * 说明: 商圈分页数据
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @author jacklin
+     */
     public function index(Request $request)
     {
         $res = Block::paginate(10);

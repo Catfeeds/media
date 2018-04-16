@@ -25,6 +25,7 @@ class ShopsHousesController extends APIBaseController
         ShopsHousesRepository $shopsHousesRepository
     )
     {
-        return $this->sendResponse($shopsHousesRepository->addShopsHouses($request),'商铺房源添加成功!');
+        $result = $shopsHousesRepository->addShopsHouses($request);
+        return $this->sendResponse($result,'商铺房源添加成功!');
     }
 }

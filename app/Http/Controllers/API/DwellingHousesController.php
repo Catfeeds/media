@@ -24,6 +24,7 @@ class DwellingHousesController extends APIBaseController
         DwellingHousesRepository $dwellingHousesRepository
     )
     {
-        return $this->sendResponse($dwellingHousesRepository->addDwellingHouses($request),'添加成功');
+        $result = $dwellingHousesRepository->addDwellingHouses($request);
+        return $this->sendResponse($result,'添加成功');
     }
 }
