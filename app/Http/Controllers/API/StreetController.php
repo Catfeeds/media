@@ -2,49 +2,54 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Requests\API\BuildingRequest;
 use App\Models\Area;
-use App\Models\Building;
 use App\Models\City;
 use App\Models\Street;
-use App\Repositories\BuildingRepository;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
-class BuildingController extends APIBaseController
+class StreetController extends APIBaseController
 {
-
-    public function index(BuildingRequest $request, BuildingRepository $repository)
-    {
-
-    }
-
     /**
-     * 说明：楼盘添加
+     * 说明：街道分页数据
      *
-     * @param BuildingRequest $request
-     * @param BuildingRepository $repository
+     * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      * @author jacklin
      */
-    public function store(BuildingRequest $request, BuildingRepository $repository)
+    public function index(Request $request)
     {
-        // 楼栋信息不能为空
-        if (empty($request->building_block)) return $this->sendError(405, '楼栋信息不能为空');
-        // 楼盘名不允许重复
-        $res = Building::where(['name' => $request->name, 'street_id' => $request->street_id])->first();
-        if (!empty($res)) return $this->sendError(405, '楼盘名不能重复');
-        $res = $repository->add($request);
-
-        return $this->sendResponse($res, 200);
+        $res = Street::paginate(10);
+        return $this->sendResponse($res, '获取成功');
     }
 
-
     /**
-     * 说明：所有楼盘下拉数据
+     * 说明：街道添加
      *
+     * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      * @author jacklin
      */
-    public function buildingSelect()
+    public function store(Request $request)
+    {
+        $res = Street::where(['name' => $request->name, 'area_id' => $request->area_id])->first();
+        if (!empty($res)) return $this->sendError(405, '街道名重复');
+
+        $res = Street::create([
+            'name' => $request->name,
+            'area_id' => $request->area_id
+        ]);
+        return $this->sendResponse($res, '添加成功');
+    }
+
+    /**
+     * 说明：所有街道下拉数据
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @author jacklin
+     */
+    public function streetsSelect(Request $request)
     {
         $cities = City::all();
         $city_box = array();
@@ -56,19 +61,9 @@ class BuildingController extends APIBaseController
                 $streets = Street::where('area_id', $area->id)->get();
                 $street_box = array();
                 foreach ($streets as $street) {
-                    $buildings = Building::where('street_id', $street->id)->get();
-                    $building_box = array();
-                    foreach ($buildings as $building) {
-                        $item = array(
-                            'value' => $building->id,
-                            'label' => $building->name,
-                        );
-                        $building_box[] = $item;
-                    }
                     $item = array(
                         'value' => $street->id,
                         'label' => $street->name,
-                        'children' => $building_box
                     );
                     $street_box[] = $item;
                 }
@@ -87,5 +82,18 @@ class BuildingController extends APIBaseController
             $city_box[] = $city_item; // 所有城市
         }
         return $this->sendResponse($city_box, '获取成功');
+    }
+
+    /**
+     * 说明：删除街道
+     *
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     * @author jacklin
+     */
+    public function destroy($id)
+    {
+        $res = Street::find($id)->delete();
+        return $this->sendResponse($res, '删除成功');
     }
 }
