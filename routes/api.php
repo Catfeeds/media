@@ -56,6 +56,9 @@ Route::group(['namespace' => 'API'], function () {
     |--------------------------------------------------------------------------
     */
     Route::resource('/buildings', 'BuildingController');
+    Route::resource('/cities', 'CityController');
+    Route::resource('/areas', 'AreaController');
+    Route::resource('/streets', 'StreetController');
 });
 
 

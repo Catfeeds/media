@@ -19,15 +19,16 @@ class CreateBuildingsTable extends Migration
 
             $table->string('name', 128)->nullable()->comment('楼盘名');
             $table->string('gps')->nullable()->comment('gps定位');
+            $table->tinyInteger('type')->nullable()->comment('1:住宅 2：写字楼 3：商铺 4：商住两用' );
 
             $table->tinyInteger('street_id')->nullable()->comment('关联街道id');
-            $table->string('block', 128)->nullable()->comment('楼盘所属商圈');
+            $table->tinyInteger('block_id')->nullable()->comment('商圈id');
             $table->string('address', 128)->nullable()->comment('具体地址');
 
             $table->string('developer', 128)->nullable()->comment('开发商');
             $table->integer('years')->nullable()->comment('年代 --年');
             $table->decimal('acreage')->nullable()->comment('建筑面积 --㎡');
-            $table->integer('building_block')->nullable()->comment('楼栋数量 --栋');
+            $table->integer('building_block_num')->nullable()->comment('楼栋数量 --栋');
             $table->integer('parking_num')->nullable()->comment('车位数量 --个');
             $table->decimal('parking_fee')->nullable()->comment('停车费 --元/月');
             $table->integer('greening_rate')->nullable()->comment('绿化率 --%');
