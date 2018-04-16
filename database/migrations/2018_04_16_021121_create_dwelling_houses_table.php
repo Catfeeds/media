@@ -51,7 +51,7 @@ class CreateDwellingHousesTable extends Migration
             $table->string('certificate',32)->nullable()->comment('证件');
             $table->string('entrust_number',32)->nullable()->comment('委托编号');
             $table->string('house_key',32)->nullable()->comment('钥匙');
-            $table->tinyInteger('prospecting')->nullable()->comment('是否实勘 1: 是 2: 否');
+            $table->tinyInteger('prospecting')->default(1)->nullable()->comment('是否实勘 1: 是 2: 否');
             $table->string('guardian', 32)->nullable()->comment('维护人');
 
             // 房源照片
