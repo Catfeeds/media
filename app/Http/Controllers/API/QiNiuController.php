@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Qiniu\Auth;
 
-class QiNiuController extends Controller
+class QiNiuController extends APIBaseController
 {
     /**
      * 说明：返回七牛token
@@ -33,6 +33,6 @@ class QiNiuController extends Controller
 
         // 生成上传 Token
         $token = $auth->uploadToken($bucket);
-        return $token;
+        return $this->sendResponse($token, '获取成功');
     }
 }

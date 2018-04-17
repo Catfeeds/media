@@ -26,7 +26,6 @@ class BuildingBlockController extends APIBaseController
         // 拿到楼座下面的id
         $buildingBlocks = BuildingBlock::where('building_id', $building_id)->get();
         return $this->sendResponse($buildingBlocks, '获取成功');
-
     }
 
     public function store(BuildingBlockRepository $repository)
@@ -83,6 +82,26 @@ class BuildingBlockController extends APIBaseController
 
         $res = $buildingBlock->delete();
         return $this->sendResponse($res, '删除成功');
+    }
+
+    /**
+     * 说明：补充楼座信息
+     *
+     * @param BuildingBlock $buildingBlock
+     * @param Request $request
+     * @param BuildingBlockRepository $repository
+     * @return \Illuminate\Http\JsonResponse
+     * @author jacklin
+     */
+    public function addBlockInfo
+    (
+        BuildingBlock $buildingBlock,
+        Request $request,  //TODO 补充验证
+        BuildingBlockRepository $repository
+    )
+    {
+        $res = $repository->addBlockInfo($buildingBlock, $request);
+        return $this->sendResponse($res, '修改成功');
     }
 
     /**

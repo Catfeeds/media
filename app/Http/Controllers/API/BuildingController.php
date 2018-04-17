@@ -14,7 +14,7 @@ class BuildingController extends APIBaseController
 
     public function index(BuildingRequest $request, BuildingRepository $repository)
     {
-
+        
     }
 
     /**

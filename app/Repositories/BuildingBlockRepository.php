@@ -14,15 +14,6 @@ class BuildingBlockRepository extends BaseRepository
         $this->model = $model;
     }
 
-    public function add($request)
-    {
-        $this->model->create([
-            '' => '',
-            '' => '',
-            '' => ''
-        ]);
-    }
-
     /**
      * 说明：修改单个楼座的单元和楼座名称
      *
@@ -57,8 +48,34 @@ class BuildingBlockRepository extends BaseRepository
         return $res;
     }
 
-    public function addBlockInfo()
+    /**
+     * 说明：补充某个楼座的楼座信息
+     *
+     * @param $buildingBlock
+     * @param $request
+     * @return mixed
+     * @author jacklin
+     */
+    public function addBlockInfo($buildingBlock, $request)
     {
-        
+        $buildingBlock->name = $request->name;
+        $buildingBlock->name_unit = $request->name_unit;
+        $buildingBlock->unit = $request->unit;
+        $buildingBlock->unit_unit = $request->unit_unit;
+
+        $buildingBlock->class = $request->class;
+        $buildingBlock->structure = $request->structure;
+        $buildingBlock->total_floor = $request->total_floor;
+        $buildingBlock->property_company = $request->property_company;
+        $buildingBlock->property_fee = $request->property_fee;
+
+        $buildingBlock->heating = $request->heating;
+        $buildingBlock->air_conditioner = $request->air_conditioner;
+
+        $buildingBlock->passenger_lift = $request->passenger_lift;
+        $buildingBlock->cargo_lift = $request->cargo_lift;
+        $buildingBlock->president_lift = $request->president_lift;
+
+        return $buildingBlock->save();
     }
 }
