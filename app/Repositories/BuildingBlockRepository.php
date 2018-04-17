@@ -28,10 +28,11 @@ class BuildingBlockRepository extends BaseRepository
     }
 
     /**
-     * 说明：修改单个楼座的单元和楼座名称
+     * 说明: 修改单个楼座的单元和楼座名称
      *
      * @param $buildingBlock
      * @param $request
+     * @return mixed
      * @author jacklin
      */
     public function changeNameUnit($buildingBlock, $request)
@@ -44,9 +45,10 @@ class BuildingBlockRepository extends BaseRepository
     }
 
     /**
-     * 说明：添加楼座单元和楼座名称
+     * 说明: 添加楼座单元和楼座名称
      *
      * @param $request
+     * @return mixed
      * @author jacklin
      */
     public function addNameUnit($request)

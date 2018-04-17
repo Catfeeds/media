@@ -89,10 +89,11 @@ class BuildingBlockController extends APIBaseController
     }
 
     /**
-     * 说明：删除楼座
+     * 说明: 删除楼座
      *
      * @param BuildingBlock $buildingBlock
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
      * @author jacklin
      */
     public function destroy(BuildingBlock $buildingBlock)

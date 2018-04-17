@@ -15,7 +15,7 @@ class QiNiuController extends APIBaseController
      * @param null $secretKey
      * @param null $bucket
      * @return string
-     * @author jacklin\
+     * @author jacklin
      */
     public function index($accessKey = null, $secretKey = null, $bucket = null)
     {
