@@ -26,11 +26,23 @@ class Building extends BaseModel
         return $this->hasMany('App\Models\BuildingBlock');
     }
 
+    /**
+     * 说明：所属商圈
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @author jacklin
+     */
     public function block()
     {
         return $this->belongsTo('App\Models\Block');
     }
 
+    /**
+     * 说明：所属街道
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @author jacklin
+     */
     public function street()
     {
         return $this->belongsTo('App\Models\Street');
@@ -69,6 +81,12 @@ class Building extends BaseModel
         return $area->name . $street->name;
     }
 
+    /**
+     * 说明：商圈信息
+     *
+     * @return mixed
+     * @author jacklin
+     */
     public function getBlockLabelAttribute()
     {
         $block = $this->block;
@@ -86,16 +104,34 @@ class Building extends BaseModel
         return $this->buildingBlocks()->count();
     }
 
+    /**
+     * 说明：区id
+     *
+     * @return mixed
+     * @author jacklin
+     */
     public function getAreaIdAttribute()
     {
         return $this->street->area->id;
     }
 
+    /**
+     * 说明：城市id
+     *
+     * @return mixed
+     * @author jacklin
+     */
     public function getCityIdAttribute()
     {
         return $this->street->area->city->id;
     }
 
+    /**
+     * 说明：城市信息
+     *
+     * @return mixed
+     * @author jacklin
+     */
     public function getCityLabelAttribute()
     {
         return $this->street->area->city->name;
