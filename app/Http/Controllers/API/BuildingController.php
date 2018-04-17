@@ -8,7 +8,6 @@ use App\Models\Building;
 use App\Models\BuildingBlock;
 use App\Models\City;
 use App\Models\Street;
-use App\Repositories\BuildingBlockRepository;
 use App\Repositories\BuildingRepository;
 use Illuminate\Http\Request;
 
@@ -51,6 +50,15 @@ class BuildingController extends APIBaseController
     }
 
 
+    /**
+     * 说明：修改楼盘数据
+     *
+     * @param BuildingRequest $request
+     * @param BuildingBlock $buildingBlock
+     * @param BuildingRepository $repository
+     * @return \Illuminate\Http\JsonResponse
+     * @author jacklin
+     */
     public function update(BuildingRequest $request, BuildingBlock $buildingBlock, BuildingRepository $repository)
     {
         $res = $repository->updateData($buildingBlock, $request);
