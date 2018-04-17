@@ -5,6 +5,422 @@ namespace App\Models;
 class ShopsHouse extends BaseModel
 {
     protected $casts = [
+        'owner_info' => 'array',
+        'support_facilities' => 'array',
+        'fit_management' => 'array',
+        'cost_detail' => 'array',
+        'house_type_img' => 'array',
+        'indoor_img' => 'array',
         'check_in_time' => 'date',
     ];
+
+    protected $appends = ['renovation_cn', 'shops_type_cn', 'public_private_cn', 'public_private_cn', 'pay_commission_unit_cn', 'payment_type_cn', 'shortest_lease_cn', 'rent_free_cn', 'frontage_cn', 'split_cn', 'orientation_cn', 'prospecting_cn', 'see_house_time_cn', 'house_proxy_type_cn', 'source_cn', 'certificate_type_cn'];
+
+    /**
+     * 说明: 关联楼座
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @author 罗振
+     */
+    public function buildingBlock()
+    {
+        return $this->hasOne(BuildingBlock::class, 'id', 'building_blocks_id');
+    }
+
+    /**
+     * 说明: 装修中文
+     *
+     * @return string
+     * @use renovation_cn
+     * @author 罗振
+     */
+    public function getRenovationCnAttribute()
+    {
+        if ($this->renovation == 1) {
+            return '豪华装修';
+        } elseif ($this->renovation == 2) {
+            return '精装修';
+        } elseif ($this->renovation == 3) {
+            return '中装修';
+        } elseif ($this->renovation == 4) {
+            return '间装修';
+        } elseif ($this->renovation == 5) {
+            return '毛坯';
+        } else {
+            return '装修情况异常';
+        }
+    }
+
+    /**
+     * 说明: 商铺类型
+     *
+     * @return string
+     * @use shops_type_cn
+     * @author 罗振
+     */
+    public function getShopsTypeCnAttributes()
+    {
+        if ($this->shops_type == 1) {
+            return '住宅底商';
+        } elseif ($this->shops_type == 2) {
+            return '商业街商铺';
+        } elseif ($this->shops_type == 3) {
+            return '酒店商底';
+        } elseif ($this->shops_type == 4) {
+            return '社区商铺';
+        } elseif ($this->shops_type == 5) {
+            return '沿街商铺';
+        } elseif ($this->shops_type == 6) {
+            return '写字底商';
+        } elseif ($this->shops_type == 7) {
+            return '购物中心';
+        } elseif ($this->shops_type == 8) {
+            return '旅游商铺';
+        } elseif ($this->shops_type == 9) {
+            return '其他';
+        } else {
+            return '商铺类型异常';
+        }
+    }
+
+    /**
+     * 说明: 公私盘中文
+     *
+     * @return string
+     * @use public_private_cn
+     * @author 罗振
+     */
+    public function getPublicPrivateCnAttribute()
+    {
+        if ($this->public_private == 1) {
+            return '店间公盘';
+        } elseif ($this->public_private == 2) {
+            return '店内公盘';
+        } elseif ($this->public_private == 3) {
+            return '私盘';
+        } else {
+            return '公私盘异常';
+        }
+    }
+
+    /**
+     * 说明: 房源业务状态中文
+     *
+     * @return string
+     * @use house_busine_state_cn
+     * @author 罗振
+     */
+    public function getHouseBusineStateCnAttribute()
+    {
+        if ($this->house_busine_state == 1) {
+            return '有效';
+        } elseif ($this->house_busine_state == 2) {
+            return '暂缓';
+        } elseif ($this->house_busine_state == 3) {
+            return '已租';
+        } elseif ($this->house_busine_state == 4) {
+            return '收购';
+        } elseif ($this->house_busine_state == 5) {
+            return '托管';
+        } elseif ($this->house_busine_state == 6) {
+            return '无效';
+        } else {
+            return '房源业务状态异常';
+        }
+    }
+
+    /**
+     * 说明: 付佣单位转换
+     *
+     * @return string
+     * @use pay_commission_unit_cn
+     * @author 罗振
+     */
+    public function getPayCommissionUnitCnAttribute()
+    {
+        if ($this->pay_commission_unit == 1) {
+            return '%';
+        } elseif ($this->pay_commission_unit == 2) {
+            return '元';
+        } else {
+            return '租金单位异常';
+        }
+    }
+
+    /**
+     * 说明: 支付方式中文
+     *
+     * @return string
+     * @use payment_type_cn
+     * @author 罗振
+     */
+    public function getPaymentTypeCnAttribute()
+    {
+        if ($this->payment_type == 1) {
+            return '押一付一';
+        } elseif ($this->payment_type == 2) {
+            return '押一付二';
+        } elseif ($this->payment_type == 3) {
+            return '押一付三';
+        } elseif ($this->payment_type == 4) {
+            return '押二付一';
+        } elseif ($this->payment_type == 5) {
+            return '押二付二';
+        } elseif ($this->payment_type == 6) {
+            return '押二付三';
+        } elseif ($this->payment_type == 7) {
+            return '押三付一';
+        } elseif ($this->payment_type == 8) {
+            return '押三付二';
+        } elseif ($this->payment_type == 9) {
+            return '押三付三';
+        } elseif ($this->payment_type == 10) {
+            return '半年付';
+        } elseif ($this->payment_type == 11) {
+            return '年付';
+        } elseif ($this->payment_type == 12) {
+            return '面谈';
+        } else {
+            return '支付方式异常';
+        }
+    }
+
+    /**
+     * 说明: 最短租期中文
+     *
+     * @return string
+     * @use shortest_lease_cn
+     * @author 罗振
+     */
+    public function getShortestLeaseCnAttributes()
+    {
+        if ($this->shortest_lease == 1) {
+            return '1-2年';
+        } elseif ($this->shortest_lease == 2) {
+            return '2-3年';
+        } elseif ($this->shortest_lease == 3) {
+            return '3-4年';
+        } elseif ($this->shortest_lease == 4) {
+            return '5年以上';
+        } else {
+            return '最短租期异常';
+        }
+    }
+
+    /**
+     * 说明: 免租期中文
+     *
+     * @return string
+     * @use rent_free_cn
+     * @author 罗振
+     */
+    public function getRentFreeCnAttributes()
+    {
+        if ($this->rent_free == 1) {
+            return '1个月';
+        } elseif ($this->rent_free == 2) {
+            return '2个月';
+        } elseif ($this->rent_free == 3) {
+            return '3个月';
+        } elseif ($this->rent_free == 4) {
+            return '4个月';
+        } elseif ($this->rent_free == 5) {
+            return '5个月';
+        } elseif ($this->rent_free == 6) {
+            return '6个月';
+        } elseif ($this->rent_free == 7) {
+            return '7个月';
+        } elseif ($this->rent_free == 8) {
+            return '8个月';
+        } elseif ($this->rent_free == 9) {
+            return '9个月';
+        } elseif ($this->rent_free == 10) {
+            return '10个月';
+        } elseif ($this->rent_free == 11) {
+            return '面谈';
+        } else {
+            return '免租期异常';
+        }
+    }
+
+    /**
+     * 说明: 是否临街中文
+     *
+     * @return string
+     * @use frontage_cn
+     * @author 罗振
+     */
+    public function getFrontageCnAttributes()
+    {
+        if ($this->frontage == 1) {
+            return '临街';
+        } elseif ($this->frontage == 2) {
+            return '不临街';
+        } else {
+            return '是否临街异常';
+        }
+    }
+
+    /**
+     * 说明: 是否可拆分
+     *
+     * @return string
+     * @use split_cn
+     * @author 罗振
+     */
+    public function getSplitCnAttributes()
+    {
+        if ($this->split == 1) {
+            return '可拆分';
+        } elseif ($this->split == 2) {
+            return '不可拆分';
+        } else {
+            return '拆分异常';
+        }
+    }
+
+    /**
+     * 说明: 朝向中文
+     *
+     * @return string
+     * @use orientation_cn
+     * @author 罗振
+     */
+    public function getOrientationCnAttribute()
+    {
+        if ($this->orientation == 1) {
+            return '东';
+        } elseif ($this->orientation == 2) {
+            return '南';
+        } elseif ($this->orientation == 3) {
+            return '西';
+        } elseif ($this->orientation == 4) {
+            return '北';
+        } elseif ($this->orientation == 5) {
+            return '东南';
+        } elseif ($this->orientation == 6) {
+            return '西南';
+        } elseif ($this->orientation == 7) {
+            return '西北';
+        } elseif ($this->orientation == 8) {
+            return '南北';
+        } elseif ($this->orientation == 9) {
+            return '东西';
+        } else {
+            return '朝向异常';
+        }
+    }
+
+    /**
+     * 说明: 是否实勘中文
+     *
+     * @return string
+     * @use prospecting_cn
+     * @author 罗振
+     */
+    public function getProspectingCnAttribute()
+    {
+        if ($this->prospecting == 1) {
+            return '是';
+        } elseif ($this->prospecting == 2) {
+            return '否';
+        } else {
+            return '是否实勘异常';
+        }
+    }
+
+    /**
+     * 说明: 看房时间中文
+     *
+     * @return string
+     * @use see_house_time_cn
+     * @author 罗振
+     */
+    public function getSeeHouseTimeCnAttribute()
+    {
+        if ($this->see_house_time == 1) {
+            return '随时';
+        } elseif ($this->see_house_time == 2) {
+            return '非工作时间';
+        } elseif ($this->see_house_time == 3) {
+            return '电话预约';
+        } else {
+            return '看房时间异常';
+        }
+    }
+
+    /**
+     * 说明: 房源状态中文
+     *
+     * @return string
+     * @use house_proxy_type_cn
+     * @author 罗振
+     */
+    public function getHouseProxyTypeCnAttribute()
+    {
+        if ($this->house_proxy_type == 1) {
+            return '独家';
+        } elseif ($this->house_proxy_type == 2) {
+            return '委托';
+        } else {
+            return '房源状态异常';
+        }
+    }
+
+    /**
+     * 说明: 来源中文
+     *
+     * @return string
+     * @use source_cn
+     * @author 罗振
+     */
+    public function getSourceCnAttribute()
+    {
+        if ($this->source == 1) {
+            return '来电';
+        } elseif ($this->source == 2) {
+            return '来访';
+        } elseif ($this->source == 3) {
+            return '中介';
+        } elseif ($this->source == 4) {
+            return '友';
+        } elseif ($this->source == 5) {
+            return '告';
+        } elseif ($this->source == 6) {
+            return '街';
+        } elseif ($this->source == 7) {
+            return '网络';
+        } else {
+            return '来源异常';
+        }
+    }
+
+    /**
+     * 说明: 证件类型中文
+     *
+     * @return string
+     * @use certificate_type_cn
+     * @author 罗振
+     */
+    public function getCertificateTypeCnAttribute()
+    {
+        if ($this->certificate_type == 1) {
+            return '房地产证';
+        } elseif ($this->certificate_type == 2) {
+            return '购房合同';
+        } elseif ($this->certificate_type == 3) {
+            return '购房发票';
+        } elseif ($this->certificate_type == 4) {
+            return '抵押合同';
+        } elseif ($this->certificate_type == 5) {
+            return '认购书';
+        } elseif ($this->certificate_type == 6) {
+            return '预售合同';
+        } elseif ($this->certificate_type == 7) {
+            return '回迁合同';
+        } else {
+            return '证件类型异常';
+        }
+    }
+
 }

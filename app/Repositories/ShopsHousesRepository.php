@@ -15,6 +15,17 @@ class ShopsHousesRepository extends BaseRepository
     }
 
     /**
+     * 说明: 商铺房源列表
+     *
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     * @author 罗振
+     */
+    public function shopsHousesList()
+    {
+        return $this->model->all();
+    }
+
+    /**
      * 说明: 商铺房源添加
      *
      * @param $request
@@ -29,7 +40,7 @@ class ShopsHousesRepository extends BaseRepository
             $house = $this->model->create([
                 'building_blocks_id' => $request->building_blocks_id,
                 'house_number' => $request->house_number,
-                'owner_info' => json_encode($request->owner_info),
+                'owner_info' => $request->owner_info,
                 'constru_acreage' => $request->constru_acreage,
                 'split' => $request->split,
                 'min_acreage' => $request->min_acreage,
@@ -41,8 +52,8 @@ class ShopsHousesRepository extends BaseRepository
                 'wide' => $request->wide,
                 'depth' => $request->depth,
                 'storey' => $request->storey,
-                'support_facilities' => json_encode($request->support_facilities),
-                'fit_management' => json_encode($request->fit_management),
+                'support_facilities' => $request->support_facilities,
+                'fit_management' => $request->fit_management,
                 'house_description' => $request->house_description,
                 'rent_price' => $request->rent_price,
                 'rent_price_unit' => $request->rent_price_unit,
@@ -52,7 +63,7 @@ class ShopsHousesRepository extends BaseRepository
                 'rent_free' => $request->rent_free,
                 'increasing_situation' => $request->increasing_situation,
                 'transfer_fee' => $request->transfer_fee,
-                'cost_detail' => json_encode($request->cost_detail),
+                'cost_detail' => $request->cost_detail,
                 'public_private' => $request->public_private,
                 'house_busine_state' => $request->house_busine_state,
                 'pay_commission' => $request->pay_commission,
@@ -65,8 +76,8 @@ class ShopsHousesRepository extends BaseRepository
                 'certificate_type' => $request->certificate_type,
                 'house_proxy_type' => $request->house_proxy_type,
                 'guardian' => $request->guardian,
-                'house_type_img' => json_encode($request->house_type_img),
-                'indoor_img' => json_encode($request->indoor_img),
+                'house_type_img' => $request->house_type_img,
+                'indoor_img' => $request->indoor_img,
             ]);
             if (empty($house)) {
                 throw new \Exception('商铺房源添加失败');

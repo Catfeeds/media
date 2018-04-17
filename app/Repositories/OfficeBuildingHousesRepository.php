@@ -14,6 +14,12 @@ class OfficeBuildingHousesRepository extends BaseRepository
         $this->model = $model;
     }
 
+    /**
+     * 说明: 写字楼房源列表
+     *
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     * @author 罗振
+     */
     public function officeBuildingHousesList()
     {
         return $this->model->all();

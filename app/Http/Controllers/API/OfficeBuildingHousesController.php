@@ -9,6 +9,13 @@ use App\Services\HousesService;
 
 class OfficeBuildingHousesController extends APIBaseController
 {
+    /**
+     * 说明: 写字楼房源列表
+     *
+     * @param OfficeBuildingHousesRepository $officeBuildingHousesRepository
+     * @return \Illuminate\Http\JsonResponse
+     * @author 罗振
+     */
     public function index(
         OfficeBuildingHousesRepository $officeBuildingHousesRepository
     )

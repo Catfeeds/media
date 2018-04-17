@@ -13,7 +13,7 @@ class OfficeBuildingHouse extends BaseModel
         'check_in_time' => 'date',
     ];
 
-    protected $appends = ['renovation_cn', 'house_type', 'renting_style_cn', 'public_private_cn', 'house_busine_state_cn', 'payment_type_cn', 'orientation_cn', 'prospecting_cn', 'see_house_time_cn', 'house_proxy_type_cn', 'source_cn', 'certificate_type_cn', 'rent_price_unit_cn', 'pay_commission_unit_cn'];
+    protected $appends = ['renovation_cn', 'house_type', 'office_building_type_cn', 'public_private_cn', 'house_busine_state_cn', 'payment_type_cn', 'split_cn', 'orientation_cn', 'prospecting_cn', 'see_house_time_cn', 'house_proxy_type_cn', 'source_cn', 'certificate_type_cn', 'rent_price_unit_cn', 'pay_commission_unit_cn', 'shortest_lease_cn', 'rent_free_cn'];
 
     /**
      * 说明: 关联楼座
@@ -47,6 +47,50 @@ class OfficeBuildingHouse extends BaseModel
             return '毛坯';
         } else {
             return '装修情况异常';
+        }
+    }
+
+    /**
+     * 说明: 户型拼接
+     *
+     * @return string
+     * @use house_type
+     * @author 罗振
+     */
+    public function getHouseTypeAttribute()
+    {
+        $houseType = '';
+        if (!empty($this->room)) {
+            $houseType = $this->room.'室';
+        }
+        if (!empty($this->hall)) {
+            $houseType = $houseType.$this->hall.'厅';
+        }
+
+        return $houseType;
+    }
+
+    /**
+     * 说明: 写字楼类型中文
+     *
+     * @return string
+     * @use office_building_type_cn
+     * @author 罗振
+     */
+    public function getOfficeBuildingTypeCnAttributes()
+    {
+        if ($this->office_building_type == 1) {
+            return '纯写字楼';
+        } elseif ($this->office_building_type == 2) {
+            return '商住楼';
+        } elseif ($this->office_building_type == 3) {
+            return '商业综合体楼';
+        } elseif ($this->office_building_type == 4) {
+            return '酒店写字楼';
+        } elseif ($this->office_building_type == 5) {
+            return '其他';
+        } else {
+            return '写字楼类型异常';
         }
     }
 
@@ -149,6 +193,24 @@ class OfficeBuildingHouse extends BaseModel
             return '面谈';
         } else {
             return '支付方式异常';
+        }
+    }
+
+    /**
+     * 说明: 是否可拆分
+     *
+     * @return string
+     * @use split_cn
+     * @author 罗振
+     */
+    public function getSplitCnAttributes()
+    {
+        if ($this->split == 1) {
+            return '可拆分';
+        } elseif ($this->split == 2) {
+            return '不可拆分';
+        } else {
+            return '拆分异常';
         }
     }
 
@@ -293,6 +355,82 @@ class OfficeBuildingHouse extends BaseModel
             return '回迁合同';
         } else {
             return '证件类型异常';
+        }
+    }
+
+    /**
+     * 说明: 租金单位转换
+     *
+     * @return string
+     * @use rent_price_unit_cn
+     * @author 罗振
+     */
+    public function getRentPriceUnitCnAttribute()
+    {
+        if ($this->rent_price_unit == 1) {
+            return '%';
+        } elseif ($this->rent_price_unit == 2) {
+            return '元';
+        } else {
+            return '租金单位异常';
+        }
+    }
+
+    /**
+     * 说明: 最短租期中文
+     *
+     * @return string
+     * @use shortest_lease_cn
+     * @author 罗振
+     */
+    public function getShortestLeaseCnAttributes()
+    {
+        if ($this->shortest_lease == 1) {
+            return '1-2年';
+        } elseif ($this->shortest_lease == 2) {
+            return '2-3年';
+        } elseif ($this->shortest_lease == 3) {
+            return '3-4年';
+        } elseif ($this->shortest_lease == 4) {
+            return '5年以上';
+        } else {
+            return '最短租期异常';
+        }
+    }
+
+    /**
+     * 说明: 免租期中文
+     *
+     * @return string
+     * @use rent_free_cn
+     * @author 罗振
+     */
+    public function getRentFreeCnAttributes()
+    {
+        if ($this->rent_free == 1) {
+            return '1个月';
+        } elseif ($this->rent_free == 2) {
+            return '2个月';
+        } elseif ($this->rent_free == 3) {
+            return '3个月';
+        } elseif ($this->rent_free == 4) {
+            return '4个月';
+        } elseif ($this->rent_free == 5) {
+            return '5个月';
+        } elseif ($this->rent_free == 6) {
+            return '6个月';
+        } elseif ($this->rent_free == 7) {
+            return '7个月';
+        } elseif ($this->rent_free == 8) {
+            return '8个月';
+        } elseif ($this->rent_free == 9) {
+            return '9个月';
+        } elseif ($this->rent_free == 10) {
+            return '10个月';
+        } elseif ($this->rent_free == 11) {
+            return '面谈';
+        } else {
+            return '免租期异常';
         }
     }
 }

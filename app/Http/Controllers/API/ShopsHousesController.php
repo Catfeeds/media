@@ -8,9 +8,19 @@ use App\Services\HousesService;
 
 class ShopsHousesController extends APIBaseController
 {
-    public function index()
+    /**
+     * 说明: 商铺房源列表
+     *
+     * @param ShopsHousesRepository $shopsHousesRepository
+     * @return \Illuminate\Http\JsonResponse
+     * @author 罗振
+     */
+    public function index(
+        ShopsHousesRepository $shopsHousesRepository
+    )
     {
-        return '商铺房源控制器';
+        $result = $shopsHousesRepository->shopsHousesList();
+        return $this->sendResponse($result,'商铺房源列表获取成功!');
     }
 
     /**
