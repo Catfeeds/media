@@ -64,6 +64,10 @@ Route::group(['namespace' => 'API'], function () {
     Route::resource('/building_blocks', 'BuildingBlockController');
     // 所有楼座下拉数据
     Route::get('/building_blocks_all', 'BuildingBlockController@buildingBlocksSelect');
+    Route::post('/change_name_unit/{building_block}', 'BuildingBlockController@changeNameUnit');
+    Route::post('/add_name_unit', 'BuildingBlockController@addNameUnit');
+    Route::post('/add_block_info/{building_block}', 'BuildingBlockController@addBlockInfo');
+    Route::get('/building_blocks_list', 'BuildingBlockController@allBlocks');
 
     /*
     |--------------------------------------------------------------------------

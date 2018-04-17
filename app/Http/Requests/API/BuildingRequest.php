@@ -23,27 +23,33 @@ class BuildingRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'name' => 'required|max:128',
-            'gps' => 'required',
-            'type' => 'required|numeric|max:100',
+        $method = $this->route()->getActionMethod();
 
-            'street_id' => 'required:numeric',
-            'block_id' => 'numeric',
-            'address' => 'required|max:128',
+        switch ($method) {
+            case 'update':
+            case 'store':
+            return [
+                'name' => 'required|max:128',
+                'gps' => 'required',
+                'type' => 'required|numeric|max:100',
 
-            'developer' => 'max:128',
-            'years' => 'numeric|max:10000',
-            'acreage' => 'numeric|max:99999999999',
-            'building_block_num' => 'numeric|max:10000',
-            'parking_num' => 'numeric|max:10000',
-            'parking_fee' => 'numeric|max:10000',
-            'greening_rate' => 'numeric|max:100',
+                'street_id' => 'required:numeric',
+                'block_id' => 'numeric',
+                'address' => 'required|max:128',
 
-            'company' => 'array',
-            'album' => 'array',
-            'building_block' => 'array'
-        ];
+                'developer' => 'nullable|max:128',
+                'years' => 'nullable|numeric|max:10000',
+                'acreage' => 'nullable|numeric|max:99999999999',
+                'building_block_num' => 'nullable|numeric|max:10000',
+                'parking_num' => 'nullable|numeric|max:10000',
+                'parking_fee' => 'nullable|numeric|max:10000',
+                'greening_rate' => 'nullable|numeric|max:100',
+
+                'company' => 'array',
+                'album' => 'array',
+                'building_block' => 'array'
+            ];
+        }
     }
 
 //    public function messages()

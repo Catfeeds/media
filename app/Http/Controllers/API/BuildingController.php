@@ -5,16 +5,27 @@ namespace App\Http\Controllers\API;
 use App\Http\Requests\API\BuildingRequest;
 use App\Models\Area;
 use App\Models\Building;
+use App\Models\BuildingBlock;
 use App\Models\City;
 use App\Models\Street;
 use App\Repositories\BuildingRepository;
+use Illuminate\Http\Request;
 
 class BuildingController extends APIBaseController
 {
 
-    public function index(BuildingRequest $request, BuildingRepository $repository)
+    /**
+     * 说明：楼盘分页列表
+     *
+     * @param Request $request
+     * @param BuildingRepository $repository
+     * @return \Illuminate\Http\JsonResponse
+     * @author jacklin
+     */
+    public function index(Request $request, BuildingRepository $repository)
     {
-
+        $res = $repository->getList([], $request->per_page);
+        return $this->sendResponse($res, '获取成功');
     }
 
     /**
@@ -28,15 +39,57 @@ class BuildingController extends APIBaseController
     public function store(BuildingRequest $request, BuildingRepository $repository)
     {
         // 楼栋信息不能为空
-        if (empty($request->building_block)) return $this->sendError(405, '楼栋信息不能为空');
+        if (empty($request->building_block)) return $this->sendError( '楼栋信息不能为空');
         // 楼盘名不允许重复
         $res = Building::where(['name' => $request->name, 'street_id' => $request->street_id])->first();
-        if (!empty($res)) return $this->sendError(405, '楼盘名不能重复');
-        $res = $repository->add($request);
+        if (!empty($res)) return $this->sendError('楼盘名不能重复');
 
+        $res = $repository->add($request);
+        if (empty($res)) return $this->sendError('添加失败');
         return $this->sendResponse($res, 200);
     }
 
+
+    /**
+     * 说明：修改楼盘数据
+     *
+     * @param BuildingRequest $request
+     * @param Building $building
+     * @param BuildingRepository $repository
+     * @return \Illuminate\Http\JsonResponse
+     * @author jacklin
+     */
+    public function update(BuildingRequest $request, Building $building, BuildingRepository $repository)
+    {
+        $res = $repository->updateData($building, $request);
+        return $this->sendResponse($res, '修改成功');
+    }
+
+    /**
+     * 说明：单个楼盘数据
+     *
+     * @param Building $building
+     * @return \Illuminate\Http\JsonResponse
+     * @author jacklin
+     */
+    public function show(Building $building)
+    {
+        $building->building_blocks = $building->buildingBlocks;
+        return $this->sendResponse($building, '获取成功');
+    }
+
+    /**
+     * 说明：楼盘删除
+     *
+     * @param Building $building
+     * @return \Illuminate\Http\JsonResponse
+     * @author jacklin
+     */
+    public function destroy(Building $building)
+    {
+        $res = $building->delete();
+        return $this->sendResponse($res, '删除成功');
+    }
 
     /**
      * 说明：所有楼盘下拉数据
