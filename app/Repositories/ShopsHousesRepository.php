@@ -64,4 +64,5 @@ class ShopsHousesRepository extends BaseRepository
             'indoor_img' => json_encode($request->indoor_img),
         ]);
     }
+
 }

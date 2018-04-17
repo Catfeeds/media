@@ -42,6 +42,8 @@ Route::group(['namespace' => 'API'], function () {
         // 写字楼房源
         Route::resource('office_building_houses', 'OfficeBuildingHousesController');
 
+        // 房源
+        Route::resource('houses', 'HousesController');
 
 //    });
 
