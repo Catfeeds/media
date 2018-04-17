@@ -14,7 +14,7 @@ class BuildingController extends APIBaseController
 
     public function index(BuildingRequest $request, BuildingRepository $repository)
     {
-        
+
     }
 
     /**
@@ -28,13 +28,13 @@ class BuildingController extends APIBaseController
     public function store(BuildingRequest $request, BuildingRepository $repository)
     {
         // 楼栋信息不能为空
-        if (empty($request->building_block)) return $this->sendError(405, '楼栋信息不能为空');
+        if (empty($request->building_block)) return $this->sendError( '楼栋信息不能为空');
         // 楼盘名不允许重复
         $res = Building::where(['name' => $request->name, 'street_id' => $request->street_id])->first();
-        if (!empty($res)) return $this->sendError(405, '楼盘名不能重复');
+        if (!empty($res)) return $this->sendError('楼盘名不能重复');
         $res = $repository->add($request);
 
-        if (empty($res)) return $this->sendError(405, '添加失败');
+        if (empty($res)) return $this->sendError('添加失败');
         return $this->sendResponse($res, 200);
     }
 
