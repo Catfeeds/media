@@ -17,7 +17,7 @@ class APIBaseController extends Controller
         return response()->json($response, 200);
     }
 
-    public function sendError($errorMessages = '', $code = 405)
+    public function sendError($errorMessages = '', $code = 406)
     {
         $response = [
             'success' => false,
