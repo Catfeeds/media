@@ -6,5 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Area extends BaseModel
 {
-    //
+    public function city()
+    {
+        return $this->belongsTo('App\Models\City');
+    }
 }

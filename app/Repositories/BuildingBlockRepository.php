@@ -58,11 +58,6 @@ class BuildingBlockRepository extends BaseRepository
      */
     public function addBlockInfo($buildingBlock, $request)
     {
-        $buildingBlock->name = $request->name;
-        $buildingBlock->name_unit = $request->name_unit;
-        $buildingBlock->unit = $request->unit;
-        $buildingBlock->unit_unit = $request->unit_unit;
-
         $buildingBlock->class = $request->class;
         $buildingBlock->structure = $request->structure;
         $buildingBlock->total_floor = $request->total_floor;

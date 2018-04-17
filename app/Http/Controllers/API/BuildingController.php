@@ -54,40 +54,41 @@ class BuildingController extends APIBaseController
      * 说明：修改楼盘数据
      *
      * @param BuildingRequest $request
-     * @param BuildingBlock $buildingBlock
+     * @param Building $building
      * @param BuildingRepository $repository
      * @return \Illuminate\Http\JsonResponse
      * @author jacklin
      */
-    public function update(BuildingRequest $request, BuildingBlock $buildingBlock, BuildingRepository $repository)
+    public function update(BuildingRequest $request, Building $building, BuildingRepository $repository)
     {
-        $res = $repository->updateData($buildingBlock, $request);
+        $res = $repository->updateData($building, $request);
         return $this->sendResponse($res, '修改成功');
     }
 
     /**
      * 说明：单个楼盘数据
      *
-     * @param BuildingBlock $buildingBlock
+     * @param Building $building
      * @return \Illuminate\Http\JsonResponse
      * @author jacklin
      */
-    public function show(BuildingBlock $buildingBlock)
+    public function show(Building $building)
     {
-        return $this->sendResponse($buildingBlock, '获取成功');
+        $building->building_blocks = $building->buildingBlocks;
+        return $this->sendResponse($building, '获取成功');
     }
 
 
     /**
      * 说明：楼盘删除
      *
-     * @param BuildingBlock $buildingBlock
+     * @param Building $building
      * @return \Illuminate\Http\JsonResponse
      * @author jacklin
      */
-    public function destroy(BuildingBlock $buildingBlock)
+    public function destroy(Building $building)
     {
-        $res = $buildingBlock->delete();
+        $res = $building->delete();
         return $this->sendResponse($res, '删除成功');
     }
 

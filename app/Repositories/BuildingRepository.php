@@ -25,7 +25,7 @@ class BuildingRepository extends Building
      */
     public function getList($where = array(), $perPage = null)
     {
-        return $this->model->where($where)
+        return $this->model->where($where)->with('buildingBlocks')
             ->orderBy('updated_at', 'desc')
             ->paginate($perPage);
     }
@@ -80,14 +80,14 @@ class BuildingRepository extends Building
     /**
      * 说明：更新楼盘信息
      *
-     * @param array $buildingBlock
-     * @param array $request
+     * @param $building
+     * @param $request
      * @return mixed
      * @author jacklin
      */
-    public function updateData($buildingBlock, $request)
+    public function updateData($building, $request)
     {
-        $res = $buildingBlock->update([
+        $res = $building->update([
             'name' => $request->name,
             'gps' => json_encode($request->gps),
 

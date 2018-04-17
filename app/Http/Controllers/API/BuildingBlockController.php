@@ -69,6 +69,18 @@ class BuildingBlockController extends APIBaseController
     }
 
     /**
+     * 说明：
+     *
+     * @param BuildingBlock $buildingBlock
+     * @return \Illuminate\Http\JsonResponse
+     * @author jacklin
+     */
+    public function show(BuildingBlock $buildingBlock)
+    {
+        return $this->sendResponse($buildingBlock, '获取成功');
+    }
+
+    /**
      * 说明：删除楼座
      *
      * @param BuildingBlock $buildingBlock
