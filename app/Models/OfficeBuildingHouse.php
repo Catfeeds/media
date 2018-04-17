@@ -267,4 +267,32 @@ class OfficeBuildingHouse extends BaseModel
             return '来源异常';
         }
     }
+
+    /**
+     * 说明: 证件类型中文
+     *
+     * @return string
+     * @use certificate_type_cn
+     * @author 罗振
+     */
+    public function getCertificateTypeCnAttribute()
+    {
+        if ($this->certificate_type == 1) {
+            return '房地产证';
+        } elseif ($this->certificate_type == 2) {
+            return '购房合同';
+        } elseif ($this->certificate_type == 3) {
+            return '购房发票';
+        } elseif ($this->certificate_type == 4) {
+            return '抵押合同';
+        } elseif ($this->certificate_type == 5) {
+            return '认购书';
+        } elseif ($this->certificate_type == 6) {
+            return '预售合同';
+        } elseif ($this->certificate_type == 7) {
+            return '回迁合同';
+        } else {
+            return '证件类型异常';
+        }
+    }
 }
