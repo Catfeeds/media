@@ -5,16 +5,28 @@ namespace App\Http\Controllers\API;
 use App\Http\Requests\API\BuildingRequest;
 use App\Models\Area;
 use App\Models\Building;
+use App\Models\BuildingBlock;
 use App\Models\City;
 use App\Models\Street;
+use App\Repositories\BuildingBlockRepository;
 use App\Repositories\BuildingRepository;
+use Illuminate\Http\Request;
 
 class BuildingController extends APIBaseController
 {
 
-    public function index(BuildingRequest $request, BuildingRepository $repository)
+    /**
+     * 说明：楼盘分页列表
+     *
+     * @param Request $request
+     * @param BuildingRepository $repository
+     * @return \Illuminate\Http\JsonResponse
+     * @author jacklin
+     */
+    public function index(Request $request, BuildingRepository $repository)
     {
-
+        $res = $repository->getList([], $request->per_page);
+        return $this->sendResponse($res, '获取成功');
     }
 
     /**
@@ -38,6 +50,38 @@ class BuildingController extends APIBaseController
         return $this->sendResponse($res, 200);
     }
 
+
+    public function update(BuildingRequest $request, BuildingBlock $buildingBlock, BuildingRepository $repository)
+    {
+        $res = $repository->updateData($buildingBlock, $request);
+        return $this->sendResponse($res, '修改成功');
+    }
+
+    /**
+     * 说明：单个楼盘数据
+     *
+     * @param BuildingBlock $buildingBlock
+     * @return \Illuminate\Http\JsonResponse
+     * @author jacklin
+     */
+    public function show(BuildingBlock $buildingBlock)
+    {
+        return $this->sendResponse($buildingBlock, '获取成功');
+    }
+
+
+    /**
+     * 说明：楼盘删除
+     *
+     * @param BuildingBlock $buildingBlock
+     * @return \Illuminate\Http\JsonResponse
+     * @author jacklin
+     */
+    public function destroy(BuildingBlock $buildingBlock)
+    {
+        $res = $buildingBlock->delete();
+        return $this->sendResponse($res, '删除成功');
+    }
 
     /**
      * 说明：所有楼盘下拉数据
