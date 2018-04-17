@@ -22,9 +22,9 @@ class BuildingRepository extends Building
         DB::beginTransaction();
         try{
             // 添加楼盘表
-            $this->model->create([
+            $res = $this->model->create([
                 'name' => $request->name,
-                'gps' => $request->gps,
+                'gps' => json_encode($request->gps),
 
                 'type' => $request->type,
                 'street_id' => $request->street_id,
@@ -47,17 +47,20 @@ class BuildingRepository extends Building
 
             foreach ($buildingBlocks as $buildingBlock) {
                 if (empty($buildingBlock->name))
-                Block::create([
-                    'name' => $buildingBlock->name,
-                    'name_unit' => $buildingBlock->name_unit,
-                    'unit' => $buildingBlock->unit,
-                    'unit_unit' => $buildingBlock->unit_unit,
+                BuildingBlock::create([
+                    'building_id' => $res->id,
+                    'name' => $buildingBlock['name'],
+                    'name_unit' => $buildingBlock['name_unit'],
+                    'unit' => $buildingBlock['unit'],
+                    'unit_unit' => $buildingBlock['unit_unit'],
                 ]);
             }
         }
         catch (\Exception $exception){
             DB::rollBack();
+            return false;
         }
         DB::commit();
+        return true;
     }
 }

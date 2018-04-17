@@ -34,6 +34,7 @@ class BuildingController extends APIBaseController
         if (!empty($res)) return $this->sendError(405, '楼盘名不能重复');
         $res = $repository->add($request);
 
+        if (empty($res)) return $this->sendError(405, '添加失败');
         return $this->sendResponse($res, 200);
     }
 

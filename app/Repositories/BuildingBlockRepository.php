@@ -56,4 +56,9 @@ class BuildingBlockRepository extends BaseRepository
         ]);
         return $res;
     }
+
+    public function addBlockInfo()
+    {
+        
+    }
 }
