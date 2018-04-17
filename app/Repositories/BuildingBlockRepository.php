@@ -15,6 +15,19 @@ class BuildingBlockRepository extends BaseRepository
     }
 
     /**
+     * 说明：获取所有楼座的列表
+     *
+     * @param array $where
+     * @param null $perPage
+     * @return mixed
+     * @author jacklin
+     */
+    public function getList($where = [], $perPage = null)
+    {
+        return $this->model->where($where)->orderBy('updated_at', 'desc')->paginate($perPage);
+    }
+
+    /**
      * 说明：修改单个楼座的单元和楼座名称
      *
      * @param $buildingBlock

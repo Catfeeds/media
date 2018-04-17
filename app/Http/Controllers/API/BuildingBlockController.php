@@ -28,9 +28,18 @@ class BuildingBlockController extends APIBaseController
         return $this->sendResponse($buildingBlocks, '获取成功');
     }
 
-    public function store(BuildingBlockRepository $repository)
+    /**
+     * 说明：楼座分页列表
+     *
+     * @param Request $request
+     * @param BuildingBlockRepository $repository
+     * @return \Illuminate\Http\JsonResponse
+     * @author jacklin
+     */
+    public function allBlocks(Request $request, BuildingBlockRepository $repository)
     {
-//        $repository->add();
+        $res = $repository->getList([], $request->per_page);
+        return $this->sendResponse($res, '获取成功');
     }
 
     /**
@@ -53,7 +62,6 @@ class BuildingBlockController extends APIBaseController
         return $this->sendResponse($res, '修改成功');
     }
 
-
     /**
      * 说明：添加楼座（名称、楼盘）
      *
@@ -69,7 +77,7 @@ class BuildingBlockController extends APIBaseController
     }
 
     /**
-     * 说明：
+     * 说明：单条楼座信息
      *
      * @param BuildingBlock $buildingBlock
      * @return \Illuminate\Http\JsonResponse
@@ -90,7 +98,7 @@ class BuildingBlockController extends APIBaseController
     public function destroy(BuildingBlock $buildingBlock)
     {
         $count = BuildingBlock::where('building_id', $buildingBlock->building_id)->get()->count();
-        if ($count <= 1) return $this->sendError(405, '最后一条不能删除');
+        if ($count <= 1) return $this->sendError('该楼盘仅剩一个楼座，不能删除');
 
         $res = $buildingBlock->delete();
         return $this->sendResponse($res, '删除成功');
@@ -137,7 +145,7 @@ class BuildingBlockController extends APIBaseController
                     $buildings = Building::where('street_id', $street->id)->get();
                     $building_box = array();
                     foreach ($buildings as $building) {
-                        $buildingBlocks = BuildingBlock::all();
+                        $buildingBlocks = BuildingBlock::where('building_id', $building->id)->get();
                         $buildingBlockBox = array();
                         foreach ($buildingBlocks as $buildingBlock) {
                             $item = array(

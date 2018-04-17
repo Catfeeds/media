@@ -30,6 +30,13 @@ class BuildingRepository extends Building
             ->paginate($perPage);
     }
 
+    /**
+     * 说明：添加楼盘
+     *
+     * @param $request
+     * @return bool
+     * @author jacklin
+     */
     public function add($request)
     {
         DB::beginTransaction();
@@ -37,7 +44,7 @@ class BuildingRepository extends Building
             // 添加楼盘表
             $res = $this->model->create([
                 'name' => $request->name,
-                'gps' => json_encode($request->gps),
+                'gps' => $request->gps,
 
                 'type' => $request->type,
                 'street_id' => $request->street_id,
@@ -52,8 +59,8 @@ class BuildingRepository extends Building
                 'parking_fee' => $request->parking_fee,
                 'greening_rate' => $request->greening_rate,
 
-                'company' => json_encode($request->company),
-                'album' => json_encode($request->album)
+                'company' => $request->company,
+                'album' => $request->album
             ]);
             // 循环添加楼座表
             $buildingBlocks = $request->building_block;
@@ -69,11 +76,12 @@ class BuildingRepository extends Building
                     ]);
             }
         } catch (\Exception $exception) {
+            dd($exception);
             DB::rollBack();
             return false;
         }
         DB::commit();
-        return true;
+        return $res;
     }
 
 
@@ -89,7 +97,7 @@ class BuildingRepository extends Building
     {
         $res = $building->update([
             'name' => $request->name,
-            'gps' => json_encode($request->gps),
+            'gps' => $request->gps,
 
             'type' => $request->type,
             'street_id' => $request->street_id,
@@ -104,8 +112,8 @@ class BuildingRepository extends Building
             'parking_fee' => $request->parking_fee,
             'greening_rate' => $request->greening_rate,
 
-            'company' => json_encode($request->company),
-            'album' => json_encode($request->album)
+            'company' => $request->company,
+            'album' => $request->album
         ]);
         return $res;
     }

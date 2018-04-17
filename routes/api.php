@@ -65,6 +65,7 @@ Route::group(['namespace' => 'API'], function () {
     Route::post('/change_name_unit/{building_block}', 'BuildingBlockController@changeNameUnit');
     Route::post('/add_name_unit', 'BuildingBlockController@addNameUnit');
     Route::post('/add_block_info/{building_block}', 'BuildingBlockController@addBlockInfo');
+    Route::get('/building_blocks_list', 'BuildingBlockController@allBlocks');
 
     /*
     |--------------------------------------------------------------------------

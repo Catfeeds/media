@@ -4,14 +4,15 @@ namespace App\Models;
 
 class Building extends BaseModel
 {
-    protected $appends = [
-        'type_label', 'street_label', 'block_label', 'blocks_count', 'area_id', 'city_id', 'city_label'
-    ];
-
     protected $casts = [
         'company' => 'array',
+        'gps' => 'array',
         'album' => 'array',
         'years' => 'string'
+    ];
+
+    protected $appends = [
+        'type_label', 'street_label', 'block_label', 'blocks_count', 'area_id', 'city_id', 'city_label'
     ];
 
     /**
@@ -27,7 +28,6 @@ class Building extends BaseModel
 
     public function block()
     {
-
         return $this->belongsTo('App\Models\Block');
     }
 

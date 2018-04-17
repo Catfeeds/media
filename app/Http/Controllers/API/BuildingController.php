@@ -43,8 +43,8 @@ class BuildingController extends APIBaseController
         // 楼盘名不允许重复
         $res = Building::where(['name' => $request->name, 'street_id' => $request->street_id])->first();
         if (!empty($res)) return $this->sendError('楼盘名不能重复');
-        $res = $repository->add($request);
 
+        $res = $repository->add($request);
         if (empty($res)) return $this->sendError('添加失败');
         return $this->sendResponse($res, 200);
     }
@@ -77,7 +77,6 @@ class BuildingController extends APIBaseController
         $building->building_blocks = $building->buildingBlocks;
         return $this->sendResponse($building, '获取成功');
     }
-
 
     /**
      * 说明：楼盘删除
