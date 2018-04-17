@@ -5,12 +5,16 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Requests\API\OfficeBuildingHousesRequest;
 use App\Repositories\OfficeBuildingHousesRepository;
+use App\Services\HousesService;
 
 class OfficeBuildingHousesController extends APIBaseController
 {
-    public function index()
+    public function index(
+        OfficeBuildingHousesRepository $officeBuildingHousesRepository
+    )
     {
-        return '写字楼房源控制器';
+        $result = $officeBuildingHousesRepository->officeBuildingHousesList();
+        return $this->sendResponse($result, '写字楼房源列表获取成功');
     }
 
     /**
@@ -18,15 +22,17 @@ class OfficeBuildingHousesController extends APIBaseController
      *
      * @param OfficeBuildingHousesRequest $request
      * @param OfficeBuildingHousesRepository $officeBuildingHousesRepository
+     * @param HousesService $housesService
      * @return \Illuminate\Http\JsonResponse
      * @author 罗振
      */
     public function store(
         OfficeBuildingHousesRequest $request,
-        OfficeBuildingHousesRepository $officeBuildingHousesRepository
+        OfficeBuildingHousesRepository $officeBuildingHousesRepository,
+        HousesService $housesService
     )
     {
-        $result = $officeBuildingHousesRepository->addOfficeBuildingHouses($request);
+        $result = $officeBuildingHousesRepository->addOfficeBuildingHouses($request, $housesService);
         return $this->sendResponse($result, '写字楼房源添加成功');
     }
 }
