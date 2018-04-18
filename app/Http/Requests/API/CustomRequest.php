@@ -41,9 +41,9 @@ class CustomRequest extends FormRequest
                     'pay_commission' => 'numeric|max:9999999999',
                     'pay_commission_unit' => 'numeric|max:100',
                     'need_type' => 'numeric|max:100',
-                    'renting_style' => 'numeric|max:100',
-                    'office_building_type' => 'numeric|max:100',
-                    'shops_type' => 'numeric|max:100',
+                    'renting_style' => 'nullable|numeric|max:100',
+                    'office_building_type' => 'nullable|numeric|max:100',
+                    'shops_type' => 'nullable|numeric|max:100',
                     'acre_low' => 'numeric|max:99999999999',
                     'acre_high' => 'numeric|max:99999999999',
                     'room' => 'numeric|max:99999999999',
@@ -64,7 +64,8 @@ class CustomRequest extends FormRequest
                     'area_id' => 'numeric|max:99999999999',
 
                     'buildings' => 'array',
-                    'areas' => 'array'
+                    'areas' => 'array',
+                    'other' => 'array'
                 ];
         }
     }

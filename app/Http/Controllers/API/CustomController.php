@@ -49,4 +49,9 @@ class CustomController extends APIBaseController
         if (!$res) return $this->sendError('更新失败');
         return $this->sendResponse($res, '更新成功');
     }
+
+    public function show(Custom $custom)
+    {
+        return $this->sendResponse($custom, '获取成功');
+    }
 }
