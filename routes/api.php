@@ -33,18 +33,25 @@ Route::group(['namespace' => 'API'], function () {
             return '123';
         });
 
+
+        /*
+        |--------------------------------------------------------------------------
+        | 房源管理
+        |--------------------------------------------------------------------------
+        */
         // 住宅房源
         Route::resource('dwelling_houses', 'DwellingHousesController');
-
         // 商铺房源
         Route::resource('shops_houses', 'ShopsHousesController');
-
         // 写字楼房源
         Route::resource('office_building_houses', 'OfficeBuildingHousesController');
 
-        // 房源
-        Route::resource('houses', 'HousesController');
-
+        /*
+        |--------------------------------------------------------------------------
+        | 跟进
+        |--------------------------------------------------------------------------
+        */
+        Route::resource('tracks', 'TracksController');
 //    });
 
     /*
