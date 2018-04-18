@@ -107,6 +107,13 @@ Route::group(['namespace' => 'API'], function () {
     // 某区域下拉数据
     Route::get('/blocks_select', 'BlockController@blocksSelect');
 
+    /*
+    |--------------------------------------------------------------------------
+    | 客户管理
+    |--------------------------------------------------------------------------
+    */
+    Route::resource('/customs', 'CustomController');
+
     // 七牛token
     Route::resource('/qiniu', 'QiNiuController');
 });
