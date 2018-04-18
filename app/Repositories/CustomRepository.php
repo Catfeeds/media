@@ -29,7 +29,7 @@ class CustomRepository extends BaseRepository
                 'name' => $request->name,
                 'tel' => $request->tel,
                 'price_low' => $request->price_low,
-                'tel_high' => $request->tel_high,
+                'price_high' => $request->price_high,
                 'payment_type' => $request->payment_type,
                 'pay_commission' => $request->pay_commission,
                 'pay_commission_unit' => $request->pay_commission_unit,
