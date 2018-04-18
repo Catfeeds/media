@@ -16,6 +16,28 @@ class CustomRepository extends BaseRepository
         $this->model = $model;
     }
 
+    /**
+     * 说明：获取列表
+     *
+     * @param array $where
+     * @param null $perPage
+     * @return mixed
+     * @author jacklin
+     */
+    public function getList($where = [], $perPage = null)
+    {
+        return $this->model->where($where)->with('buildings')
+            ->orderBy('updated_at', 'desc')
+            ->paginate($perPage);
+    }
+
+    /**
+     * 说明：添加客户
+     *
+     * @param $request
+     * @return bool
+     * @author jacklin
+     */
     public function add($request)
     {
         \DB::beginTransaction();
@@ -75,6 +97,14 @@ class CustomRepository extends BaseRepository
         return $res;
     }
 
+    /**
+     * 说明：更新客户数据
+     *
+     * @param $custom
+     * @param $request
+     * @return bool
+     * @author jacklin
+     */
     public function updateData($custom, $request)
     {
         \DB::beginTransaction();
