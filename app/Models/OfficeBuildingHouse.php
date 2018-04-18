@@ -77,7 +77,7 @@ class OfficeBuildingHouse extends BaseModel
      * @use office_building_type_cn
      * @author 罗振
      */
-    public function getOfficeBuildingTypeCnAttributes()
+    public function getOfficeBuildingTypeCnAttribute()
     {
         if ($this->office_building_type == 1) {
             return '纯写字楼';
@@ -203,7 +203,7 @@ class OfficeBuildingHouse extends BaseModel
      * @use split_cn
      * @author 罗振
      */
-    public function getSplitCnAttributes()
+    public function getSplitCnAttribute()
     {
         if ($this->split == 1) {
             return '可拆分';
@@ -236,12 +236,10 @@ class OfficeBuildingHouse extends BaseModel
         } elseif ($this->orientation == 6) {
             return '西南';
         } elseif ($this->orientation == 7) {
-            return '西北';
+            return '东北';
         } elseif ($this->orientation == 8) {
-            return '南北';
-        } elseif ($this->orientation == 9) {
-            return '东西';
-        } else {
+            return '西北';
+        }  else {
             return '朝向异常';
         }
     }
@@ -383,7 +381,7 @@ class OfficeBuildingHouse extends BaseModel
      * @use shortest_lease_cn
      * @author 罗振
      */
-    public function getShortestLeaseCnAttributes()
+    public function getShortestLeaseCnAttribute()
     {
         if ($this->shortest_lease == 1) {
             return '1-2年';
@@ -405,7 +403,7 @@ class OfficeBuildingHouse extends BaseModel
      * @use rent_free_cn
      * @author 罗振
      */
-    public function getRentFreeCnAttributes()
+    public function getRentFreeCnAttribute()
     {
         if ($this->rent_free == 1) {
             return '1个月';

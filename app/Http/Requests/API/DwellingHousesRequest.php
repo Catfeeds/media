@@ -77,28 +77,28 @@ class DwellingHousesRequest extends FormRequest
                     'constru_acreage' => 'required|max:32',
                     'floor' => 'nullable|numeric|max:99999999999',
 
-                    'renovation' => 'nullable|between:1,2,3,4,5',
-                    'orientation' => 'nullable|between:1,2,3,4,5,6,7,8,9',
+                    'renovation' => 'nullable|integer|between:1,5',
+                    'orientation' => 'nullable|integer|between:1,9',
                     'house_description' => 'max:255',
                     // 租赁信息
                     'rent_price' => 'required|numeric|max:9999999999',
-                    'rent_price_unit' => 'nullable|between:1,2',
-                    'payment_type' => 'required|between:1,2,3,4,5,6,7,8,9,10,11,12',
-                    'renting_style' => 'nullable|between:1,2',
+                    'rent_price_unit' => 'nullable|integer|between:1,2',
+                    'payment_type' => 'required|integer|between:1,12',
+                    'renting_style' => 'nullable|integer|between:1,2',
                     'check_in_time' => 'date',
-                    'shortest_lease' => 'nullable|between:1,2,3,4,5',
+                    'shortest_lease' => 'nullable|integer|between:1,5',
                     // 业务信息
                     'public_private' => 'required|between:1,2',
-                    'house_busine_state' => 'required|between:1,2,3,4,5,6',
+                    'house_busine_state' => 'required|integer|between:1,6',
                     'pay_commission' => 'nullable|numeric|max:9999999999',
-                    'pay_commission_unit' => 'nullable|between:1,2',
-                    'prospecting' => 'nullable|between:1,2',
-                    'source' => 'nullable|between:1,2,3,4,5,6,7',
+                    'pay_commission_unit' => 'nullable|integer|between:1,2',
+                    'prospecting' => 'nullable|integer|between:1,2',
+                    'source' => 'nullable|integer|between:1,7',
                     'house_key' => 'max:32',
-                    'see_house_time' => 'nullable|between:1,2,3',
+                    'see_house_time' => 'nullable|integer|between:1,3',
                     'see_house_time_remark' => 'max:32',
-                    'certificate_type' => 'nullable|between:1,2,3,4,5,6,7',
-                    'house_proxy_type' => 'nullable|between:1,2',
+                    'certificate_type' => 'nullable|integer|between:1,7',
+                    'house_proxy_type' => 'nullable|integer|between:1,2',
                     'guardian' => 'max:32',
                     // 房源照片
                     'house_type_img' => 'max:1024',
@@ -108,7 +108,49 @@ class DwellingHousesRequest extends FormRequest
             case 'PATCH':
                 {
                     return [
+                        // 核心信息
+                        'building_blocks_id' => [
+                            'integer',
+//                        Rule::in(
+//                            BuildingBlock::all()->pluck('id')->toArray()
+//                        )
+                        ],
+                        'house_number' => 'max:32',
+                        // 房子信息
+                        'room' => 'nullable|numeric|max:9999999999',
+                        'hall' => 'nullable|numeric|max:9999999999',
+                        'toilet' => 'nullable|numeric|max:9999999999',
+                        'kitchen' => 'nullable|numeric|max:9999999999',
+                        'balcony' => 'nullable|numeric|max:9999999999',
+                        'constru_acreage' => 'max:32',
+                        'floor' => 'nullable|numeric|max:99999999999',
 
+                        'renovation' => 'nullable|integer|between:1,5',
+                        'orientation' => 'nullable|integer|between:1,9',
+                        'house_description' => 'max:255',
+                        // 租赁信息
+                        'rent_price' => 'nullable|numeric|max:9999999999',
+                        'rent_price_unit' => 'nullable|integer|between:1,2',
+                        'payment_type' => 'nullable|integer|between:1,12',
+                        'renting_style' => 'nullable|integer|between:1,2',
+                        'check_in_time' => 'date',
+                        'shortest_lease' => 'nullable|integer|between:1,5',
+                        // 业务信息
+                        'public_private' => 'nullable|integer|between:1,2',
+                        'house_busine_state' => 'nullable|integer|between:1,6',
+                        'pay_commission' => 'nullable|numeric|max:9999999999',
+                        'pay_commission_unit' => 'nullable|integer|between:1,2',
+                        'prospecting' => 'nullable|integer|between:1,2',
+                        'source' => 'nullable|integer|between:1,7',
+                        'house_key' => 'max:32',
+                        'see_house_time' => 'nullable|integer|between:1,3',
+                        'see_house_time_remark' => 'max:32',
+                        'certificate_type' => 'nullable|integer|between:1,7',
+                        'house_proxy_type' => 'nullable|integer|between:1,2',
+                        'guardian' => 'max:32',
+                        // 房源照片
+                        'house_type_img' => 'max:1024',
+                        'indoor_img' => 'max:1024',
                     ];
                 }
             case 'GET':

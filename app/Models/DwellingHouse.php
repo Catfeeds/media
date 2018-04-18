@@ -207,12 +207,10 @@ class DwellingHouse extends BaseModel
         } elseif ($this->orientation == 6) {
             return '西南';
         } elseif ($this->orientation == 7) {
-            return '西北';
+            return '东北';
         } elseif ($this->orientation == 8) {
-            return '南北';
-        } elseif ($this->orientation == 9) {
-            return '东西';
-        } else {
+            return '西北';
+        }  else {
             return '朝向异常';
         }
     }

@@ -22,7 +22,7 @@ class OfficeBuildingHousesRepository extends BaseRepository
      */
     public function officeBuildingHousesList()
     {
-        return $this->model->all();
+        return $this->model->paginate(10);
     }
 
     /**
@@ -93,6 +93,62 @@ class OfficeBuildingHousesRepository extends BaseRepository
             \Log::error('写字楼房源添加失败：' . $e->getFile() . $e->getLine() . $e->getMessage());
             return false;
         }
+    }
 
+    /**
+     * 说明: 修改写字楼
+     *
+     * @param $officeBuildingHouse
+     * @param $request
+     * @return bool
+     * @author 罗振
+     */
+    public function updateOfficeBuildingHouses($officeBuildingHouse, $request)
+    {
+        $officeBuildingHouse->building_blocks_id = $request->building_blocks_id;
+        $officeBuildingHouse->house_number = $request->house_number;
+        $officeBuildingHouse->owner_info = $request->owner_info;
+        $officeBuildingHouse->room = $request->room;
+        $officeBuildingHouse->hall = $request->hall;
+        $officeBuildingHouse->constru_acreage = $request->constru_acreage;
+        $officeBuildingHouse->split = $request->split;
+        $officeBuildingHouse->min_acreage = $request->min_acreage;
+        $officeBuildingHouse->floor = $request->floor;
+        $officeBuildingHouse->station_number = $request->station_number;
+        $officeBuildingHouse->office_building_type = $request->office_building_type;
+        $officeBuildingHouse->register_company = $request->register_company;
+        $officeBuildingHouse->open_bill = $request->open_bill;
+        $officeBuildingHouse->renovation = $request->renovation;
+        $officeBuildingHouse->orientation = $request->orientation;
+        $officeBuildingHouse->support_facilities = $request->support_facilities;
+        $officeBuildingHouse->house_description = $request->house_description;
+        $officeBuildingHouse->rent_price = $request->rent_price;
+        $officeBuildingHouse->rent_price_unit = $request->rent_price_unit;
+        $officeBuildingHouse->payment_type = $request->payment_type;
+        $officeBuildingHouse->check_in_time = $request->check_in_time;
+        $officeBuildingHouse->shortest_lease = $request->shortest_lease;
+        $officeBuildingHouse->rent_free = $request->rent_free;
+        $officeBuildingHouse->increasing_situation = $request->increasing_situation;
+        $officeBuildingHouse->cost_detail = $request->cost_detail;
+        $officeBuildingHouse->public_private = $request->public_private;
+        $officeBuildingHouse->house_busine_state = $request->house_busine_state;
+        $officeBuildingHouse->pay_commission = $request->pay_commission;
+        $officeBuildingHouse->pay_commission_unit = $request->pay_commission_unit;
+        $officeBuildingHouse->prospecting = $request->prospecting;
+        $officeBuildingHouse->source = $request->source;
+        $officeBuildingHouse->house_key = $request->house_key;
+        $officeBuildingHouse->see_house_time = $request->see_house_time;
+        $officeBuildingHouse->see_house_time_remark = $request->see_house_time_remark;
+        $officeBuildingHouse->certificate_type = $request->certificate_type;
+        $officeBuildingHouse->house_proxy_type = $request->house_proxy_type;
+        $officeBuildingHouse->guardian = $request->guardian;
+        $officeBuildingHouse->house_type_img = $request->house_type_img;
+        $officeBuildingHouse->indoor_img = $request->indoor_img;
+
+        if (!$officeBuildingHouse->save()) {
+            return false;
+        }
+
+        return true;
     }
 }

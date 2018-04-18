@@ -27,12 +27,12 @@ class CreateOfficeBuildingHousesTable extends Migration
             $table->tinyInteger('split')->default(1)->comment('可拆分 1: 是 2: 否');
             $table->string('min_acreage', 32)->nullable()->comment('最小面积');
             $table->integer('floor')->nullable()->comment('楼层');
-            $table->integer('station_number')->nullable()->comment('工位数量');
+            $table->string('station_number',32)->nullable()->comment('工位数量');
             $table->tinyInteger('office_building_type')->default(1)->comment('写字楼类型 1: 纯写字楼 2: 商住楼 3: 商业综合体楼 4: 酒店写字楼 5: 其他');
             $table->tinyInteger('register_company')->default(1)->comment('注册公司 1: 可以 2: 不可以');
             $table->tinyInteger('open_bill')->default(1)->comment('可开发票 1: 可以 2: 不可以');
             $table->tinyInteger('renovation')->nullable()->comment('装修: 1: 豪华装修 2: 精装修 3: 中装修 4: 间装修 5: 毛坯');
-            $table->string('orientation', 32)->nullable()->comment('朝向: 1: 东 2: 南 3: 西 4: 北 5: 东南 6: 西南 7: 西北 8: 南北 9: 东西');
+            $table->string('orientation', 32)->nullable()->comment('朝向: 1: 东 2: 南 3: 西 4: 北 5: 东南 6: 西南 7: 东北 8: 西北');
             $table->string('support_facilities', 1024)->nullable()->comment('配套设施');
             $table->string('house_description', 255)->nullable()->comment('房源描述');
             // 租赁信息

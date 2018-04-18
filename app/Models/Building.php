@@ -136,4 +136,7 @@ class Building extends BaseModel
     {
         return $this->street->area->city->name;
     }
+
+
+
 }
