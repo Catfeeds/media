@@ -232,7 +232,7 @@ class Custom extends BaseModel
      */
     public function getAreaLabelAttribute()
     {
-        return $this->area->name;
+        if (!empty($this->area)) return $this->area->name;
     }
 
     /**
