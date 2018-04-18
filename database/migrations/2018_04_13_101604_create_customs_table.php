@@ -51,7 +51,7 @@ class CreateCustomsTable extends Migration
             $table->tinyInteger('orientation')->default(1)->comment('朝向: 1: 东 2: 南 3: 西 4: 北 5: 东南 6: 西南 7: 东北 8: 西北');
 
             // 配套设置需求
-            $table->tinyInteger('subway')->comment('期望地铁')->nullable();
+            $table->string('subway', 128)->comment('期望地铁')->nullable();
             $table->integer('walk_to_subway')->comment('最近地铁站步行时间 N分钟')->nullable();
             $table->string('bus',128)->comment('公交线路')->nullable();
             $table->integer('walk_to_bus')->comment('最近公交站步行时间 N分钟')->nullable();
