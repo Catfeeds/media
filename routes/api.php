@@ -55,6 +55,8 @@ Route::group(['namespace' => 'API'], function () {
     Route::resource('/buildings', 'BuildingController');
     // 楼盘下拉
     Route::get('/buildings_select', 'BuildingController@buildingSelect');
+    // 某区下的所有楼楼盘
+    Route::get('/area_buildings', 'BuildingController@areaBuildings');
 
     /*
     |--------------------------------------------------------------------------

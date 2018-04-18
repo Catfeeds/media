@@ -142,4 +142,28 @@ class BuildingController extends APIBaseController
         }
         return $this->sendResponse($city_box, '获取成功');
     }
+
+    /**
+     * 说明：获取某个区下的所有楼盘的下拉数据
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @author jacklin
+     */
+    public function areaBuildings(Request $request)
+    {
+        $streetIds = Street::where('area_id', $request->area_id)->get()->pluck('id')->toArray();
+        $buildings = Building::whereIn('street_id', $streetIds)->get();
+
+        $res = array();
+        foreach ($buildings as $building) {
+            $item = array(
+                'value' => $building->id,
+                'label' => $building->name
+            );
+            $res[] = $item;
+        }
+
+        return $this->sendResponse($res, '获取成功');
+    }
 }

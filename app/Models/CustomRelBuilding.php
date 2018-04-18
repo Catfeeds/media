@@ -3,7 +3,9 @@
 namespace App\Models;
 
 
-class CustomRelBuilding extends BaseModel
+use Illuminate\Database\Eloquent\Model;
+
+class CustomRelBuilding extends Model
 {
-    //
+    protected $guarded = [];
 }
