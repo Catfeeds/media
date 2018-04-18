@@ -55,6 +55,8 @@ Route::group(['namespace' => 'API'], function () {
     Route::resource('/buildings', 'BuildingController');
     // 楼盘下拉
     Route::get('/buildings_select', 'BuildingController@buildingSelect');
+    // 某区下的所有楼楼盘
+    Route::get('/area_buildings', 'BuildingController@areaBuildings');
 
     /*
     |--------------------------------------------------------------------------
@@ -106,6 +108,13 @@ Route::group(['namespace' => 'API'], function () {
     Route::get('/city_blocks', 'BlockController@cityBlocks');
     // 某区域下拉数据
     Route::get('/blocks_select', 'BlockController@blocksSelect');
+
+    /*
+    |--------------------------------------------------------------------------
+    | 客户管理
+    |--------------------------------------------------------------------------
+    */
+    Route::resource('/customs', 'CustomController');
 
     // 七牛token
     Route::resource('/qiniu', 'QiNiuController');
