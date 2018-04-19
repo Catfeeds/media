@@ -126,42 +126,6 @@ Route::group(['namespace' => 'API'], function () {
     // 七牛token
     Route::resource('/qiniu', 'QiNiuController');
 
-    Route::get('/test', function(){
-        $data = array();
-        $str = '四座五单元';
-
-        // 如果有 '期' 赋值
-//        $qi = mb_strstr($str, '期', true);
-//        if (!empty($qi)) $data['phase'] = $qi;
-//        $str = mb_strstr($str, '期', false);
-        $arr = explode('期', $str);
-        dd($arr);
-        // 如果有 '栋'
-        $dong = mb_strstr($str, '栋', true);
-        if (!empty($dong)) {
-            $data['name'] = $dong;
-            $data['name_unit'] = '栋';
-            $str = explode('栋', $str)[1];
-        } else {
-            $dong = mb_strstr($str, '座', true);
-            $data['name'] = $dong;
-            $data['name_unit'] = '座';
-            $str = explode('座', $str)[1];
-        }
-
-        $danyuan = mb_strstr($str, '单元', true);
-        if (!empty($danyuan)) {
-            $data['unit'] = $danyuan;
-            $data['unit_unit'] = '单元';
-        } else {
-            $danyuan = mb_strstr($str, '门', true);
-            if (!empty($danyuan)) {
-                $data['unit'] = $danyuan;
-                $data['unit_unit'] = '门';
-            }
-        }
-        dd($data);
-    });
 });
 
 

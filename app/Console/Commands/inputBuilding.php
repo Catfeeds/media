@@ -58,6 +58,7 @@ class inputBuilding extends Command
             $block = $v->栋座位置;
             $arr = explode('期', $block);
             if (count($arr) == 2) {
+                if($arr[1]=='') $arr[1] = '独';
                 \DB::table('tmp_houses')->where('id', $v->id)->update([
                     '栋座位置' => $arr[1],
                     '楼盘字典' => $v->楼盘字典 . $this->numberUnit($arr[0]) . '期'
