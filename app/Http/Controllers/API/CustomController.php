@@ -50,7 +50,7 @@ class CustomController extends APIBaseController
     }
 
     /**
-     * 说明：
+     * 说明：客户信息
      *
      * @param Custom $custom
      * @return \Illuminate\Http\JsonResponse

@@ -14,4 +14,44 @@ class Area extends BaseModel
     {
         return $this->belongsTo('App\Models\City');
     }
+
+    /**
+     * 说明: 所属街道
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @author 罗振
+     */
+    public function street()
+    {
+        return $this->hasMany(Street::class, 'area_id', 'id');
+    }
+
+    /**
+     * 说明: 街道下所属楼盘
+     *
+     * @return mixed
+     * @author 罗振
+     */
+    public function getBuildingAttribute()
+    {
+        return $this->street->map(function ($item) {
+            return Building::where('street_id', $item->id)->get();
+        });
+    }
+
+    /**
+     * 说明: 楼盘下所属楼座
+     *
+     * @return mixed
+     * @author 罗振
+     */
+    public function getBuildingBlockAttribute()
+    {
+        return $this->building->flatten()->map(function ($val) {
+            if (!empty($val->count())) {
+                return BuildingBlock::where('building_id', $val->id)->get();
+            }
+        });
+    }
+
 }

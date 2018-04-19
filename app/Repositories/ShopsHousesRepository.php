@@ -22,7 +22,7 @@ class ShopsHousesRepository extends BaseRepository
      */
     public function shopsHousesList()
     {
-        return $this->model->all();
+        return $this->model->paginate(10);
     }
 
     /**
@@ -94,6 +94,64 @@ class ShopsHousesRepository extends BaseRepository
             \Log::error('商铺房源添加失败：' . $e->getFile() . $e->getLine() . $e->getMessage());
             return false;
         }
+    }
+
+    /**
+     * 说明: 商铺房源修改
+     *
+     * @param $shopsHouse
+     * @param $request
+     * @return bool
+     * @author 罗振
+     */
+    public function updateShopsHouses($shopsHouse, $request)
+    {
+        $shopsHouse->building_blocks_id = $request->building_blocks_id;
+        $shopsHouse->house_number = $request->house_number;
+        $shopsHouse->owner_info = $request->owner_info;
+        $shopsHouse->constru_acreage = $request->constru_acreage;
+        $shopsHouse->split = $request->split;
+        $shopsHouse->min_acreage = $request->min_acreage;
+        $shopsHouse->floor = $request->floor;
+        $shopsHouse->frontage = $request->frontage;
+        $shopsHouse->shops_type = $request->shops_type;
+        $shopsHouse->renovation = $request->renovation;
+        $shopsHouse->orientation = $request->orientation;
+        $shopsHouse->wide = $request->wide;
+        $shopsHouse->depth = $request->depth;
+        $shopsHouse->storey = $request->storey;
+        $shopsHouse->support_facilities = $request->support_facilities;
+        $shopsHouse->fit_management = $request->fit_management;
+        $shopsHouse->house_description = $request->house_description;
+        $shopsHouse->rent_price = $request->rent_price;
+        $shopsHouse->rent_price_unit = $request->rent_price_unit;
+        $shopsHouse->payment_type = $request->payment_type;
+        $shopsHouse->check_in_time = $request->check_in_time;
+        $shopsHouse->shortest_lease = $request->shortest_lease;
+        $shopsHouse->rent_free = $request->rent_free;
+        $shopsHouse->increasing_situation = $request->increasing_situation;
+        $shopsHouse->transfer_fee = $request->transfer_fee;
+        $shopsHouse->cost_detail = $request->cost_detail;
+        $shopsHouse->public_private = $request->public_private;
+        $shopsHouse->house_busine_state = $request->house_busine_state;
+        $shopsHouse->pay_commission = $request->pay_commission;
+        $shopsHouse->pay_commission_unit = $request->pay_commission_unit;
+        $shopsHouse->prospecting = $request->prospecting;
+        $shopsHouse->source = $request->source;
+        $shopsHouse->house_key = $request->house_key;
+        $shopsHouse->see_house_time = $request->see_house_time;
+        $shopsHouse->see_house_time_remark = $request->see_house_time_remark;
+        $shopsHouse->certificate_type = $request->certificate_type;
+        $shopsHouse->house_proxy_type = $request->house_proxy_type;
+        $shopsHouse->guardian = $request->guardian;
+        $shopsHouse->house_type_img = $request->house_type_img;
+        $shopsHouse->indoor_img = $request->indoor_img;
+
+        if (!$shopsHouse->save()) {
+            return false;
+        }
+
+        return true;
     }
 
 }
