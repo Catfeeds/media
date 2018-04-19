@@ -131,6 +131,13 @@ Route::group(['namespace' => 'API'], function () {
 
     // 七牛token
     Route::resource('/qiniu', 'QiNiuController');
+
+      /*
+    |--------------------------------------------------------------------------
+    | 门店管理
+    |--------------------------------------------------------------------------
+    */
+    Route::resource('storefronts', 'StorefrontsController');
 });
 
 
