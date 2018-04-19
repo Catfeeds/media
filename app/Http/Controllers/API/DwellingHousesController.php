@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Requests\API\DwellingHousesRequest;
+use App\Models\BuildingBlock;
 use App\Models\DwellingHouse;
 use App\Repositories\DwellingHousesRepository;
 use App\Services\HousesService;
@@ -22,7 +23,7 @@ class DwellingHousesController extends APIBaseController
         DwellingHousesRepository $dwellingHousesRepository
     )
     {
-        $result = $dwellingHousesRepository->dwellingHousesList($request);
+        $result = $dwellingHousesRepository->dwellingHousesList($request->per_page??null, $request->condition);
         return $this->sendResponse($result,'住宅写字楼列表获取成功');
     }
 
@@ -41,8 +42,11 @@ class DwellingHousesController extends APIBaseController
         HousesService $housesService
     )
     {
-        $result = $dwellingHousesRepository->addDwellingHouses($request, $housesService);
-        return $this->sendResponse($result,'添加成功');
+        if (!empty($result = $dwellingHousesRepository->addDwellingHouses($request, $housesService))) {
+            return $this->sendResponse($result,'添加成功');
+        }
+
+        return $this->sendError('添加失败');
     }
 
     /**
@@ -56,6 +60,14 @@ class DwellingHousesController extends APIBaseController
         DwellingHouse $dwellingHouse
     )
     {
+
+//        dd(BuildingBlock::find(2)->building->street);
+
+
+
+
+
+
         return $this->sendResponse($dwellingHouse, '修改之前原始数据返回成功!');
     }
 
