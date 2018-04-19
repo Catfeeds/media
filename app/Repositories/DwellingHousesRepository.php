@@ -8,7 +8,6 @@ use App\Services\HousesService;
 
 class DwellingHousesRepository extends BaseRepository
 {
-
     private $model;
 
     public function __construct(DwellingHouse $model)
@@ -19,42 +18,41 @@ class DwellingHousesRepository extends BaseRepository
     /**
      * 说明: 住宅房源列表
      *
-     * @param $data
+     * @param $request
      * @return mixed
      * @author 罗振
      */
     public function dwellingHousesList(
-        $data
+        $request
     )
     {
         $result = $this->model;
 
-        if (!empty($data['region']) && !empty($data['build'])) {
+        if (!empty($request->region) && !empty($request->build)) {
             // 楼盘包含的楼座
-            $blockId = array_column(Building::find($data['build'])->buildingBlocks->toArray(), 'id');
+            $blockId = array_column(Building::find($request->build)->buildingBlocks->toArray(), 'id');
             $result = $result->whereIn('building_blocks_id', $blockId);
-        } elseif (!empty($data['region']) && empty($data['build'])) {
+        } elseif (!empty($request->region) && empty($request->build)) {
             // 区域包含的楼座
-            $blockId = array_column(Area::find($data['region'])->building_block->flatten()->toArray(), 'id');
+            $blockId = array_column(Area::find($request->region)->building_block->flatten()->toArray(), 'id');
             $result = $result->whereIn('building_blocks_id', $blockId);
         }
 
         // 最小面积
-        if (!empty($data['min_acreage'])) {
-            $result = $result->where('constru_acreage', '>', $data['min_acreage']);
+        if (!empty($request->min_acreage)) {
+            $result = $result->where('constru_acreage', ">", (int)$request->min_acreage);
         }
-
         // 最大面积
-        if (!empty($data['max_acreage'])) {
-            $result = $result->where('constru_acreage', '<', $data['max_acreage']);
+        if (!empty($request->max_acreage)) {
+            $result = $result->where('constru_acreage', "<", (int)$request->max_acreage);
         }
 
         // 排序
-        if (!empty($data['order'])) {
-            $result = $result->orderBy('updated_at', $data['order']);
+        if (!empty($request->order)) {
+            $result = $result->orderBy('updated_at', $request->order);
         }
 
-        return $result->paginate($data['number']??10);
+        return $result->paginate($request->number??10);
     }
 
     /**
@@ -86,7 +84,6 @@ class DwellingHousesRepository extends BaseRepository
                 'support_facilities' => $request->support_facilities,
                 'house_description' => $request->house_description,
                 'rent_price' => $request->rent_price,
-                'rent_price_unit' => $request->rent_price_unit,
                 'payment_type' => $request->payment_type,
                 'renting_style' => $request->renting_style,
                 'check_in_time' => $request->check_in_time,
@@ -150,7 +147,6 @@ class DwellingHousesRepository extends BaseRepository
         $dwellingHouse->support_facilities = $request->support_facilities;
         $dwellingHouse->house_description = $request->house_description;
         $dwellingHouse->rent_price = $request->rent_price;
-        $dwellingHouse->rent_price_unit = $request->rent_price_unit;
         $dwellingHouse->payment_type = $request->payment_type;
         $dwellingHouse->renting_style = $request->renting_style;
         $dwellingHouse->check_in_time = $request->check_in_time;

@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Models\Area;
 use App\Models\Building;
 use App\Models\BuildingBlock;
 use Illuminate\Support\Facades\DB;
@@ -17,17 +18,26 @@ class BuildingRepository extends Building
     }
 
     /**
-     * 说明：楼盘列表
+     * 说明: 楼盘列表
      *
-     * @param array $where
-     * @param null $perPage
-     * @author jacklin
+     * @param $request
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     * @author 罗振
      */
-    public function getList($where = array(), $perPage = null)
+    public function getList(
+        $request
+    )
     {
-        return $this->model->where($where)->with('buildingBlocks')
-            ->orderBy('updated_at', 'desc')
-            ->paginate($perPage);
+        $result = $this->model->with('buildingBlocks')->orderBy('updated_at', 'desc');
+
+        if (!empty($request->building_id)) {
+            $result = $result->where(['id' => $request->building_id]);
+        } elseif(!empty($request->area_id)) {
+            $buildingId = array_column(Area::find($request->area_id)->building->flatten()->toArray(), 'id');
+            $result = $result->whereIn('id', $buildingId);
+        }
+
+        return $result->paginate($request->per_page??10);
     }
 
     /**

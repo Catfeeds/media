@@ -67,6 +67,9 @@ Route::group(['namespace' => 'API'], function () {
     Route::get('/buildings_select', 'BuildingController@buildingSelect');
     // 某区下的所有楼楼盘
     Route::get('/area_buildings', 'BuildingController@areaBuildings');
+    // 楼盘搜索下拉
+    Route::get('/building_search_select', 'BuildingController@buildingSearchSelect');
+
 
     /*
     |--------------------------------------------------------------------------

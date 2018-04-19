@@ -6,6 +6,6 @@ namespace App\Models;
 class Track extends BaseModel
 {
     protected $casts = [
-        'tracks_time' => 'date',
+        'tracks_time' => 'array',
     ];
 }

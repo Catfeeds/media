@@ -6,7 +6,6 @@ use App\Models\DwellingHouse;
 use App\Repositories\DwellingHousesRepository;
 use App\Services\HousesService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class DwellingHousesController extends APIBaseController
 {
@@ -23,7 +22,7 @@ class DwellingHousesController extends APIBaseController
         DwellingHousesRepository $dwellingHousesRepository
     )
     {
-        $result = $dwellingHousesRepository->dwellingHousesList($request->all());
+        $result = $dwellingHousesRepository->dwellingHousesList($request);
         return $this->sendResponse($result,'住宅写字楼列表获取成功');
     }
 
@@ -44,6 +43,20 @@ class DwellingHousesController extends APIBaseController
     {
         $result = $dwellingHousesRepository->addDwellingHouses($request, $housesService);
         return $this->sendResponse($result,'添加成功');
+    }
+
+    /**
+     * 说明: 住宅房源修改之前数据
+     *
+     * @param DwellingHouse $dwellingHouse
+     * @return \Illuminate\Http\JsonResponse
+     * @author 罗振
+     */
+    public function edit(
+        DwellingHouse $dwellingHouse
+    )
+    {
+        return $this->sendResponse($dwellingHouse, '修改之前原始数据返回成功!');
     }
 
     /**

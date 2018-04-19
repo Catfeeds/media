@@ -14,7 +14,7 @@ class DwellingHouse extends BaseModel
         'check_in_time' => 'date',
     ];
 
-    protected $appends = ['renovation_cn', 'house_type', 'renting_style_cn', 'public_private_cn', 'house_busine_state_cn', 'payment_type_cn', 'orientation_cn', 'prospecting_cn', 'see_house_time_cn', 'house_proxy_type_cn', 'source_cn', 'certificate_type_cn', 'rent_price_unit_cn', 'pay_commission_unit_cn'];
+    protected $appends = ['renovation_cn', 'house_type', 'renting_style_cn', 'public_private_cn', 'house_busine_state_cn', 'payment_type_cn', 'orientation_cn', 'prospecting_cn', 'see_house_time_cn', 'house_proxy_type_cn', 'source_cn', 'certificate_type_cn', 'pay_commission_unit_cn'];
 
     /**
      * 说明: 关联楼座
@@ -324,24 +324,6 @@ class DwellingHouse extends BaseModel
             return '回迁合同';
         } else {
             return '证件类型异常';
-        }
-    }
-
-    /**
-     * 说明: 租金单位转换
-     *
-     * @return string
-     * @use rent_price_unit_cn
-     * @author 罗振
-     */
-    public function getRentPriceUnitCnAttribute()
-    {
-        if ($this->rent_price_unit == 1) {
-            return '%';
-        } elseif ($this->rent_price_unit == 2) {
-            return '元';
-        } else {
-            return '租金单位异常';
         }
     }
 

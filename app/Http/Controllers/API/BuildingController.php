@@ -22,9 +22,12 @@ class BuildingController extends APIBaseController
      * @return \Illuminate\Http\JsonResponse
      * @author jacklin
      */
-    public function index(Request $request, BuildingRepository $repository)
+    public function index(
+        Request $request,
+        BuildingRepository $repository
+    )
     {
-        $res = $repository->getList([], $request->per_page);
+        $res = $repository->getList($request);
         return $this->sendResponse($res, '获取成功');
     }
 
@@ -166,4 +169,47 @@ class BuildingController extends APIBaseController
 
         return $this->sendResponse($res, '获取成功');
     }
+
+    /**
+     * 说明: 楼盘搜索下拉
+     *
+     * @return \Illuminate\Http\JsonResponse
+     * @author 罗振
+     */
+    public function buildingSearchSelect()
+    {
+        $cities = City::all();
+        $city_box = array();
+        foreach ($cities as $index => $city) {
+            // 循环城市 将区域的
+            $areas = Area::where('city_id', $city->id)->get();
+            $area_box = array();
+            foreach ($areas as $area) {
+                // 获取楼盘
+                $buildings = $area->Building->flatten();
+                $building_box = array();
+                foreach ($buildings as $building) {
+                    $item = array(
+                        'value' => $building->id,
+                        'label' => $building->name,
+                    );
+                    $building_box[] = $item;
+                }
+                $item = array(
+                    'value' => $area->id,
+                    'label' => $area->name,
+                    'children' => $building_box
+                );
+                $area_box[] = $item;
+            }
+            $city_item = array(
+                'value' => $city->name,
+                'label' => $city->name,
+                'children' => $area_box
+            );
+            $city_box[] = $city_item; // 所有城市
+        }
+        return $this->sendResponse($city_box, '获取成功');
+    }
+    
 }

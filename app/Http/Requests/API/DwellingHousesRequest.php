@@ -82,7 +82,6 @@ class DwellingHousesRequest extends FormRequest
                     'house_description' => 'max:255',
                     // 租赁信息
                     'rent_price' => 'required|numeric|max:9999999999',
-                    'rent_price_unit' => 'nullable|integer|between:1,2',
                     'payment_type' => 'required|integer|between:1,12',
                     'renting_style' => 'nullable|integer|between:1,2',
                     'check_in_time' => 'date',
@@ -130,7 +129,6 @@ class DwellingHousesRequest extends FormRequest
                         'house_description' => 'max:255',
                         // 租赁信息
                         'rent_price' => 'nullable|numeric|max:9999999999',
-                        'rent_price_unit' => 'nullable|integer|between:1,2',
                         'payment_type' => 'nullable|integer|between:1,12',
                         'renting_style' => 'nullable|integer|between:1,2',
                         'check_in_time' => 'date',

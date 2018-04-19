@@ -19,7 +19,7 @@ class CreateTracksTable extends Migration
             $table->integer('custom_id')->nullable()->comment('客户id');
             $table->integer('tracks_mode')->default(1)->comment('跟进方式');
             $table->integer('conscientious_id')->nullable()->comment('负责人');
-            $table->date('tracks_time')->nullable()->comment('跟进时间');
+            $table->string('tracks_time',32)->nullable()->comment('跟进时间');
             $table->text('content')->nullable()->comment('跟进内容');
             $table->timestamps();
             $table->softDeletes();
