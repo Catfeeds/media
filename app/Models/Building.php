@@ -76,6 +76,7 @@ class Building extends BaseModel
      */
     public function getStreetLabelAttribute()
     {
+        if (empty($street)) return;
         $street = $this->street;
         $area = $street->area;
         return $area->name . $street->name;
@@ -112,6 +113,7 @@ class Building extends BaseModel
      */
     public function getAreaIdAttribute()
     {
+        if (empty($this->street)) return;
         return $this->street->area->id;
     }
 
@@ -123,6 +125,7 @@ class Building extends BaseModel
      */
     public function getCityIdAttribute()
     {
+        if (empty($this->street)) return;
         return $this->street->area->city->id;
     }
 
@@ -134,6 +137,7 @@ class Building extends BaseModel
      */
     public function getCityLabelAttribute()
     {
+        if (empty($this->street)) return;
         return $this->street->area->city->name;
     }
 
