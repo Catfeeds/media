@@ -69,8 +69,26 @@ class inputBuilding extends Command
         dump($count);
     }
 
+    public function addBuilding()
+    {
+        $res = \DB::table('tmp_houses')->get();
+        foreach ($res as $v) {
+            $buildingName = $v->楼盘字典;
+            $building = Building::where('name', $buildingName)->first();
+            if (!empty($building)) continue;
+            if ($v->type === '住宅') $type = 1;
+            if ($v->type === '写字楼') $type = 2;
+            if ($v->type === '商铺') $type = 3;
+            Building::create([
+                'name' =>  $v->楼盘字典,
+                'type' => $type
+            ]);
+        }
+    }
+
     public function addBlocks()
     {
+        // 如果不是正常格式 直接跳过
         $res = \DB::table('tmp_houses')->get();
         foreach ($res as $v) {
             $buildingName = $v->楼盘字典;
