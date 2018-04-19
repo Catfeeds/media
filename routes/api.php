@@ -22,6 +22,10 @@ header('Access-Control-Allow-Methods:*');
 
 //Route::group(['domain' => 'admin.agency.com', 'namespace' => 'API'], function () {
 Route::group(['namespace' => 'API'], function () {
+
+    // 登录
+    Route::resource('login', 'LoginController');
+
     /*
     |--------------------------------------------------------------------------
     | 登录后的操作
@@ -29,9 +33,8 @@ Route::group(['namespace' => 'API'], function () {
     */
 //    Route::group(['middleware' => ''], function () {
 
-        Route::get('/test', function () {
-            return '123';
-        });
+        // 退出登录
+        Route::post('/logout', 'LoginController@logout');
 
 
         /*

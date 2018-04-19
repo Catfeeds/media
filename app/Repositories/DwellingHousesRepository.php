@@ -49,7 +49,12 @@ class DwellingHousesRepository extends BaseRepository
             $result = $result->where('constru_acreage', '<', $data['max_acreage']);
         }
 
-        return $result->paginate(10);
+        // 排序
+        if (!empty($data['order'])) {
+            $result = $result->orderBy('updated_at', $data['order']);
+        }
+
+        return $result->paginate($data['number']??10);
     }
 
     /**
