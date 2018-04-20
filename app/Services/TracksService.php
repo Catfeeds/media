@@ -18,7 +18,15 @@ class TracksService
     {
         // 客户
         $relevantData['customs'] = Custom::all()->pluck('name', 'id')->toArray();
+        Custom::all()->map(function($custom) {
+            return [
+                'label' => $custom->group_name,
+                'value' => $item->id,
+            ];
+        });
 
+
+        dd($relevantData);
         $relevantData['user'] = User::all()->pluck('name', 'id')->toArray();
 
 //        $relevantData['track'] = Auth::guard('api')->user()->name;
