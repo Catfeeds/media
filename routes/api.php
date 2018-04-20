@@ -139,6 +139,12 @@ Route::group(['namespace' => 'API'], function () {
     */
     Route::resource('storefronts', 'StorefrontsController');
 
+    /*
+    |--------------------------------------------------------------------------
+    | 权限管理
+    |--------------------------------------------------------------------------
+    */
+    Route::resource('permissions', 'PermissionsController');
 
 });
 

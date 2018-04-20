@@ -25,8 +25,8 @@ class StorefrontsController extends APIBaseController
 
     )
 	{
-        $res = $storefrontsRepository->getStorefrontsList($request);
-        return $this->sendResponse($res,'门店列表获取成功');
+	    $res = $storefrontsRepository->getStorefrontsList($request);
+	    return $this->sendResponse($res,'门店列表获取成功');
 	}
 
     /**
@@ -54,7 +54,7 @@ class StorefrontsController extends APIBaseController
      * @return \Illuminate\Http\JsonResponse
      * @author 刘坤涛
      */
-    public function edit(Storefront $storefront)
+        public function edit(Storefront $storefront)
     {
         return $this->sendResponse($storefront,'门店修改之前原始数据');
     }
