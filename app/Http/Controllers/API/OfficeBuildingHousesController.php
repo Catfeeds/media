@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Requests\API\OfficeBuildingHousesRequest;
+use App\Models\BuildingBlock;
 use App\Models\OfficeBuildingHouse;
 use App\Repositories\OfficeBuildingHousesRepository;
 use App\Services\HousesService;
@@ -22,7 +23,7 @@ class OfficeBuildingHousesController extends APIBaseController
         OfficeBuildingHousesRepository $officeBuildingHousesRepository
     )
     {
-        $result = $officeBuildingHousesRepository->officeBuildingHousesList($request->per_page??null, $request->condition);
+        $result = $officeBuildingHousesRepository->officeBuildingHousesList($request->per_page??null, json_decode($request->condition));
         return $this->sendResponse($result, '写字楼房源列表获取成功');
     }
 
@@ -53,9 +54,12 @@ class OfficeBuildingHousesController extends APIBaseController
      * @author 罗振
      */
     public function edit(
-        OfficeBuildingHouse $officeBuildingHouse
+        OfficeBuildingHouse $officeBuildingHouse,
+        HousesService $housesService
     )
     {
+        $officeBuildingHouse->allId = $housesService->adoptBuildingBlockGetCity($officeBuildingHouse->building_blocks_id);
+
         return $this->sendResponse($officeBuildingHouse, '写字楼修改之前原始数据!');
     }
 

@@ -22,7 +22,7 @@ class ShopsHousesController extends APIBaseController
         ShopsHousesRepository $shopsHousesRepository
     )
     {
-        $result = $shopsHousesRepository->shopsHousesList($request->per_page??null, $request->condition);
+        $result = $shopsHousesRepository->shopsHousesList($request->per_page??null, json_decode($request->condition));
         return $this->sendResponse($result,'商铺房源列表获取成功!');
     }
 
@@ -49,13 +49,17 @@ class ShopsHousesController extends APIBaseController
      * 说明: 商铺房源修改之前原始数据
      *
      * @param ShopsHouse $shopsHouse
+     * @param HousesService $housesService
      * @return \Illuminate\Http\JsonResponse
      * @author 罗振
      */
     public function edit(
-        ShopsHouse $shopsHouse
+        ShopsHouse $shopsHouse,
+        HousesService $housesService
     )
     {
+        $shopsHouse->allId = $housesService->adoptBuildingBlockGetCity($shopsHouse->building_blocks_id);
+
         return $this->sendResponse($shopsHouse, '商铺房源修改之前原始数据!');
     }
 
