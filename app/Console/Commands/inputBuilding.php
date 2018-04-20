@@ -4,7 +4,10 @@ namespace App\Console\Commands;
 
 use App\Models\Building;
 use App\Models\BuildingBlock;
+use App\Models\DwellingHouse;
 use App\Models\House;
+use App\Models\OfficeBuildingHouse;
+use App\Models\ShopsHouse;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 
@@ -41,7 +44,10 @@ class inputBuilding extends Command
      */
     public function handle()
     {
-        $this->updateQi();
+//        $this->updateQi();
+//        $this->addBuilding();
+//        $this->addBlocks();
+        $this->addHouse();
     }
 
     /**
@@ -76,9 +82,9 @@ class inputBuilding extends Command
             $buildingName = $v->楼盘字典;
             $building = Building::where('name', $buildingName)->first();
             if (!empty($building)) continue;
-            if ($v->type === '住宅') $type = 1;
-            if ($v->type === '写字楼') $type = 2;
-            if ($v->type === '商铺') $type = 3;
+            if ($v->用途 === '住宅') $type = 1;
+            if ($v->用途 === '写字楼') $type = 2;
+            if ($v->用途 === '商铺') $type = 3;
             Building::create([
                 'name' =>  $v->楼盘字典,
                 'type' => $type
@@ -88,8 +94,8 @@ class inputBuilding extends Command
 
     public function addBlocks()
     {
-        // 如果不是正常格式 直接跳过
         $res = \DB::table('tmp_houses')->get();
+        $count = 0;
         foreach ($res as $v) {
             $buildingName = $v->楼盘字典;
             $building = Building::where('name', $buildingName)->first();
@@ -97,46 +103,62 @@ class inputBuilding extends Command
             // 处理楼栋
             $block = $v->栋座位置;
             $block = $this->blockForm($block);
+            if (empty($block['name'])) continue;
+
             $res = BuildingBlock::where('name', $block['name'])->first();
             if (empty($res)) {
                 // 如果没有这个楼栋 楼栋
                 $res = BuildingBlock::create([
                     'building_id' => $building->id,
-                    'name' => $block['name']
+                    'name' => $block['name'],
+                    'name_unit' => $block['name_unit'],
+                    'unit' => $block['unit']??null,
+                    'unit_unit' => $block['unit_unit']??null
                 ]);
+                $count++;
             }
         }
+        dump($count);
     }
 
     public function addHouse()
     {
         $res = \DB::table('tmp_houses')->get();
+        $count = 0;
         foreach ($res as $v) {
-            $buildingName = $v->楼盘字典;
-            $building = Building::where('name', $buildingName)->first();
-            // 10栋1单元 独栋 2期4栋 B座
-            // 处理楼栋
-            $block = $v->栋座位置;
-            $block = $this->blockForm($block);
-            $block = BuildingBlock::where('name', $block['name'])->first();
 
-//            if ($v->用途 === '住宅') {
-//                House::create([
-//                    'building_blocks_id' => $block->id,
-//                    'house_number' => $v->房号,
-//                ]);
-//            } elseif($v->用途 === '写字楼') {
-//                House::create([
-//                    'building_blocks_id' => $block->id,
-//                    'house_number' => $v->房号,
-//                ]);
-//            } elseif($v->用途 === '商铺') {
-//                House::create([
-//                    'building_blocks_id' => $block->id,
-//                    'house_number' => $v->房号,
-//                ]);
-//            }
+            $block = $this->blockForm($v->栋座位置);
+            if (empty($block['name'])) {
+                dump($v->栋座位置);
+                continue;
+            };
+
+            $res = BuildingBlock::where('name', $block['name'])->first();
+
+            if (!empty($res)) {
+                if ($v->用途 === '住宅') {
+                    DwellingHouse::create([
+                        'building_blocks_id' => $res->id,
+                        'house_number' => $v->房号,
+                        'floor' => $v->楼层
+                    ]);
+                } elseif($v->用途 === '写字楼') {
+                    OfficeBuildingHouse::create([
+                        'building_blocks_id' => $res->id,
+                        'house_number' => $v->房号,
+                        'floor' => $v->楼层
+                    ]);
+                } elseif($v->用途 === '商铺') {
+                    ShopsHouse::create([
+                        'building_blocks_id' => $res->id,
+                        'house_number' => $v->房号,
+                        'floor' => $v->楼层
+                    ]);
+                }
+            }
+            $count++;
         }
+        dump($count);
     }
 
     /**
@@ -155,9 +177,11 @@ class inputBuilding extends Command
             $data['name'] = $dong;
             $data['name_unit'] = '栋';
             $str = explode('栋', $str)[1];
-        } else {
-            $dong = mb_strstr($str, '座', true);
-            $data['name'] = $dong;
+        }
+
+        $zuo = mb_strstr($str, '座', true);
+        if (!empty($zuo)) {
+            $data['name'] = $zuo;
             $data['name_unit'] = '座';
             $str = explode('座', $str)[1];
         }
@@ -173,6 +197,7 @@ class inputBuilding extends Command
                 $data['unit_unit'] = '门';
             }
         }
+        if (empty($data)) return array('name' => '独', 'name_');
         return $data;
     }
 

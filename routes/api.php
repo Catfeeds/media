@@ -138,6 +138,41 @@ Route::group(['namespace' => 'API'], function () {
     |--------------------------------------------------------------------------
     */
     Route::resource('storefronts', 'StorefrontsController');
+
+    Route::get('/test', function(){
+        $str = '4栋';
+
+        $data = array();
+        // 如果有 '栋'
+        $dong = mb_strstr($str, '栋', true);
+        if (!empty($dong)) {
+            $data['name'] = $dong;
+            $data['name_unit'] = '栋';
+            $str = explode('栋', $str)[1];
+        }
+
+        $zuo = mb_strstr($str, '座', true);
+        if (!empty($zuo)) {
+            $data['name'] = $zuo;
+            $data['name_unit'] = '座';
+            $str = explode('座', $str)[1];
+        }
+
+        $danyuan = mb_strstr($str, '单元', true);
+        if (!empty($danyuan)) {
+            $data['unit'] = $danyuan;
+            $data['unit_unit'] = '单元';
+        } else {
+            $danyuan = mb_strstr($str, '门', true);
+            if (!empty($danyuan)) {
+                $data['unit'] = $danyuan;
+                $data['unit_unit'] = '门';
+            }
+        }
+
+        return $data;
+    });
+
 });
 
 
