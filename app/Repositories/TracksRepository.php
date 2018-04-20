@@ -23,7 +23,8 @@ class TracksRepository extends BaseRepository
     public function addTracks($request)
     {
         return $this->model->create([
-            'house_id' => $request->house_id,
+            'house_id' => $request->house_id??null,
+            'user_info' => $request->user_info??null,
             'custom_id' => $request->custom_id,
             'tracks_mode' => $request->tracks_mode,
             'conscientious_id' => $request->conscientious_id,

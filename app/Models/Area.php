@@ -16,14 +16,14 @@ class Area extends BaseModel
     }
 
     /**
-     * 说明: 所属街道
+     * 说明: 所属楼盘
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      * @author 罗振
      */
-    public function street()
+    public function building()
     {
-        return $this->hasMany(Street::class, 'area_id', 'id');
+        return $this->hasMany(Building::class, 'area_id', 'id');
     }
 
     /**
@@ -32,26 +32,26 @@ class Area extends BaseModel
      * @return mixed
      * @author 罗振
      */
-    public function getBuildingAttribute()
+    public function getBuildingBlockAttribute()
     {
-        return $this->street->map(function ($item) {
-            return Building::where('street_id', $item->id)->get();
+        return $this->building->map(function ($item) {
+            return BuildingBlock::where('building_id', $item->id)->get();
         });
     }
 
-    /**
-     * 说明: 楼盘下所属楼座
-     *
-     * @return mixed
-     * @author 罗振
-     */
-    public function getBuildingBlockAttribute()
-    {
-        return $this->building->flatten()->map(function ($val) {
-            if (!empty($val->count())) {
-                return BuildingBlock::where('building_id', $val->id)->get();
-            }
-        });
-    }
+//    /**
+//     * 说明: 楼盘下所属楼座
+//     *
+//     * @return mixed
+//     * @author 罗振
+//     */
+//    public function getBuildingBlockAttribute()
+//    {
+//        return $this->building->flatten()->map(function ($val) {
+//            if (!empty($val->count())) {
+//                return BuildingBlock::where('building_id', $val->id)->get();
+//            }
+//        });
+//    }
 
 }
