@@ -33,7 +33,7 @@ class BuildingBlock extends BaseModel
     public function getInfoAttribute()
     {
         $building = $this->building;
-
+        if (empty($building)) return ;
         $blocksInfo = $this->name . $this->name_unit . $this->unit . $this->unit_unit;
         return $building->name . $blocksInfo;
     }
