@@ -13,7 +13,7 @@ class StorefrontsRepository extends BaseRepository
         $this->model = $model;
     }
 
-    public function addStroefronts($request)
+    public function addStorefronts($request)
     {
     	return $this->model->create([
     		   'storefront_name' => $request->storefront_name,
@@ -27,6 +27,7 @@ class StorefrontsRepository extends BaseRepository
     {
         return $this->model->paginate(10);
     }
+
 
     public function updateStorefronts($storefront, $request)
     {

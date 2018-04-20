@@ -43,7 +43,7 @@ class StorefrontsController extends APIBaseController
     	StorefrontsRepository $storefrontsRepository
     )
     {
-    	$res = $storefrontsRepository->addStroefronts($request);
+    	$res = $storefrontsRepository->addStorefronts($request);
         return $this->sendResponse($res, '门店信息添加成功');
     }
 
