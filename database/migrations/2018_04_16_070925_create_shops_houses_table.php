@@ -28,7 +28,7 @@ class CreateShopsHousesTable extends Migration
             $table->tinyInteger('frontage')->default(1)->comment('是否临街 1: 是 2: 否');
             $table->tinyInteger('shops_type')->default(1)->comment('商铺类型 1: 住宅底商 2: 商业街商铺 3: 酒店商底 4: 社区商铺 5: 沿街商铺 6: 写字底商 7: 购物中心 8: 旅游商铺 9: 其他');
             $table->tinyInteger('renovation')->nullable()->comment('装修: 1: 豪华装修 2: 精装修 3: 中装修 4: 间装修 5: 毛坯');
-            $table->string('orientation', 32)->nullable()->comment('朝向: 1: 东 2: 南 3: 西 4: 北 5: 东南 6: 西南 7: 东北 8: 西北');
+            $table->string('orientation', 32)->nullable()->comment('朝向: 1: 东 2: 西 3: 南 4: 北 5: 东南 6: 东北 7: 西南 8: 西北 9: 东西 10: 南北');
             $table->string('wide', 32)->nullable()->comment('面宽');
             $table->string('depth', 32)->nullable()->comment('进深');
             $table->string('storey', 32)->nullable()->comment('层高');

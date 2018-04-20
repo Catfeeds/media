@@ -17,9 +17,7 @@ class CreatePermissionTables extends Migration
 
         Schema::create($tableNames['permissions'], function (Blueprint $table) {
             $table->increments('id')->comment('权限id');
-//            $table->string('name');
-//            $table->string('guard_name');
-
+            $table->string('guard_name');
             $table->string('name_en', 32)->nullable()->comment('权限英文名');
             $table->string('name_cn', 128)->nullable()->comment('权限中文名');
             $table->integer('group_id')->nullable()->comment('所属组id');
@@ -29,9 +27,7 @@ class CreatePermissionTables extends Migration
 
         Schema::create($tableNames['roles'], function (Blueprint $table) {
             $table->increments('id')->comment('角色id');
-//            $table->string('name');
-//            $table->string('guard_name');
-
+            $table->string('guard_name');
             $table->string('name_cn')->comment('角色中文名');
             $table->string('name_en')->comment('角色英文名');
 
@@ -88,6 +84,7 @@ class CreatePermissionTables extends Migration
             $table->char('group_name', 32)->comment('组名');
             $table->integer('id')->unsigned()->comment('权限组id');
             $table->integer('parent_id')->unsigned()->nullable()->comment('父级权限组id');
+            $table->char('guard_name', 128)->comment('所属认证平台');
             $table->primary(['id']);
         });
     }
