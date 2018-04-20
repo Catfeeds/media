@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Models\BuildingBlock;
+
 class HousesService
 {
     /**
@@ -23,9 +25,16 @@ class HousesService
         }
     }
 
-    public function adoptBuildingBlockGetCity()
+    public function adoptBuildingBlockGetCity($BuildingBlockId)
     {
+        $temp = BuildingBlock::find(2);
+        // 拼接商圈获取城市数据
+        $arr[] = $BuildingBlockId;
+        $arr[] = $temp->building->id;
+        $arr[] = $temp->building->street->id;
+        $arr[] = $temp->building->street->area->id;
+        $arr[] = $temp->building->street->area->city->id;
 
-
+        return $arr;
     }
 }

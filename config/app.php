@@ -179,6 +179,8 @@ return [
 
         // Passport
         Laravel\Passport\PassportServiceProvider::class,
+        // 权限
+        Spatie\Permission\PermissionServiceProvider::class,
     ],
 
     /*

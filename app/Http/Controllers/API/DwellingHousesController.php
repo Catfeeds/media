@@ -23,7 +23,7 @@ class DwellingHousesController extends APIBaseController
         DwellingHousesRepository $dwellingHousesRepository
     )
     {
-        $result = $dwellingHousesRepository->dwellingHousesList($request->per_page??null, $request->condition);
+        $result = $dwellingHousesRepository->dwellingHousesList($request->per_page??null, json_decode($request->condition));
         return $this->sendResponse($result,'住宅写字楼列表获取成功');
     }
 
@@ -53,20 +53,16 @@ class DwellingHousesController extends APIBaseController
      * 说明: 住宅房源修改之前数据
      *
      * @param DwellingHouse $dwellingHouse
+     * @param HousesService $housesService
      * @return \Illuminate\Http\JsonResponse
      * @author 罗振
      */
     public function edit(
-        DwellingHouse $dwellingHouse
+        DwellingHouse $dwellingHouse,
+        HousesService $housesService
     )
     {
-
-//        dd(BuildingBlock::find(2)->building->street);
-
-
-
-
-
+        $dwellingHouse->allId = $housesService->adoptBuildingBlockGetCity($dwellingHouse->building_block_id);
 
         return $this->sendResponse($dwellingHouse, '修改之前原始数据返回成功!');
     }

@@ -33,11 +33,11 @@ class DwellingHousesRepository extends BaseRepository
         if (!empty($condition->region) && !empty($condition->build)) {
             // 楼盘包含的楼座
             $blockId = array_column(Building::find($condition->build)->buildingBlocks->toArray(), 'id');
-            $result = $result->whereIn('building_blocks_id', $blockId);
+            $result = $result->whereIn('building_block_id', $blockId);
         } elseif (!empty($condition->region) && empty($condition->build)) {
             // 区域包含的楼座
             $blockId = array_column(Area::find($condition->region)->building_block->flatten()->toArray(), 'id');
-            $result = $result->whereIn('building_blocks_id', $blockId);
+            $result = $result->whereIn('building_block_id', $blockId);
         }
 
         // 最小面积
@@ -70,7 +70,7 @@ class DwellingHousesRepository extends BaseRepository
         \DB::beginTransaction();
         try {
             $house = $this->model->create([
-                'building_blocks_id' => $request->building_blocks_id,
+                'building_block_id' => $request->building_block_id,
                 'house_number' => $request->house_number,
                 'owner_info' => $request->owner_info,
                 'room' => $request->room,
@@ -133,7 +133,7 @@ class DwellingHousesRepository extends BaseRepository
      */
     public function updateDwellingHouses($dwellingHouse, $request)
     {
-        $dwellingHouse->building_blocks_id = $request->building_blocks_id;
+        $dwellingHouse->building_block_id = $request->building_block_id;
         $dwellingHouse->house_number = $request->house_number;
         $dwellingHouse->owner_info = $request->owner_info;
         $dwellingHouse->room = $request->room;

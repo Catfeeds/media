@@ -1,6 +1,7 @@
 <?php
 namespace App\Repositories;
 
+use App\Models\Area;
 use App\Models\Building;
 use App\Models\OfficeBuildingHouse;
 use App\Services\HousesService;
@@ -18,41 +19,43 @@ class OfficeBuildingHousesRepository extends BaseRepository
     /**
      * 说明: 写字楼房源列表
      *
-     * @param $request
+     * @param $per_page
+     * @param $condition
      * @return mixed
      * @author 罗振
      */
     public function officeBuildingHousesList(
-        $request
+        $per_page,
+        $condition
     )
     {
         $result = $this->model;
 
-        if (!empty($request->region) && !empty($request->build)) {
+        if (!empty($condition->region) && !empty($condition->build)) {
             // 楼盘包含的楼座
-            $blockId = array_column(Building::find($request->build)->buildingBlocks->toArray(), 'id');
-            $result = $result->whereIn('building_blocks_id', $blockId);
-        } elseif (!empty($request->region) && empty($request->build)) {
+            $blockId = array_column(Building::find($condition->build)->buildingBlocks->toArray(), 'id');
+            $result = $result->whereIn('building_block_id', $blockId);
+        } elseif (!empty($condition->region) && empty($condition->build)) {
             // 区域包含的楼座
-            $blockId = array_column(Area::find($request->region)->building_block->flatten()->toArray(), 'id');
-            $result = $result->whereIn('building_blocks_id', $blockId);
+            $blockId = array_column(Area::find($condition->region)->building_block->flatten()->toArray(), 'id');
+            $result = $result->whereIn('building_block_id', $blockId);
         }
 
         // 最小面积
-        if (!empty($request->min_acreage)) {
-            $result = $result->where('constru_acreage', ">", (int)$request->min_acreage);
+        if (!empty($condition->min_acreage)) {
+            $result = $result->where('constru_acreage', ">", (int)$condition->min_acreage);
         }
         // 最大面积
-        if (!empty($request->max_acreage)) {
-            $result = $result->where('constru_acreage', "<", (int)$request->max_acreage);
+        if (!empty($condition->max_acreage)) {
+            $result = $result->where('constru_acreage', "<", (int)$condition->max_acreage);
         }
 
         // 排序
-        if (!empty($request->order)) {
-            $result = $result->orderBy('updated_at', $request->order);
+        if (!empty($condition->order)) {
+            $result = $result->orderBy('updated_at', $condition->order);
         }
 
-        return $result->paginate($request->number??10);
+        return $result->paginate($per_page??10);
     }
 
     /**
@@ -68,7 +71,7 @@ class OfficeBuildingHousesRepository extends BaseRepository
         \DB::beginTransaction();
         try {
             $house =  $this->model->create([
-                'building_blocks_id' => $request->building_blocks_id,
+                'building_block_id' => $request->building_block_id,
                 'house_number' => $request->house_number,
                 'owner_info' => $request->owner_info,
                 'room' => $request->room,
@@ -135,7 +138,7 @@ class OfficeBuildingHousesRepository extends BaseRepository
      */
     public function updateOfficeBuildingHouses($officeBuildingHouse, $request)
     {
-        $officeBuildingHouse->building_blocks_id = $request->building_blocks_id;
+        $officeBuildingHouse->building_block_id = $request->building_block_id;
         $officeBuildingHouse->house_number = $request->house_number;
         $officeBuildingHouse->owner_info = $request->owner_info;
         $officeBuildingHouse->room = $request->room;

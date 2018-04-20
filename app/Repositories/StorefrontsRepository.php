@@ -5,7 +5,6 @@ use App\Models\Storefront;
 
 class StorefrontsRepository extends BaseRepository
 {
-
     private $model;
 
     public function __construct(Storefront $model)

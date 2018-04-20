@@ -20,24 +20,26 @@ class BuildingRepository extends Building
     /**
      * 说明: 楼盘列表
      *
-     * @param $request
+     * @param $per_page
+     * @param $condition
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      * @author 罗振
      */
     public function getList(
-        $request
+        $per_page,
+        $condition
     )
     {
         $result = $this->model->with('buildingBlocks')->orderBy('updated_at', 'desc');
 
-        if (!empty($request->building_id)) {
-            $result = $result->where(['id' => $request->building_id]);
-        } elseif(!empty($request->area_id)) {
-            $buildingId = array_column(Area::find($request->area_id)->building->flatten()->toArray(), 'id');
+        if (!empty($condition->building_id)) {
+            $result = $result->where(['id' => $condition->building_id]);
+        } elseif(!empty($condition->area_id)) {
+            $buildingId = array_column(Area::find($condition->area_id)->building->flatten()->toArray(), 'id');
             $result = $result->whereIn('id', $buildingId);
         }
 
-        return $result->paginate($request->per_page??10);
+        return $result->paginate($per_page??10);
     }
 
     /**
