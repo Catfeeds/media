@@ -36,8 +36,8 @@ class PermissionsRepository extends BaseRepository
     public function addPermissions($request)
     {
         return $this->model->create([
-            'name_en' => $request->name_en,
-            'name_cn' => $request->name_cn,
+            'name' => $request->name,
+            'label' => $request->label,
             'group_id' => $request->group_id
         ]);
     }
@@ -52,8 +52,8 @@ class PermissionsRepository extends BaseRepository
      */
     public function updatePermissions($permission, $request)
     {
-        $permission->name_en = $request->name_en;
-        $permission->name_cn = $request->name_cn;
+        $permission->name = $request->name;
+        $permission->label = $request->label;
         $permission->group_id = $request->group_id;
 
         if (!$permission->save()) {

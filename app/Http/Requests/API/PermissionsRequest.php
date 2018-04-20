@@ -30,13 +30,13 @@ class PermissionsRequest extends FormRequest
         switch ($this->method()) {
             case 'POST':
                 return [
-                    'name_en' => 'required|max:32',
-                    'name_cn' => 'required|max:128',
+                    'name' => 'required|max:255',
+                    'label' => 'required|max:128',
                     'group_id' => [
                         'required',
                         'integer',
 //                            Rule::in(
-//                                PermissionGroup::all()->pluck('id')->toarray()
+//                                PermissionGroup::all()->pluck('id')->toArray()
 //                            )
                     ],
                 ];
@@ -46,13 +46,13 @@ class PermissionsRequest extends FormRequest
                 ];
             case 'PATCH':
                 return [
-                    'name_en' => 'required|max:32',
-                    'name_cn' => 'required|max:128',
+                    'name' => 'required|max:255',
+                    'label' => 'required|max:128',
                     'group_id' => [
                         'required',
                         'integer',
 //                            Rule::in(
-//                                PermissionGroup::all()->pluck('id')->toarray()
+//                                PermissionGroup::all()->pluck('id')->toArray()
 //                            )
                     ],
                 ];
