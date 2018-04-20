@@ -34,7 +34,7 @@ class BuildingRequest extends FormRequest
                 'type' => 'required|numeric|max:100',
 
                 'street_id' => 'required:numeric',
-                'block_id' => 'numeric',
+                'block_id' => 'nullable|numeric',
                 'address' => 'required|max:128',
 
                 'developer' => 'nullable|max:128',

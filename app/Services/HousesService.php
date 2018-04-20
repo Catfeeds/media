@@ -22,4 +22,10 @@ class HousesService
             return $initials.date('Ymd', time()).$houseId;
         }
     }
+
+    public function adoptBuildingBlockGetCity()
+    {
+
+
+    }
 }

@@ -76,7 +76,7 @@ class StorefrontsController extends APIBaseController
     )
     {
         $res = $storefrontsRepository->updateStorefronts($storefront, $request);
-            return $this->sendResponse($res,'更新成功');
+        return $this->sendResponse($res,'更新成功');
     }
 
     /**
