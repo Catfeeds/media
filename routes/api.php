@@ -138,6 +138,8 @@ Route::group(['namespace' => 'API'], function () {
     |--------------------------------------------------------------------------
     */
     Route::resource('storefronts', 'StorefrontsController');
+
+
 });
 
 
