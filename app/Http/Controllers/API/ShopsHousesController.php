@@ -58,7 +58,7 @@ class ShopsHousesController extends APIBaseController
         HousesService $housesService
     )
     {
-        $shopsHouse->allId = $housesService->adoptBuildingBlockGetCity($shopsHouse->building_blocks_id);
+        $shopsHouse->allId = $housesService->adoptBuildingBlockGetCity($shopsHouse->building_block_id);
 
         return $this->sendResponse($shopsHouse, '商铺房源修改之前原始数据!');
     }

@@ -27,7 +27,7 @@ class BuildingController extends APIBaseController
         BuildingRepository $repository
     )
     {
-        $res = $repository->getList($request);
+        $res = $repository->getList($request->per_page, json_decode($request->condition));
         return $this->sendResponse($res, '获取成功');
     }
 

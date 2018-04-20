@@ -58,7 +58,7 @@ class OfficeBuildingHousesController extends APIBaseController
         HousesService $housesService
     )
     {
-        $officeBuildingHouse->allId = $housesService->adoptBuildingBlockGetCity($officeBuildingHouse->building_blocks_id);
+        $officeBuildingHouse->allId = $housesService->adoptBuildingBlockGetCity($officeBuildingHouse->building_block_id);
 
         return $this->sendResponse($officeBuildingHouse, '写字楼修改之前原始数据!');
     }

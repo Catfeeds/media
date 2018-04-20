@@ -17,9 +17,9 @@ class CreateOfficeBuildingHousesTable extends Migration
             // 核心信息
             $table->increments('id');
             $table->string('house_identifier', 32)->nullable()->comment('房源编号: 住宅房源以大写X开头+年月日+3个数字');
-            $table->integer('building_blocks_id')->nullable()->comment('楼座id');
+            $table->integer('building_block_id')->nullable()->comment('楼座id');
             $table->string('house_number', 32)->nullable()->comment('房号');
-            $table->string('owner_info', 1024)->nullable()->comment('业主联系方式:json');
+            $table->json('owner_info')->nullable()->comment('业主联系方式:json');
             // 房子信息
             $table->tinyInteger('room')->nullable()->comment('N室');
             $table->tinyInteger('hall')->nullable()->comment('N厅');
@@ -33,7 +33,7 @@ class CreateOfficeBuildingHousesTable extends Migration
             $table->tinyInteger('open_bill')->default(1)->comment('可开发票 1: 可以 2: 不可以');
             $table->tinyInteger('renovation')->nullable()->comment('装修: 1: 豪华装修 2: 精装修 3: 中装修 4: 间装修 5: 毛坯');
             $table->string('orientation', 32)->nullable()->comment('朝向: 1: 东 2: 南 3: 西 4: 北 5: 东南 6: 西南 7: 东北 8: 西北');
-            $table->string('support_facilities', 1024)->nullable()->comment('配套设施');
+            $table->json('support_facilities')->nullable()->comment('配套设施');
             $table->string('house_description', 255)->nullable()->comment('房源描述');
             // 租赁信息
             $table->decimal('rent_price', 10, 2)->nullable()->comment('租金');
@@ -43,7 +43,7 @@ class CreateOfficeBuildingHousesTable extends Migration
             $table->tinyInteger('shortest_lease')->default(1)->comment('最短租期: 1: 1-2年 2: 2-3年 3: 3-4年 4: 5年以上');
             $table->tinyInteger('rent_free')->default(1)->comment('免租期: 1: 1个月 2: 2个月 3: 3个月 4: 4个月 5: 5个月 6: 6个月 7: 7个月 8: 8个月 9: 9个月 10: 10个月 11: 面谈');
             $table->string('increasing_situation', 32)->nullable()->comment('递增情况');
-            $table->string('cost_detail', 1024)->nullable()->comment('费用明细:json');
+            $table->json('cost_detail')->nullable()->comment('费用明细:json');
             // 业务信息
             $table->tinyInteger('public_private')->default(1)->comment('公私盘 1: 店间公盘 2: 店内公盘 3: 私盘');
 
@@ -59,8 +59,8 @@ class CreateOfficeBuildingHousesTable extends Migration
             $table->tinyInteger('house_proxy_type')->default(1)->comment('房源状态: 1: 独家 2: 委托');
             $table->string('guardian', 32)->nullable()->comment('维护人');
             // 房源照片
-            $table->string('house_type_img', 1024)->nullable()->comment('户型图:json');
-            $table->string('indoor_img', 1024)->nullable()->comment('室内图:json');
+            $table->json('house_type_img')->nullable()->comment('户型图:json');
+            $table->json('indoor_img')->nullable()->comment('室内图:json');
 
             $table->softDeletes();
             $table->timestamps();

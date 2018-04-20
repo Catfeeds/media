@@ -59,7 +59,7 @@ class DwellingHousesRequest extends FormRequest
             case 'POST':
                 return [
                     // 核心信息
-                    'building_blocks_id' => [
+                    'building_block_id' => [
                         'required',
                         'integer',
 //                        Rule::in(
@@ -111,7 +111,7 @@ class DwellingHousesRequest extends FormRequest
                 {
                     return [
                         // 核心信息
-                        'building_blocks_id' => [
+                        'building_block_id' => [
                             'integer',
 //                        Rule::in(
 //                            BuildingBlock::all()->pluck('id')->toArray()

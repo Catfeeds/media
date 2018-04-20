@@ -84,7 +84,7 @@ class CreatePermissionTables extends Migration
         });
 
         // 权限层级管理表
-        Schema::create('permission_group', function (Blueprint $table) {
+        Schema::create('permission_groups', function (Blueprint $table) {
             $table->char('group_name', 32)->comment('组名');
             $table->integer('id')->unsigned()->comment('权限组id');
             $table->integer('parent_id')->unsigned()->nullable()->comment('父级权限组id');
@@ -106,6 +106,6 @@ class CreatePermissionTables extends Migration
         Schema::drop($tableNames['model_has_permissions']);
         Schema::drop($tableNames['roles']);
         Schema::drop($tableNames['permissions']);
-        Schema::drop('permission_group');
+        Schema::drop('permission_groups');
     }
 }

@@ -62,7 +62,7 @@ class DwellingHousesController extends APIBaseController
         HousesService $housesService
     )
     {
-        $dwellingHouse->allId = $housesService->adoptBuildingBlockGetCity($dwellingHouse->building_blocks_id);
+        $dwellingHouse->allId = $housesService->adoptBuildingBlockGetCity($dwellingHouse->building_block_id);
 
         return $this->sendResponse($dwellingHouse, '修改之前原始数据返回成功!');
     }
