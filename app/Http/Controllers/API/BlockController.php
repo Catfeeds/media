@@ -48,7 +48,8 @@ class BlockController extends APIBaseController
     public function blocksSelect(Request $request)
     {
         $area_id = $request->area_id;
-        if (empty($area_id)) return $this->sendError(405, '参数错误');
+        if (empty($area_id)) return $this->sendError('参数错误');
+
         $blocks = Block::where('area_id', $area_id)->get();
         $blockBox = array();
         foreach ($blocks as $v) {
