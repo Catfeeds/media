@@ -38,20 +38,4 @@ class Area extends BaseModel
             return BuildingBlock::where('building_id', $item->id)->get();
         });
     }
-
-//    /**
-//     * 说明: 楼盘下所属楼座
-//     *
-//     * @return mixed
-//     * @author 罗振
-//     */
-//    public function getBuildingBlockAttribute()
-//    {
-//        return $this->building->flatten()->map(function ($val) {
-//            if (!empty($val->count())) {
-//                return BuildingBlock::where('building_id', $val->id)->get();
-//            }
-//        });
-//    }
-
 }

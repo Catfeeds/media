@@ -102,14 +102,6 @@ Route::group(['namespace' => 'API'], function () {
     Route::resource('/areas', 'AreaController');
     Route::get('/areas_select', 'AreaController@areasSelect');
 
-    /*
-    |--------------------------------------------------------------------------
-    | 街道管理
-    |--------------------------------------------------------------------------
-    */
-    Route::resource('/streets', 'StreetController');
-    // 街道三级下拉数据
-    Route::get('/streets_select', 'StreetController@streetsSelect');
 
     /*
     |--------------------------------------------------------------------------
@@ -138,8 +130,6 @@ Route::group(['namespace' => 'API'], function () {
     |--------------------------------------------------------------------------
     */
     Route::resource('storefronts', 'StorefrontsController');
-
-
 });
 
 

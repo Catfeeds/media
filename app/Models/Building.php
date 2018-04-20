@@ -12,7 +12,7 @@ class Building extends BaseModel
     ];
 
     protected $appends = [
-        'type_label', 'street_label', 'block_label', 'blocks_count', 'area_id', 'city_id', 'city_label'
+        'type_label', 'area_label', 'block_label', 'blocks_count', 'area_id', 'city_id', 'city_label'
     ];
 
     /**
@@ -43,9 +43,9 @@ class Building extends BaseModel
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      * @author jacklin
      */
-    public function street()
+    public function area()
     {
-        return $this->belongsTo('App\Models\Street');
+        return $this->belongsTo('App\Models\Area');
     }
 
     /**
@@ -74,12 +74,11 @@ class Building extends BaseModel
      * @return string
      * @author jacklin
      */
-    public function getStreetLabelAttribute()
+    public function getAreaLabelAttribute()
     {
-        if (empty($street)) return;
-        $street = $this->street;
-        $area = $street->area;
-        return $area->name . $street->name;
+        $area = $this->area;
+        if (empty($area)) return;
+        return $area->name;
     }
 
     /**
