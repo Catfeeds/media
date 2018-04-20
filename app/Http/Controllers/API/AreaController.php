@@ -63,7 +63,7 @@ class AreaController extends APIBaseController
                 $area_box[] = $item; // 城市下的区
             }
             $city_item = array(
-                'value' => $city->id,
+                'value' => $city->name,
                 'label' => $city->name,
                 'children' => $area_box,
             );

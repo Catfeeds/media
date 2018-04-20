@@ -12,7 +12,7 @@ class Building extends BaseModel
     ];
 
     protected $appends = [
-        'type_label', 'area_label', 'block_label', 'blocks_count', 'area_id', 'city_id', 'city_label'
+        'type_label', 'area_label', 'block_label', 'blocks_count', 'city_id', 'city_label'
     ];
 
     /**
@@ -105,18 +105,6 @@ class Building extends BaseModel
     }
 
     /**
-     * 说明：区id
-     *
-     * @return mixed
-     * @author jacklin
-     */
-    public function getAreaIdAttribute()
-    {
-        if (empty($this->street)) return;
-        return $this->street->area->id;
-    }
-
-    /**
      * 说明：城市id
      *
      * @return mixed
@@ -136,8 +124,7 @@ class Building extends BaseModel
      */
     public function getCityLabelAttribute()
     {
-        if (empty($this->street)) return;
-        return $this->street->area->city->name;
+        return $this->area->city->name;
     }
 
 
