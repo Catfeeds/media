@@ -33,7 +33,7 @@ class BuildingRequest extends FormRequest
                 'gps' => 'required',
                 'type' => 'required|numeric|max:100',
 
-                'street_id' => 'required:numeric',
+                'area_id' => 'required:numeric',
                 'block_id' => 'nullable|numeric',
                 'address' => 'required|max:128',
 

@@ -59,7 +59,7 @@ class BuildingRepository extends Building
                 'gps' => $request->gps,
 
                 'type' => $request->type,
-                'street_id' => $request->street_id,
+                'area_id' => $request->street_id,
                 'block_id' => $request->block_id,
                 'address' => $request->address,
 
@@ -112,7 +112,7 @@ class BuildingRepository extends Building
             'gps' => $request->gps,
 
             'type' => $request->type,
-            'street_id' => $request->street_id,
+            'area_id' => $request->street_id,
             'block_id' => $request->block_id,
             'address' => $request->address,
 
