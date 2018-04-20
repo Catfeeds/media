@@ -29,10 +29,6 @@ class DwellingHousesRepository extends BaseRepository
     )
     {
         $result = $this->model;
-
-        dd(Area::find($condition->region)->building_block);
-
-
         if (!empty($condition->region) && !empty($condition->build)) {
             // 楼盘包含的楼座
             $blockId = array_column(Building::find($condition->build)->buildingBlocks->toArray(), 'id');
