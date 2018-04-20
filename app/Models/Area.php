@@ -16,17 +16,6 @@ class Area extends BaseModel
     }
 
     /**
-     * 说明: 所属街道
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     * @author 罗振
-     */
-    public function street()
-    {
-        return $this->hasMany(Street::class, 'area_id', 'id');
-    }
-
-    /**
      * 说明: 街道下所属楼盘
      *
      * @return mixed

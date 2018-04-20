@@ -42,7 +42,7 @@ class BuildingController extends APIBaseController
     public function store(BuildingRequest $request, BuildingRepository $repository)
     {
         // 楼栋信息不能为空
-        if (empty($request->building_block)) return $this->sendError( '楼栋信息不能为空');
+        if (empty($request->building_block)) return $this->sendError('楼栋信息不能为空');
         // 楼盘名不允许重复
         $res = Building::where(['name' => $request->name, 'street_id' => $request->street_id])->first();
         if (!empty($res)) return $this->sendError('楼盘名不能重复');
@@ -110,31 +110,21 @@ class BuildingController extends APIBaseController
             $areas = Area::where('city_id', $city->id)->get();
             $area_box = array();
             foreach ($areas as $area) {
-                $streets = Street::where('area_id', $area->id)->get();
-                $street_box = array();
-                foreach ($streets as $street) {
-                    $buildings = Building::where('street_id', $street->id)->get();
-                    $building_box = array();
-                    foreach ($buildings as $building) {
-                        $item = array(
-                            'value' => $building->id,
-                            'label' => $building->name,
-                        );
-                        $building_box[] = $item;
-                    }
+                $buildings = Building::where('area_id', $area->id)->get();
+                $building_box = array();
+                foreach ($buildings as $building) {
                     $item = array(
-                        'value' => $street->id,
-                        'label' => $street->name,
-                        'children' => $building_box
+                        'value' => $building->id,
+                        'label' => $building->name,
                     );
-                    $street_box[] = $item;
+                    $building_box[] = $item;
                 }
-                $item = array(
-                    'value' => $area->id,
-                    'label' => $area->name,
-                    'children' => $street_box
+                $area_item = array(
+                    'value' => $area->name,
+                    'label' => $area->id,
+                    'children' => $building_box
                 );
-                $area_box[] = $item; // 城市下的区
+                $area_box[] = $area_item;
             }
             $city_item = array(
                 'value' => $city->name,
@@ -211,5 +201,5 @@ class BuildingController extends APIBaseController
         }
         return $this->sendResponse($city_box, '获取成功');
     }
-    
+
 }
