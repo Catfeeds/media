@@ -34,6 +34,8 @@ class OfficeBuildingHouse extends BaseModel
      */
     public function getBuildingNameAttribute()
     {
+        if (empty($this->buildingBlock->building)) return ;
+
         return $this->buildingBlock->building->name;
     }
 

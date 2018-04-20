@@ -27,7 +27,8 @@ class HousesService
 
     public function adoptBuildingBlockGetCity($BuildingBlockId)
     {
-        $temp = BuildingBlock::find(2);
+        $temp = BuildingBlock::find($BuildingBlockId);
+
         // 拼接商圈获取城市数据
         $arr[] = $BuildingBlockId;
         $arr[] = $temp->building->id;
