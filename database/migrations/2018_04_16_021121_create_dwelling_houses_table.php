@@ -29,7 +29,7 @@ class CreateDwellingHousesTable extends Migration
             $table->string('constru_acreage', 32)->nullable()->comment('建筑面积');
             $table->integer('floor')->nullable()->comment('楼层');
             $table->tinyInteger('renovation')->nullable()->comment('装修: 1: 豪华装修 2: 精装修 3: 中装修 4: 间装修 5: 毛坯');
-            $table->tinyInteger('orientation')->default(1)->comment('朝向: 1: 东 2: 南 3: 西 4: 北 5: 东南 6: 西南 7: 东北 8: 西北');
+            $table->tinyInteger('orientation')->default(1)->comment('朝向: 1: 东 2: 西 3: 南 4: 北 5: 东南 6: 东北 7: 西南 8: 西北 9: 东西 10: 南北');
             $table->json('feature_lable')->nullable()->comment('特色标签:json');
             $table->json('support_facilities')->nullable()->comment('配套设施:json');
             $table->string('house_description', 255)->nullable()->comment('房源描述');

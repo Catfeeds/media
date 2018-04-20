@@ -32,7 +32,7 @@ class CreateOfficeBuildingHousesTable extends Migration
             $table->tinyInteger('register_company')->default(1)->comment('注册公司 1: 可以 2: 不可以');
             $table->tinyInteger('open_bill')->default(1)->comment('可开发票 1: 可以 2: 不可以');
             $table->tinyInteger('renovation')->nullable()->comment('装修: 1: 豪华装修 2: 精装修 3: 中装修 4: 间装修 5: 毛坯');
-            $table->string('orientation', 32)->nullable()->comment('朝向: 1: 东 2: 南 3: 西 4: 北 5: 东南 6: 西南 7: 东北 8: 西北');
+            $table->string('orientation', 32)->nullable()->comment('朝向: 1: 东 2: 西 3: 南 4: 北 5: 东南 6: 东北 7: 西南 8: 西北 9: 东西 10: 南北');
             $table->json('support_facilities')->nullable()->comment('配套设施');
             $table->string('house_description', 255)->nullable()->comment('房源描述');
             // 租赁信息
