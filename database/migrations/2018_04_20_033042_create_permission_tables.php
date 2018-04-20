@@ -39,19 +39,19 @@ class CreatePermissionTables extends Migration
         });
 
         Schema::create($tableNames['model_has_permissions'], function (Blueprint $table) use ($tableNames) {
-            $table->unsignedInteger('permission_id');
-            $table->morphs('model');
+            $table->integer('permission_id')->unsigned();
+            $table->string('model', 32);
 
             $table->foreign('permission_id')
                 ->references('id')
                 ->on($tableNames['permissions'])
                 ->onDelete('cascade');
 
-            $table->primary(['permission_id', 'model_id', 'model_type']);
+            $table->primary(['permission_id']);
         });
 
         Schema::create($tableNames['model_has_roles'], function (Blueprint $table) use ($tableNames) {
-            $table->unsignedInteger('role_id')->unsigned();
+            $table->integer('role_id')->unsigned()->comment('角色id');
             $table->integer('user_id')->nullable()->comment('用户id');
 
 //            $table->morphs('model');
@@ -61,12 +61,12 @@ class CreatePermissionTables extends Migration
                 ->on($tableNames['roles'])
                 ->onDelete('cascade');
 
-            $table->primary(['role_id', 'model_id', 'model_type']);
+            $table->primary(['role_id', 'user_id']);
         });
 
         Schema::create($tableNames['role_has_permissions'], function (Blueprint $table) use ($tableNames) {
-            $table->unsignedInteger('permission_id')->unsigned();
-            $table->unsignedInteger('role_id')->unsigned();
+            $table->integer('permission_id')->unsigned()->comment('权限id');
+            $table->integer('role_id')->unsigned()->comment('角色id');
 
             $table->foreign('permission_id')
                 ->references('id')
