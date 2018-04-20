@@ -22,7 +22,7 @@ class ShopsHousesController extends APIBaseController
         ShopsHousesRepository $shopsHousesRepository
     )
     {
-        $result = $shopsHousesRepository->shopsHousesList($request);
+        $result = $shopsHousesRepository->shopsHousesList($request->per_page??null, $request->condition);
         return $this->sendResponse($result,'商铺房源列表获取成功!');
     }
 

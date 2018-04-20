@@ -61,7 +61,7 @@ class DwellingHousesController extends APIBaseController
     )
     {
 
-//        dd(BuildingBlock::find(2)->building->street);
+        dd(BuildingBlock::find(2)->building->street);
 
 
 
