@@ -22,6 +22,10 @@ header('Access-Control-Allow-Methods:*');
 
 //Route::group(['domain' => 'admin.agency.com', 'namespace' => 'API'], function () {
 Route::group(['namespace' => 'API'], function () {
+
+    // 登录
+    Route::resource('login', 'LoginController');
+
     /*
     |--------------------------------------------------------------------------
     | 登录后的操作
@@ -29,9 +33,8 @@ Route::group(['namespace' => 'API'], function () {
     */
 //    Route::group(['middleware' => ''], function () {
 
-        Route::get('/test', function () {
-            return '123';
-        });
+        // 退出登录
+        Route::post('/logout', 'LoginController@logout');
 
 
         /*
@@ -64,6 +67,9 @@ Route::group(['namespace' => 'API'], function () {
     Route::get('/buildings_select', 'BuildingController@buildingSelect');
     // 某区下的所有楼楼盘
     Route::get('/area_buildings', 'BuildingController@areaBuildings');
+    // 楼盘搜索下拉
+    Route::get('/building_search_select', 'BuildingController@buildingSearchSelect');
+
 
     /*
     |--------------------------------------------------------------------------
@@ -126,6 +132,12 @@ Route::group(['namespace' => 'API'], function () {
     // 七牛token
     Route::resource('/qiniu', 'QiNiuController');
 
+    /*
+    |--------------------------------------------------------------------------
+    | 门店管理
+    |--------------------------------------------------------------------------
+    */
+    Route::resource('storefronts', 'StorefrontsController');
 });
 
 

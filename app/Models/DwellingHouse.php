@@ -14,7 +14,7 @@ class DwellingHouse extends BaseModel
         'check_in_time' => 'date',
     ];
 
-    protected $appends = ['renovation_cn', 'house_type', 'renting_style_cn', 'public_private_cn', 'house_busine_state_cn', 'payment_type_cn', 'orientation_cn', 'prospecting_cn', 'see_house_time_cn', 'house_proxy_type_cn', 'source_cn', 'certificate_type_cn', 'rent_price_unit_cn', 'pay_commission_unit_cn'];
+    protected $appends = ['renovation_cn', 'house_type', 'renting_style_cn', 'public_private_cn', 'house_busine_state_cn', 'payment_type_cn', 'orientation_cn', 'prospecting_cn', 'see_house_time_cn', 'house_proxy_type_cn', 'source_cn', 'certificate_type_cn', 'pay_commission_unit_cn', 'shortest_lease_cn','house_type_img_cn', 'indoor_img_cn'];
 
     /**
      * 说明: 关联楼座
@@ -328,24 +328,6 @@ class DwellingHouse extends BaseModel
     }
 
     /**
-     * 说明: 租金单位转换
-     *
-     * @return string
-     * @use rent_price_unit_cn
-     * @author 罗振
-     */
-    public function getRentPriceUnitCnAttribute()
-    {
-        if ($this->rent_price_unit == 1) {
-            return '%';
-        } elseif ($this->rent_price_unit == 2) {
-            return '元';
-        } else {
-            return '租金单位异常';
-        }
-    }
-
-    /**
      * 说明: 付佣单位转换
      *
      * @return string
@@ -361,5 +343,71 @@ class DwellingHouse extends BaseModel
         } else {
             return '租金单位异常';
         }
+    }
+
+    /**
+     * 说明: 最短租期中文
+     *
+     * @return string
+     * @use shortest_lease_cn
+     * @author 罗振
+     */
+    public function getShortestLeaseCnAttribute()
+    {
+        if ($this->shortest_lease == 1) {
+            return '1个月';
+        } elseif ($this->shortest_lease == 2) {
+            return '2个月';
+        } elseif ($this->shortest_lease == 3) {
+            return '3个月';
+        } elseif ($this->shortest_lease == 4) {
+            return '4个月';
+        } elseif ($this->shortest_lease == 5) {
+            return '5个月';
+        } elseif ($this->shortest_lease == 6) {
+            return '6个月';
+        } elseif ($this->shortest_lease == 7) {
+            return '7个月';
+        } elseif ($this->shortest_lease == 8) {
+            return '8个月';
+        } elseif ($this->shortest_lease == 9) {
+            return '9个月';
+        } elseif ($this->shortest_lease == 10) {
+            return '10个月';
+        } elseif ($this->shortest_lease == 11) {
+            return '11个月';
+        } elseif ($this->shortest_lease == 12) {
+            return '12个月';
+        } else {
+            return '最短租期异常';
+        }
+    }
+
+    /**
+     * 说明: 户型图拼接url
+     *
+     * @return static
+     * @use house_type_img_cn
+     * @author 罗振
+     */
+    public function getHouseTypeImgCnAttribute()
+    {
+        return collect($this->house_type_img)->map(function ($img) {
+            return ['name' => $img, 'url' => config('setting.qiniu_url') . $img . config('setting.static')];
+        })->values();
+    }
+
+    /**
+     * 说明: 室内图拼接url
+     *
+     * @return static
+     * @use indoor_img_cn
+     * @author 罗振
+     */
+    public function getIndoorImgCnAttribute()
+    {
+        return collect($this->indoor_img)->map(function ($img) {
+            return ['name' => $img, 'url' => config('setting.qiniu_url') . $img . config('setting.static')];
+        })->values();
     }
 }

@@ -1,6 +1,7 @@
 <?php
 namespace App\Repositories;
 
+use App\Models\Building;
 use App\Models\OfficeBuildingHouse;
 use App\Services\HousesService;
 
@@ -17,12 +18,41 @@ class OfficeBuildingHousesRepository extends BaseRepository
     /**
      * 说明: 写字楼房源列表
      *
-     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     * @param $request
+     * @return mixed
      * @author 罗振
      */
-    public function officeBuildingHousesList()
+    public function officeBuildingHousesList(
+        $request
+    )
     {
-        return $this->model->paginate(10);
+        $result = $this->model;
+
+        if (!empty($request->region) && !empty($request->build)) {
+            // 楼盘包含的楼座
+            $blockId = array_column(Building::find($request->build)->buildingBlocks->toArray(), 'id');
+            $result = $result->whereIn('building_blocks_id', $blockId);
+        } elseif (!empty($request->region) && empty($request->build)) {
+            // 区域包含的楼座
+            $blockId = array_column(Area::find($request->region)->building_block->flatten()->toArray(), 'id');
+            $result = $result->whereIn('building_blocks_id', $blockId);
+        }
+
+        // 最小面积
+        if (!empty($request->min_acreage)) {
+            $result = $result->where('constru_acreage', ">", (int)$request->min_acreage);
+        }
+        // 最大面积
+        if (!empty($request->max_acreage)) {
+            $result = $result->where('constru_acreage', "<", (int)$request->max_acreage);
+        }
+
+        // 排序
+        if (!empty($request->order)) {
+            $result = $result->orderBy('updated_at', $request->order);
+        }
+
+        return $result->paginate($request->number??10);
     }
 
     /**

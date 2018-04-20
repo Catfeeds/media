@@ -14,7 +14,7 @@ class ShopsHouse extends BaseModel
         'check_in_time' => 'date',
     ];
 
-    protected $appends = ['renovation_cn', 'shops_type_cn', 'public_private_cn', 'public_private_cn', 'pay_commission_unit_cn', 'payment_type_cn', 'shortest_lease_cn', 'rent_free_cn', 'frontage_cn', 'split_cn', 'orientation_cn', 'prospecting_cn', 'see_house_time_cn', 'house_proxy_type_cn', 'source_cn', 'certificate_type_cn'];
+    protected $appends = ['renovation_cn', 'shops_type_cn', 'public_private_cn', 'public_private_cn', 'pay_commission_unit_cn', 'payment_type_cn', 'shortest_lease_cn', 'rent_free_cn', 'frontage_cn', 'split_cn', 'orientation_cn', 'prospecting_cn', 'see_house_time_cn', 'house_proxy_type_cn', 'source_cn', 'certificate_type_cn', 'house_type_img_cn', 'indoor_img_cn'];
 
     /**
      * 说明: 关联楼座
@@ -421,4 +421,31 @@ class ShopsHouse extends BaseModel
         }
     }
 
+    /**
+     * 说明: 户型图拼接url
+     *
+     * @return static
+     * @use house_type_img_cn
+     * @author 罗振
+     */
+    public function getHouseTypeImgCnAttribute()
+    {
+        return collect($this->house_type_img)->map(function ($img) {
+            return ['name' => $img, 'url' => config('setting.qiniu_url') . $img . config('setting.static')];
+        })->values();
+    }
+
+    /**
+     * 说明: 室内图拼接url
+     *
+     * @return static
+     * @use indoor_img_cn
+     * @author 罗振
+     */
+    public function getIndoorImgCnAttribute()
+    {
+        return collect($this->indoor_img)->map(function ($img) {
+            return ['name' => $img, 'url' => config('setting.qiniu_url') . $img . config('setting.static')];
+        })->values();
+    }
 }

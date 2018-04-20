@@ -29,21 +29,7 @@ class TracksRequest extends FormRequest
         switch ($this->method()) {
             case 'POST':
                 return [
-                    'custom_id' => [
-                        'required',
-                        'integer',
-                        Rule::in(
-                            Custom::all()->pluck('id')->toArray()
-                        )
-                    ],
-                    'conscientious_id' => [
-                        'nullable',
-                        'integer',
-                        // 用户必须存在
-                    ],
-                    'tracks_mode' => 'nullable|integer',
-                    'tracks_time' => 'date',
-                    'content' => 'max:65535'
+
                 ];
             case 'PUT':
             case 'PATCH':
@@ -72,7 +58,20 @@ class TracksRequest extends FormRequest
         switch ($this->method()) {
             case 'POST':
                 return [
-
+                    'custom_id' => [
+                        'required',
+                        'integer',
+//                        Rule::in(
+//                            Custom::all()->pluck('id')->toArray()
+//                        )
+                    ],
+                    'conscientious_id' => [
+                        'nullable',
+                        'integer',
+                        // 用户必须存在
+                    ],
+                    'tracks_mode' => 'nullable|integer',
+                    'content' => 'max:65535'
                 ];
             case 'PUT':
             case 'PATCH':

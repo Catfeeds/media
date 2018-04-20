@@ -36,11 +36,10 @@ class CreateDwellingHousesTable extends Migration
 
             // 租赁信息
             $table->decimal('rent_price', 10, 2)->nullable()->comment('租金');
-            $table->tinyInteger('rent_price_unit')->default(1)->comment('租金单位: 1: % 2: 多少元');
             $table->tinyInteger('payment_type')->default(1)->comment('支付方式: 1: 押一付一 2: 押一付二 3: 押一付三 4: 押二付一 5: 押二付二 6: 押二付三 7: 押三付一 8: 押三付二 9: 押三付三 10: 半年付 11: 年付 12: 面谈');
             $table->tinyInteger('renting_style')->default(1)->comment('出租方式: 1: 整租 2: 合租');
             $table->date('check_in_time')->nullable()->comment('入住时间');
-            $table->tinyInteger('shortest_lease')->default(1)->comment('最短租期: 1: 1-2年 2: 2-3年 3: 3-4年 4: 5年以上');
+            $table->tinyInteger('shortest_lease')->default(1)->comment('最短租期: 1: 1个月 2: 2个月 3: 3个月 4: 4个月 5: 5个月 6: 6个月 7: 7个月 8: 8个月 9: 9个月 10: 10个月 11: 11个月 12: 12个月');
             $table->string('cost_detail', 1024)->nullable()->comment('费用明细:json');
 
             // 业务信息

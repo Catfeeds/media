@@ -1,26 +1,28 @@
 <?php
 namespace App\Http\Controllers\API;
 
-
 use App\Http\Requests\API\ShopsHousesRequest;
 use App\Models\ShopsHouse;
 use App\Repositories\ShopsHousesRepository;
 use App\Services\HousesService;
+use Illuminate\Http\Request;
 
 class ShopsHousesController extends APIBaseController
 {
     /**
      * 说明: 商铺房源列表
      *
+     * @param Request $request
      * @param ShopsHousesRepository $shopsHousesRepository
      * @return \Illuminate\Http\JsonResponse
      * @author 罗振
      */
     public function index(
+        Request $request,
         ShopsHousesRepository $shopsHousesRepository
     )
     {
-        $result = $shopsHousesRepository->shopsHousesList();
+        $result = $shopsHousesRepository->shopsHousesList($request);
         return $this->sendResponse($result,'商铺房源列表获取成功!');
     }
 
@@ -41,6 +43,20 @@ class ShopsHousesController extends APIBaseController
     {
         $result = $shopsHousesRepository->addShopsHouses($request, $housesService);
         return $this->sendResponse($result,'商铺房源添加成功!');
+    }
+
+    /**
+     * 说明: 商铺房源修改之前原始数据
+     *
+     * @param ShopsHouse $shopsHouse
+     * @return \Illuminate\Http\JsonResponse
+     * @author 罗振
+     */
+    public function edit(
+        ShopsHouse $shopsHouse
+    )
+    {
+        return $this->sendResponse($shopsHouse, '商铺房源修改之前原始数据!');
     }
 
     /**

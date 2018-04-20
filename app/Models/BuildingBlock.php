@@ -18,6 +18,12 @@ class BuildingBlock extends BaseModel
         return $this->belongsTo(Building::class);
     }
 
+    public function street()
+    {
+        return $this->belongsTo(Street::class);
+    }
+
+
     /**
      * 说明：获取楼座info
      *

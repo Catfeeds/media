@@ -2,13 +2,6 @@
 
 namespace App\Services;
 
-use App\Models\DwellingHouse;
-use App\Models\ShopsHouse;
-use App\Repositories\DwellingHousesRepository;
-use App\Repositories\OfficeBuildingHousesRepository;
-use App\Repositories\ShopsHousesRepository;
-use Illuminate\Support\Facades\DB;
-
 class HousesService
 {
     /**
@@ -28,5 +21,11 @@ class HousesService
         } else {
             return $initials.date('Ymd', time()).$houseId;
         }
+    }
+
+    public function adoptBuildingBlockGetCity()
+    {
+
+
     }
 }
