@@ -45,7 +45,7 @@ class BuildingController extends APIBaseController
         if (empty($request->building_block)) return $this->sendError('楼栋信息不能为空');
         // 楼盘名不允许重复
         $res = Building::where(['name' => $request->name, 'area_id' => $request->area_id])->first();
-        if (!empty($res)) return $this->sendError('楼盘名不能重复');
+        if (!empty($res)) return $this->sendError('该城区下已有此楼盘，请勿重复添加');
 
         $res = $repository->add($request);
         if (empty($res)) return $this->sendError('添加失败');
@@ -127,7 +127,7 @@ class BuildingController extends APIBaseController
                 $area_box[] = $area_item;
             }
             $city_item = array(
-                'value' => $city->name,
+                'value' => $city->id,
                 'label' => $city->name,
                 'children' => $area_box
             );
@@ -193,7 +193,7 @@ class BuildingController extends APIBaseController
                 $area_box[] = $item;
             }
             $city_item = array(
-                'value' => $city->name,
+                'value' => $city->id,
                 'label' => $city->name,
                 'children' => $area_box
             );
