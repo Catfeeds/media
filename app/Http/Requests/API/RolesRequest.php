@@ -3,7 +3,6 @@
 namespace App\Http\Requests\API;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class RolesRequest extends FormRequest
 {
@@ -49,7 +48,23 @@ class RolesRequest extends FormRequest
 
                 ];
             case 'PATCH':
-
+                return[
+                    'name' => [
+                        'required',
+                        'string',
+                        'min:1',
+                        'max:32',
+                        'regex:/^[a-z\d\_]*$/i',
+                    ],
+                    'name_en' => [
+                        'required',
+                        'string',
+                        'min:1',
+                        'max:32',
+                        'regex:/^[a-z\d\_]*$/i',
+                    ],
+                    'name_cn' => 'required|min:1|max:32',
+                ];
             case 'GET':
             case 'DELETE':
             default:
