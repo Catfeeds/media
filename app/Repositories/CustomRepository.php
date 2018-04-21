@@ -19,14 +19,20 @@ class CustomRepository extends BaseRepository
     /**
      * 说明：获取列表
      *
-     * @param array $where
+     * @param $request
      * @param null $perPage
      * @return mixed
      * @author jacklin
      */
-    public function getList($where = [], $perPage = null)
+    public function getList($request, $perPage = null)
     {
-        return $this->model->where($where)->with('buildings')
+        // 拼接条件
+        $query = $this->model;
+        if (!empty($request->status)) $query = $query->where('status', $request->status);
+        if (!empty($request->name)) $query = $query->where('name', $request->name);
+        if (!empty($request->tel)) $query = $query->where('tel', $request->tel);
+        if (!empty($request->area_id)) $query = $query->where('status', $request->area_id);
+        return $query->with('buildings')
             ->orderBy('updated_at', 'desc')
             ->paginate($perPage);
     }
