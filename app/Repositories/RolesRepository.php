@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Models\Role;
+use \Spatie\Permission\Models\Role;
 
 class RolesRepository extends BaseRepository
 {
@@ -24,7 +24,7 @@ class RolesRepository extends BaseRepository
     {
         \DB::beginTransaction();
         try {
-            $role = $this->model->create([
+            $role = Role::create([
                 'name' => $request->name,
                 'name_en' => $request->name_en,
                 'name_cn' => $request->name_cn,
