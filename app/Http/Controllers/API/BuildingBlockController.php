@@ -159,8 +159,8 @@ class BuildingBlockController extends APIBaseController
                     $building_box[] = $item;
                 }
                 $area_item = array(
-                    'value' => $area->name,
-                    'label' => $area->id,
+                    'value' => $area->id,
+                    'label' => $area->name,
                     'children' => $building_box
                 );
                 $area_box[] = $area_item;
