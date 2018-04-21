@@ -101,6 +101,12 @@ class SelectDataController extends APIBaseController
         return $this->sendResponse($res, '获取成功');
     }
 
+    /**
+     * 说明：所有客户数据
+     *
+     * @return \Illuminate\Http\JsonResponse
+     * @author jacklin
+     */
     public function selectCustoms()
     {
         $customs = Custom::where([])->get();
