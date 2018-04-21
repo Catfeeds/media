@@ -37,7 +37,7 @@ class BuildingBlockController extends APIBaseController
      */
     public function allBlocks(Request $request, BuildingBlockRepository $repository)
     {
-        $res = $repository->getList([], $request->per_page);
+        $res = $repository->getList($request->per_page, json_decode($request->condition));
         return $this->sendResponse($res, '获取成功');
     }
 

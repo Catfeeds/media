@@ -2,6 +2,8 @@
 
 namespace App\Repositories;
 
+use App\Models\Area;
+use App\Models\Building;
 use App\Models\BuildingBlock;
 
 class BuildingBlockRepository extends BaseRepository
@@ -22,9 +24,22 @@ class BuildingBlockRepository extends BaseRepository
      * @return mixed
      * @author jacklin
      */
-    public function getList($where = [], $perPage = null)
+    public function getList(
+        $per_page,
+        $condition
+    )
     {
-        return $this->model->where($where)->orderBy('updated_at', 'desc')->paginate($perPage);
+        $result = $this->model->orderBy('updated_at', 'desc');
+
+        if (!empty($condition->building_id)) {
+            $buildingId = array_column(Building::find(1)->buildingBlocks->flatten()->toArray(), 'id');
+            $result = $result->where('id', $buildingId);
+        } elseif(!empty($condition->area_id)) {
+            $buildingId = array_column(Area::find($condition->area_id)->BuildingBlock->flatten()->toArray(), 'id');
+            $result = $result->whereIn('id', $buildingId);
+        }
+
+        return $result->paginate($per_page??10);
     }
 
     /**
