@@ -124,7 +124,8 @@ class Building extends BaseModel
      */
     public function getCityLabelAttribute()
     {
-        if (empty($area)) return;
+        if (empty($this->area)) return;
+
         return $this->area->city->name;
     }
 }
