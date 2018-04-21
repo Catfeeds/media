@@ -100,4 +100,22 @@ class OfficeBuildingHousesController extends APIBaseController
         $res = $officeBuildingHouse->delete();
         return $this->sendResponse($res, '删除成功');
     }
+
+    /**
+     * 说明:修改写字楼房源业务状态
+     *
+     * @param OfficeBuildingHousesRepository $buildingHousesRepository
+     * @param OfficeBuildingHousesRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     * @author 刘坤涛
+     */
+    public function updateOfficeBusinessState
+    (
+        OfficeBuildingHousesRepository $buildingHousesRepository,
+        OfficeBuildingHousesRequest $request
+    )
+    {
+        $res = $buildingHousesRepository->updateState($request);
+        return $this->sendResponse($res, '写字楼房源业务状态修改成功');
+    }
 }

@@ -100,4 +100,22 @@ class ShopsHousesController extends APIBaseController
         $res = $shopsHouse->delete();
         return $this->sendResponse($res, '删除成功');
     }
+
+    /**
+     * 说明:修改商铺房源业务状态
+     *
+     * @param ShopsHousesRepository $shopsHousesRepository
+     * @param ShopsHousesRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     * @author 刘坤涛
+     */
+    public function updateShopsBusinessState
+    (
+        ShopsHousesRepository $shopsHousesRepository,
+        ShopsHousesRequest $request
+    )
+    {
+        $res = $shopsHousesRepository->updateState($request);
+        return $this->sendResponse($res, '商铺房源业务状态修改成功');
+    }
 }

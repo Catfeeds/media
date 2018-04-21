@@ -175,4 +175,16 @@ class DwellingHousesRepository extends BaseRepository
         return true;
     }
 
+    /**
+     * 说明:修改住宅房源业务状态
+     *
+     * @param $request
+     * @return mixed
+     * @author 刘坤涛
+     */
+    public function updateState($request)
+    {
+        return $this->model->where('id', $request->id)->update(['house_busine_state' => $request->house_busine_state]);
+    }
+
 }

@@ -104,4 +104,23 @@ class DwellingHousesController extends APIBaseController
         $res = $dwellingHouse->delete();
         return $this->sendResponse($res, '删除成功');
     }
+
+    /**
+     * 说明:修改住宅房源业务状态
+     *
+     * @param DwellingHousesRepository $dwellingHousesRepository
+     * @param DwellingHousesRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     * @author 刘坤涛
+     */
+    public function updateDwellingBusinessState
+
+    (
+        DwellingHousesRepository $dwellingHousesRepository,
+        DwellingHousesRequest $request
+    )
+    {
+        $res = $dwellingHousesRepository->updateState($request);
+            return $this->sendResponse($res,'住宅房源业务状态修改成功');
+    }
 }

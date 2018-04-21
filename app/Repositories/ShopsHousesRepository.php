@@ -187,4 +187,15 @@ class ShopsHousesRepository extends BaseRepository
         return true;
     }
 
+    /**
+     * 说明:修改商铺房源业务状态
+     *
+     * @param $request
+     * @author 刘坤涛
+     */
+    public function updateState($request)
+    {
+        $this->model->where('id', $request->id)->update(['house_busine_state' => $request->house_busine_state]);
+    }
+
 }
