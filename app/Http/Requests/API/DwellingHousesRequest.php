@@ -135,7 +135,7 @@ class DwellingHousesRequest extends FormRequest
                         'payment_type' => 'nullable|integer|between:1,12',
                         'renting_style' => 'nullable|integer|between:1,2',
                         'check_in_time' => 'date',
-                        'shortest_lease' => 'nullable|integer|between:1,5',
+                        'shortest_lease' => 'nullable|integer|between:1,12',
                         // 业务信息
                         'public_private' => 'nullable|integer|between:1,3',
                         'house_busine_state' => 'nullable|integer|between:1,6',

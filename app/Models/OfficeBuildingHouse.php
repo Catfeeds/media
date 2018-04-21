@@ -13,7 +13,7 @@ class OfficeBuildingHouse extends BaseModel
         'check_in_time' => 'date',
     ];
 
-    protected $appends = ['renovation_cn', 'house_type', 'office_building_type_cn', 'public_private_cn', 'house_busine_state_cn', 'payment_type_cn', 'split_cn', 'orientation_cn', 'prospecting_cn', 'see_house_time_cn', 'house_proxy_type_cn', 'source_cn', 'certificate_type_cn', 'rent_price_unit_cn', 'pay_commission_unit_cn', 'shortest_lease_cn', 'rent_free_cn', 'house_type_img_cn', 'indoor_img_cn', 'building_name'];
+    protected $appends = ['renovation_cn', 'house_type', 'office_building_type_cn', 'public_private_cn', 'house_busine_state_cn', 'payment_type_cn', 'split_cn', 'orientation_cn', 'prospecting_cn', 'see_house_time_cn', 'house_proxy_type_cn', 'source_cn', 'certificate_type_cn', 'rent_price_unit_cn', 'pay_commission_unit_cn', 'shortest_lease_cn', 'rent_free_cn', 'house_type_img_cn', 'indoor_img_cn', 'building_name', 'register_company_cn', 'open_bill_cn'];
 
     /**
      * 说明: 楼座
@@ -481,5 +481,41 @@ class OfficeBuildingHouse extends BaseModel
                 'url' => config('setting.qiniu_url') . $img . config('setting.static')
             ];
         })->values();
+    }
+
+    /**
+     * 说明: 注册公司中文
+     *
+     * @return string
+     * @use register_company_cn
+     * @author 罗振
+     */
+    public function getRegisterCompanyCnAttribute()
+    {
+        if ($this->register_company == 1) {
+            return '可注册';
+        } elseif ($this->register_company == 2) {
+            return '不可注册';
+        } else {
+            return '公司是否可注册异常';
+        }
+    }
+
+    /**
+     * 说明: 可开发票中文
+     *
+     * @return string
+     * @use open_bill_cn
+     * @author 罗振
+     */
+    public function getOpenBillCnAttribute()
+    {
+        if ($this->open_bill == 1) {
+            return '可开发票';
+        } elseif ($this->open_bill == 2) {
+            return '不可开发票';
+        } else {
+            return '是否可开发票异常';
+        }
     }
 }
