@@ -65,7 +65,7 @@ class AreaController extends APIBaseController
             $city_item = array(
                 'value' => $city->name,
                 'label' => $city->name,
-                'children' => $area_box,
+                'children' => $area_box
             );
             $city_box[] = $city_item; // 所有城市
         }
