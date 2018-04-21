@@ -5,12 +5,13 @@ namespace App\Http\Controllers\API;
 use App\Http\Requests\API\CustomRequest;
 use App\Models\Custom;
 use App\Repositories\CustomRepository;
+use Illuminate\Http\Request;
 
 class CustomController extends APIBaseController
 {
-    public function index(CustomRepository $repository)
+    public function index(Request $request, CustomRepository $repository)
     {
-        $res = $repository->getList();
+        $res = $repository->getList($request);
         return $this->sendResponse($res, '获取成功');
     }
 

@@ -73,6 +73,29 @@ class AreaController extends APIBaseController
     }
 
     /**
+     * 说明：武汉的城区
+     *
+     * @return \Illuminate\Http\JsonResponse
+     * @author jacklin
+     */
+    public function areasOfCity()
+    {
+        $city = 1;
+        // 循环城市 将区域的
+        $areas = Area::where('city_id', $city)->get();
+        $area_box = array();
+        foreach ($areas as $area) {
+            $item = array(
+                'value' => $area->id,
+                'label' => $area->name,
+            );
+            $area_box[] = $item; // 城市下的区
+        }
+
+        return $this->sendResponse($area_box, '获取成功');
+    }
+
+    /**
      * 说明：删除区
      *
      * @param $id

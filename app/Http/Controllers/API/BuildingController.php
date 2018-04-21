@@ -120,8 +120,8 @@ class BuildingController extends APIBaseController
                     $building_box[] = $item;
                 }
                 $area_item = array(
-                    'value' => $area->name,
-                    'label' => $area->id,
+                    'value' => $area->id,
+                    'label' => $area->name,
                     'children' => $building_box
                 );
                 $area_box[] = $area_item;
@@ -145,8 +145,7 @@ class BuildingController extends APIBaseController
      */
     public function areaBuildings(Request $request)
     {
-        $streetIds = Street::where('area_id', $request->area_id)->get()->pluck('id')->toArray();
-        $buildings = Building::whereIn('street_id', $streetIds)->get();
+        $buildings = Building::where('area_id', $request->area_id)->get();
 
         $res = array();
         foreach ($buildings as $building) {

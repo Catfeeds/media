@@ -107,6 +107,7 @@ Route::group(['namespace' => 'API'], function () {
     // 区域二级下拉数据
     Route::resource('/areas', 'AreaController');
     Route::get('/areas_select', 'AreaController@areasSelect');
+    Route::get('/areas_of_city', 'AreaController@areasOfCity');
 
 
     /*
@@ -150,6 +151,13 @@ Route::group(['namespace' => 'API'], function () {
     |--------------------------------------------------------------------------
     */
     Route::resource('roles', 'RolesController');
+
+    /*
+    |--------------------------------------------------------------------------
+    | 角色管理
+    |--------------------------------------------------------------------------
+    */
+    Route::get('/select_buildings', 'SelectDataController@areaBuildings');
 });
 
 
