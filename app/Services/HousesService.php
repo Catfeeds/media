@@ -32,6 +32,7 @@ class HousesService
         // 拼接商圈获取城市数据
         $arr[] = $BuildingBlockId;
         $arr[] = $temp->building->id;
+
         $arr[] = $temp->building->area->id;
         $arr[] = $temp->building->area->city->id;
 
