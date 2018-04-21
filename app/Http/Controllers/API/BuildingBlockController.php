@@ -139,41 +139,31 @@ class BuildingBlockController extends APIBaseController
             $areas = Area::where('city_id', $city->id)->get();
             $area_box = array();
             foreach ($areas as $area) {
-                $streets = Street::where('area_id', $area->id)->get();
-                $street_box = array();
-                foreach ($streets as $street) {
-                    $buildings = Building::where('street_id', $street->id)->get();
-                    $building_box = array();
-                    foreach ($buildings as $building) {
-                        $buildingBlocks = BuildingBlock::where('building_id', $building->id)->get();
-                        $buildingBlockBox = array();
-                        foreach ($buildingBlocks as $buildingBlock) {
-                            $item = array(
-                                'value' => $buildingBlock->id,
-                                'label' => $buildingBlock->name,
-                            );
-                            $buildingBlockBox[] = $item;
-                        }
+                $buildings = Building::where('area_id', $area->id)->get();
+                $building_box = array();
+                foreach ($buildings as $building) {
+                    $buildingBlocks = BuildingBlock::where('building_id', $building->id)->get();
+                    $buildingBlockBox = array();
+                    foreach ($buildingBlocks as $buildingBlock) {
                         $item = array(
-                            'value' => $building->id,
-                            'label' => $building->name,
-                            'children' => $buildingBlockBox
+                            'value' => $buildingBlock->id,
+                            'label' => $buildingBlock->name . $buildingBlock->name_unit . $buildingBlock->unit . $buildingBlock->unit_unit,
                         );
-                        $building_box[] = $item;
+                        $buildingBlockBox[] = $item;
                     }
                     $item = array(
-                        'value' => $street->id,
-                        'label' => $street->name,
-                        'children' => $building_box
+                        'value' => $building->id,
+                        'label' => $building->name,
+                        'children' => $buildingBlockBox
                     );
-                    $street_box[] = $item;
+                    $building_box[] = $item;
                 }
-                $item = array(
-                    'value' => $area->id,
-                    'label' => $area->name,
-                    'children' => $street_box
+                $area_item = array(
+                    'value' => $area->name,
+                    'label' => $area->id,
+                    'children' => $building_box
                 );
-                $area_box[] = $item; // 城市下的区
+                $area_box[] = $area_item;
             }
             $city_item = array(
                 'value' => $city->name,
