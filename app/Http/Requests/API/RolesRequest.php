@@ -3,6 +3,8 @@
 namespace App\Http\Requests\API;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+use Spatie\Permission\Models\Permission;
 
 class RolesRequest extends FormRequest
 {
@@ -42,6 +44,13 @@ class RolesRequest extends FormRequest
                         'regex:/^[a-z\d\_]*$/i',
                     ],
                     'name_cn' => 'required|min:1|max:32',
+                    'permissions' => 'required|array',
+                    'permissions.*' => [
+                        'required',
+                        Rule::in(
+                            Permission::where('guard_name', 'web')->pluck('name')->toArray()
+                        )
+                    ]
                 ];
             case 'PUT':
                 return [
@@ -64,6 +73,11 @@ class RolesRequest extends FormRequest
                         'regex:/^[a-z\d\_]*$/i',
                     ],
                     'name_cn' => 'required|min:1|max:32',
+                    'permissions' => 'required|array',
+                    'permissions.*' => [
+                        'required',
+                        Rule::in(Permission::where('guard_name', 'web')->pluck('name')->toArray())
+                    ]
                 ];
             case 'GET':
             case 'DELETE':

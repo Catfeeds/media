@@ -5,7 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Requests\API\RolesRequest;
 use App\Repositories\RolesRepository;
 use Illuminate\Http\Request;
-use \Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Role;
 
 class RolesController extends APIBaseController
 {
@@ -18,8 +18,9 @@ class RolesController extends APIBaseController
      * @author 刘坤涛
      */
     public function index
-    (Request $request,
-     RolesRepository $rolesRepository
+    (
+        Request $request,
+        RolesRepository $rolesRepository
     )
     {
         $res = $rolesRepository->rolesList($request);
@@ -56,6 +57,7 @@ class RolesController extends APIBaseController
      */
     public function edit(Role $role)
     {
+        // TODO 还有获取角色下所有权限
         return $this->sendResponse($role, '角色修改之前原始数据');
     }
 

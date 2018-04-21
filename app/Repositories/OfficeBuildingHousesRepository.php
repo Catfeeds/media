@@ -186,7 +186,7 @@ class OfficeBuildingHousesRepository extends BaseRepository
     }
 
     /**
-     * 说明:修改写字楼房源业务状态
+     * 说明: 修改写字楼房源业务状态
      *
      * @param $request
      * @return mixed
@@ -194,6 +194,8 @@ class OfficeBuildingHousesRepository extends BaseRepository
      */
     public function updateState($request)
     {
-        return $this->model->where('id', $request->id)->update(['house_busine_state' => $request->house_busine_state]);
+        return $this->model->where('id', $request->id)->update([
+            'house_busine_state' => $request->house_busine_state
+        ]);
     }
 }

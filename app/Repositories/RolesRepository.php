@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use \Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Role;
 
 class RolesRepository extends BaseRepository
 {
@@ -47,7 +47,7 @@ class RolesRepository extends BaseRepository
             if (empty($role)) {
                 throw new \Exception('角色信息添加失败');
             }
-            $role->givePermissionTo($request->permission);
+            $role->givePermissionTo($request->permissions);
             \DB::commit();
             return true;
         } catch (\Exception $e) {
@@ -76,7 +76,7 @@ class RolesRepository extends BaseRepository
             if (empty($res)) {
                 throw new \Exception('角色信息更新失败');
             }
-            $role->syncPermissions($request->permission);
+            $role->syncPermissions($request->permissions);
             \DB::commit();
             return true;
         } catch (\Exception $e) {

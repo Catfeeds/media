@@ -106,7 +106,7 @@ class DwellingHousesController extends APIBaseController
     }
 
     /**
-     * 说明:修改住宅房源业务状态
+     * 说明: 修改住宅房源业务状态
      *
      * @param DwellingHousesRepository $dwellingHousesRepository
      * @param DwellingHousesRequest $request
@@ -114,13 +114,12 @@ class DwellingHousesController extends APIBaseController
      * @author 刘坤涛
      */
     public function updateDwellingBusinessState
-
     (
         DwellingHousesRepository $dwellingHousesRepository,
         DwellingHousesRequest $request
     )
     {
         $res = $dwellingHousesRepository->updateState($request);
-            return $this->sendResponse($res,'住宅房源业务状态修改成功');
+        return $this->sendResponse($res,'住宅房源业务状态修改成功');
     }
 }
