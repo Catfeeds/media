@@ -35,6 +35,7 @@ class BuildingBlockRepository extends BaseRepository
         if (!empty($request->building_id)) {
             $result = $buildingBlock->where('building_id', $request->building_id);
         }
+        if (empty($request->area_id) && empty($request->building_id)) $result = $buildingBlock;
         return $result->paginate($per_page);
     }
 

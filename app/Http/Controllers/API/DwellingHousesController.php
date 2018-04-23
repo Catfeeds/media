@@ -31,10 +31,10 @@ class DwellingHousesController extends APIBaseController
         DwellingHousesRepository $dwellingHousesRepository
     )
     {
-        $userPermission = $this->permissionsService->getUserPermission(config('permission.house_list'));
-        if (!$userPermission) {
-            return $this->sendError('没有房源列表权限', '403');
-        }
+//        $userPermission = $this->permissionsService->getUserPermission(config('permission.house_list'));
+//        if (!$userPermission) {
+//            return $this->sendError('没有房源列表权限', '403');
+//        }
 
         $result = $dwellingHousesRepository->dwellingHousesList($request->per_page??null, json_decode($request->condition));
         return $this->sendResponse($result,'住宅写字楼列表获取成功');
