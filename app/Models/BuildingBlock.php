@@ -18,9 +18,19 @@ class BuildingBlock extends BaseModel
         return $this->belongsTo(Building::class);
     }
 
-    public function street()
+    public function office()
     {
-        return $this->belongsTo(Street::class);
+        return $this->hasMany(OfficeBuildingHouse::class);
+    }
+
+    public function shop()
+    {
+        return $this->hasMany(ShopsHouse::class);
+    }
+
+    public function dWelling()
+    {
+        return $this->hasMany(DwellingHouse::class);
     }
 
 
@@ -33,7 +43,7 @@ class BuildingBlock extends BaseModel
     public function getInfoAttribute()
     {
         $building = $this->building;
-        if (empty($building)) return ;
+        if (empty($building)) return;
         $blocksInfo = $this->name . $this->name_unit . $this->unit . $this->unit_unit;
         return $building->name . $blocksInfo;
     }

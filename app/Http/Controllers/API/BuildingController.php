@@ -91,6 +91,7 @@ class BuildingController extends APIBaseController
      */
     public function destroy(Building $building)
     {
+        if (!empty($building->buildingBlocks)) return $this->sendError('该楼盘下有楼座信息，不能删除');
         $res = $building->delete();
         return $this->sendResponse($res, '删除成功');
     }

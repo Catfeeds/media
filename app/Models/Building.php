@@ -63,8 +63,6 @@ class Building extends BaseModel
                 return '写字楼';
             case 3:
                 return '商铺';
-            case 4:
-                return '商住两用';
         }
     }
 

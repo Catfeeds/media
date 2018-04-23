@@ -100,6 +100,10 @@ class BuildingBlockController extends APIBaseController
         $count = BuildingBlock::where('building_id', $buildingBlock->building_id)->get()->count();
         if ($count <= 1) return $this->sendError('该楼盘仅剩一个楼座，不能删除');
 
+        // 如果有 写字楼、住宅、商铺 不允许删除
+        if (!empty($buildingBlock->shop || !empty($buildingBlock->dWelling || !empty($buildingBlock->office))))
+            return $this->sendError('该楼下有房源，不允许删除');
+
         $res = $buildingBlock->delete();
         return $this->sendResponse($res, '删除成功');
     }
