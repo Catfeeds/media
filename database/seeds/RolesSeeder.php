@@ -21,5 +21,9 @@ class RolesSeeder extends Seeder
             'guard_name' => 'web',
         ]);
         $role->givePermissionTo(Permission::where('guard_name','web')->pluck('name')->toArray());
+
+//        $permissions = ['house_list', 'add_house', 'update_house'];
+//        $role->givePermissionTo($permissions);
+
     }
 }

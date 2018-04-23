@@ -2,22 +2,14 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Requests\API\DwellingHousesRequest;
-use App\Models\BuildingBlock;
 use App\Models\DwellingHouse;
 use App\Repositories\DwellingHousesRepository;
 use App\Services\HousesService;
-use App\Services\PermissionsService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DwellingHousesController extends APIBaseController
 {
-    protected $permissionsService;
-
-    public function __construct(PermissionsService $permissionsService)
-    {
-        $this->permissionsService = $permissionsService;
-    }
-
     /**
      * 说明: 住宅房源列表
      *
@@ -31,8 +23,9 @@ class DwellingHousesController extends APIBaseController
         DwellingHousesRepository $dwellingHousesRepository
     )
     {
-        $userPermission = $this->permissionsService->getUserPermission(config('permission.house_list'));
-        if (!$userPermission) {
+        // 判断用户权限
+        $role = Auth::guard('api')->user()->can('house_list');
+        if (empty($role)) {
             return $this->sendError('没有房源列表权限', '403');
         }
 

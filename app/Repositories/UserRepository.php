@@ -25,8 +25,6 @@ class UserRepository extends BaseRepository
                 'nick_name' => $request->nick_name,
                 'ascription_store' => $request->ascription_store,
                 'level' => $request->level,
-                'role' => $request->role,
-                'email' => $request->email,
                 'password' => bcrypt($request->password),
                 'remark' => $request->remark,
             ]);
