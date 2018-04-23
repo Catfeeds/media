@@ -10,6 +10,7 @@ use App\Models\City;
 use App\Models\Street;
 use App\Repositories\BuildingRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BuildingController extends APIBaseController
 {
@@ -27,6 +28,12 @@ class BuildingController extends APIBaseController
         BuildingRepository $repository
     )
     {
+        //判断用户权限
+        $role = Auth::guard('api')->user()->can('building_list');
+        if (empty($role)) {
+            return $this->sendError('没有楼盘列表权限','403');
+        }
+
         $res = $repository->getList($request->per_page, json_decode($request->condition));
         return $this->sendResponse($res, '获取成功');
     }
@@ -41,6 +48,11 @@ class BuildingController extends APIBaseController
      */
     public function store(BuildingRequest $request, BuildingRepository $repository)
     {
+        $role= Auth::guard('api')->user()->can('add_building');
+        if (empty($role)) {
+            return $this->sendError('无添加楼盘权限','403');
+        }
+
         // 楼栋信息不能为空
         if (empty($request->building_block)) return $this->sendError('楼栋信息不能为空');
         // 楼盘名不允许重复
@@ -64,6 +76,11 @@ class BuildingController extends APIBaseController
      */
     public function update(BuildingRequest $request, Building $building, BuildingRepository $repository)
     {
+        $role = Auth::guard('api')->user()->can('update_building');
+        if (empty($role)) {
+            return $this->sendError('无修改楼盘权限','403');
+        }
+
         $res = $repository->updateData($building, $request);
         return $this->sendResponse($res, '修改成功');
     }
@@ -91,6 +108,11 @@ class BuildingController extends APIBaseController
      */
     public function destroy(Building $building)
     {
+        $role = Auth::guard('api')->user()->can('del_building');
+        if (empty($role)) {
+            return $this->sendError('无删除楼盘权限','403');
+        }
+
         $res = $building->delete();
         return $this->sendResponse($res, '删除成功');
     }

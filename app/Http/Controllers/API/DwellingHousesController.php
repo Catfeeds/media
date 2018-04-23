@@ -100,6 +100,11 @@ class DwellingHousesController extends APIBaseController
         HousesService $housesService
     )
     {
+        $role = Auth::guard('api')->user()->can('add_house');
+        if(empty($role)) {
+            return $this->sendError('没有房源添加权限','403');
+        }
+
         if (!empty($result = $dwellingHousesRepository->addDwellingHouses($request, $housesService))) {
             return $this->sendResponse($result,'添加成功');
         }
@@ -140,6 +145,11 @@ class DwellingHousesController extends APIBaseController
         DwellingHouse $dwellingHouse
     )
     {
+        $role = Auth::guard('api')->user()->can('update_house');
+        if(empty($role)) {
+            return $this->sendError('没有房源修改权限','403');
+        }
+
         if (!empty($result = $dwellingHousesRepository->updateDwellingHouses($dwellingHouse, $request))) {
             return $this->sendResponse($result,'修改成功');
         }
@@ -159,6 +169,11 @@ class DwellingHousesController extends APIBaseController
         DwellingHouse $dwellingHouse
     )
     {
+        $role = Auth::guard('api')->user()->can('del_house');
+        if(empty($role)) {
+            return $this->sendError('没有房源删除权限','403');
+        }
+
         $res = $dwellingHouse->delete();
         return $this->sendResponse($res, '删除成功');
     }
@@ -177,6 +192,11 @@ class DwellingHousesController extends APIBaseController
         DwellingHousesRequest $request
     )
     {
+        $role = Auth::guard('api')->user()->can('update_business_state');
+        if(empty($role)) {
+            return $this->sendError('没有修改住宅房源业务状态权限','403');
+        }
+
         $res = $dwellingHousesRepository->updateState($request);
         return $this->sendResponse($res,'住宅房源业务状态修改成功');
     }

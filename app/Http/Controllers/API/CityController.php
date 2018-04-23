@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Models\City;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CityController extends APIBaseController
 {
@@ -15,6 +16,11 @@ class CityController extends APIBaseController
      */
     public function index()
     {
+        $role = Auth::guard('api')->user()->can('city_list');
+        if (empty($role)) {
+            return $this->sendError('无城市列表权限','403');
+        }
+
         $cities = City::all();
         return $this->sendResponse($cities, '获取成功');
     }
@@ -28,6 +34,11 @@ class CityController extends APIBaseController
      */
     public function store(Request $request)
     {
+        $role= Auth::guard('api')->user()->can('add_city');
+        if (empty($role)) {
+            return $this->sendError('无添加城市权限','403');
+        }
+
         $res = City::where('name', $request->name)->first();
         if (!empty($res)) return $this->sendError(405, '城市名重复');
         $res = City::create([
@@ -44,6 +55,8 @@ class CityController extends APIBaseController
      */
     public function citiesSelect()
     {
+
+
         $cities = City::all();
         $res = array();
         foreach ($cities as $v) {
@@ -65,6 +78,11 @@ class CityController extends APIBaseController
      */
     public function destroy($id)
     {
+        $role = Auth::guard('api')->user()->can('del_city');
+        if (empty($role)) {
+            return $this->sendError('无删除城市权限','403');
+        }
+
         $res = City::find($id)->delete();
         return $this->sendResponse($res, '删除成功');
     }
