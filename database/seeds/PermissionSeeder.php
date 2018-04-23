@@ -42,6 +42,27 @@ class PermissionSeeder extends Seeder
             'group_id' => 1,
         ]);
 
+        Permission::create([
+            'name' => 'set_top_house',
+            'guard_name' => 'web',
+            'label' => '置顶房源',
+            'group_id' => 1,
+        ]);
+
+        Permission::create([
+            'name' => 'update_business_state',
+            'guard_name' => 'web',
+            'label' => '修改房源业务状态',
+            'group_id' => 1,
+        ]);
+
+        Permission::create([
+            'name' => 'house_add_tracks',
+            'guard_name' => 'web',
+            'label' => '添加跟进',
+            'group_id' => 1,
+        ]);
+
         // 楼盘管理
         Permission::create([
             'name' => 'building_list',
@@ -118,6 +139,20 @@ class PermissionSeeder extends Seeder
             'name' => 'add_custom',
             'guard_name' => 'web',
             'label' => '添加客户',
+            'group_id' => 3,
+        ]);
+
+        Permission::create([
+            'name' => 'custom_add_tracks',
+            'guard_name' => 'web',
+            'label' => '客户添加跟进',
+            'group_id' => 3,
+        ]);
+
+        Permission::create([
+            'name' => 'matching_house',
+            'guard_name' => 'web',
+            'label' => '匹配房源',
             'group_id' => 3,
         ]);
 

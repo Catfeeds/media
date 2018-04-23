@@ -43,13 +43,17 @@ class OfficeBuildingHousesController extends APIBaseController
     )
     {
         $result = $officeBuildingHousesRepository->addOfficeBuildingHouses($request, $housesService);
-        return $this->sendResponse($result, '写字楼房源添加成功');
+        if (!empty($result)) {
+            return $this->sendResponse($result, '写字楼房源添加成功');
+        }
+        return $this->sendError('写字楼添加失败');
     }
 
     /**
      * 说明: 写字楼修改之前原始数据
      *
      * @param OfficeBuildingHouse $officeBuildingHouse
+     * @param HousesService $housesService
      * @return \Illuminate\Http\JsonResponse
      * @author 罗振
      */
