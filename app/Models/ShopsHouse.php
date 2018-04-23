@@ -12,6 +12,15 @@ class ShopsHouse extends BaseModel
         'house_type_img' => 'array',
         'indoor_img' => 'array',
         'check_in_time' => 'date',
+        'min_acreage' => 'float',
+        'constru_acreage' => 'float',
+        'wide' => 'float',
+        'depth' => 'float',
+        'storey' => 'float',
+        'rent_price' => 'float',
+        'increasing_situation' => 'float',
+        'transfer_fee' => 'float',
+        'pay_commission' => 'float'
     ];
 
     protected $appends = ['renovation_cn', 'shops_type_cn', 'public_private_cn', 'public_private_cn', 'pay_commission_unit_cn', 'payment_type_cn', 'shortest_lease_cn', 'rent_free_cn', 'frontage_cn', 'split_cn', 'orientation_cn', 'prospecting_cn', 'see_house_time_cn', 'house_proxy_type_cn', 'source_cn', 'certificate_type_cn', 'house_type_img_cn', 'indoor_img_cn', 'building_name'];

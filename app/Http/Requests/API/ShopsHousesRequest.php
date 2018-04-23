@@ -104,7 +104,7 @@ class ShopsHousesRequest extends FormRequest
                     'transfer_fee' => 'nullable|numeric|max:99999999999',
                     // 业务信息
                     'public_private' => 'required|integer|between:1,3',
-                    'house_busine_state' => 'nullable|integer|between:1,6',
+                    'house_busine_state' => 'required|integer|between:1,6',
                     'pay_commission' => 'nullable|numeric|max:9999999999',
                     'pay_commission_unit' => 'nullable|integer|between:1,2',
                     'prospecting' => 'nullable|integer|between:1,2',
@@ -153,7 +153,7 @@ class ShopsHousesRequest extends FormRequest
                     'transfer_fee' => 'nullable|numeric|max:99999999999',
                     // 业务信息
                     'public_private' => 'nullable|integer|between:1,3',
-                    'house_busine_state' => 'nullable|integer|between:1,6',
+                    'house_busine_state' => 'required|integer|between:1,6',
                     'pay_commission' => 'nullable|numeric|max:9999999999',
                     'pay_commission_unit' => 'nullable|integer|between:1,2',
                     'prospecting' => 'nullable|integer|between:1,2',

@@ -26,7 +26,7 @@ class CreateDwellingHousesTable extends Migration
             $table->tinyInteger('toilet')->nullable()->comment('N卫');
             $table->tinyInteger('kitchen')->nullable()->comment('N厨');
             $table->tinyInteger('balcony')->nullable()->comment('N阳台');
-            $table->string('constru_acreage', 32)->nullable()->comment('建筑面积');
+            $table->decimal('constru_acreage')->nullable()->comment('建筑面积');
             $table->integer('floor')->nullable()->comment('楼层');
             $table->tinyInteger('renovation')->nullable()->comment('装修: 1: 豪华装修 2: 精装修 3: 中装修 4: 间装修 5: 毛坯');
             $table->tinyInteger('orientation')->nullable()->comment('朝向: 1: 东 2: 西 3: 南 4: 北 5: 东南 6: 东北 7: 西南 8: 西北 9: 东西 10: 南北');
