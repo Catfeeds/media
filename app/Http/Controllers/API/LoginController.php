@@ -23,12 +23,12 @@ class LoginController extends APIBaseController
         LoginService $loginService
     )
     {
-        $user = User::where('name', $request->name)->first();
+        $user = User::where('tel', $request->tel)->first();
         if (empty($user)) {
             return $this->sendError('用户不存在');
         }
 
-        $passport = $loginService->applyPasswordToken($request->name, $request->password);
+        $passport = $loginService->applyPasswordToken($request->tel, $request->password);
 
         return $this->sendResponse($passport['data'], '获取token成功！');
     }

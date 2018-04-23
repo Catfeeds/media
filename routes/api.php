@@ -36,6 +36,13 @@ Route::group(['namespace' => 'API'], function () {
         // 退出登录
         Route::post('/logout', 'LoginController@logout');
 
+        /*
+        |--------------------------------------------------------------------------
+        | 用户管理
+        |--------------------------------------------------------------------------
+        */
+        Route::resource('users', 'UserController');
+
 
         /*
         |--------------------------------------------------------------------------
@@ -152,12 +159,16 @@ Route::group(['namespace' => 'API'], function () {
     */
     Route::resource('roles', 'RolesController');
 
+
     /*
     |--------------------------------------------------------------------------
-    | 角色管理
+    | element下拉格式数据
     |--------------------------------------------------------------------------
     */
     Route::get('/select_buildings', 'SelectDataController@areaBuildings');
+    Route::get('/select_building_blocks', 'SelectDataController@buildingBlocks');
+    Route::get('/select_block_houses', 'SelectDataController@blockHouses');
+    Route::get('/select_customs', 'SelectDataController@selectCustoms');
 });
 
 
