@@ -25,15 +25,22 @@ class HousesService
         }
     }
 
+    /**
+     * 说明: 通过楼座获取城市
+     *
+     * @param $BuildingBlockId
+     * @return array
+     * @author 罗振
+     */
     public function adoptBuildingBlockGetCity($BuildingBlockId)
     {
         $temp = BuildingBlock::find($BuildingBlockId);
 
         // 拼接商圈获取城市数据
-        $arr[] = $BuildingBlockId;
-        $arr[] = $temp->building->id;
-        $arr[] = $temp->building->area->id;
         $arr[] = $temp->building->area->city->id;
+        $arr[] = $temp->building->area->id;
+        $arr[] = $temp->building->id;
+        $arr[] = $BuildingBlockId;
 
         return $arr;
     }

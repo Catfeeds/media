@@ -44,10 +44,16 @@ Route::group(['namespace' => 'API'], function () {
         */
         // 住宅房源
         Route::resource('dwelling_houses', 'DwellingHousesController');
+        //住宅房源业务状态
+        Route::post('update_dwelling_business_state', 'DwellingHousesController@updateDwellingBusinessState');
         // 商铺房源
         Route::resource('shops_houses', 'ShopsHousesController');
+        //商铺房源业务状态
+        Route::post('update_shops_business_state', 'ShopsHousesController@updateShopsBusinessState');
         // 写字楼房源
         Route::resource('office_building_houses', 'OfficeBuildingHousesController');
+        // 写字楼房源业务状态修改
+        Route::post('update_office_business_state', 'OfficeBuildingHousesController@updateOfficeBusinessState');
 
         /*
         |--------------------------------------------------------------------------
