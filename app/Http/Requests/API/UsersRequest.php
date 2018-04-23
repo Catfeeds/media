@@ -4,7 +4,7 @@ namespace App\Http\Requests\API;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StorefrontsRequest extends FormRequest
+class UsersRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,22 +27,19 @@ class StorefrontsRequest extends FormRequest
         switch ($this->method()) {
             case 'POST':
                 return [
-                    'storefront_name' => 'required|max:32',
-                    'address' => 'required|max:32',
-                    'fixed_tel' => 'required|max:16',
+                    'real_name' => 'required|max:32',
+                    'nick_name' => 'required|max:32',
+                    'ascription_store' => 'required|array',
+                    'level' => 'required|integer|between:1,4',
+                    'tel' => 'required|max:16',
+                    'remark' => 'nullable|max:255',
                 ];
             case 'PUT':
                 return [
 
                 ];
             case 'PATCH':
-                {
-                    return [
-                        'storefront_name' => 'required|max:32',
-                        'address' => 'required|max:32',
-                        'fixed_tel' => 'required|max:16',
-                    ];
-                }
+
             case 'GET':
             case 'DELETE':
             default:

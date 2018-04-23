@@ -13,6 +13,9 @@ class User extends Authenticatable
 
     // 不允许集体赋值的字段
     protected $guarded = [];
+    protected $casts = [
+        'ascription_store' => 'array',
+    ];
 
     /**
      * The attributes that should be hidden for arrays.

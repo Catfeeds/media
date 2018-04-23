@@ -30,6 +30,7 @@ return [
     'add_storefronts' => 'add_storefronts',//添加门店
     'update_storefronts' => 'update_storefronts',//修改门店
     'del_storefronts' => 'del_storefronts', //删除门店
+    'add_user' => 'add_user',//添加成员
 
 
 

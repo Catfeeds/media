@@ -2,6 +2,7 @@
 namespace App\Repositories;
 
 use App\Models\Storefront;
+use Illuminate\Support\Facades\Auth;
 
 class StorefrontsRepository extends BaseRepository
 {
@@ -24,8 +25,8 @@ class StorefrontsRepository extends BaseRepository
     	return $this->model->create([
             'storefront_name' => $request->storefront_name,
             'address' => $request->address,
-            'user_id' => $request->user_id,
-            'fixed_tel' => $request->fixed_tel
+            'fixed_tel' => $request->fixed_tel,
+            'area_manager_id' => Auth::guard('api')->user()->id
     	]);
     }
 
@@ -53,7 +54,6 @@ class StorefrontsRepository extends BaseRepository
     {
         $storefront->storefront_name = $request->storefront_name;
         $storefront->address = $request->address;
-        $storefront->user_id = $request->user_id;
         $storefront->fixed_tel = $request->fixed_tel;
 
         if (!$storefront->save()) {
