@@ -6,6 +6,7 @@ use App\Models\Area;
 use App\Models\Block;
 use App\Models\City;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BlockController extends APIBaseController
 {
@@ -18,6 +19,11 @@ class BlockController extends APIBaseController
      */
     public function index(Request $request)
     {
+        $role = Auth::guard('api')->user()->can('blocks_list');
+        if(empty($role)) {
+            return $this->sendError('无商圈列表权限','403');
+        }
+
         $res = Block::paginate(10);
         return $this->sendResponse($res, '获取成功');
     }
@@ -31,6 +37,11 @@ class BlockController extends APIBaseController
      */
     public function store(Request $request)
     {
+        $role = Auth::guard('api')->user()->can('add_blocks');
+        if(empty($role)) {
+            return $this->sendError('无添加商圈权限','403');
+        }
+
         $res = Block::create([
             'name' => $request->name,
             'area_id' => $request->area_id
@@ -112,6 +123,11 @@ class BlockController extends APIBaseController
      */
     public function destroy($id)
     {
+        $role = Auth::guard('api')->user()->can('del_blocks');
+        if (empty($role)) {
+            return $this->sendError('无删除商圈权限','403');
+        }
+
         $res = Block::find($id)->delete();
         return $this->sendResponse($res, '删除成功');
     }

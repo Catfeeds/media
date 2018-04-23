@@ -116,7 +116,7 @@ class PermissionSeeder extends Seeder
         Permission::create([
             'name' => 'del_building_block',
             'guard_name' => 'web',
-            'label' => '修改楼座',
+            'label' => '删除楼座',
             'group_id' => 2,
         ]);
 

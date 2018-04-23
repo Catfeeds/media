@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Models\Area;
 use App\Models\City;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AreaController extends APIBaseController
 {
@@ -17,6 +18,11 @@ class AreaController extends APIBaseController
      */
     public function index(Request $request)
     {
+        $role = Auth::guard('api')->user()->can('area_list');
+        if (empty($role)) {
+            return $this->sendError('无区域列表权限','403');
+        }
+
         $city_id = $request->city_id??1;
         $res = Area::where('city_id', $city_id)->get();
         return $this->sendResponse($res, '获取成功');
@@ -31,6 +37,11 @@ class AreaController extends APIBaseController
      */
     public function store(Request $request)
     {
+        $role = Auth::guard('api')->user()->can('add_city');
+        if (empty($role)) {
+            return $this->sendError('无添加区域权限','403');
+        }
+
         $res = Area::where(['name' => $request->name, 'city_id' => $request->city_id])->first();
         if (!empty($res)) return $this->sendError(405, '区名重复');
 
@@ -104,6 +115,11 @@ class AreaController extends APIBaseController
      */
     public function destroy($id)
     {
+        $role = Auth::guard('api')->user()->can('del_area');
+        if (empty($role)) {
+            return $this->sendError('无删除区域权限','403');
+        }
+
         $res = Area::find($id)->delete();
         return $this->sendResponse($res, '删除成功');
     }

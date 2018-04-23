@@ -9,6 +9,7 @@ use App\Models\BuildingBlock;
 use App\Models\City;
 use App\Repositories\BuildingBlockRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BuildingBlockController extends APIBaseController
 {
@@ -37,6 +38,11 @@ class BuildingBlockController extends APIBaseController
      */
     public function allBlocks(Request $request, BuildingBlockRepository $repository)
     {
+        $role= Auth::guard('api')->user()->can('building_block_list');
+        if (empty($role)) {
+            return $this->sendError('无楼座列表权限','403');
+        }
+
         $res = $repository->getList($request->per_page, json_decode($request->condition));
         return $this->sendResponse($res, '获取成功');
     }
@@ -57,6 +63,10 @@ class BuildingBlockController extends APIBaseController
         BuildingBlockRepository $repository
     )
     {
+        $role = Auth::guard('api')->user()->can('update_building_block');
+        if (empty($role)) {
+            return $this->sendError('无修改楼座权限','403');
+        }
         $res = $repository->changeNameUnit($buildingBlock, $request);
         return $this->sendResponse($res, '修改成功');
     }
@@ -71,6 +81,11 @@ class BuildingBlockController extends APIBaseController
      */
     public function addNameUnit(BuildingBlockRequest $request, BuildingBlockRepository $repository)
     {
+        $role = Auth::guard('api')->user()->can('add_building_block');
+        if (empty($role)) {
+            return $this->sendError('无添加楼座权限','403');
+        }
+
         $res = $repository->addNameUnit($request);
         return $this->sendResponse($res, '添加成功');
     }
@@ -97,6 +112,11 @@ class BuildingBlockController extends APIBaseController
      */
     public function destroy(BuildingBlock $buildingBlock)
     {
+        $role= Auth::guard('api')->user()->can('del_building_block');
+        if (empty($role)) {
+            return $this->sendError('无删除楼座权限','403');
+        }
+
         $count = BuildingBlock::where('building_id', $buildingBlock->building_id)->get()->count();
         if ($count <= 1) return $this->sendError('该楼盘仅剩一个楼座，不能删除');
 
