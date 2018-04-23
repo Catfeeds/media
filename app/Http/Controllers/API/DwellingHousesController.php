@@ -128,4 +128,5 @@ class DwellingHousesController extends APIBaseController
         $res = $dwellingHousesRepository->updateState($request);
         return $this->sendResponse($res,'住宅房源业务状态修改成功');
     }
+    
 }
