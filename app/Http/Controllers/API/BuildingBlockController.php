@@ -37,7 +37,7 @@ class BuildingBlockController extends APIBaseController
      */
     public function allBlocks(Request $request, BuildingBlockRepository $repository)
     {
-        $res = $repository->getList($request->per_page, json_decode($request->condition));
+        $res = $repository->getList($request->per_page, $request);
         return $this->sendResponse($res, '获取成功');
     }
 
@@ -101,7 +101,7 @@ class BuildingBlockController extends APIBaseController
         if ($count <= 1) return $this->sendError('该楼盘仅剩一个楼座，不能删除');
 
         // 如果有 写字楼、住宅、商铺 不允许删除
-        if (!empty($buildingBlock->shop || !empty($buildingBlock->dWelling || !empty($buildingBlock->office))))
+        if (!empty($buildingBlock->shop->count() || !empty($buildingBlock->dWelling->count() || !empty($buildingBlock->office->count()))))
             return $this->sendError('该楼下有房源，不允许删除');
 
         $res = $buildingBlock->delete();

@@ -24,22 +24,18 @@ class BuildingBlockRepository extends BaseRepository
      * @return mixed
      * @author jacklin
      */
-    public function getList(
-        $per_page,
-        $condition
-    )
+    public function getList($per_page, $request)
     {
-        $result = $this->model->orderBy('updated_at', 'desc');
-
-        if (!empty($condition->building_id)) {
-            $buildingId = array_column(Building::find(1)->buildingBlocks->flatten()->toArray(), 'id');
-            $result = $result->where('id', $buildingId);
-        } elseif(!empty($condition->area_id)) {
-            $buildingId = array_column(Area::find($condition->area_id)->BuildingBlock->flatten()->toArray(), 'id');
-            $result = $result->whereIn('id', $buildingId);
+        $buildingBlock = $this->model->orderBy('updated_at', 'desc');
+        if (!empty($request->area_id)) {
+            // 传了城区 查城区下的楼盘 再查楼盘下的楼座
+            $buildings = Building::where('area_id', $request->area_id)->get()->pluck('id')->toArray();
+            $result = $buildingBlock->whereIn('building_id', $buildings);
         }
-
-        return $result->paginate($per_page??10);
+        if (!empty($request->building_id)) {
+            $result = $buildingBlock->where('building_id', $request->building_id);
+        }
+        return $result->paginate($per_page);
     }
 
     /**
