@@ -134,6 +134,7 @@ Route::group(['namespace' => 'API'], function () {
     |--------------------------------------------------------------------------
     */
     Route::resource('/customs', 'CustomController');
+    Route::post('/custom_status/{custom}', 'CustomController@updateStatus');
 
     // 七牛token
     Route::resource('/qiniu', 'QiNiuController');

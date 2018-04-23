@@ -61,4 +61,24 @@ class CustomController extends APIBaseController
     {
         return $this->sendResponse($custom, '获取成功');
     }
+
+    /**
+     * 说明：修改客户状态
+     *
+     * @param CustomRequest $request
+     * @param Custom $custom
+     * @param CustomRepository $repository
+     * @return \Illuminate\Http\JsonResponse
+     * @author jacklin
+     */
+    public function updateStatus
+    (
+        CustomRequest $request,
+        Custom $custom,
+        CustomRepository $repository
+    )
+    {
+        $res = $repository->updateStatus($custom, $request);
+        return $this->sendResponse($res, '修改成功');
+    }
 }

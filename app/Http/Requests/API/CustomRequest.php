@@ -67,6 +67,10 @@ class CustomRequest extends FormRequest
                     'areas' => 'nullable|array',
                     'other' => 'nullable|array'
                 ];
+            case 'updateStatus':
+                return [
+                    'status' => 'required|numeric|max:100'
+                ];
         }
     }
 }
