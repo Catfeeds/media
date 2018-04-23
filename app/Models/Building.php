@@ -12,7 +12,7 @@ class Building extends BaseModel
     ];
 
     protected $appends = [
-        'type_label', 'area_label', 'block_label', 'blocks_count', 'city_id', 'city_label'
+        'type_label', 'area_label', 'block_label', 'blocks_count', 'city_id', 'city_label', 'album_img'
     ];
 
     /**
@@ -127,5 +127,22 @@ class Building extends BaseModel
         if (empty($this->area)) return;
 
         return $this->area->city->name;
+    }
+
+    /**
+     * 说明: 户型图拼接url
+     *
+     * @return static
+     * @use house_type_img_cn
+     * @author 罗振
+     */
+    public function getAlbumImgAttribute()
+    {
+        return collect($this->album)->map(function ($img) {
+            return [
+                'name' => $img,
+                'url' => config('setting.qiniu_url') . $img . config('setting.static')
+            ];
+        })->values();
     }
 }
