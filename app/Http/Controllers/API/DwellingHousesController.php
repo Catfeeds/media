@@ -3,10 +3,13 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Requests\API\DwellingHousesRequest;
 use App\Models\DwellingHouse;
+use App\Models\Storefront;
 use App\Repositories\DwellingHousesRepository;
 use App\Services\HousesService;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Monolog\Handler\IFTTTHandler;
 
 class DwellingHousesController extends APIBaseController
 {
@@ -24,10 +27,46 @@ class DwellingHousesController extends APIBaseController
     )
     {
         // 判断用户权限
-        $role = Auth::guard('api')->user()->can('house_list');
-        if (empty($role)) {
+        $user = Auth::guard('api')->user();
+        if (empty($user->can('house_list'))) {
             return $this->sendError('没有房源列表权限', '403');
         }
+
+
+        // 总经理
+        if ($user->level == 1) {
+            // 查询所有
+        } elseif($user->level == 2) {
+            $storefront = Storefront::where('area_manager_id', $user->id)->all()->pluck('id')->toArray();
+
+            $allHouseId = DwellingHouse::whereIn('storefront', $storefront)->pluck('id')->toArray();
+        } elseif($user->level == 3) {
+            $dwellingHouseId = array();
+
+            // 查询门店的所有房源
+            // 判断是否属于店长
+            $storefront = Storefront::where('user_id', $user->id)->first();
+            if (!empty($storefront)) {
+                // 获取门店下所有店员id
+                $users = User::where('ascription_store', $storefront->id)->pluck('id')->toArray();
+
+                if (!empty($users)) {
+                    // 获取房源id
+                    $dwellingHouseId = DwellingHouse::whereIn('guardian', $users)->pluck('id')->toArray();
+                }
+
+                // 店内公盘
+                $storefrontHouse = DwellingHouse::where('storefront', $storefront->id)->pluck('id')->toArray();
+
+                $allHouseId = array_merge($dwellingHouseId, $storefrontHouse);
+            }
+
+        } elseif($user->level == 4) {
+
+        } else {
+
+    }
+
 
         $result = $dwellingHousesRepository->dwellingHousesList($request->per_page??null, json_decode($request->condition));
         return $this->sendResponse($result,'住宅写字楼列表获取成功');
@@ -148,5 +187,4 @@ class DwellingHousesController extends APIBaseController
         $res = $dwellingHousesRepository->updateState($request);
         return $this->sendResponse($res,'住宅房源业务状态修改成功');
     }
-    
 }
