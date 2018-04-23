@@ -17,6 +17,7 @@ class CreateStorefrontsTable extends Migration
             $table->increments('id');
             $table->string('storefront_name', 32)->nullable()->comment('门店名称');
             $table->string('address', 32)->nullable()->comment('门店地址');
+            $table->integer('area_manager_id')->nullable()->comment('区域经理id');
             $table->integer('user_id')->nullable()->comment('店长id');
             $table->string('fixed_tel',16)->nullable()->comment('座机');
             $table->timestamps();

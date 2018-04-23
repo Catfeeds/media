@@ -58,8 +58,8 @@ class CreateShopsHousesTable extends Migration
             $table->string('see_house_time_remark',32)->nullable()->comment('看房时间备注');
             $table->tinyInteger('certificate_type')->nullable()->comment('证件类型: 1: 房地产证 2: 购房合同 3: 购房发票 4: 抵押合同 5: 认购书 6: 预售合同 7: 回迁合同');
             $table->tinyInteger('house_proxy_type')->nullable()->comment('房源状态: 1: 独家 2: 委托');
-            $table->string('guardian', 32)->nullable()->comment('维护人');
-
+            $table->tinyInteger('guardian')->nullable()->comment('维护人');
+            $table->tinyInteger('storefront')->nullable()->comment('维护门店');
             // 房源照片
             $table->json('house_type_img')->nullable()->comment('户型图:json');
             $table->json('indoor_img')->nullable()->comment('室内图:json');
