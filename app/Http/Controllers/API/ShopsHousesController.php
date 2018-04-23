@@ -42,7 +42,11 @@ class ShopsHousesController extends APIBaseController
     )
     {
         $result = $shopsHousesRepository->addShopsHouses($request, $housesService);
-        return $this->sendResponse($result,'商铺房源添加成功!');
+        if (!empty($result)) {
+            return $this->sendResponse($result,'商铺房源添加成功!');
+        }
+
+        return $this->sendError('商铺房源添加失败');
     }
 
     /**

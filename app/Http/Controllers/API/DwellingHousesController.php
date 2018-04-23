@@ -6,10 +6,18 @@ use App\Models\BuildingBlock;
 use App\Models\DwellingHouse;
 use App\Repositories\DwellingHousesRepository;
 use App\Services\HousesService;
+use App\Services\PermissionsService;
 use Illuminate\Http\Request;
 
 class DwellingHousesController extends APIBaseController
 {
+    protected $permissionsService;
+
+    public function __construct(PermissionsService $permissionsService)
+    {
+        $this->permissionsService = $permissionsService;
+    }
+
     /**
      * 说明: 住宅房源列表
      *
@@ -23,6 +31,11 @@ class DwellingHousesController extends APIBaseController
         DwellingHousesRepository $dwellingHousesRepository
     )
     {
+        $userPermission = $this->permissionsService->getUserPermission(config('permission.house_list'));
+        if (!$userPermission) {
+            return $this->sendError('没有房源列表权限', '403');
+        }
+
         $result = $dwellingHousesRepository->dwellingHousesList($request->per_page??null, json_decode($request->condition));
         return $this->sendResponse($result,'住宅写字楼列表获取成功');
     }

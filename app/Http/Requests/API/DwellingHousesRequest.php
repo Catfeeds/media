@@ -97,13 +97,13 @@ class DwellingHousesRequest extends FormRequest
                     // 租赁信息
                     'rent_price' => 'required|numeric|max:9999999999',
                     'payment_type' => 'required|integer|between:1,12',
-                    'renting_style' => 'nullable|integer|between:1,2',
-                    'check_in_time' => 'date',
+                    'renting_style' => 'required|integer|between:1,2',
+                    'check_in_time' => 'nullable|date',
                     'shortest_lease' => 'nullable|integer|between:1,12',
                     'cost_detail' => 'nullable|array',
                     // 业务信息
                     'public_private' => 'required|between:1,3',
-                    'house_busine_state' => 'required|integer|between:1,6',
+                    'house_busine_state' => 'nullable|integer|between:1,6',
                     'pay_commission' => 'nullable|numeric|max:9999999999',
                     'pay_commission_unit' => 'nullable|integer|between:1,2',
                     'prospecting' => 'nullable|integer|between:1,2',
@@ -144,7 +144,7 @@ class DwellingHousesRequest extends FormRequest
                     'rent_price' => 'nullable|numeric|max:9999999999',
                     'payment_type' => 'nullable|integer|between:1,12',
                     'renting_style' => 'nullable|integer|between:1,2',
-                    'check_in_time' => 'date',
+                    'check_in_time' => 'nullable|date',
                     'shortest_lease' => 'nullable|integer|between:1,12',
                     // 业务信息
                     'public_private' => 'nullable|integer|between:1,3',
