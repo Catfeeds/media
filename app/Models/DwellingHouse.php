@@ -447,7 +447,6 @@ class DwellingHouse extends BaseModel
 
         if (empty($this->guardian)) {
             $ownerInfo->tel = '******';
-
             return $ownerInfo;
         } else {
             return $ownerInfo;
