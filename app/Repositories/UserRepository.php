@@ -22,7 +22,17 @@ class UserRepository extends BaseRepository
      */
     public function userList($request)
     {
-        return $this->model->paginate(10);
+        $result = $this->model->where('level', '!=', 1);
+
+        if (!empty($request->shop_id)) {
+            $result = $result->where('ascription_store', $request->shop_id);
+        }
+
+        if (!empty($request->name)) {
+            $result = $result->where('real_name', $request->name)->orWhere('nick_name', $request->name);
+        }
+
+        return $result->paginate($request->per_page??10);
     }
 
     /**
@@ -48,15 +58,16 @@ class UserRepository extends BaseRepository
             if (!$user) {
                 throw new \Exception('用户添加失败');
             }
-            if($user->level != 4) {
-                foreach($request->ascription_store as $v) {
-                    $res = Storefront::where('id',$v)->update(['user_id'=>$user->id]);
-                    if (empty($res)) {
-                        throw new \Exception('区域经理/店长关联店面失败');
-                    }
+
+            if ($request->level == 3) {
+                $storefront = Storefront::where('id', $request->ascription_store)->update(['user_id' => $user->id]);
+                if (!$storefront) {
+                    throw new \Exception('添加店长失败');
                 }
             }
-            $user->assignRole($request->role);
+
+            // $request->level
+            $user->assignRole(1);
             \DB::commit();
             return true;
         } catch (\Exception $exception) {
@@ -86,15 +97,14 @@ class UserRepository extends BaseRepository
             if (!$user->save()) {
                 throw new \Exception('用户修改失败');
             }
-            if($user->level != 4) {
-                foreach($request->ascription_store as $v) {
-                    $res = Storefront::where('id',$v)->update(['user_id'=>$user->id]);
-                    if (empty($res)) {
-                        throw new \Exception('区域经理/店长关联店面失败');
-                    }
+            if ($request->level == 3) {
+                $storefront = Storefront::where('id', $request->ascription_store)->update(['user_id' => $user->id]);
+                if (!$storefront) {
+                    throw new \Exception('添加店长失败');
                 }
             }
-            $user->assignRole($request->role);
+            // $request->level
+            $user->assignRole(1);
             \DB::commit();
             return true;
         } catch (\Exception $exception) {
@@ -146,7 +156,7 @@ class UserRepository extends BaseRepository
      */
     public function getAllAreaManager()
     {
-        return $this->model->where('level', 2)->pluck('real_name', 'id');
+        return $this->model->where('level', 2)->get();
     }
 
 }

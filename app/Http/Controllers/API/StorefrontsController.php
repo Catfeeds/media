@@ -9,7 +9,6 @@ use App\Http\Requests\API\StorefrontsRequest;
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 
-
 class StorefrontsController extends APIBaseController
 {
     /**
@@ -45,7 +44,14 @@ class StorefrontsController extends APIBaseController
         UserRepository $userRepository
     )
     {
-        return $this->sendResponse($userRepository->getAllAreaManager(),'获取区域经理');
+        $res= $userRepository->getAllAreaManager();
+         $result= $res->map(function($res) {
+            return [
+                'label' => $res->real_name,
+                'value' => $res->id
+            ];
+        });
+        return $this->sendResponse($result,'区域经理信息获取成功');
 	}
 
     /**
@@ -77,7 +83,7 @@ class StorefrontsController extends APIBaseController
      * @return \Illuminate\Http\JsonResponse
      * @author 刘坤涛
      */
-        public function edit(Storefront $storefront)
+     public function edit(Storefront $storefront)
     {
         return $this->sendResponse($storefront,'门店修改之前原始数据');
     }
@@ -124,6 +130,24 @@ class StorefrontsController extends APIBaseController
         return $this->sendResponse($res,'删除成功');
     }
 
-
+    /**
+     * 说明: 获取所有门店信息
+     *
+     * @param StorefrontsRepository $storefrontsRepository
+     * @return \Illuminate\Http\JsonResponse
+     * @author 罗振
+     */
+    public function getAllStorefrontsInfo(
+        StorefrontsRepository $storefrontsRepository
+    )
+    {
+        $result = $storefrontsRepository->getAllStorefrontsInfo()->map(function($v) {
+            return [
+                'label' => $v->storefront_name,
+                'value' => $v->id
+            ];
+        });
+        return $this->sendResponse($result,'获取所有门店信息成功');
+    }
 }
 

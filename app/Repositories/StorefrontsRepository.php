@@ -2,7 +2,6 @@
 namespace App\Repositories;
 
 use App\Models\Storefront;
-use Illuminate\Support\Facades\Auth;
 
 class StorefrontsRepository extends BaseRepository
 {
@@ -26,7 +25,7 @@ class StorefrontsRepository extends BaseRepository
             'storefront_name' => $request->storefront_name,
             'address' => $request->address,
             'fixed_tel' => $request->fixed_tel,
-            'area_manager_id' => $request->id
+            'area_manager_id' => $request->area_manager_id
     	]);
     }
 
@@ -39,7 +38,7 @@ class StorefrontsRepository extends BaseRepository
      */
     public function getStorefrontsList($request)
     {
-        return $this->model->paginate(10);
+        return $this->model->paginate($request->per_page);
     }
 
     /**
@@ -55,11 +54,23 @@ class StorefrontsRepository extends BaseRepository
         $storefront->storefront_name = $request->storefront_name;
         $storefront->address = $request->address;
         $storefront->fixed_tel = $request->fixed_tel;
+        $storefront->area_manager_id = $request->area_manager_id;
 
         if (!$storefront->save()) {
             return false;
         }
 
         return true;
+    }
+
+    /**
+     * 说明: 获取所有门店信息
+     *
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     * @author 罗振
+     */
+    public function getAllStorefrontsInfo()
+    {
+        return $this->model->all();
     }
 }

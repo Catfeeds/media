@@ -2,7 +2,10 @@
 
 namespace App\Http\Requests\API;
 
+use App\Models\Storefront;
+use App\User;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UsersRequest extends FormRequest
 {
@@ -27,18 +30,48 @@ class UsersRequest extends FormRequest
         switch ($this->route()->getActionMethod()) {
             case 'store':
                 return [
-                    'real_name' => 'required|max:32',
+                    'real_name' => [
+                        'required',
+                        'max:32',
+                        Rule::notIn(
+                            User::all()->pluck('real_name')->toArray()
+                        )
+                    ],
                     'nick_name' => 'required|max:32',
-                    'ascription_store' => 'required|array',
+                    'ascription_store' => [
+                        'nullable',
+                        'integer',
+                        Rule::in(
+                            Storefront::all()->pluck('id')->toArray()
+                        )
+                    ],
                     'level' => 'required|integer|between:1,4',
-                    'tel' => 'required|max:16',
+                    'tel' => [
+                        'required',
+                        'max:16',
+                        Rule::notIn(
+                            User::all()->pluck('tel')->toArray()
+                        )
+                    ],
                     'remark' => 'nullable|max:255',
                 ];
             case 'update':
                 return [
-                    'real_name' => 'required|max:32',
+                    'real_name' => [
+                        'required',
+                        'max:32',
+                        Rule::notIn(
+                            User::all()->pluck('real_name')->toArray()
+                        )
+                    ],
                     'nick_name' => 'required|max:32',
-                    'ascription_store' => 'required|array',
+                    'ascription_store' => [
+                        'nullable',
+                        'integer',
+                        Rule::in(
+                            Storefront::all()->pluck('id')->toArray()
+                        )
+                    ],
                     'level' => 'required|integer|between:1,4',
                     'remark' => 'nullable|max:255',
                 ];
@@ -48,7 +81,13 @@ class UsersRequest extends FormRequest
                 ];
             case 'updateTel':
                 return [
-                    'tel' => 'required|max:16',
+                    'tel' => [
+                        'required',
+                        'max:16',
+                        Rule::notIn(
+                            User::all()->pluck('tel')->toArray()
+                        )
+                    ],
                 ];
             default:
                 {

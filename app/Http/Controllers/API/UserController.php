@@ -194,6 +194,7 @@ class UserController extends APIBaseController
         UsersService $usersService
     )
     {
-        return $usersService->getInfo($request);
+        $result = $usersService->getInfo($request);
+        return $this->sendResponse($result,'获取门店信息成功');
     }
 }
