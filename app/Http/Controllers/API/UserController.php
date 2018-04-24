@@ -194,7 +194,6 @@ class UserController extends APIBaseController
         UsersService $usersService
     )
     {
-
         $result = $usersService->getInfo($request)->map(function($v) {
             return [
               'label' => $v->storefront_name,

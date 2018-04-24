@@ -12,6 +12,7 @@ class UsersService
      * 说明: 获取门店信息
      *
      * @param $request
+     * @return bool
      * @author 罗振
      */
     public function getInfo(
@@ -29,7 +30,7 @@ class UsersService
             return Storefront::where([
                 'area_manager_id' => $user->id,
                 'user_id' => null
-            ])->pluck('storefront_name', 'id');
+            ])->get();
         } elseif ($user->level == 2 && $request->level == 4) {
             return Storefront::where('area_manager_id', $user->id)->get();
         } elseif ($user->level == 3 && $request->level == 4) {
