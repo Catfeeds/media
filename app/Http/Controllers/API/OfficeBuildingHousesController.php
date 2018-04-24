@@ -7,6 +7,7 @@ use App\Models\OfficeBuildingHouse;
 use App\Repositories\OfficeBuildingHousesRepository;
 use App\Services\HousesService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class OfficeBuildingHousesController extends APIBaseController
 {
@@ -23,6 +24,12 @@ class OfficeBuildingHousesController extends APIBaseController
         OfficeBuildingHousesRepository $officeBuildingHousesRepository
     )
     {
+        // 判断用户权限
+        $user = Auth::guard('api')->user();
+        if (empty($user->can('house_list'))) {
+            return $this->sendError('没有房源列表权限', '403');
+        }
+
         $result = $officeBuildingHousesRepository->officeBuildingHousesList($request->per_page??null, json_decode($request->condition));
         return $this->sendResponse($result, '写字楼房源列表获取成功');
     }
@@ -42,6 +49,11 @@ class OfficeBuildingHousesController extends APIBaseController
         HousesService $housesService
     )
     {
+        $role = Auth::guard('api')->user()->can('add_house');
+        if(empty($role)) {
+            return $this->sendError('没有房源添加权限','403');
+        }
+
         $result = $officeBuildingHousesRepository->addOfficeBuildingHouses($request, $housesService);
         if (!empty($result)) {
             return $this->sendResponse($result, '写字楼房源添加成功');
@@ -82,6 +94,11 @@ class OfficeBuildingHousesController extends APIBaseController
         OfficeBuildingHouse $officeBuildingHouse
     )
     {
+        $role = Auth::guard('api')->user()->can('update_house');
+        if(empty($role)) {
+            return $this->sendError('没有房源修改权限','403');
+        }
+
         if (!empty($result = $officeBuildingHousesRepository->updateOfficeBuildingHouses($officeBuildingHouse, $request))) {
             return $this->sendResponse($result, '写字楼房源修改成功');
         }
@@ -101,6 +118,11 @@ class OfficeBuildingHousesController extends APIBaseController
         OfficeBuildingHouse $officeBuildingHouse
     )
     {
+        $role = Auth::guard('api')->user()->can('del_house');
+        if(empty($role)) {
+            return $this->sendError('没有房源删除权限','403');
+        }
+
         $res = $officeBuildingHouse->delete();
         return $this->sendResponse($res, '删除成功');
     }
@@ -119,6 +141,11 @@ class OfficeBuildingHousesController extends APIBaseController
         OfficeBuildingHousesRequest $request
     )
     {
+        $role = Auth::guard('api')->user()->can('update_business_state');
+        if(empty($role)) {
+            return $this->sendError('没有修改住宅房源业务状态权限','403');
+        }
+
         $res = $buildingHousesRepository->updateState($request);
         return $this->sendResponse($res, '写字楼房源业务状态修改成功');
     }

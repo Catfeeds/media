@@ -8,6 +8,12 @@ use Illuminate\Support\Facades\Auth;
 
 class UsersService
 {
+    /**
+     * 说明:获取添加成员等级和所有未归属的门店信息
+     *
+     * @return array
+     * @author 刘坤涛
+     */
     public function getInfo()
     {
         $item = array();

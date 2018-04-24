@@ -22,6 +22,12 @@ class ShopsHousesController extends APIBaseController
         ShopsHousesRepository $shopsHousesRepository
     )
     {
+        // 判断用户权限
+        $user = Auth::guard('api')->user();
+        if (empty($user->can('house_list'))) {
+            return $this->sendError('没有房源列表权限', '403');
+        }
+
         $result = $shopsHousesRepository->shopsHousesList($request->per_page??null, json_decode($request->condition));
         return $this->sendResponse($result,'商铺房源列表获取成功!');
     }
@@ -41,6 +47,11 @@ class ShopsHousesController extends APIBaseController
         HousesService $housesService
     )
     {
+        $role = Auth::guard('api')->user()->can('add_house');
+        if(empty($role)) {
+            return $this->sendError('没有房源添加权限','403');
+        }
+
         $result = $shopsHousesRepository->addShopsHouses($request, $housesService);
         if (!empty($result)) {
             return $this->sendResponse($result,'商铺房源添加成功!');
@@ -82,6 +93,11 @@ class ShopsHousesController extends APIBaseController
         ShopsHouse $shopsHouse
     )
     {
+        $role = Auth::guard('api')->user()->can('update_house');
+        if(empty($role)) {
+            return $this->sendError('没有房源修改权限','403');
+        }
+
         if (!empty($result = $shopsHousesRepository->updateShopsHouses($shopsHouse, $request))) {
             return $this->sendResponse($result,'商铺房源修改成功!');
         }
@@ -101,6 +117,11 @@ class ShopsHousesController extends APIBaseController
         ShopsHouse $shopsHouse
     )
     {
+        $role = Auth::guard('api')->user()->can('del_house');
+        if(empty($role)) {
+            return $this->sendError('没有房源删除权限','403');
+        }
+
         $res = $shopsHouse->delete();
         return $this->sendResponse($res, '删除成功');
     }
@@ -119,6 +140,11 @@ class ShopsHousesController extends APIBaseController
         ShopsHousesRequest $request
     )
     {
+        $role = Auth::guard('api')->user()->can('update_business_state');
+        if(empty($role)) {
+            return $this->sendError('没有修改住宅房源业务状态权限','403');
+        }
+
         $res = $shopsHousesRepository->updateState($request);
         return $this->sendResponse($res, '商铺房源业务状态修改成功');
     }
