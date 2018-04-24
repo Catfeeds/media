@@ -106,9 +106,8 @@ class UserController extends APIBaseController
     )
     {
         if(empty(Common::user()->can('update_user'))) {
-            return $this->sendError('无修改成员权限','403');
+            return $this->sendError('无修改成员权限', '403');
         }
-
         $res = $userRepository->updateUser($user, $request);
         if($res) {
             return $this->sendResponse($res, '修改成员成功');

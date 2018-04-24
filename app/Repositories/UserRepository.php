@@ -91,7 +91,7 @@ class UserRepository extends BaseRepository
         try {
                 $user->real_name = $request->real_name;
                 $user->nick_name = $request->nick_name;
-                $user->ascription_store = $request->ascription_store;
+                $user->ascription_store = $request->ascription_store??null;
                 $user->level = $request->level;
                 $user->remark = $request->remark;
             if (!$user->save()) {
@@ -104,7 +104,7 @@ class UserRepository extends BaseRepository
                 }
             }
             // $request->level
-            $user->assignRole(1);
+            $user->syncRoles(1);
             \DB::commit();
             return true;
         } catch (\Exception $exception) {
