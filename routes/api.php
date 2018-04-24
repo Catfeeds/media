@@ -16,9 +16,9 @@ use Illuminate\Http\Request;
 //Route::middleware('auth:api')->get('/user', function (Request $request) {
 //    return $request->user();
 //});
-header('Access-Control-Allow-Origin:*');
+header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Headers:X-Token,Content-Type,Authorization');
-header('Access-Control-Allow-Methods:*');
+header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
 
 //Route::group(['domain' => 'admin.agency.com', 'namespace' => 'API'], function () {
 Route::group(['namespace' => 'API'], function () {
@@ -139,6 +139,7 @@ Route::group(['namespace' => 'API'], function () {
     |--------------------------------------------------------------------------
     */
     Route::resource('/customs', 'CustomController');
+    Route::post('/custom_status/{custom}', 'CustomController@updateStatus');
 
     // 七牛token
     Route::resource('/qiniu', 'QiNiuController');

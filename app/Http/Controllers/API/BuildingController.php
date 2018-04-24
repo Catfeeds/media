@@ -109,6 +109,7 @@ class BuildingController extends APIBaseController
             return $this->sendError('无删除楼盘权限','403');
         }
 
+        if (!empty($building->buildingBlocks)) return $this->sendError('该楼盘下有楼座信息，不能删除');
         $res = $building->delete();
         return $this->sendResponse($res, '删除成功');
     }

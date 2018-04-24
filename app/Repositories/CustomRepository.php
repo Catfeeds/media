@@ -178,4 +178,18 @@ class CustomRepository extends BaseRepository
         \DB::commit();
         return $res;
     }
+
+    /**
+     * 说明：修改客户状态
+     *
+     * @param $model
+     * @param $request
+     * @return mixed
+     * @author jacklin
+     */
+    public function updateStatus($model, $request)
+    {
+        $model->status = $request->status;
+        return $model->save();
+    }
 }

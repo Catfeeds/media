@@ -14,7 +14,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        MakeRepository::class
+        MakeRepository::class,
+        '\App\Console\Commands\AddManager',// 添加管理员
     ];
 
     /**

@@ -103,7 +103,7 @@ class DwellingHousesRequest extends FormRequest
                     'cost_detail' => 'nullable|array',
                     // 业务信息
                     'public_private' => 'required|between:1,3',
-                    'house_busine_state' => 'nullable|integer|between:1,6',
+                    'house_busine_state' => 'required|integer|between:1,6',
                     'pay_commission' => 'nullable|numeric|max:9999999999',
                     'pay_commission_unit' => 'nullable|integer|between:1,2',
                     'prospecting' => 'nullable|integer|between:1,2',
@@ -147,8 +147,8 @@ class DwellingHousesRequest extends FormRequest
                     'check_in_time' => 'nullable|date',
                     'shortest_lease' => 'nullable|integer|between:1,12',
                     // 业务信息
-                    'public_private' => 'nullable|integer|between:1,3',
-                    'house_busine_state' => 'nullable|integer|between:1,6',
+                    'public_private' => 'required|integer|between:1,3',
+                    'house_busine_state' => 'required|integer|between:1,6',
                     'pay_commission' => 'nullable|numeric|max:9999999999',
                     'pay_commission_unit' => 'nullable|integer|between:1,2',
                     'prospecting' => 'nullable|integer|between:1,2',

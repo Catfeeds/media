@@ -43,7 +43,7 @@ class BuildingBlockController extends APIBaseController
             return $this->sendError('无楼座列表权限','403');
         }
 
-        $res = $repository->getList($request->per_page, json_decode($request->condition));
+        $res = $repository->getList($request->per_page, $request);
         return $this->sendResponse($res, '获取成功');
     }
 
@@ -117,6 +117,10 @@ class BuildingBlockController extends APIBaseController
 
         $count = BuildingBlock::where('building_id', $buildingBlock->building_id)->get()->count();
         if ($count <= 1) return $this->sendError('该楼盘仅剩一个楼座，不能删除');
+
+        // 如果有 写字楼、住宅、商铺 不允许删除
+        if (!empty($buildingBlock->shop->count() || !empty($buildingBlock->dWelling->count() || !empty($buildingBlock->office->count()))))
+            return $this->sendError('该楼下有房源，不允许删除');
 
         $res = $buildingBlock->delete();
         return $this->sendResponse($res, '删除成功');
