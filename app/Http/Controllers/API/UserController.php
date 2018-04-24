@@ -194,6 +194,11 @@ class UserController extends APIBaseController
         UsersService $usersService
     )
     {
-        return $usersService->getInfo($request);
+        return $usersService->
+
+
+
+
+        getInfo($request);
     }
 }

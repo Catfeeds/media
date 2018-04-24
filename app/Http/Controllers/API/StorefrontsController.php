@@ -45,6 +45,7 @@ class StorefrontsController extends APIBaseController
         UserRepository $userRepository
     )
     {
+
             $res= $userRepository->getAllAreaManager();
              $result= $res->map(function($res) {
                 return [
@@ -130,7 +131,5 @@ class StorefrontsController extends APIBaseController
         $res = $storefront->delete();
         return $this->sendResponse($res,'删除成功');
     }
-
-
 }
 
