@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\Area;
 use App\Models\Block;
+use App\Models\Building;
 use Illuminate\Console\Command;
 
 class chulouBlock extends Command
@@ -57,6 +58,25 @@ class chulouBlock extends Command
                     'area_id' => $areaId
                 ]);
             }
+        }
+
+        $buildings = \DB::connection('chulou')->table('data_building_info')->get();
+
+        foreach ($buildings as $building) {
+            // 拿到城区
+            $area = Area::where('name', $building->area)->first();
+            // 拿到商圈
+            $block = Block::where('name', $building->block)->first();
+            $data = array(
+                'name' => $building->name,
+                'type' => 2,
+                'area_id' => $area->id,
+                'block_id' => $block->id,
+                'address' => $building->address,
+                'acreage' => $building->acreage,
+                'gps' => json_decode('[' . $building->gps . ']')
+            );
+            Building::create($data);
         }
     }
 }

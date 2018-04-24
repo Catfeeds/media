@@ -21,8 +21,8 @@ class CreateBuildingsTable extends Migration
             $table->json('gps')->nullable()->comment('gps定位');
             $table->tinyInteger('type')->nullable()->comment('1:住宅 2：写字楼 3：商铺' );
 
-            $table->tinyInteger('area_id')->nullable()->comment('关联城区id');
-            $table->tinyInteger('block_id')->nullable()->comment('商圈id');
+            $table->integer('area_id')->nullable()->comment('关联城区id');
+            $table->integer('block_id')->nullable()->comment('商圈id');
             $table->string('address', 128)->nullable()->comment('具体地址');
 
             $table->string('developer', 128)->nullable()->comment('开发商');

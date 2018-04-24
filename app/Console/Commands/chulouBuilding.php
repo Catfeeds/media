@@ -55,7 +55,7 @@ class chulouBuilding extends Command
                 'block_id' => $block->id,
                 'address' => $building->address,
                 'acreage' => $building->acreage,
-                'gps' => '[' . $building->gps . ']'
+                'gps' => json_decode('[' . $building->gps . ']')
             );
             Building::create($data);
         }

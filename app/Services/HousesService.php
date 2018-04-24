@@ -58,6 +58,9 @@ class HousesService
     public function getCanSeeHouseId($user)
     {
         // 总经理
+        if ($user->level ==1 ) {
+            return [];
+        }
         if($user->level == 2) {
             // 获取区域经理下面的门店
             $storefront = Storefront::where('area_manager_id', $user->id)->pluck('id')->toArray();
