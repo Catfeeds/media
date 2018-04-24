@@ -104,51 +104,51 @@ class UserController extends APIBaseController
         return $this->sendError('修改成员失败');
     }
 
+
     /**
      * 说明:修改密码
      *
-     * @param User $user
      * @param UserRepository $userRepository
      * @param UsersRequest $request
+     * @param User $user
      * @return \Illuminate\Http\JsonResponse
      * @author 刘坤涛
      */
     public function updatePassword
     (
-        User $user,
         UserRepository $userRepository,
-        UsersRequest $request
-
+        UsersRequest $request,
+        User $user
     )
     {
         $res = $userRepository->changePassword($user, $request);
         if ($res) {
             return $this->sendResponse($res,'密码修改成功');
         }
-        return $this->sendError('密码更新失败');
+        return $this->sendError('密码修改失败');
     }
 
     /**
      * 说明:修改电话
      *
-     * @param User $user
-     * @param UsersRequest $request
      * @param UserRepository $userRepository
+     * @param UsersRequest $request
+     * @param User $user
      * @return \Illuminate\Http\JsonResponse
      * @author 刘坤涛
      */
     public function updateTel
     (
-        User $user,
+        UserRepository $userRepository,
         UsersRequest $request,
-        UserRepository $userRepository
+        User $user
     )
     {
-        $res = $userRepository->changeTel($user, $request);
+        $res = $userRepository->changeTel($user ,$request);
         if ($res) {
             return $this->sendResponse($res,'电话修改成功');
         }
-        return $this->sendError('电话修改失败');
+        return $this->sendError('修改电话失败');
     }
 
 }

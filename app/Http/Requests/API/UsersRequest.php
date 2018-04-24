@@ -24,8 +24,8 @@ class UsersRequest extends FormRequest
      */
     public function rules()
     {
-        switch ($this->method()) {
-            case 'POST':
+        switch ($this->route()->getActionMethod()) {
+            case 'store':
                 return [
                     'real_name' => 'required|max:32',
                     'nick_name' => 'required|max:32',
@@ -34,14 +34,22 @@ class UsersRequest extends FormRequest
                     'tel' => 'required|max:16',
                     'remark' => 'nullable|max:255',
                 ];
-            case 'PUT':
+            case 'update':
                 return [
-
+                    'real_name' => 'required|max:32',
+                    'nick_name' => 'required|max:32',
+                    'ascription_store' => 'required|array',
+                    'level' => 'required|integer|between:1,4',
+                    'remark' => 'nullable|max:255',
                 ];
-            case 'PATCH':
-
-            case 'GET':
-            case 'DELETE':
+            case 'updatePassword':
+                return [
+                    'password' => 'required|min:6|max:18',
+                ];
+            case 'updateTel':
+                return [
+                    'tel' => 'required|max:16',
+                ];
             default:
                 {
                     return [];

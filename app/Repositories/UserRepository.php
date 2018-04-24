@@ -114,15 +114,15 @@ class UserRepository extends BaseRepository
      */
     public function changePassword($user, $request)
     {
-         $user->password= bcrypt($request->password);
-         if($user->save()) {
+         $user->password = bcrypt($request->password);
+         if ($user->save()) {
              return true;
          }
          return false;
     }
 
     /**
-     * 说明:修改手机号
+     * 说明:修改电话
      *
      * @param $user
      * @param $request
