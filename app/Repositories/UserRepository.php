@@ -138,4 +138,15 @@ class UserRepository extends BaseRepository
         return false;
     }
 
+    /**
+     * 说明: 获取所有区域经理
+     *
+     * @return mixed
+     * @author 罗振
+     */
+    public function getAllAreaManager()
+    {
+        return $this->model->where('level', 2)->pluck('real_name', 'id');
+    }
+
 }

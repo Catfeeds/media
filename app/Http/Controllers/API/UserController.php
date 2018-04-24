@@ -33,19 +33,7 @@ class UserController extends APIBaseController
         $res = $userRepository->userList($request);
         return $this->sendResponse($res,'成员列表获取成功');
     }
-
-    /**
-     * 说明:获取添加成员等级和所有未归属的门店信息
-     *
-     * @param UsersService $service
-     * @return array
-     * @author 刘坤涛
-     */
-    public function create(UsersService $service)
-    {
-        return $res = $service->getInfo();
-    }
-
+    
     /**
      * 说明:添加成员
      *
@@ -178,5 +166,21 @@ class UserController extends APIBaseController
 
         $res = $user->delete();
         return $this->sendResponse($res,'成员删除成功');
+    }
+
+    /**
+     * 说明: 获取门店信息
+     *
+     * @param Request $request
+     * @param UsersService $usersService
+     * @return mixed
+     * @author 罗振
+     */
+    public function getStoreFrontsInfo(
+        Request $request,
+        UsersService $usersService
+    )
+    {
+        return $usersService->getInfo($request);
     }
 }

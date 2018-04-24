@@ -2,42 +2,38 @@
 
 namespace App\Services;
 
-
+use App\Handler\Common;
 use App\Models\Storefront;
-use Illuminate\Support\Facades\Auth;
 
 class UsersService
 {
     /**
-     * 说明:获取添加成员等级和所有未归属的门店信息
+     * 说明: 获取门店信息
      *
-     * @return array
-     * @author 刘坤涛
+     * @param $request
+     * @author 罗振
      */
-    public function getInfo()
+    public function getInfo(
+        $request
+    )
     {
-        $item = array();
-        //获取当前登录用户的等级
-        $current_level = Auth::guard('api')->user()->level;
-        switch ($current_level) {
-            case '1' :
-                $item['level_name'] = '区域经理';
-                $item['level']= 2;
-                break;
-            case '2':
-                $item['level_name'] = '门店店长';
-                $item['level']= 3;
-                break;
-            case  '3':
-                $item['level_name'] = '业务员';
-                $item['level']= 4;
-                break;
-            default:
-                break;
+        $user = Common::user();
+
+        if ($user->level == 1 && $request->level == 2) {
+            return ;
+        } elseif ($user->level == 1 && $request->level == 3) {
+            return Storefront::where('user_id', null)->pluck('storefront_name', 'id');
+        } elseif ($user->level == 1 && $request->level == 4) {
+            return Storefront::where([])->pluck('storefront_name', 'id');
+        } elseif ($user->level == 2 && $request->level == 3) {
+            return Storefront::where([
+                'area_manager_id' => $user->id,
+                'user_id' => null
+            ])->pluck('storefront_name', 'id');
+        } elseif ($user->level == 2 && $request->level == 4) {
+            return Storefront::where('area_manager_id', $user->id)->pluck('storefront_name', 'id');
+        } elseif ($user->level == 3 && $request->level == 4) {
+            return Storefront::where('user_id', $user->id)->pluck('storefront_name', 'id');
         }
-        //获取所有未归属的门店Id和对应门店名称
-        $stroefromts = Storefront::where('user_id',null)->get(['id','storefront_name'])->toArray();
-        $item['storefront'] = $stroefromts;
-        return $item;
-   }
+    }
 }

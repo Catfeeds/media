@@ -46,7 +46,8 @@ Route::group(['namespace' => 'API'], function () {
         Route::post('update_password/{user}','UserController@updatePassword');
         //更新用户电话
         Route::post('update_tel/{user}','UserController@updateTel');
-
+        // 获取所属门店
+        Route::post('getStoreFrontsInfo','UserController@getStoreFrontsInfo');
 
     /*
     |--------------------------------------------------------------------------

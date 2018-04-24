@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Models\Storefront;
 use App\Repositories\StorefrontsRepository;
 use App\Http\Requests\API\StorefrontsRequest;
+use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -32,6 +33,20 @@ class StorefrontsController extends APIBaseController
 
 	    $res = $storefrontsRepository->getStorefrontsList($request);
 	    return $this->sendResponse($res,'门店列表获取成功');
+	}
+
+    /**
+     * 说明: 获取区域经理
+     *
+     * @param UserRepository $userRepository
+     * @return mixed
+     * @author 罗振
+     */
+    public function create(
+        UserRepository $userRepository
+    )
+    {
+        return $userRepository->getAllAreaManager();
 	}
 
     /**
