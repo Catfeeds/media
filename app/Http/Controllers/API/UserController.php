@@ -197,7 +197,7 @@ class UserController extends APIBaseController
         $result = $usersService->getInfo($request)->map(function($v) {
             return [
               'label' => $v->storefront_name,
-              'id'  => $v->id
+              'value'  => $v->id
             ];
         });
         return $this->sendResponse($result,'获取门店信息成功');
