@@ -33,10 +33,7 @@ class StorefrontsRequest extends FormRequest
                     'address' => 'required|max:32',
                     'user_id' => [
                         'required',
-                        'integer',
-//                        Rule::in(
-//                            User::all()->pluck('id')->toArray()
-//                        )
+                        'integer'
                     ],
                     'fixed_tel' => 'required|max:16',
                 ];

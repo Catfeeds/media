@@ -81,4 +81,17 @@ class CustomController extends APIBaseController
         $res = $repository->updateStatus($custom, $request);
         return $this->sendResponse($res, '修改成功');
     }
+
+    /**
+     * 说明：删除客户
+     *
+     * @param Custom $custom
+     * @return \Illuminate\Http\JsonResponse
+     * @author jacklin
+     */
+    public function destroy(Custom $custom)
+    {
+        $res = $custom->delete();
+        return $this->sendResponse($res, '删除成功');
+    }
 }

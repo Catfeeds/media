@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-class ShopsHouse extends BaseModel
+class ShopsHouse extends House
 {
     protected $casts = [
         'owner_info' => 'array',
@@ -23,7 +23,18 @@ class ShopsHouse extends BaseModel
         'pay_commission' => 'float'
     ];
 
-    protected $appends = ['renovation_cn', 'shops_type_cn', 'public_private_cn', 'public_private_cn', 'pay_commission_unit_cn', 'payment_type_cn', 'shortest_lease_cn', 'rent_free_cn', 'frontage_cn', 'split_cn', 'orientation_cn', 'prospecting_cn', 'see_house_time_cn', 'house_proxy_type_cn', 'source_cn', 'certificate_type_cn', 'house_type_img_cn', 'indoor_img_cn', 'building_name'];
+    protected $newAppends = [
+        'renovation_cn', 'shops_type_cn', 'public_private_cn', 'public_private_cn',
+        'pay_commission_unit_cn', 'payment_type_cn', 'shortest_lease_cn', 'rent_free_cn',
+        'frontage_cn', 'split_cn', 'orientation_cn', 'prospecting_cn', 'see_house_time_cn',
+        'house_proxy_type_cn', 'source_cn', 'certificate_type_cn', 'house_type_img_cn',
+        'indoor_img_cn', 'building_name', 'house_busine_state_cn'
+    ];
+
+    public function __construct()
+    {
+        $this->appends = array_merge($this->appends, $this->newAppends);
+    }
 
     /**
      * 说明: 楼座
@@ -71,6 +82,26 @@ class ShopsHouse extends BaseModel
         } else {
             return '装修情况异常';
         }
+    }
+
+    /**
+     * 说明: 户型拼接
+     *
+     * @return string
+     * @use house_type
+     * @author 罗振
+     */
+    public function getHouseTypeAttribute()
+    {
+        $houseType = '';
+        if (!empty($this->room)) {
+            $houseType = $this->room.'室';
+        }
+        if (!empty($this->hall)) {
+            $houseType = $houseType.$this->hall.'厅';
+        }
+
+        return $houseType;
     }
 
     /**
