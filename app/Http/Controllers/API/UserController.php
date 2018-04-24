@@ -8,7 +8,6 @@ use App\Repositories\UserRepository;
 use App\Services\UsersService;
 use App\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class UserController extends APIBaseController
 {
@@ -26,8 +25,7 @@ class UserController extends APIBaseController
         Request $request
     )
     {
-        $role = Auth::guard('api')->user()->can('user_list');
-        if(empty($role)) {
+        if(empty(Common::user()->can('user_list'))) {
             return $this->sendError('无成员列表权限',403);
         }
 
@@ -65,9 +63,8 @@ class UserController extends APIBaseController
         UserRepository $userRepository
     )
     {
-        $role = Auth::guard('api')->user()->can('add_user');
-        if(empty($role)) {
-            return $this->sendError('无添加成员权限');
+        if(empty(Common::user()->can('add_user'))) {
+            return $this->sendError('无添加成员权限','403');
         }
 
         if ($request->password != $request->password_confirmation) {
@@ -108,9 +105,8 @@ class UserController extends APIBaseController
         UsersRequest $request
     )
     {
-        $role = Auth::guard('api')->user()->can('add_user');
-        if(empty($role)) {
-            return $this->sendError('无添加成员权限');
+        if(empty(Common::user()->can('update_user'))) {
+            return $this->sendError('无修改成员权限','403');
         }
 
         $res = $userRepository->updateUser($user, $request);
@@ -177,9 +173,8 @@ class UserController extends APIBaseController
      */
     public function destroy(User $user)
     {
-        $role = Auth::guard('api')->user()->can('del_user');
-        if(empty($role)) {
-            return $this->sendError('无删除成员权限');
+        if(empty(Common::user()->can('del_user'))) {
+            return $this->sendError('无删除成员权限','403');
         }
 
         $res = $user->delete();

@@ -7,7 +7,6 @@ use App\Models\DwellingHouse;
 use App\Repositories\DwellingHousesRepository;
 use App\Services\HousesService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class DwellingHousesController extends APIBaseController
 {

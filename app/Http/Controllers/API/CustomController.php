@@ -2,18 +2,17 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Handler\Common;
 use App\Http\Requests\API\CustomRequest;
 use App\Models\Custom;
 use App\Repositories\CustomRepository;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class CustomController extends APIBaseController
 {
     public function index(Request $request, CustomRepository $repository)
     {
-        $role= Auth::guard('api')->user()->can('custom_list');
-        if (empty($role)) {
+        if (empty(Common::user()->can('custom_list'))) {
             return $this->sendError('无客户列表权限','403');
         }
 
@@ -31,8 +30,7 @@ class CustomController extends APIBaseController
      */
     public function store(CustomRequest $request, CustomRepository $repository)
     {
-        $role = Auth::guard('api')->user()->can('add_custom');
-        if (empty($role)) {
+        if (empty(Common::user()->can('add_custom'))) {
             return $this->sendError('无添加客户权限','403');
         }
 
@@ -70,8 +68,7 @@ class CustomController extends APIBaseController
      */
     public function show(Custom $custom)
     {
-        $role = Auth::guard('api')->user()->can('custom_show');
-        if (empty($role)) {
+        if (empty(Common::user()->can('custom_show'))) {
             return $this->sendError('无客户详情权限','403');
         }
 

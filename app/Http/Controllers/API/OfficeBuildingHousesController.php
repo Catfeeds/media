@@ -7,7 +7,6 @@ use App\Models\OfficeBuildingHouse;
 use App\Repositories\OfficeBuildingHousesRepository;
 use App\Services\HousesService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class OfficeBuildingHousesController extends APIBaseController
 {
