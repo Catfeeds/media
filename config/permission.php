@@ -1,10 +1,10 @@
 <?php
 
 return [
-    'house_list' => 'house_list', //住宅房源类表
-    'add_house' => 'add_house', //住宅房源添加
-    'update_house' => 'update_house', //住宅房源修改
-    'del_house' => 'del_house', //住宅房源删除
+    'house_list' => 'house_list', //房源类表
+    'add_house' => 'add_house', //房源添加
+    'update_house' => 'update_house', //房源修改
+    'del_house' => 'del_house', //房源删除
     'update_business_state' => 'update_business_state', //修改住宅房源业务状态
     'building_list' => 'building_list', //楼盘列表
     'add_building' => 'add_building', //楼盘添加
@@ -30,7 +30,10 @@ return [
     'add_storefronts' => 'add_storefronts',//添加门店
     'update_storefronts' => 'update_storefronts',//修改门店
     'del_storefronts' => 'del_storefronts', //删除门店
+    'user_list' => 'user_list', //成员列表
     'add_user' => 'add_user',//添加成员
+    'update_user' => 'update_user', //修改成员
+    'del_user' => 'del_user',//删除成员
 
 
 

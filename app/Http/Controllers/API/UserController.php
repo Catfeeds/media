@@ -25,6 +25,11 @@ class UserController extends APIBaseController
         Request $request
     )
     {
+        $role = Auth::guard('api')->user()->can('user_list');
+        if(empty($role)) {
+            return $this->sendError('无成员列表权限');
+        }
+
         $res = $userRepository->userList($request);
         return $this->sendResponse($res,'成员列表获取成功');
     }
@@ -55,10 +60,11 @@ class UserController extends APIBaseController
         UserRepository $userRepository
     )
     {
-        $role = Auth::guard('api')->user()->can();
+        $role = Auth::guard('api')->user()->can('add_user');
         if(empty($role)) {
             return $this->sendError('无添加成员权限');
         }
+
         if ($request->password != $request->password_confirmation) {
             return $this->sendError('密码与确认密码不一致,请重新输入');
         }
@@ -97,7 +103,12 @@ class UserController extends APIBaseController
         UsersRequest $request
     )
     {
-        $res = $userRepository->updateUser($request, $user);
+        $role = Auth::guard('api')->user()->can('add_user');
+        if(empty($role)) {
+            return $this->sendError('无添加成员权限');
+        }
+
+        $res = $userRepository->updateUser($user, $request);
         if($res) {
             return $this->sendResponse($res, '修改成员成功');
         }
@@ -151,4 +162,22 @@ class UserController extends APIBaseController
         return $this->sendError('修改电话失败');
     }
 
+    /**
+     * 说明:删除成员
+     *
+     * @param User $user
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
+     * @author 刘坤涛
+     */
+    public function destroy(User $user)
+    {
+        $role = Auth::guard('api')->user()->can('del_user');
+        if(empty($role)) {
+            return $this->sendError('无删除成员权限');
+        }
+
+        $res = $user->delete();
+        return $this->sendResponse($res,'成员删除成功');
+    }
 }
