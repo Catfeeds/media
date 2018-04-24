@@ -172,7 +172,7 @@ class UserController extends APIBaseController
      * @return mixed
      * @author 罗振
      */
-    public function getStoreFrontsInfo(
+    public function getStorefrontsInfo(
         Request $request,
         UsersService $usersService
     )

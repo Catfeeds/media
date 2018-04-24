@@ -26,7 +26,7 @@ class StorefrontsRepository extends BaseRepository
             'storefront_name' => $request->storefront_name,
             'address' => $request->address,
             'fixed_tel' => $request->fixed_tel,
-            'area_manager_id' => Auth::guard('api')->user()->id
+            'area_manager_id' => $request->id
     	]);
     }
 
