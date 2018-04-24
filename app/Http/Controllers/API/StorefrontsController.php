@@ -45,7 +45,14 @@ class StorefrontsController extends APIBaseController
         UserRepository $userRepository
     )
     {
-        return $userRepository->getAllAreaManager();
+            $res= $userRepository->getAllAreaManager();
+             $result= $res->map(function($res) {
+                return [
+                        'label' => $res->real_name,
+                        'value' => $res->id
+                        ];
+            });
+            return $this->sendResponse($result,'区域经理信息获取成功');
 	}
 
     /**

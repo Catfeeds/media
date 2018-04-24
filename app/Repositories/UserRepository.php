@@ -146,7 +146,7 @@ class UserRepository extends BaseRepository
      */
     public function getAllAreaManager()
     {
-        return $this->model->where('level', 2)->pluck('real_name', 'id');
+        return $this->model->where('level', 2)->get();
     }
 
 }
