@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-class OfficeBuildingHouse extends BaseModel
+class OfficeBuildingHouse extends House
 {
     protected $casts = [
         'owner_info' => 'array',
@@ -11,9 +11,25 @@ class OfficeBuildingHouse extends BaseModel
         'house_type_img' => 'array',
         'indoor_img' => 'array',
         'check_in_time' => 'date',
+        'constru_acreage' => 'float',
+        'min_acreage' => 'float',
+        'rent_price' => 'float',
+        'increasing_situation' => 'float',
+        'pay_commission' => 'float'
     ];
 
-    protected $appends = ['renovation_cn', 'house_type', 'office_building_type_cn', 'public_private_cn', 'house_busine_state_cn', 'payment_type_cn', 'split_cn', 'orientation_cn', 'prospecting_cn', 'see_house_time_cn', 'house_proxy_type_cn', 'source_cn', 'certificate_type_cn', 'rent_price_unit_cn', 'pay_commission_unit_cn', 'shortest_lease_cn', 'rent_free_cn', 'house_type_img_cn', 'indoor_img_cn', 'building_name', 'register_company_cn', 'open_bill_cn'];
+    protected $newAppends = [
+        'renovation_cn', 'house_type', 'office_building_type_cn', 'public_private_cn',
+        'house_busine_state_cn', 'payment_type_cn', 'split_cn', 'orientation_cn', 'prospecting_cn',
+        'see_house_time_cn', 'house_proxy_type_cn', 'source_cn', 'certificate_type_cn',
+        'rent_price_unit_cn', 'pay_commission_unit_cn', 'shortest_lease_cn', 'rent_free_cn',
+        'house_type_img_cn', 'indoor_img_cn', 'building_name', 'register_company_cn', 'open_bill_cn'
+    ];
+
+    public function __construct()
+    {
+        $this->appends = array_merge($this->appends, $this->newAppends);
+    }
 
     /**
      * 说明: 楼座
