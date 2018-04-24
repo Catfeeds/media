@@ -69,11 +69,27 @@ class UserController extends APIBaseController
         return $this->sendError('添加成员失败');
     }
 
+    /**
+     * 说明:获取成员修改之前原始数据
+     *
+     * @param User $user
+     * @return \Illuminate\Http\JsonResponse
+     * @author 刘坤涛
+     */
     public function edit(User $user)
     {
         return $this->sendResponse($user,'成员修改之前原始数据');
     }
 
+    /**
+     * 说明:修改成员信息
+     *
+     * @param User $user
+     * @param UserRepository $userRepository
+     * @param UsersRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     * @author 刘坤涛
+     */
     public function update
     (
         User $user,
@@ -88,6 +104,15 @@ class UserController extends APIBaseController
         return $this->sendError('修改成员失败');
     }
 
+    /**
+     * 说明:修改密码
+     *
+     * @param User $user
+     * @param UserRepository $userRepository
+     * @param UsersRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     * @author 刘坤涛
+     */
     public function updatePassword
     (
         User $user,
@@ -103,9 +128,27 @@ class UserController extends APIBaseController
         return $this->sendError('密码更新失败');
     }
 
-    public function updateTel()
+    /**
+     * 说明:修改电话
+     *
+     * @param User $user
+     * @param UsersRequest $request
+     * @param UserRepository $userRepository
+     * @return \Illuminate\Http\JsonResponse
+     * @author 刘坤涛
+     */
+    public function updateTel
+    (
+        User $user,
+        UsersRequest $request,
+        UserRepository $userRepository
+    )
     {
-        
+        $res = $userRepository->changeTel($user, $request);
+        if ($res) {
+            return $this->sendResponse($res,'电话修改成功');
+        }
+        return $this->sendError('电话修改失败');
     }
 
 }
