@@ -2,11 +2,11 @@
 
 namespace App\Console\Commands;
 
+use App\Services\UsersService;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Validator;
 
 /**
- * 注册超级管理员命令
+ * 生成总经理命令
  *
  * Class CreateAdministrator
  * @package App\Console\Commands
@@ -29,14 +29,16 @@ class AddManager extends Command
     protected $description = '创建总经理 eg: addManager --u root';
 
     // 管理员业务辅助
-    protected static $adminService = null;
+    protected static $usersService = null;
 
     /**
-     * CreateAdministrator constructor.
+     * AddManager constructor.
+     * @param UsersService $usersService
      */
-    public function __construct()
+    public function __construct(UsersService $usersService)
     {
         parent::__construct();
+        self::$usersService = $usersService;
     }
 
     /**
@@ -50,7 +52,11 @@ class AddManager extends Command
         self::create();
     }
 
-
+    /**
+     * 说明: 添加总经理
+     *
+     * @author 罗振
+     */
     public function create()
     {
         $password = $this->secret('请输入密码：');
@@ -73,11 +79,28 @@ class AddManager extends Command
                 'password' => $password,
             ];
 
-
+            // 验证
+            $validator = \Validator::make($data, [
+                'real_name' => 'required|max:32',
+                'tel' => 'required|max:16',
+                'password' => 'required|min:6|max:12'
+            ]);
+            if ($validator->fails()) {
+                $errors = $validator->errors();
+                $this->table(['错误'], (array) $errors->toArray());
+                self::create();
+                return ;
+            }
+            $result = self::$usersService->addManager($data);
+            if (!empty($result)) {
+                $this->info('添加成功');
+            } else {
+                $this->error('添加失败');
+                self::create();
+            }
 
         } else {
             $this->info('取消注册');
         }
-
     }
 }
