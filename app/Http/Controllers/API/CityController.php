@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Handler\Common;
 use App\Models\City;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class CityController extends APIBaseController
 {
@@ -16,8 +16,7 @@ class CityController extends APIBaseController
      */
     public function index()
     {
-        $role = Auth::guard('api')->user()->can('city_list');
-        if (empty($role)) {
+        if (empty(Common::user()->can('city_list'))) {
             return $this->sendError('无城市列表权限','403');
         }
 
@@ -34,8 +33,7 @@ class CityController extends APIBaseController
      */
     public function store(Request $request)
     {
-        $role= Auth::guard('api')->user()->can('add_city');
-        if (empty($role)) {
+        if (empty(Common::user()->can('add_city'))) {
             return $this->sendError('无添加城市权限','403');
         }
 
@@ -78,8 +76,7 @@ class CityController extends APIBaseController
      */
     public function destroy($id)
     {
-        $role = Auth::guard('api')->user()->can('del_city');
-        if (empty($role)) {
+        if (empty(Common::user()->can('del_city'))) {
             return $this->sendError('无删除城市权限','403');
         }
 

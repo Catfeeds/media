@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Handler\Common;
 use App\Http\Requests\API\BuildingBlockRequest;
 use App\Models\Area;
 use App\Models\Building;
@@ -38,8 +39,7 @@ class BuildingBlockController extends APIBaseController
      */
     public function allBlocks(Request $request, BuildingBlockRepository $repository)
     {
-        $role= Auth::guard('api')->user()->can('building_block_list');
-        if (empty($role)) {
+        if (empty(Common::user()->can('building_block_list'))) {
             return $this->sendError('无楼座列表权限','403');
         }
 
@@ -81,8 +81,7 @@ class BuildingBlockController extends APIBaseController
      */
     public function addNameUnit(BuildingBlockRequest $request, BuildingBlockRepository $repository)
     {
-        $role = Auth::guard('api')->user()->can('add_building_block');
-        if (empty($role)) {
+        if (empty(Common::user()->can('add_building_block'))) {
             return $this->sendError('无添加楼座权限','403');
         }
 
@@ -112,8 +111,7 @@ class BuildingBlockController extends APIBaseController
      */
     public function destroy(BuildingBlock $buildingBlock)
     {
-        $role= Auth::guard('api')->user()->can('del_building_block');
-        if (empty($role)) {
+        if (empty(Common::user()->can('del_building_block'))) {
             return $this->sendError('无删除楼座权限','403');
         }
 

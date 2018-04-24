@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Handler\Common;
 use App\Models\Area;
 use App\Models\City;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class AreaController extends APIBaseController
 {
@@ -18,8 +18,7 @@ class AreaController extends APIBaseController
      */
     public function index(Request $request)
     {
-        $role = Auth::guard('api')->user()->can('area_list');
-        if (empty($role)) {
+        if (empty(Common::user()->can('area_list'))) {
             return $this->sendError('无区域列表权限','403');
         }
 
@@ -37,8 +36,7 @@ class AreaController extends APIBaseController
      */
     public function store(Request $request)
     {
-        $role = Auth::guard('api')->user()->can('add_city');
-        if (empty($role)) {
+        if (empty(Common::user()->can('add_city'))) {
             return $this->sendError('无添加区域权限','403');
         }
 
@@ -115,8 +113,7 @@ class AreaController extends APIBaseController
      */
     public function destroy($id)
     {
-        $role = Auth::guard('api')->user()->can('del_area');
-        if (empty($role)) {
+        if (empty(Common::user()->can('del_area'))) {
             return $this->sendError('无删除区域权限','403');
         }
 

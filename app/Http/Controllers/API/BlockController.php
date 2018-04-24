@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Handler\Common;
 use App\Models\Area;
 use App\Models\Block;
 use App\Models\City;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class BlockController extends APIBaseController
 {
@@ -19,8 +19,7 @@ class BlockController extends APIBaseController
      */
     public function index(Request $request)
     {
-        $role = Auth::guard('api')->user()->can('blocks_list');
-        if(empty($role)) {
+        if(empty(Common::user()->can('blocks_list'))) {
             return $this->sendError('无商圈列表权限','403');
         }
 
@@ -37,8 +36,7 @@ class BlockController extends APIBaseController
      */
     public function store(Request $request)
     {
-        $role = Auth::guard('api')->user()->can('add_blocks');
-        if(empty($role)) {
+        if(empty(Common::user()->can('add_blocks'))) {
             return $this->sendError('无添加商圈权限','403');
         }
 
@@ -123,8 +121,7 @@ class BlockController extends APIBaseController
      */
     public function destroy($id)
     {
-        $role = Auth::guard('api')->user()->can('del_blocks');
-        if (empty($role)) {
+        if (empty(Common::user()->can('del_blocks'))) {
             return $this->sendError('无删除商圈权限','403');
         }
 
