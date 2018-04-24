@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->tinyInteger('level')->nullable()->comment('级别 1: 总经理 2: 区域经理 3: 店长 4: 业务');
             $table->string('password');
             $table->text('remark')->nullable()->comment('备注信息');
+            $table->timestamp('last_login_time')->nullable()->comment('最后登录时间');
             $table->rememberToken();
             $table->timestamps();
         });

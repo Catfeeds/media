@@ -49,6 +49,8 @@ Route::group(['namespace' => 'API'], function () {
         // 获取所属门店
         Route::post('get_storefronts_info','UserController@getStorefrontsInfo');
 
+
+
     /*
     |--------------------------------------------------------------------------
     | 房源管理
@@ -150,6 +152,8 @@ Route::group(['namespace' => 'API'], function () {
     |--------------------------------------------------------------------------
     */
     Route::resource('storefronts', 'StorefrontsController');
+    Route::get('get_all_storefronts_info','StorefrontsController@getAllStorefrontsInfo');
+
 
     /*
     |--------------------------------------------------------------------------

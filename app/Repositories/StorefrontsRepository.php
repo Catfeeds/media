@@ -38,7 +38,7 @@ class StorefrontsRepository extends BaseRepository
      */
     public function getStorefrontsList($request)
     {
-        return $this->model->paginate(10);
+        return $this->model->paginate($request->per_page);
     }
 
     /**
@@ -61,5 +61,16 @@ class StorefrontsRepository extends BaseRepository
         }
 
         return true;
+    }
+
+    /**
+     * 说明: 获取所有门店信息
+     *
+     * @return \Illuminate\Database\Eloquent\Collection|static[]
+     * @author 罗振
+     */
+    public function getAllStorefrontsInfo()
+    {
+        return $this->model->all();
     }
 }
