@@ -44,14 +44,13 @@ class StorefrontsController extends APIBaseController
         UserRepository $userRepository
     )
     {
-        $res= $userRepository->getAllAreaManager();
-         $result= $res->map(function($res) {
-            return [
-                'label' => $res->real_name,
-                'value' => $res->id
-            ];
-        });
-        return $this->sendResponse($result,'区域经理信息获取成功');
+             $result= $userRepository->getAllAreaManager()->map(function($v) {
+                return [
+                        'label' => $v->real_name,
+                        'value' => $v->id
+                        ];
+            });
+            return $this->sendResponse($result,'区域经理信息获取成功');
 	}
 
     /**
@@ -130,6 +129,7 @@ class StorefrontsController extends APIBaseController
         return $this->sendResponse($res,'删除成功');
     }
 
+
     /**
      * 说明: 获取所有门店信息
      *
@@ -149,5 +149,6 @@ class StorefrontsController extends APIBaseController
         });
         return $this->sendResponse($result,'获取所有门店信息成功');
     }
+
 }
 
