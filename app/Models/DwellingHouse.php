@@ -14,7 +14,7 @@ class DwellingHouse extends BaseModel
         'check_in_time' => 'date',
     ];
 
-    protected $appends = ['renovation_cn', 'house_type', 'renting_style_cn', 'public_private_cn', 'house_busine_state_cn', 'payment_type_cn', 'orientation_cn', 'prospecting_cn', 'see_house_time_cn', 'house_proxy_type_cn', 'source_cn', 'certificate_type_cn', 'pay_commission_unit_cn', 'shortest_lease_cn','house_type_img_cn', 'indoor_img_cn', 'building_name'];
+    protected $appends = ['renovation_cn', 'house_type', 'renting_style_cn', 'public_private_cn', 'house_busine_state_cn', 'payment_type_cn', 'orientation_cn', 'prospecting_cn', 'see_house_time_cn', 'house_proxy_type_cn', 'source_cn', 'certificate_type_cn', 'pay_commission_unit_cn', 'shortest_lease_cn','house_type_img_cn', 'indoor_img_cn', 'building_name', 'tel_cn'];
 
     /**
      * 说明: 楼座
@@ -432,5 +432,25 @@ class DwellingHouse extends BaseModel
                 'url' => config('setting.qiniu_url') . $img . config('setting.static')
             ];
         })->values();
+    }
+
+    /**
+     * 说明: 手机号转移
+     *
+     * @return mixed
+     * @use tel_cn
+     * @author 罗振
+     */
+    public function getTelCnAttribute()
+    {
+        $ownerInfo = json_decode($this->owner_info['0']);
+
+        if (empty($this->guardian)) {
+            $ownerInfo->tel = '******';
+
+            return $ownerInfo;
+        } else {
+            return $ownerInfo;
+        }
     }
 }
