@@ -13,14 +13,26 @@ class UserRepository extends BaseRepository
         $this->model = $model;
     }
 
+    /**
+     * 说明:获取成员列表
+     *
+     * @param $request
+     * @return mixed
+     * @author 刘坤涛
+     */
     public function userList($request)
     {
         return $this->model->paginate(10);
     }
 
-    public function addUser(
-        $request
-    )
+    /**
+     * 说明:添加成员
+     *
+     * @param $request
+     * @return bool
+     * @author 刘坤涛
+     */
+    public function addUser($request)
     {
         \DB::beginTransaction();
         try {
@@ -54,6 +66,14 @@ class UserRepository extends BaseRepository
         }
     }
 
+    /**
+     * 说明:更新成员
+     *
+     * @param $user
+     * @param $request
+     * @return bool
+     * @author 刘坤涛
+     */
     public function updateUser($user, $request)
     {
         \DB::beginTransaction();
@@ -84,14 +104,38 @@ class UserRepository extends BaseRepository
         }
     }
 
+    /**
+     * 说明:修改密码
+     *
+     * @param $user
+     * @param $request
+     * @return bool
+     * @author 刘坤涛
+     */
     public function changePassword($user, $request)
     {
-         $user->password= bcrypt($request->password);
-         $res = $user->save();
-         if($res) {
+         $user->password = bcrypt($request->password);
+         if ($user->save()) {
              return true;
          }
          return false;
+    }
+
+    /**
+     * 说明:修改电话
+     *
+     * @param $user
+     * @param $request
+     * @return bool
+     * @author 刘坤涛
+     */
+    public function changeTel($user, $request)
+    {
+        $user->tel = $request->tel;
+        if ($user->save()) {
+            return true;
+        }
+        return false;
     }
 
 }

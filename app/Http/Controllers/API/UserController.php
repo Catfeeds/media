@@ -69,11 +69,27 @@ class UserController extends APIBaseController
         return $this->sendError('添加成员失败');
     }
 
+    /**
+     * 说明:获取成员修改之前原始数据
+     *
+     * @param User $user
+     * @return \Illuminate\Http\JsonResponse
+     * @author 刘坤涛
+     */
     public function edit(User $user)
     {
         return $this->sendResponse($user,'成员修改之前原始数据');
     }
 
+    /**
+     * 说明:修改成员信息
+     *
+     * @param User $user
+     * @param UserRepository $userRepository
+     * @param UsersRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     * @author 刘坤涛
+     */
     public function update
     (
         User $user,
@@ -88,24 +104,51 @@ class UserController extends APIBaseController
         return $this->sendError('修改成员失败');
     }
 
+
+    /**
+     * 说明:修改密码
+     *
+     * @param UserRepository $userRepository
+     * @param UsersRequest $request
+     * @param User $user
+     * @return \Illuminate\Http\JsonResponse
+     * @author 刘坤涛
+     */
     public function updatePassword
     (
-        User $user,
         UserRepository $userRepository,
-        UsersRequest $request
-
+        UsersRequest $request,
+        User $user
     )
     {
         $res = $userRepository->changePassword($user, $request);
         if ($res) {
             return $this->sendResponse($res,'密码修改成功');
         }
-        return $this->sendError('密码更新失败');
+        return $this->sendError('密码修改失败');
     }
 
-    public function updateTel()
+    /**
+     * 说明:修改电话
+     *
+     * @param UserRepository $userRepository
+     * @param UsersRequest $request
+     * @param User $user
+     * @return \Illuminate\Http\JsonResponse
+     * @author 刘坤涛
+     */
+    public function updateTel
+    (
+        UserRepository $userRepository,
+        UsersRequest $request,
+        User $user
+    )
     {
-        
+        $res = $userRepository->changeTel($user ,$request);
+        if ($res) {
+            return $this->sendResponse($res,'电话修改成功');
+        }
+        return $this->sendError('修改电话失败');
     }
 
 }
