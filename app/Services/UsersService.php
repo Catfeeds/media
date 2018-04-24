@@ -22,18 +22,18 @@ class UsersService
         if ($user->level == 1 && $request->level == 2) {
             return ;
         } elseif ($user->level == 1 && $request->level == 3) {
-            return Storefront::where('user_id', null)->pluck('storefront_name', 'id');
+            return Storefront::where('user_id', null)->get();
         } elseif ($user->level == 1 && $request->level == 4) {
-            return Storefront::where([])->pluck('storefront_name', 'id');
+            return Storefront::where([])->get();
         } elseif ($user->level == 2 && $request->level == 3) {
             return Storefront::where([
                 'area_manager_id' => $user->id,
                 'user_id' => null
             ])->pluck('storefront_name', 'id');
         } elseif ($user->level == 2 && $request->level == 4) {
-            return Storefront::where('area_manager_id', $user->id)->pluck('storefront_name', 'id');
+            return Storefront::where('area_manager_id', $user->id)->get();
         } elseif ($user->level == 3 && $request->level == 4) {
-            return Storefront::where('user_id', $user->id)->pluck('storefront_name', 'id');
+            return Storefront::where('user_id', $user->id)->get();
         }
     }
 
