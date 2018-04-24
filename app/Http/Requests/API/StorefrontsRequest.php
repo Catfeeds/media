@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\API;
 
+use App\User;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StorefrontsRequest extends FormRequest
 {
