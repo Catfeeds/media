@@ -189,11 +189,12 @@ class UserController extends APIBaseController
      * @return mixed
      * @author 罗振
      */
-    public function getStoreFrontsInfo(
+    public function getStorefrontsInfo(
         Request $request,
         UsersService $usersService
     )
     {
-        return $usersService->getInfo($request);
+        $result = $usersService->getInfo($request);
+        return $this->sendResponse($result,'获取门店信息成功');
     }
 }

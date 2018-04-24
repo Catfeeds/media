@@ -19,7 +19,6 @@ class UsersService
     )
     {
         $user = Common::user();
-
         if ($user->level == 1 && $request->level == 2) {
             return ;
         } elseif ($user->level == 1 && $request->level == 3) {

@@ -47,7 +47,9 @@ Route::group(['namespace' => 'API'], function () {
         //更新用户电话
         Route::post('update_tel/{user}','UserController@updateTel');
         // 获取所属门店
-        Route::post('getStoreFrontsInfo','UserController@getStoreFrontsInfo');
+        Route::post('get_storefronts_info','UserController@getStorefrontsInfo');
+
+
 
     /*
     |--------------------------------------------------------------------------
@@ -150,6 +152,8 @@ Route::group(['namespace' => 'API'], function () {
     |--------------------------------------------------------------------------
     */
     Route::resource('storefronts', 'StorefrontsController');
+    Route::get('get_all_storefronts_info','StorefrontsController@getAllStorefrontsInfo');
+
 
     /*
     |--------------------------------------------------------------------------

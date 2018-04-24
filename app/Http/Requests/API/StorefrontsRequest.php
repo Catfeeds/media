@@ -32,19 +32,40 @@ class StorefrontsRequest extends FormRequest
                     'storefront_name' => 'required|max:32',
                     'address' => 'required|max:32',
                     'fixed_tel' => 'required|max:16',
+                    'area_manager_id' => [
+                        'required',
+                        Rule::in(
+                            User::where(
+                                [
+                                    'level' => 2,
+                                    'id' => $this->area_manager_id
+                                ]
+                            )->pluck('id')->toArray()
+                        )
+                    ]
                 ];
             case 'PUT':
                 return [
 
                 ];
             case 'PATCH':
-                {
-                    return [
-                        'storefront_name' => 'required|max:32',
-                        'address' => 'required|max:32',
-                        'fixed_tel' => 'required|max:16',
-                    ];
-                }
+                return [
+                    'storefront_name' => 'required|max:32',
+                    'address' => 'required|max:32',
+                    'fixed_tel' => 'required|max:16',
+                    'area_manager_id' => [
+                        'required',
+                        Rule::in(
+                            User::where(
+                                [
+                                    'level' => 2,
+                                    'id' => $this->area_manager_id
+                                ]
+                            )->pluck('id')->toArray()
+                        )
+                    ]
+
+                ];
             case 'GET':
             case 'DELETE':
             default:
