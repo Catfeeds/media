@@ -27,13 +27,12 @@ class UserController extends APIBaseController
     {
         $role = Auth::guard('api')->user()->can('user_list');
         if(empty($role)) {
-            return $this->sendError('无成员列表权限');
+            return $this->sendError('无成员列表权限',403);
         }
 
         $res = $userRepository->userList($request);
         return $this->sendResponse($res,'成员列表获取成功');
     }
-
 
     /**
      * 说明:获取添加成员等级和所有未归属的门店信息

@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Passport\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
@@ -48,5 +49,16 @@ class User extends Authenticatable
     public function findForPassport($username)
     {
         return User::where('tel', $username)->first();
+    }
+
+    /**
+     * 说明: 当前登录用户信息
+     *
+     * @return mixed
+     * @author 罗振
+     */
+    public function userInfo()
+    {
+        return Auth::guard('api')->user();
     }
 }

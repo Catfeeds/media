@@ -1,11 +1,13 @@
 <?php
 namespace App\Http\Controllers\API;
 
+use App\Handler\Common;
 use App\Http\Requests\API\ShopsHousesRequest;
 use App\Models\ShopsHouse;
 use App\Repositories\ShopsHousesRepository;
 use App\Services\HousesService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ShopsHousesController extends APIBaseController
 {
@@ -22,9 +24,7 @@ class ShopsHousesController extends APIBaseController
         ShopsHousesRepository $shopsHousesRepository
     )
     {
-        // 判断用户权限
-        $user = Auth::guard('api')->user();
-        if (empty($user->can('house_list'))) {
+        if (empty(Common::user()->can('house_list'))) {
             return $this->sendError('没有房源列表权限', '403');
         }
 
@@ -47,8 +47,7 @@ class ShopsHousesController extends APIBaseController
         HousesService $housesService
     )
     {
-        $role = Auth::guard('api')->user()->can('add_house');
-        if(empty($role)) {
+        if(empty(Common::user()->can('add_house'))) {
             return $this->sendError('没有房源添加权限','403');
         }
 
@@ -93,16 +92,12 @@ class ShopsHousesController extends APIBaseController
         ShopsHouse $shopsHouse
     )
     {
-        $role = Auth::guard('api')->user()->can('update_house');
-        if(empty($role)) {
+        if(empty(Common::user()->can('update_house'))) {
             return $this->sendError('没有房源修改权限','403');
         }
 
-        if (!empty($result = $shopsHousesRepository->updateShopsHouses($shopsHouse, $request))) {
-            return $this->sendResponse($result,'商铺房源修改成功!');
-        }
-
-        return $this->sendError('商铺房源修改失败');
+        $result = $shopsHousesRepository->updateShopsHouses($shopsHouse, $request);
+        return $this->sendResponse($result,'商铺房源修改成功!');
     }
 
     /**
@@ -117,8 +112,7 @@ class ShopsHousesController extends APIBaseController
         ShopsHouse $shopsHouse
     )
     {
-        $role = Auth::guard('api')->user()->can('del_house');
-        if(empty($role)) {
+        if(empty(Common::user()->can('del_house'))) {
             return $this->sendError('没有房源删除权限','403');
         }
 
@@ -140,8 +134,7 @@ class ShopsHousesController extends APIBaseController
         ShopsHousesRequest $request
     )
     {
-        $role = Auth::guard('api')->user()->can('update_business_state');
-        if(empty($role)) {
+        if(empty(Common::user()->can('update_business_state'))) {
             return $this->sendError('没有修改住宅房源业务状态权限','403');
         }
 

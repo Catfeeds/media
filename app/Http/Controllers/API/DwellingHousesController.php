@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\API;
 
+use App\Handler\Common;
 use App\Http\Requests\API\DwellingHousesRequest;
 use App\Models\DwellingHouse;
 use App\Repositories\DwellingHousesRepository;
@@ -26,12 +27,11 @@ class DwellingHousesController extends APIBaseController
     )
     {
         // 判断用户权限
-        $user = Auth::guard('api')->user();
-        if (empty($user->can('house_list'))) {
+        if (empty(Common::user()->can('house_list'))) {
             return $this->sendError('没有房源列表权限', '403');
         }
 
-        $allHouseId = $housesService->getCanSeeHouseId($user);
+        $allHouseId = $housesService->getCanSeeHouseId(Common::user());
 
         $result = $dwellingHousesRepository->dwellingHousesList($request->per_page??null, json_decode($request->condition), $allHouseId);
         return $this->sendResponse($result,'住宅写字楼列表获取成功');
@@ -52,8 +52,7 @@ class DwellingHousesController extends APIBaseController
         HousesService $housesService
     )
     {
-        $role = Auth::guard('api')->user()->can('add_house');
-        if(empty($role)) {
+        if(empty(Common::user()->can('add_house'))) {
             return $this->sendError('没有房源添加权限','403');
         }
 
@@ -97,16 +96,12 @@ class DwellingHousesController extends APIBaseController
         DwellingHouse $dwellingHouse
     )
     {
-        $role = Auth::guard('api')->user()->can('update_house');
-        if(empty($role)) {
+        if(empty(Common::user()->can('update_house'))) {
             return $this->sendError('没有房源修改权限','403');
         }
 
-        if (!empty($result = $dwellingHousesRepository->updateDwellingHouses($dwellingHouse, $request))) {
-            return $this->sendResponse($result,'修改成功');
-        }
-
-        return $this->sendError('修改失败');
+        $result = $dwellingHousesRepository->updateDwellingHouses($dwellingHouse, $request);
+        return $this->sendResponse($result,'修改成功');
     }
 
     /**
@@ -121,8 +116,7 @@ class DwellingHousesController extends APIBaseController
         DwellingHouse $dwellingHouse
     )
     {
-        $role = Auth::guard('api')->user()->can('del_house');
-        if(empty($role)) {
+        if(empty(Common::user()->can('del_house'))) {
             return $this->sendError('没有房源删除权限','403');
         }
 
@@ -144,8 +138,7 @@ class DwellingHousesController extends APIBaseController
         DwellingHousesRequest $request
     )
     {
-        $role = Auth::guard('api')->user()->can('update_business_state');
-        if(empty($role)) {
+        if(empty(Common::user()->can('update_business_state'))) {
             return $this->sendError('没有修改住宅房源业务状态权限','403');
         }
 
