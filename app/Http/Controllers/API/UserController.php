@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Handler\Common;
 use App\Http\Requests\API\UsersRequest;
 use App\Repositories\UserRepository;
 use App\Services\UsersService;
@@ -33,7 +34,24 @@ class UserController extends APIBaseController
         $res = $userRepository->userList($request);
         return $this->sendResponse($res,'成员列表获取成功');
     }
-    
+
+    /**
+     * 说明: 用户信息
+     *
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     * @author 罗振
+     */
+    public function show($id)
+    {
+        if (empty($user = Common::user())) {
+            return $this->sendError('登录账户异常', 401);
+        }
+        $result = $user->toArray();
+        $result['access'] = $user->getAllPermissions()->pluck('name')->toArray()??[];
+        return $this->sendResponse($result, '成功');
+    }
+
     /**
      * 说明:添加成员
      *
