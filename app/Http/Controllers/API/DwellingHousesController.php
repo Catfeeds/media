@@ -3,13 +3,10 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Requests\API\DwellingHousesRequest;
 use App\Models\DwellingHouse;
-use App\Models\Storefront;
 use App\Repositories\DwellingHousesRepository;
 use App\Services\HousesService;
-use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Monolog\Handler\IFTTTHandler;
 
 class DwellingHousesController extends APIBaseController
 {
@@ -18,12 +15,14 @@ class DwellingHousesController extends APIBaseController
      *
      * @param Request $request
      * @param DwellingHousesRepository $dwellingHousesRepository
+     * @param HousesService $housesService
      * @return \Illuminate\Http\JsonResponse
      * @author 罗振
      */
     public function index(
         Request $request,
-        DwellingHousesRepository $dwellingHousesRepository
+        DwellingHousesRepository $dwellingHousesRepository,
+        HousesService $housesService
     )
     {
         // 判断用户权限
@@ -32,56 +31,9 @@ class DwellingHousesController extends APIBaseController
             return $this->sendError('没有房源列表权限', '403');
         }
 
+        $allHouseId = $housesService->getCanSeeHouseId($user);
 
-        // 总经理
-        if ($user->level == 1) {
-            // 查询所有
-        } elseif($user->level == 2) {
-            // 获取区域经理下面的门店
-            $storefront = Storefront::where('area_manager_id', $user->id)->pluck('id')->toArray();
-            // 获取门店下所有房源
-            $allHouseId = DwellingHouse::whereIn('storefront', $storefront)->pluck('id')->toArray();
-
-        } elseif($user->level == 3) {
-            $dwellingHouseId = array();
-
-            // 查询门店的所有房源
-            // 判断是否属于店长
-            $storefront = Storefront::where('user_id', $user->id)->first();
-            if (!empty($storefront)) {
-                // 获取门店下所有店员id
-                $users = User::where('ascription_store', $storefront->id)->pluck('id')->toArray();
-
-                $dwellingHouseId = DwellingHouse::make();
-
-                if (!empty($users)) $dwellingHouseId = $dwellingHouseId->whereIn('guardian', $users);
-                $dwellingHouseId = $dwellingHouseId->where('storefront', $storefront->id)->pluck('id')->toArray;
-
-
-                if (!empty($users)) {
-                    // 获取房源id
-                    $dwellingHouseId = DwellingHouse::whereIn('guardian', $users)->pluck('id')->toArray();
-                }
-                // 店内公盘
-                $storefrontHouse = DwellingHouse::where('storefront', $storefront->id)->pluck('id')->toArray();
-
-                $allHouseId = array_merge($dwellingHouseId, $storefrontHouse);
-            } else {
-                $allHouseId = array();
-            }
-
-        } elseif($user->level == 4) {
-            // 获取公盘数据
-            $publicHouseId = DwellingHouse::where('storefront', $user->ascription_store)->pluck('id')->toArray();
-
-            // 获取业务员自己的房源
-            $dwellingHouseId = DwellingHouse::where('guardian', $user->id)->pluck('id')->toArray();
-
-            $allHouseId = array_merge($publicHouseId, $dwellingHouseId);
-        }
-
-
-        $result = $dwellingHousesRepository->dwellingHousesList($request->per_page??null, json_decode($request->condition));
+        $result = $dwellingHousesRepository->dwellingHousesList($request->per_page??null, json_decode($request->condition), $allHouseId);
         return $this->sendResponse($result,'住宅写字楼列表获取成功');
     }
 

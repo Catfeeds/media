@@ -20,15 +20,21 @@ class DwellingHousesRepository extends BaseRepository
      *
      * @param $per_page
      * @param $condition
+     * @param $allHouseId
      * @return mixed
      * @author 罗振
      */
     public function dwellingHousesList(
         $per_page,
-        $condition
+        $condition,
+        $allHouseId
     )
     {
         $result = $this->model;
+        if (!empty($allHouseId)) {
+            $result = $result->whereIn('id', $allHouseId);
+        }
+
         if (!empty($condition->region) && !empty($condition->build)) {
             // 楼盘包含的楼座
             $blockId = array_column(Building::find($condition->build)->buildingBlocks->toArray(), 'id');
