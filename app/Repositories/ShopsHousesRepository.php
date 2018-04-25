@@ -85,8 +85,8 @@ class ShopsHousesRepository extends BaseRepository
                 'wide' => $request->wide,
                 'depth' => $request->depth,
                 'storey' => $request->storey,
-                'support_facilities' => $request->support_facilities,
-                'fit_management' => $request->fit_management,
+                'support_facilities' => $request->support_facilities??array(),
+                'fit_management' => $request->fit_management??array(),
                 'house_description' => $request->house_description,
                 'rent_price' => $request->rent_price,
                 'rent_price_unit' => $request->rent_price_unit,
@@ -96,8 +96,7 @@ class ShopsHousesRepository extends BaseRepository
                 'rent_free' => $request->rent_free,
                 'increasing_situation' => $request->increasing_situation,
                 'transfer_fee' => $request->transfer_fee,
-                'cost_detail' => $request->cost_detail,
-                'public_private' => $request->public_private,
+                'cost_detail' => $request->cost_detail??array(),
                 'house_busine_state' => $request->house_busine_state,
                 'pay_commission' => $request->pay_commission,
                 'pay_commission_unit' => $request->pay_commission_unit,
@@ -154,8 +153,8 @@ class ShopsHousesRepository extends BaseRepository
         $shopsHouse->wide = $request->wide;
         $shopsHouse->depth = $request->depth;
         $shopsHouse->storey = $request->storey;
-        $shopsHouse->support_facilities = $request->support_facilities;
-        $shopsHouse->fit_management = $request->fit_management;
+        $shopsHouse->support_facilities = $request->support_facilities??array();
+        $shopsHouse->fit_management = $request->fit_management??array();
         $shopsHouse->house_description = $request->house_description;
         $shopsHouse->rent_price = $request->rent_price;
         $shopsHouse->rent_price_unit = $request->rent_price_unit;
@@ -165,8 +164,7 @@ class ShopsHousesRepository extends BaseRepository
         $shopsHouse->rent_free = $request->rent_free;
         $shopsHouse->increasing_situation = $request->increasing_situation;
         $shopsHouse->transfer_fee = $request->transfer_fee;
-        $shopsHouse->cost_detail = $request->cost_detail;
-        $shopsHouse->public_private = $request->public_private;
+        $shopsHouse->cost_detail = $request->cost_detail??array();
         $shopsHouse->house_busine_state = $request->house_busine_state;
         $shopsHouse->pay_commission = $request->pay_commission;
         $shopsHouse->pay_commission_unit = $request->pay_commission_unit;
