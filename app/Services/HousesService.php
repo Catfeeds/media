@@ -57,6 +57,9 @@ class HousesService
      */
     public function getCanSeeHouseId($user)
     {
+        // 获取所有房源
+        $allDwellingHouse = DwellingHouse::all()->pluck('storefront', 'id');
+
         // 总经理
         if ($user->level ==1 ) {
             return [];
@@ -64,25 +67,46 @@ class HousesService
         if($user->level == 2) {
             // 获取区域经理下面的门店
             $storefront = Storefront::where('area_manager_id', $user->id)->pluck('id')->toArray();
-            // 获取门店下所有房源
-            $allHouseId = DwellingHouse::whereIn('storefront', $storefront)->pluck('id')->toArray();
 
+            $allHouseId = array();
+            foreach ($allDwellingHouse as $k => $v) {
+                if (!empty($v)) {
+                    foreach ($v as $val) {
+                        if (in_array($val, $storefront)) {
+                            $allHouseId[] = $k;
+                        }
+                    }
+                }
+            }
+            // 去重
+            $allHouseId = array_unique($allHouseId);
         } elseif($user->level == 3) {
             $dwellingHouseId = array();
 
             // 查询门店的所有房源
             // 判断是否属于店长
-            $storefront = Storefront::where('user_id', $user->id)->first();
-            if (!empty($storefront)) {
+            $storefrontId = Storefront::where('user_id', $user->id)->pluck('id')->toArray();
+
+            if (!empty($storefrontId)) {
                 // 获取门店下所有店员id
-                $users = User::where('ascription_store', $storefront->id)->pluck('id')->toArray();
+                $users = User::where('ascription_store', $storefrontId)->pluck('id')->toArray();
 
                 if (!empty($users)) {
-                    // 获取房源id
+                    // 私盘
                     $dwellingHouseId = DwellingHouse::whereIn('guardian', $users)->pluck('id')->toArray();
                 }
-                // 店内公盘
-                $storefrontHouse = DwellingHouse::where('storefront', $storefront->id)->pluck('id')->toArray();
+
+                $storefrontHouse = array();
+                foreach ($allDwellingHouse as $k => $v) {
+                    if (!empty($v)) {
+                        foreach ($v as $val) {
+                            if (in_array($val, $storefrontId)) {
+                                $storefrontHouse[] = $k;
+                            }
+                        }
+                    }
+                }
+                $storefrontHouse = array_unique($storefrontHouse);
 
                 $allHouseId = array_merge($dwellingHouseId, $storefrontHouse);
             } else {
@@ -90,10 +114,20 @@ class HousesService
             }
 
         } elseif($user->level == 4) {
-            // 获取公盘数据
-            $publicHouseId = DwellingHouse::where('storefront', $user->ascription_store)->pluck('id')->toArray();
+            // 店内公盘
+            $publicHouseId = array();
+            foreach ($allDwellingHouse as $k => $v) {
+                if (!empty($v)) {
+                    foreach ($v as $val) {
+                        if ($val == $user->ascription_store) {
+                            $publicHouseId[] = $k;
+                        }
+                    }
+                }
+            }
+            $publicHouseId = array_unique($publicHouseId);
 
-            // 获取业务员自己的房源
+            // 私盘
             $dwellingHouseId = DwellingHouse::where('guardian', $user->id)->pluck('id')->toArray();
 
             $allHouseId = array_merge($publicHouseId, $dwellingHouseId);

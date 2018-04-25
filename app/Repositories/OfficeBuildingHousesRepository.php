@@ -86,7 +86,7 @@ class OfficeBuildingHousesRepository extends BaseRepository
                 'open_bill' => $request->open_bill,
                 'renovation' => $request->renovation,
                 'orientation' => $request->orientation,
-                'support_facilities' => $request->support_facilities,
+                'support_facilities' => $request->support_facilities??array(),
                 'house_description' => $request->house_description,
                 'rent_price' => $request->rent_price,
                 'rent_price_unit' => $request->rent_price_unit,
@@ -95,8 +95,7 @@ class OfficeBuildingHousesRepository extends BaseRepository
                 'shortest_lease' => $request->shortest_lease,
                 'rent_free' => $request->rent_free,
                 'increasing_situation' => $request->increasing_situation,
-                'cost_detail' => $request->cost_detail,
-                'public_private' => $request->public_private,
+                'cost_detail' => $request->cost_detail??array(),
                 'house_busine_state' => $request->house_busine_state,
                 'pay_commission' => $request->pay_commission,
                 'pay_commission_unit' => $request->pay_commission_unit,
@@ -153,7 +152,7 @@ class OfficeBuildingHousesRepository extends BaseRepository
         $officeBuildingHouse->open_bill = $request->open_bill;
         $officeBuildingHouse->renovation = $request->renovation;
         $officeBuildingHouse->orientation = $request->orientation;
-        $officeBuildingHouse->support_facilities = $request->support_facilities;
+        $officeBuildingHouse->support_facilities = $request->support_facilities??array();
         $officeBuildingHouse->house_description = $request->house_description;
         $officeBuildingHouse->rent_price = $request->rent_price;
         $officeBuildingHouse->rent_price_unit = $request->rent_price_unit;
@@ -162,8 +161,7 @@ class OfficeBuildingHousesRepository extends BaseRepository
         $officeBuildingHouse->shortest_lease = $request->shortest_lease;
         $officeBuildingHouse->rent_free = $request->rent_free;
         $officeBuildingHouse->increasing_situation = $request->increasing_situation;
-        $officeBuildingHouse->cost_detail = $request->cost_detail;
-        $officeBuildingHouse->public_private = $request->public_private;
+        $officeBuildingHouse->cost_detail = $request->cost_detail??array();
         $officeBuildingHouse->house_busine_state = $request->house_busine_state;
         $officeBuildingHouse->pay_commission = $request->pay_commission;
         $officeBuildingHouse->pay_commission_unit = $request->pay_commission_unit;
