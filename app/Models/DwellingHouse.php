@@ -14,7 +14,8 @@ class DwellingHouse extends BaseModel
         'check_in_time' => 'date',
         'rent_price' => 'float',
         'constru_acreage' => 'float',
-        'pay_commission' => 'float'
+        'pay_commission' => 'float',
+        'storefront' => 'array'
     ];
 
     protected $appends = [

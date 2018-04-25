@@ -12,6 +12,7 @@ use App\Models\DwellingHouse;
 use App\Models\OfficeBuildingHouse;
 use App\Models\ShopsHouse;
 use App\Models\Storefront;
+use App\User;
 use Illuminate\Http\Request;
 
 class SelectDataController extends APIBaseController
@@ -89,46 +90,55 @@ class SelectDataController extends APIBaseController
                 break;
         }
 
+        // 用户信息
         $user = Common::user();
 
         $storePublid = array();
         $private = array();
         if ($user->level == 1) {
+            // 1. 总经理
+
             $allPublic = $model->all()->toArray();
+
         } elseif($user->level == 2) {
+            // 2. 区域经理
+
             // 公盘
             $allPublic = $model->where([
                 'guardian' => null,
                 'storefront' => null
             ])->get()->toArray();
 
-            // 私盘
-            $private = $model->where([
-                'guardian' => $user->id,
-            ])->get()->toArray();
-
+            // 店内公盘
             $storefrontId = Storefront::where('area_manager_id', $user->id)->pluck('id')->toArray();
             if (!empty($storefrontId)) {
                 $storePublid = $model->whereIn('storefront', $storefrontId)->where('guardian', null)->get()->toArray();
             }
         } elseif ($user->level == 3) {
+            // 3. 店长
+
             // 公盘
             $allPublic = $model->where([
                 'guardian' => null,
                 'storefront' => null
             ])->get()->toArray();
 
-            // 私盘
-            $private = $model->where([
-                'guardian' => $user->id,
-            ])->get()->toArray();
-
             // 店内公盘
             $storefront = Storefront::where('user_id', $user->id)->first();
             if (!empty($storefront)) {
-                $storePublid = $model->where('storefront', $storefront->id)->pluck('id')->toArray();
+                // 获取门店下所有店员id
+                $users = User::where('ascription_store', $storefront->id)->pluck('id')->toArray();
+                if (!empty($users)) {
+                    // 私盘
+                    $private = $model->whereIn('guardian', $users)->get()->toArray();
+                }
+
+                // 店内公盘
+                $storePublid = $model->where('storefront', $storefront->id)->get()->toArray();
             }
         } else {
+            // 4. 业务员
+
             // 公盘
             $allPublic = $model->where([
                 'guardian' => null,
@@ -170,27 +180,75 @@ class SelectDataController extends APIBaseController
      */
     public function selectCustoms()
     {
-
+        // 用户信息
         $user = Common::user();
-        // 公盘
-        $allPublic = Custom::where([
-            'guardian' => null,
-            'storefront' => null
-        ])->get()->toArray();
 
-        // 公司公盘
         $storePublid = array();
-        if (!empty($user->ascription_store)) {
-            $storePublid = Custom::where([
+        $private = array();
+        if ($user->level == 1) {
+            // 1. 总经理
+
+            // 公盘
+            $allPublic = Custom::all()->toArray();
+        } elseif ($user->level == 2) {
+            // 2. 区域经理
+
+            // 公盘
+            $allPublic = Custom::where([
                 'guardian' => null,
-                'storefront' => $user->ascription_store
+                'storefront' => null
+            ])->get()->toArray();
+
+            // 店内公盘
+            $storefrontId = Storefront::where('area_manager_id', $user->id)->pluck('id')->toArray();
+            if (!empty($storefrontId)) {
+                $storePublid = Custom::whereIn('storefront', $storefrontId)->where('guardian', null)->get()->toArray();
+            }
+
+        } elseif ($user->level == 3) {
+            // 3. 店长
+
+            // 公盘
+            $allPublic = Custom::where([
+                'guardian' => null,
+                'storefront' => null
+            ])->get()->toArray();
+
+            // 店内公盘
+            $storefront = Storefront::where('user_id', $user->id)->first();
+            if (!empty($storefront)) {
+                // 获取门店下所有店员id
+                $users = User::where('ascription_store', $storefront->id)->pluck('id')->toArray();
+                if (!empty($users)) {
+                    // 私盘
+                    $private = Custom::whereIn('guardian', $users)->get()->toArray();
+                }
+
+                // 店内公盘
+                $storePublid = Custom::where('storefront', $storefront->id)->get()->toArray();
+            }
+        } else {
+            // 4. 业务员
+
+            // 公盘
+            $allPublic = Custom::where([
+                'guardian' => null,
+                'storefront' => null
+            ])->get()->toArray();
+
+            // 公司公盘
+            if (!empty($user->ascription_store)) {
+                $storePublid = Custom::where([
+                    'guardian' => null,
+                    'storefront' => $user->ascription_store
+                ])->get()->toArray();
+            }
+
+            // 私盘
+            $private = Custom::where([
+                'guardian' => $user->id,
             ])->get()->toArray();
         }
-
-        // 私盘
-        $private = Custom::where([
-            'guardian' => $user->id,
-        ])->get()->toArray();
 
         $customs = array_merge($allPublic, $storePublid, $private);
 

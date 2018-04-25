@@ -15,7 +15,8 @@ class OfficeBuildingHouse extends BaseModel
         'min_acreage' => 'float',
         'rent_price' => 'float',
         'increasing_situation' => 'float',
-        'pay_commission' => 'float'
+        'pay_commission' => 'float',
+        'storefront' => 'array'
     ];
 
     protected $appends = [
