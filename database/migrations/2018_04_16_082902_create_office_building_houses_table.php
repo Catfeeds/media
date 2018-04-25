@@ -51,7 +51,7 @@ class CreateOfficeBuildingHousesTable extends Migration
             $table->decimal('pay_commission', 10, 2)->nullable()->comment('付佣');
             $table->tinyInteger('pay_commission_unit')->nullable()->comment('付佣单位: 1: % 2: 多少元');
             $table->tinyInteger('prospecting')->nullable()->comment('是否实勘 1: 是 2: 否');
-            $table->tinyInteger('source')->nullable()->comment('来源: 1: 来电 2: 来访 3: 中介 4: 友 5: 告 6: 街 7: 网络');
+            $table->tinyInteger('source')->nullable()->comment('来源: 1: 来电 2: 来访 3: 中介 4: 友 5: 告 6: 街 7: 网络 8:自有数据');
             $table->string('house_key',32)->nullable()->comment('钥匙');
             $table->tinyInteger('see_house_time')->nullable()->nullable()->comment('看房时间 1: 随时 2: 非工作时间 3: 电话预约');
             $table->string('see_house_time_remark',32)->nullable()->comment('看房时间备注');
