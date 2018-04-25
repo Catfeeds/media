@@ -68,6 +68,7 @@ class ShopsHousesRepository extends BaseRepository
      */
     public function addShopsHouses($request, HousesService $housesService)
     {
+        $temp = $housesService->public_private_info($request->public_private);
         \DB::beginTransaction();
         try {
             $house = $this->model->create([
@@ -108,6 +109,8 @@ class ShopsHousesRepository extends BaseRepository
                 'certificate_type' => $request->certificate_type,
                 'house_proxy_type' => $request->house_proxy_type,
                 'watch' => $request->watch,
+                'guardian' => $temp['guardian'],
+                'storefront' => $temp['storefront'],
                 'house_type_img' => $request->house_type_img,
                 'indoor_img' => $request->indoor_img,
             ]);

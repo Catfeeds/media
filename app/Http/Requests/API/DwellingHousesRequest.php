@@ -4,6 +4,7 @@ namespace App\Http\Requests\API;
 
 use App\Models\BuildingBlock;
 use app\Models\DwellingHouse;
+use App\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -103,6 +104,13 @@ class DwellingHousesRequest extends FormRequest
                     'cost_detail' => 'nullable|array',
                     // 业务信息
                     'public_private' => 'required|between:1,3',
+                    'watch' => [
+                        'nullable',
+                        'integer',
+                        Rule::in(
+                            User::all()->pluck('id')->toArray()
+                        )
+                    ],
                     'house_busine_state' => 'required|integer|between:1,6',
                     'pay_commission' => 'nullable|numeric|max:9999999999',
                     'pay_commission_unit' => 'nullable|integer|between:1,2',
@@ -113,7 +121,6 @@ class DwellingHousesRequest extends FormRequest
                     'see_house_time_remark' => 'max:32',
                     'certificate_type' => 'nullable|integer|between:1,7',
                     'house_proxy_type' => 'nullable|integer|between:1,2',
-                    'guardian' => 'max:32',
                     // 房源照片
                     'house_type_img' => 'nullable|array',
                     'indoor_img' => 'nullable|array',
@@ -148,6 +155,13 @@ class DwellingHousesRequest extends FormRequest
                     'shortest_lease' => 'nullable|integer|between:1,12',
                     // 业务信息
                     'house_busine_state' => 'required|integer|between:1,6',
+                    'watch' => [
+                        'nullable',
+                        'integer',
+                        Rule::in(
+                            User::all()->pluck('id')->toArray()
+                        )
+                    ],
                     'pay_commission' => 'nullable|numeric|max:9999999999',
                     'pay_commission_unit' => 'nullable|integer|between:1,2',
                     'prospecting' => 'nullable|integer|between:1,2',
@@ -157,7 +171,6 @@ class DwellingHousesRequest extends FormRequest
                     'see_house_time_remark' => 'max:32',
                     'certificate_type' => 'nullable|integer|between:1,7',
                     'house_proxy_type' => 'nullable|integer|between:1,2',
-                    'guardian' => 'max:32',
                     // 房源照片
                     'house_type_img' => 'max:1024',
                     'indoor_img' => 'max:1024',
