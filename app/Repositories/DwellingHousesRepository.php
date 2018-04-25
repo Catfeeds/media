@@ -74,7 +74,6 @@ class DwellingHousesRepository extends BaseRepository
      */
     public function addDwellingHouses($request, HousesService $housesService)
     {
-
         $temp = $housesService->public_private_info($request->public_private);
         \DB::beginTransaction();
         try {

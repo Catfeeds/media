@@ -145,9 +145,9 @@ class HousesService
     }
 
     /**
-     * 说明:根据用户登录等级选择公私盘类型获取对应的门店
+     * 说明: 根据用户登录等级选择公私盘类型获取对应的门店
      *
-     * @param $request
+     * @param $public_private
      * @return array
      * @author 刘坤涛
      */
@@ -173,13 +173,7 @@ class HousesService
             $item['guardian'] = $user->id;
             $item['storefront'] = Storefront::where('id', $user->ascription_store)->pluck('id')->toArray();
         }
-//        $res = $item['storefront']->map(function($v) {
-//            return [
-//                'id' => $v['id']
-//            ];
-//        });
 
-//        $item['storefront'] = $res;
-            return $item;
+        return $item;
     }
 }
