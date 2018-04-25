@@ -124,6 +124,7 @@ class ShopsHousesRepository extends BaseRepository
             \DB::commit();
             return $house;
         } catch (\Exception $e) {
+            \DB::rollback();
             \Log::error('商铺房源添加失败：' . $e->getFile() . $e->getLine() . $e->getMessage());
             return false;
         }

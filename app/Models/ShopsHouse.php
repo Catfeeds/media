@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-class ShopsHouse extends House
+class ShopsHouse extends BaseModel
 {
     protected $casts = [
         'owner_info' => 'array',
@@ -23,18 +23,13 @@ class ShopsHouse extends House
         'pay_commission' => 'float'
     ];
 
-    protected $newAppends = [
+    protected $appends = [
         'renovation_cn', 'shops_type_cn', 'public_private_cn', 'public_private_cn',
         'pay_commission_unit_cn', 'payment_type_cn', 'shortest_lease_cn', 'rent_free_cn',
         'frontage_cn', 'split_cn', 'orientation_cn', 'prospecting_cn', 'see_house_time_cn',
         'house_proxy_type_cn', 'source_cn', 'certificate_type_cn', 'house_type_img_cn',
-        'indoor_img_cn', 'building_name', 'house_busine_state_cn'
+        'indoor_img_cn', 'building_name', 'house_busine_state_cn', 'house_number_info', 'address'
     ];
-
-    public function __construct()
-    {
-        $this->appends = array_merge($this->appends, $this->newAppends);
-    }
 
     /**
      * 说明: 楼座
@@ -510,5 +505,29 @@ class ShopsHouse extends House
                 'url' => config('setting.qiniu_url') . $img . config('setting.static')
             ];
         })->values();
+    }
+
+    /**
+     * 说明：房号
+     *
+     * @return string
+     * @author jacklin
+     */
+    public function getHouseNumberInfoAttribute()
+    {
+        $block = $this->buildingBlock->block_info;
+        if (!empty($this->house_number)) $block .= $this->house_number . '室';
+        return $block;
+    }
+
+    /**
+     * 说明：地址
+     *
+     * @return mixed
+     * @author jacklin
+     */
+    public function getAddressAttribute()
+    {
+        return $this->buildingBlock->building->address;
     }
 }
