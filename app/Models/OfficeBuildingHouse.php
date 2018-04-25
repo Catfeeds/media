@@ -351,6 +351,8 @@ class OfficeBuildingHouse extends BaseModel
             return '街';
         } elseif ($this->source == 7) {
             return '网络';
+        }elseif ($this->source == 8) {
+            return '自有数据';
         } else {
             return '来源异常';
         }
