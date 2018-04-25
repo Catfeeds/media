@@ -213,6 +213,9 @@ class SelectDataController extends APIBaseController
         // 用户信息
         $user = Common::user();
 
+        // 查询所有房源数据
+        $allHouse = Custom::pluck('storefront', 'id');
+
         $storePublid = array();
         $private = array();
         if ($user->level == 1) {
@@ -231,9 +234,19 @@ class SelectDataController extends APIBaseController
 
             // 店内公盘
             $storefrontId = Storefront::where('area_manager_id', $user->id)->pluck('id')->toArray();
-            if (!empty($storefrontId)) {
-                $storePublid = Custom::whereIn('storefront', $storefrontId)->where('guardian', null)->get()->toArray();
+
+            $allHouseId = array();
+            foreach ($allHouse as $k => $v) {
+                if (!empty($v)) {
+                    foreach ($v as $val) {
+                        if (in_array($val, $storefrontId)) {
+                            $allHouseId[] = $k;
+                        }
+                    }
+                }
             }
+            // 去重
+            $storePublid = array_unique($allHouseId);
 
         } elseif ($user->level == 3) {
             // 3. 店长
@@ -245,18 +258,30 @@ class SelectDataController extends APIBaseController
             ])->get()->toArray();
 
             // 店内公盘
-            $storefront = Storefront::where('user_id', $user->id)->first();
+            $storefrontId = Storefront::where('user_id', $user->id)->pluck('id')->toArray();
             if (!empty($storefront)) {
                 // 获取门店下所有店员id
                 $users = User::where('ascription_store', $storefront->id)->pluck('id')->toArray();
+
                 if (!empty($users)) {
                     // 私盘
                     $private = Custom::whereIn('guardian', $users)->get()->toArray();
                 }
 
                 // 店内公盘
-                $storePublid = Custom::where('storefront', $storefront->id)->get()->toArray();
+                $storefrontHouse = array();
+                foreach ($allHouse as $k => $v) {
+                    if (!empty($v)) {
+                        foreach ($v as $val) {
+                            if (in_array($val, $storefrontId)) {
+                                $storefrontHouse[] = $k;
+                            }
+                        }
+                    }
+                }
+                $storePublid = array_unique($storefrontHouse);
             }
+
         } else {
             // 4. 业务员
 
@@ -266,13 +291,18 @@ class SelectDataController extends APIBaseController
                 'storefront' => null
             ])->get()->toArray();
 
-            // 公司公盘
-            if (!empty($user->ascription_store)) {
-                $storePublid = Custom::where([
-                    'guardian' => null,
-                    'storefront' => $user->ascription_store
-                ])->get()->toArray();
+            // 店内公盘
+            $publicHouseId = array();
+            foreach ($allHouse as $k => $v) {
+                if (!empty($v)) {
+                    foreach ($v as $val) {
+                        if ($val == $user->ascription_store) {
+                            $publicHouseId[] = $k;
+                        }
+                    }
+                }
             }
+            $storePublid = array_unique($publicHouseId);
 
             // 私盘
             $private = Custom::where([
