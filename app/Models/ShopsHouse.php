@@ -76,7 +76,7 @@ class ShopsHouse extends BaseModel
         } elseif ($this->renovation == 5) {
             return '毛坯';
         } else {
-            return '装修情况异常';
+            return '';
         }
     }
 
@@ -128,7 +128,7 @@ class ShopsHouse extends BaseModel
         } elseif ($this->shops_type == 9) {
             return '其他';
         } else {
-            return '商铺类型异常';
+            return '';
         }
     }
 
@@ -148,7 +148,7 @@ class ShopsHouse extends BaseModel
         } elseif ($this->public_private == 3) {
             return '私盘';
         } else {
-            return '公私盘异常';
+            return '';
         }
     }
 
@@ -174,7 +174,7 @@ class ShopsHouse extends BaseModel
         } elseif ($this->house_busine_state == 6) {
             return '无效';
         } else {
-            return '房源业务状态异常';
+            return '';
         }
     }
 
@@ -192,7 +192,7 @@ class ShopsHouse extends BaseModel
         } elseif ($this->pay_commission_unit == 2) {
             return '元';
         } else {
-            return '租金单位异常';
+            return '';
         }
     }
 
@@ -230,7 +230,7 @@ class ShopsHouse extends BaseModel
         } elseif ($this->payment_type == 12) {
             return '面谈';
         } else {
-            return '支付方式异常';
+            return '';
         }
     }
 
@@ -252,7 +252,7 @@ class ShopsHouse extends BaseModel
         } elseif ($this->shortest_lease == 4) {
             return '5年以上';
         } else {
-            return '最短租期异常';
+            return '';
         }
     }
 
@@ -288,7 +288,7 @@ class ShopsHouse extends BaseModel
         } elseif ($this->rent_free == 11) {
             return '面谈';
         } else {
-            return '免租期异常';
+            return '';
         }
     }
 
@@ -306,7 +306,7 @@ class ShopsHouse extends BaseModel
         } elseif ($this->frontage == 2) {
             return '不临街';
         } else {
-            return '是否临街异常';
+            return '';
         }
     }
 
@@ -324,7 +324,7 @@ class ShopsHouse extends BaseModel
         } elseif ($this->split == 2) {
             return '不可拆分';
         } else {
-            return '拆分异常';
+            return '';
         }
     }
 
@@ -358,7 +358,7 @@ class ShopsHouse extends BaseModel
         } elseif ($this->orientation == 10) {
             return '南北';
         } else {
-            return '朝向异常';
+            return '';
         }
     }
 
@@ -376,7 +376,7 @@ class ShopsHouse extends BaseModel
         } elseif ($this->prospecting == 2) {
             return '否';
         } else {
-            return '是否实勘异常';
+            return '';
         }
     }
 
@@ -396,7 +396,7 @@ class ShopsHouse extends BaseModel
         } elseif ($this->see_house_time == 3) {
             return '电话预约';
         } else {
-            return '看房时间异常';
+            return '';
         }
     }
 
@@ -414,7 +414,7 @@ class ShopsHouse extends BaseModel
         } elseif ($this->house_proxy_type == 2) {
             return '委托';
         } else {
-            return '房源状态异常';
+            return '';
         }
     }
 
@@ -442,7 +442,7 @@ class ShopsHouse extends BaseModel
         } elseif ($this->source == 7) {
             return '网络';
         } else {
-            return '来源异常';
+            return '';
         }
     }
 
@@ -470,7 +470,7 @@ class ShopsHouse extends BaseModel
         } elseif ($this->certificate_type == 7) {
             return '回迁合同';
         } else {
-            return '证件类型异常';
+            return '';
         }
     }
 

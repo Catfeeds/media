@@ -111,7 +111,12 @@ class SelectDataController extends APIBaseController
         return $this->sendResponse($res, '获取成功');
     }
 
-    
+    /**
+     * 说明: 房源添加跟进用户下拉框
+     *
+     * @return \Illuminate\Support\Collection|static
+     * @author 罗振
+     */
     public function selectCustoms()
     {
         $user = Common::user();
