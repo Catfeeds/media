@@ -75,6 +75,7 @@ Route::group(['namespace' => 'API'], function () {
         |--------------------------------------------------------------------------
         */
         Route::resource('tracks', 'TracksController');
+        Route::get('get_colleague', 'TracksController@getColleague');
 //    });
 
     /*
