@@ -1,9 +1,11 @@
 <?php
 namespace App\Repositories;
 
+use App\Handler\Common;
 use App\Models\Area;
 use App\Models\Building;
 use App\Models\DwellingHouse;
+use App\Models\Storefront;
 use App\Services\HousesService;
 
 class DwellingHousesRepository extends BaseRepository
@@ -72,6 +74,8 @@ class DwellingHousesRepository extends BaseRepository
      */
     public function addDwellingHouses($request, HousesService $housesService)
     {
+
+        $temp = $housesService->public_private_info($request->public_private);
         \DB::beginTransaction();
         try {
             $house = $this->model->create([
@@ -96,7 +100,6 @@ class DwellingHousesRepository extends BaseRepository
                 'check_in_time' => $request->check_in_time,
                 'shortest_lease' => $request->shortest_lease,
                 'cost_detail' => $request->cost_detail,
-                'public_private' => $request->public_private,
                 'house_busine_state' => $request->house_busine_state,
                 'pay_commission' => $request->pay_commission,
                 'pay_commission_unit' => $request->pay_commission_unit,
@@ -107,7 +110,9 @@ class DwellingHousesRepository extends BaseRepository
                 'see_house_time_remark' => $request->see_house_time_remark,
                 'certificate_type' => $request->certificate_type,
                 'house_proxy_type' => $request->house_proxy_type,
-                'guardian' => $request->guardian,
+                'watch' => $request->watch,
+                'guardian' => $temp['guardian'],
+                'storefront' => $temp['storefront'],
                 'house_type_img' => $request->house_type_img,
                 'indoor_img' => $request->indoor_img,
             ]);
@@ -119,7 +124,6 @@ class DwellingHousesRepository extends BaseRepository
             if (empty($house->save())) {
                 throw new \Exception('住宅房源编号添加失败');
             }
-
             \DB::commit();
             return $house;
         } catch (\Exception $e) {
@@ -159,7 +163,6 @@ class DwellingHousesRepository extends BaseRepository
         $dwellingHouse->check_in_time = $request->check_in_time;
         $dwellingHouse->shortest_lease = $request->shortest_lease;
         $dwellingHouse->cost_detail = $request->cost_detail;
-        $dwellingHouse->public_private = $request->public_private;
         $dwellingHouse->house_busine_state = $request->house_busine_state;
         $dwellingHouse->pay_commission = $request->pay_commission;
         $dwellingHouse->pay_commission_unit = $request->pay_commission_unit;

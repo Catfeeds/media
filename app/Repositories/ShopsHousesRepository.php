@@ -108,7 +108,7 @@ class ShopsHousesRepository extends BaseRepository
                 'see_house_time_remark' => $request->see_house_time_remark,
                 'certificate_type' => $request->certificate_type,
                 'house_proxy_type' => $request->house_proxy_type,
-                'guardian' => $request->guardian,
+                'watch' => $request->watch,
                 'house_type_img' => $request->house_type_img,
                 'indoor_img' => $request->indoor_img,
             ]);
