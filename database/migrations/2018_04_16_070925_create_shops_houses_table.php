@@ -46,8 +46,6 @@ class CreateShopsHousesTable extends Migration
             $table->decimal('transfer_fee', 10, 2)->nullable()->comment('转让费');
             $table->json('cost_detail')->nullable()->comment('费用明细:json');
             // 业务信息
-            $table->tinyInteger('public_private')->nullable()->comment('公私盘 1: 店间公盘 2: 店内公盘 3: 私盘');
-
             $table->tinyInteger('house_busine_state')->nullable()->comment('房源业务状态: 1: 有效 2: 暂缓 3: 已租 4: 收购 5: 托管 6: 无效');
             $table->decimal('pay_commission', 10, 2)->nullable()->comment('付佣');
             $table->tinyInteger('pay_commission_unit')->nullable()->comment('付佣单位: 1: % 2: 多少元');
@@ -58,8 +56,10 @@ class CreateShopsHousesTable extends Migration
             $table->string('see_house_time_remark',32)->nullable()->comment('看房时间备注');
             $table->tinyInteger('certificate_type')->nullable()->comment('证件类型: 1: 房地产证 2: 购房合同 3: 购房发票 4: 抵押合同 5: 认购书 6: 预售合同 7: 回迁合同');
             $table->tinyInteger('house_proxy_type')->nullable()->comment('房源状态: 1: 独家 2: 委托');
-            $table->tinyInteger('guardian')->nullable()->comment('维护人');
-            $table->tinyInteger('storefront')->nullable()->comment('维护门店');
+            $table->tinyInteger('watch')->nullable()->comment('维护人(页面维护人)');
+
+            $table->tinyInteger('guardian')->nullable()->comment('跟进人');
+            $table->json('storefront')->nullable()->comment('跟进门店');
             // 房源照片
             $table->json('house_type_img')->nullable()->comment('户型图:json');
             $table->json('indoor_img')->nullable()->comment('室内图:json');

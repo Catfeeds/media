@@ -20,7 +20,8 @@ class ShopsHouse extends BaseModel
         'rent_price' => 'float',
         'increasing_situation' => 'float',
         'transfer_fee' => 'float',
-        'pay_commission' => 'float'
+        'pay_commission' => 'float',
+        'storefront' => 'array'
     ];
 
     protected $appends = [

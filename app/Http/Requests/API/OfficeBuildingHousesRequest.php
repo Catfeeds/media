@@ -152,7 +152,6 @@ class OfficeBuildingHousesRequest extends FormRequest
                       'rent_free' => 'nullable|integer|between:1,11',
                       'increasing_situation' => 'max:32',
                       // 业务信息
-                      'public_private' => 'nullable|integer|between:1,3',
                       'house_busine_state' => 'required|integer|between:1,6',
                       'pay_commission' => 'nullable|numeric|max:9999999999',
                       'pay_commission_unit' => 'nullable|integer|between:1,2',

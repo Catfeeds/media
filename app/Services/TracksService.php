@@ -2,9 +2,9 @@
 
 namespace App\Services;
 
+use App\Handler\Common;
 use App\Models\Custom;
 use App\User;
-use Illuminate\Support\Facades\Auth;
 
 class TracksService
 {
@@ -36,5 +36,16 @@ class TracksService
 
         return $relevantData;
     }
-    
+
+    /**
+     * 说明:获取当前登录用户同事信息
+     *
+     * @return mixed
+     * @author 刘坤涛
+     */
+    public function getColleagueInfo()
+    {
+        $user = Common::user();
+        return User::where('ascription_store' , $user->ascription_store)->where('id','!=',$user->id)->get();
+    }
 }
