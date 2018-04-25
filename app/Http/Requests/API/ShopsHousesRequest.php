@@ -113,7 +113,6 @@ class ShopsHousesRequest extends FormRequest
                     'see_house_time_remark' => 'max:32',
                     'certificate_type' => 'nullable|integer|between:1,7',
                     'house_proxy_type' => 'nullable|integer|between:1,2',
-                    'guardian' => 'max:32',
                     // 房源照片
                     'house_type_img' => 'max:1024',
                     'indoor_img' => 'max:1024',
@@ -161,7 +160,6 @@ class ShopsHousesRequest extends FormRequest
                     'see_house_time_remark' => 'max:32',
                     'certificate_type' => 'nullable|integer|between:1,7',
                     'house_proxy_type' => 'nullable|integer|between:1,2',
-                    'guardian' => 'max:32',
                     // 房源照片
                     'house_type_img' => 'max:1024',
                     'indoor_img' => 'max:1024',

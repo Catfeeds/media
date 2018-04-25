@@ -69,6 +69,7 @@ class OfficeBuildingHousesRepository extends BaseRepository
      */
     public function addOfficeBuildingHouses($request, HousesService $housesService)
     {
+        $temp = $housesService->public_private_info($request->public_private);
         \DB::beginTransaction();
         try {
             $house =  $this->model->create([

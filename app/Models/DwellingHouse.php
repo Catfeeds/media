@@ -453,7 +453,7 @@ class DwellingHouse extends BaseModel
     public function getTelCnAttribute()
     {
         $ownerInfo = $this->owner_info[0];
-
+        dd($ownerInfo);
         if (empty($this->guardian)) {
             $ownerInfo['tel'] = '******';
             return $ownerInfo;
