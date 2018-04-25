@@ -1,9 +1,11 @@
 <?php
 namespace App\Repositories;
 
+use App\Handler\Common;
 use App\Models\Area;
 use App\Models\Building;
 use App\Models\DwellingHouse;
+use App\Models\Storefront;
 use App\Services\HousesService;
 
 class DwellingHousesRepository extends BaseRepository
@@ -72,6 +74,7 @@ class DwellingHousesRepository extends BaseRepository
      */
     public function addDwellingHouses($request, HousesService $housesService)
     {
+        $temp = $housesService->public_private_info($request->public_private);
         \DB::beginTransaction();
         try {
             $house = $this->model->create([
@@ -106,7 +109,9 @@ class DwellingHousesRepository extends BaseRepository
                 'see_house_time_remark' => $request->see_house_time_remark,
                 'certificate_type' => $request->certificate_type,
                 'house_proxy_type' => $request->house_proxy_type,
-                'guardian' => $request->guardian,
+                'watch' => $request->watch,
+                'guardian' => $temp['guardian'],
+                'storefront' => $temp['storefront'],
                 'house_type_img' => $request->house_type_img,
                 'indoor_img' => $request->indoor_img,
             ]);
@@ -118,7 +123,6 @@ class DwellingHousesRepository extends BaseRepository
             if (empty($house->save())) {
                 throw new \Exception('住宅房源编号添加失败');
             }
-
             \DB::commit();
             return $house;
         } catch (\Exception $e) {

@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Handler\Common;
 use App\Models\BuildingBlock;
 use App\Models\DwellingHouse;
 use App\Models\Storefront;
@@ -141,5 +142,38 @@ class HousesService
         ->toArray();
 
         return array_merge($publicHouseId, $allHouseId);
+    }
+
+    /**
+     * 说明: 根据用户登录等级选择公私盘类型获取对应的门店
+     *
+     * @param $public_private
+     * @return array
+     * @author 刘坤涛
+     */
+    public function public_private_info($public_private)
+    {
+        $user = Common::user();
+        $item = ['guardian' => null, 'storefront' => null];
+        if($user->level == 1 && $public_private == 3) {
+            $item['guardian'] = $user->id;
+        }  elseif ($user->level == 2 && $public_private == 2) {
+            $item['storefront'] = Storefront::where('area_manager_id',$user->id)->pluck('id')->toArray();
+        } elseif ($user->level == 2 && $public_private == 3) {
+            $item['guardian'] = $user->id;
+            $item['storefront'] = Storefront::where('area_manager_id',$user->id)->pluck('id')->toArray();
+        } elseif ($user->level == 3 && $public_private == 2) {
+            $item['storefront'] = Storefront::where('user_id', $user->id)->pluck('id')->toArray();
+        } elseif ($user->level == 3 && $public_private == 3) {
+            $item['guardian'] = $user->id;
+            $item['storefront'] = Storefront::where('user_id', $user->id)->pluck('id')->toArray();
+            } elseif ($user->level == 4 && $public_private == 2) {
+            $item['storefront'] = Storefront::where('id',$user->ascription_store)->pluck('id')->toArray();
+        } elseif($user->level == 4 && $public_private == 3) {
+            $item['guardian'] = $user->id;
+            $item['storefront'] = Storefront::where('id', $user->ascription_store)->pluck('id')->toArray();
+        }
+
+        return $item;
     }
 }
