@@ -1,6 +1,7 @@
 <?php
 namespace App\Repositories;
 
+use App\Handler\Common;
 use App\Models\Area;
 use App\Models\Building;
 use App\Models\OfficeBuildingHouse;
@@ -106,7 +107,7 @@ class OfficeBuildingHousesRepository extends BaseRepository
                 'see_house_time_remark' => $request->see_house_time_remark,
                 'certificate_type' => $request->certificate_type,
                 'house_proxy_type' => $request->house_proxy_type,
-                'watch' => $request->watch,
+                'guardian' => Common::user()->id,
                 'house_type_img' => $request->house_type_img,
                 'indoor_img' => $request->indoor_img,
             ]);
@@ -172,7 +173,6 @@ class OfficeBuildingHousesRepository extends BaseRepository
         $officeBuildingHouse->see_house_time_remark = $request->see_house_time_remark;
         $officeBuildingHouse->certificate_type = $request->certificate_type;
         $officeBuildingHouse->house_proxy_type = $request->house_proxy_type;
-        $officeBuildingHouse->guardian = $request->guardian;
         $officeBuildingHouse->house_type_img = $request->house_type_img;
         $officeBuildingHouse->indoor_img = $request->indoor_img;
 

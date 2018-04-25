@@ -1,6 +1,7 @@
 <?php
 namespace App\Repositories;
 
+use App\Handler\Common;
 use App\Models\Area;
 use App\Models\Building;
 use App\Models\ShopsHouse;
@@ -107,7 +108,7 @@ class ShopsHousesRepository extends BaseRepository
                 'see_house_time_remark' => $request->see_house_time_remark,
                 'certificate_type' => $request->certificate_type,
                 'house_proxy_type' => $request->house_proxy_type,
-                'watch' => $request->watch,
+                'guardian' => Common::user()->id,
                 'house_type_img' => $request->house_type_img,
                 'indoor_img' => $request->indoor_img,
             ]);
@@ -175,7 +176,6 @@ class ShopsHousesRepository extends BaseRepository
         $shopsHouse->see_house_time_remark = $request->see_house_time_remark;
         $shopsHouse->certificate_type = $request->certificate_type;
         $shopsHouse->house_proxy_type = $request->house_proxy_type;
-        $shopsHouse->guardian = $request->guardian;
         $shopsHouse->house_type_img = $request->house_type_img;
         $shopsHouse->indoor_img = $request->indoor_img;
 

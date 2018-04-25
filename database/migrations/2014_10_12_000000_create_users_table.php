@@ -17,7 +17,6 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->string('tel')->nullable();
             $table->string('real_name')->nullable()->comment('真实名称');
-            $table->string('nick_name')->nullable()->comment('昵称');
             $table->string('ascription_store')->nullable()->comment('所属门店');
             $table->tinyInteger('level')->nullable()->comment('级别 1: 总经理 2: 区域经理 3: 店长 4: 业务');
             $table->string('password');

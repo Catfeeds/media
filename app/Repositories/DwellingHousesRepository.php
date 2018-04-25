@@ -22,20 +22,15 @@ class DwellingHousesRepository extends BaseRepository
      *
      * @param $per_page
      * @param $condition
-     * @param $allHouseId
      * @return mixed
      * @author 罗振
      */
     public function dwellingHousesList(
         $per_page,
-        $condition,
-        $allHouseId
+        $condition
     )
     {
         $result = $this->model;
-        if (!empty($allHouseId)) {
-            $result = $result->whereIn('id', $allHouseId);
-        }
 
         if (!empty($condition->region) && !empty($condition->build)) {
             // 楼盘包含的楼座
@@ -74,7 +69,6 @@ class DwellingHousesRepository extends BaseRepository
      */
     public function addDwellingHouses($request, HousesService $housesService)
     {
-        $temp = $housesService->public_private_info($request->public_private);
         \DB::beginTransaction();
         try {
             $house = $this->model->create([
@@ -109,9 +103,7 @@ class DwellingHousesRepository extends BaseRepository
                 'see_house_time_remark' => $request->see_house_time_remark,
                 'certificate_type' => $request->certificate_type,
                 'house_proxy_type' => $request->house_proxy_type,
-                'watch' => $request->watch,
-                'guardian' => $temp['guardian'],
-                'storefront' => $temp['storefront'],
+                'guardian' => Common::user()->id,
                 'house_type_img' => $request->house_type_img,
                 'indoor_img' => $request->indoor_img,
             ]);
@@ -172,7 +164,6 @@ class DwellingHousesRepository extends BaseRepository
         $dwellingHouse->see_house_time_remark = $request->see_house_time_remark;
         $dwellingHouse->certificate_type = $request->certificate_type;
         $dwellingHouse->house_proxy_type = $request->house_proxy_type;
-        $dwellingHouse->guardian = $request->guardian;
         $dwellingHouse->house_type_img = $request->house_type_img;
         $dwellingHouse->indoor_img = $request->indoor_img;
 

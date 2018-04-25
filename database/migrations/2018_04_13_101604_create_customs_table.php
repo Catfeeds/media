@@ -59,7 +59,6 @@ class CreateCustomsTable extends Migration
             $table->string('not_like',256)->comment('核心抵触点')->nullable();
 
             $table->tinyInteger('guardian')->nullable()->comment('维护人');
-            $table->tinyInteger('storefront')->nullable()->comment('维护门店');
 
             $table->json('other')->comment('其他需求')->nullable();
 

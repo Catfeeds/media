@@ -15,14 +15,12 @@ class DwellingHousesController extends APIBaseController
      *
      * @param Request $request
      * @param DwellingHousesRepository $dwellingHousesRepository
-     * @param HousesService $housesService
      * @return \Illuminate\Http\JsonResponse
      * @author 罗振
      */
     public function index(
         Request $request,
-        DwellingHousesRepository $dwellingHousesRepository,
-        HousesService $housesService
+        DwellingHousesRepository $dwellingHousesRepository
     )
     {
         // 判断用户权限
@@ -30,9 +28,7 @@ class DwellingHousesController extends APIBaseController
             return $this->sendError('没有房源列表权限', '403');
         }
 
-        $allHouseId = $housesService->getCanSeeHouseId(Common::user());
-
-        $result = $dwellingHousesRepository->dwellingHousesList($request->per_page??null, json_decode($request->condition), $allHouseId);
+        $result = $dwellingHousesRepository->dwellingHousesList($request->per_page??null, json_decode($request->condition));
         return $this->sendResponse($result,'住宅写字楼列表获取成功');
     }
 
