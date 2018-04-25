@@ -39,4 +39,22 @@ class TracksController extends APIBaseController
         $result = $tracksRepository->addTracks($request);
         return $this->sendResponse($result,'房源添加跟进成功');
     }
+
+    /**
+     * 说明:获取当前登录用户同事信息
+     *
+     * @param TracksService $tracksService
+     * @return \Illuminate\Http\JsonResponse
+     * @author 刘坤涛
+     */
+    public function getColleague(TracksService $tracksService)
+    {
+        $res = $tracksService->getColleagueInfo()->map(function($v) {
+                return [
+                    'label' => $v->real_name,
+                    'value' => $v->id
+                ];
+        });
+        return $this->sendResponse($res,'同事信息获取成功');
+    }
 }
