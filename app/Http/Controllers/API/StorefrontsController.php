@@ -29,7 +29,18 @@ class StorefrontsController extends APIBaseController
 	        return $this->sendError('无门店列表权限','403');
         }
 
-	    $res = $storefrontsRepository->getStorefrontsList($request);
+        // 获取当前权限等级
+        $user = Common::user();
+
+        switch ($user->level) {
+            case 1: // 总经理 查看所有门店
+                $where = [];
+                break;
+            case 2: // 区域经理查看属于自己的门店
+                $where = ['area_manager_id' => $user->id];
+                break;
+        }
+	    $res = $storefrontsRepository->getStorefrontsList($where, $request);
 	    return $this->sendResponse($res,'门店列表获取成功');
 	}
 
@@ -44,7 +55,15 @@ class StorefrontsController extends APIBaseController
         UserRepository $userRepository
     )
     {
-             $result= $userRepository->getAllAreaManager()->map(function($v) {
+        $user = Common::user();
+        switch ($user->level) {
+            case 1:
+                $where = [];
+                break;
+            case 2:
+                $where = ['id' => $user->id];
+        }
+             $result= $userRepository->getAllAreaManager($where)->map(function($v) {
                 return [
                         'label' => $v->real_name,
                         'value' => $v->id

@@ -154,9 +154,9 @@ class UserRepository extends BaseRepository
      * @return mixed
      * @author 罗振
      */
-    public function getAllAreaManager()
+    public function getAllAreaManager($where = [])
     {
-        return $this->model->where('level', 2)->get();
+        return $this->model->where($where)->where('level', 2)->get();
     }
 
 }

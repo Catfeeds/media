@@ -37,7 +37,6 @@ class UsersRequest extends FormRequest
                             User::all()->pluck('real_name')->toArray()
                         )
                     ],
-                    'nick_name' => 'required|max:32',
                     'ascription_store' => [
                         'nullable',
                         'integer',
@@ -64,7 +63,6 @@ class UsersRequest extends FormRequest
                             User::all()->pluck('real_name')->toArray()
                         )
                     ],
-                    'nick_name' => 'required|max:32',
                     'ascription_store' => [
                         'nullable',
                         'integer',

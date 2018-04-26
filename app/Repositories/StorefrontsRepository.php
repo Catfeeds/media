@@ -30,15 +30,16 @@ class StorefrontsRepository extends BaseRepository
     }
 
     /**
-     * 说明: 门店列表
+     * 说明：门店列表
      *
+     * @param array $where
      * @param $request
      * @return mixed
-     * @author 刘坤涛
+     * @author jacklin
      */
-    public function getStorefrontsList($request)
+    public function getStorefrontsList($where = [], $request)
     {
-        return $this->model->paginate($request->per_page);
+        return $this->model->where($where)->paginate($request->per_page);
     }
 
     /**
