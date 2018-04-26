@@ -24,16 +24,6 @@ class TracksService
             ];
         });
 
-        $relevantData['user'] = User::all()->map(function($user) {
-            return [
-                'label' => $user->name,
-                'value' => $user->id,
-            ];
-        });
-
-//        $relevantData['track'] = Auth::guard('api')->user()->name;
-        $relevantData['track'] = 'zxz';
-
         return $relevantData;
     }
 

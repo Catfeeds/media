@@ -53,9 +53,10 @@ class UserController extends APIBaseController
             'status' => 1
         ])->first();
         if (!empty($ownerViewRecord)) {
-            $result['ownerViewRecord'] = false;
-        } else {
-            $result['ownerViewRecord'] = true;
+            $result['ownerViewRecord'] = [
+                'type' => $ownerViewRecord->model_type,
+                'house_id' => $ownerViewRecord->house_id
+            ];
         }
 
         $result = $user->toArray();

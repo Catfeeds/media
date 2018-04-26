@@ -38,14 +38,7 @@ class RolesSeeder extends Seeder
 
         // 业务员所有权限
         $salesManPermissions = $model->whereNotIn('group_id', [5, 6])->pluck('name')->toArray();
-        unset($salesManPermissions['del_house']);
-        unset($salesManPermissions['del_building']);
-        unset($salesManPermissions['del_building_block']);
-        unset($salesManPermissions['del_city']);
-        unset($salesManPermissions['del_area']);
-        unset($salesManPermissions['del_blocks']);
-        unset($salesManPermissions['del_storefronts']);
-        unset($salesManPermissions['del_user']);
+        $salesManPermissions = array_diff($salesManPermissions, ['del_house', 'del_building', 'del_building_block', 'del_city', 'del_area', 'del_blocks', 'del_storefronts', 'del_user']);
 
         // 店长
         $shopOwner = Role::create([
