@@ -51,7 +51,15 @@ class TracksController extends APIBaseController
         TracksRepository $tracksRepository
     )
     {
+        //验证house_id是否存,如果存在,必须存在house_model
+        if (empty($request->house_id) && !empty($request->house_model) || !empty($request->house_id) && empty($request->house_model)) {
+            return $this->sendError('房源参数错误');
+        }
         $res = $tracksRepository->addCustomsTracks($request);
+        if ($res) {
+            return $this->sendResponse($res,'客户跟进信息添加成功');
+        }
+        return $this->sendError('客户跟进信息添加失败');
     }
 
     /**
