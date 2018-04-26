@@ -263,7 +263,10 @@ class Custom extends BaseModel
      */
     public function getAcreLabelAttribute()
     {
-       return $this->acre_low. '㎡-' . $this->acre_high . '㎡';
+        $str = '';
+        if (!empty($this->acre_low)) $str.=$this->acre_low . '㎡-';
+        if (!empty($this->acre_high)) $str.=$this->acre_high . '㎡';
+        return $str;
     }
 
     /**
@@ -274,7 +277,13 @@ class Custom extends BaseModel
      */
     public function getRoomLabelAttribute()
     {
-        return $this->room . '室' . $this->hall . '厅' . $this->toilet .'卫' . $this->kitchen .'厨' . $this->balcony . '阳台' ;
+        $str = '';
+        if (!empty($this->room)) $str .= $this->room . '室';
+        if (!empty($this->hall)) $str .= $this->hall . '厅';
+        if (!empty($this->toilet)) $str .= $this->toilet . '卫';
+        if (!empty($this->kitchen)) $str .= $this->kitchen . '厨';
+        if (!empty($this->balcony)) $str .= $this->balcony . '阳台';
+        return $str;
     }
 
     /**
@@ -285,7 +294,10 @@ class Custom extends BaseModel
      */
     public function getFloorLabelAttribute()
     {
-        return $this->floor_low . '层-' . $this->floor_high . '层';
+        $str = '';
+        if (!empty($this->floor_low)) $str .= $this->floor_low . '层-';
+        if (!empty($this->floor_high)) $str .= $this->floor_high . '层';
+        return $str;
     }
 
     /**
