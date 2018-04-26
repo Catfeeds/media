@@ -54,14 +54,11 @@ class TracksRequest extends FormRequest
      */
     public function rules()
     {
-        switch ($this->method()) {
-            case 'POST':
+        switch ($this->route()->getActionMethod()) {
+            case 'store':
                 return [
-                    'house_model' => 'required|integer',
-                    'house_id' => [
-                        'required',
-                        'integer',
-                    ],
+                    'house_model' => 'required|integer|between:1,3',
+                    'house_id' => 'required|integer',
                     'custom_id' => [
                         'required',
                         'integer',
@@ -72,15 +69,20 @@ class TracksRequest extends FormRequest
                     'tracks_mode' => 'required|integer',
                     'content' => 'required',
                 ];
-            case 'PUT':
-            case 'PATCH':
-                {
-                    return [
-
-                    ];
-                }
-            case 'GET':
-            case 'DELETE':
+            case 'addCustomsTracks':
+                return [
+                    'custom_id' => [
+                        'required',
+                        'integer',
+                        Rule::in(
+                            Custom::all()->pluck('id')->toArray()
+                        )
+                    ],
+                    'tracks_mode' => 'required|integer',
+                    'content' => 'required',
+                    'house_model' => 'nullable|integer|between:1,3',
+                    'house_id' => 'nullable|integer',
+                ];
             default:
                 {
                     return [];

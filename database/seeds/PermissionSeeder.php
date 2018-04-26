@@ -143,6 +143,20 @@ class PermissionSeeder extends Seeder
         ]);
 
         Permission::create([
+            'name' => 'update_custom',
+            'guard_name' => 'web',
+            'label' => '修改客户',
+            'group_id' => 3,
+        ]);
+
+        Permission::create([
+            'name' => 'del_custom',
+            'guard_name' => 'web',
+            'label' => '删除客户',
+            'group_id' => 3,
+        ]);
+
+        Permission::create([
             'name' => 'custom_add_tracks',
             'guard_name' => 'web',
             'label' => '客户添加跟进',

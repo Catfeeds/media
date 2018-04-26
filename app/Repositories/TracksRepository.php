@@ -24,14 +24,18 @@ class TracksRepository extends BaseRepository
      */
     public function addTracks($request)
     {
-       if ($request->house_model == 1) {
-            $model = "App\\Models\\DwellingHouse";
-       } elseif ($request->house_model == 2) {
-           $model = "App\\Models\\OfficeBuildingHouse";
-       } elseif ($request->house_model == 3) {
-           $model = "App\\Models\\ShopsHouse";
-       } else {
-           $model = '';
+       switch ($request->house_model) {
+           case '1':
+               $model = "App\\Models\\DwellingHouse";
+               break;
+           case '2':
+               $model = "App\\Models\\DwellingHouse";
+               break;
+           case '3':
+               $model = "App\\Models\\DwellingHouse";
+               break;
+           default;
+               break;
        }
         \DB::beginTransaction();
         try {
@@ -46,12 +50,13 @@ class TracksRepository extends BaseRepository
             if (empty($tracks)) {
                throw new \Exception('房源跟进信息添加失败');
            }
-            $res = OwnerViewRecord::where([
+            $OwnerViewRecord = OwnerViewRecord::where([
                 'user_id' => Common::user()->id,
                 'house_id' => $request->house_id,
-            ])->update(['status'=>2]);
-            if (!$res) {
-                throw new \Exception('查看房源记录更新失败');
+            ])->first();
+            if ($OwnerViewRecord) {
+                $res = $OwnerViewRecord->update(['status' => 2]);
+                if (!$res) throw new \Exception('查看房源记录更新失败');
             }
             \DB::commit();
            return true;
@@ -60,6 +65,32 @@ class TracksRepository extends BaseRepository
             \Log::error('房源跟进信息添加失败'. $e->getMessage());
             return false;
         }
+    }
+
+    public function addCustomsTracks($request)
+    {
+            switch ($request->house_model) {
+                case '1':
+                    $model = "App\\Models\\DwellingHouse";
+                    break;
+                case '2':
+                    $model = "App\\Models\\DwellingHouse";
+                    break;
+                case '3':
+                    $model = "App\\Models\\DwellingHouse";
+                    break;
+                default;
+                    $model = null;
+                    break;
+        }
+        return $this->model->create([
+            'house_model' => $model,
+            'house_id' => $request->house_id,
+            'user_id' => Common::user()->id,
+            'custom_id' => $request->custom_id,
+            'tracks_mode' => $request->tracks_mode,
+            'content' => $request->content,
+        ]);
     }
 
 }

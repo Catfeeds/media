@@ -48,19 +48,26 @@ class UserController extends APIBaseController
             return $this->sendError('登录账户异常', 401);
         }
 
+        $result = $user->toArray();
+        $result['access'] = $user->getAllPermissions()->pluck('name')->toArray()??[];
+
         // 查询跟进
         $ownerViewRecord = OwnerViewRecord::where([
             'user_id' => $user->id,
             'status' => 1
         ])->first();
         if (!empty($ownerViewRecord)) {
-            $result['ownerViewRecord'] = false;
+            $result['ownerViewRecord'] = [
+                'type' => $ownerViewRecord->model_type,
+                'house_id' => $ownerViewRecord->house_id,
+                'status' => true
+            ];
         } else {
-            $result['ownerViewRecord'] = true;
+            $result['ownerViewRecord'] = [
+                'status' => false
+            ];
         }
 
-        $result = $user->toArray();
-        $result['access'] = $user->getAllPermissions()->pluck('name')->toArray()??[];
         return $this->sendResponse($result, '成功');
     }
 
