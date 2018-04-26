@@ -9,21 +9,21 @@ use App\Models\ShopsHouse;
 use App\Models\Track;
 use Illuminate\Console\Command;
 
-class HouseToPublic extends Command
+class HouseAndCustomToPublic extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'HouseToPublic';
+    protected $signature = 'HouseAndCustomToPublic';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = '私盘移入公盘';
+    protected $description = '房源,客户私盘移入公盘';
 
     /**
      * Create a new command instance.
@@ -43,10 +43,10 @@ class HouseToPublic extends Command
     public function handle()
     {
         //
-        $this->houseToPublic();
+        $this->HouseAndCustomToPublic();
     }
 
-    public function houseToPublic()
+    public function houseAndCustomToPublic()
     {
         \DB::beginTransaction();
         try {
@@ -70,7 +70,7 @@ class HouseToPublic extends Command
                 }
             } else {
                 // 判断时间
-                if (strtotime($dwellingTemp->created_at) + 30*60*60*24 > strtotime(date('Ymd'))) {
+                if (strtotime($dwellingTemp->created_at) + config('setting.house_to_public')*60*60*24 > strtotime(date('Ymd'))) {
                     $res = DwellingHouse::where('id', $v->id)->update(['guardian' => null]);
                     if (!$res) {
                         throw new \Exception('id为:'.$v->id.'的住宅房源加入公盘失败');
@@ -97,7 +97,7 @@ class HouseToPublic extends Command
                 }
             } else {
                 // 判断时间
-                if (strtotime($shopsTemp->created_at) + 30*60*60*24 > strtotime(date('Ymd'))) {
+                if (strtotime($shopsTemp->created_at) + config('setting.house_to_public')*60*60*24 > strtotime(date('Ymd'))) {
                     $res = ShopsHouse::where('id', $v->id)->update(['guardian' => null]);
                     if (!$res) {
                         throw new \Exception('id为:'.$v->id.'的商铺房源加入公盘失败');
@@ -124,7 +124,7 @@ class HouseToPublic extends Command
                 }
             } else {
                 // 判断时间
-                if (strtotime($officeTemp->created_at) + 30*60*60*24 > strtotime(date('Ymd'))) {
+                if (strtotime($officeTemp->created_at) + config('setting.house_to_public')*60*60*24 > strtotime(date('Ymd'))) {
                     $res = OfficeBuildingHouse::where('id', $v->id)->update(['guardian' => null]);
                     if (!$res) {
                         throw new \Exception('id为:'.$v->id.'的写字楼房源加入公盘失败');
@@ -149,7 +149,7 @@ class HouseToPublic extends Command
                 }
             } else {
                 // 判断时间
-                if (strtotime($officeTemp->created_at) + 30*60*60*24 > strtotime(date('Ymd'))) {
+                if (strtotime($officeTemp->created_at) + config('setting.custom_to_public')*60*60*24 > strtotime(date('Ymd'))) {
                     $res = Custom::where('id', $v->id)->update(['guardian' => null]);
                     if (!$res) {
                         throw new \Exception('id为:'.$v->id.'的客户加入公盘失败');
