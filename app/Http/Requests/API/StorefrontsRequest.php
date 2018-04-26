@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\API;
 
+use App\Models\Storefront;
 use App\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -29,7 +30,13 @@ class StorefrontsRequest extends FormRequest
         switch ($this->method()) {
             case 'POST':
                 return [
-                    'storefront_name' => 'required|max:32',
+                    'storefront_name' => [
+                        'required',
+                        'max:32',
+                        Rule::notIn(
+                            Storefront::all()->pluck('storefront_name')->toArray()
+                        )
+                    ],
                     'address' => 'required|max:32',
                     'fixed_tel' => 'required|max:16',
                     'area_manager_id' => [
