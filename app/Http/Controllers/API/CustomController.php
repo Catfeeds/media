@@ -10,6 +10,14 @@ use Illuminate\Http\Request;
 
 class CustomController extends APIBaseController
 {
+    /**
+     * 说明: 客户列表
+     *
+     * @param Request $request
+     * @param CustomRepository $repository
+     * @return \Illuminate\Http\JsonResponse
+     * @author 罗振
+     */
     public function index(Request $request, CustomRepository $repository)
     {
         if (empty(Common::user()->can('custom_list'))) {

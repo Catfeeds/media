@@ -172,7 +172,7 @@ class CustomRepository extends BaseRepository
         }
         catch (\Exception $exception) {
             \Log::error($exception);
-            \DB::commit();
+            \DB::rollback();
             return false;
         }
         \DB::commit();
