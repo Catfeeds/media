@@ -26,11 +26,12 @@ class UserController extends APIBaseController
         Request $request
     )
     {
-        if(empty(Common::user()->can('user_list'))) {
+        $user = Common::user();
+        if(empty($user->can('user_list'))) {
             return $this->sendError('无成员列表权限',403);
         }
 
-        $res = $userRepository->userList($request);
+        $res = $userRepository->userList($user, $request);
         return $this->sendResponse($res,'成员列表获取成功');
     }
 

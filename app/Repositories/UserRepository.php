@@ -14,22 +14,33 @@ class UserRepository extends BaseRepository
     }
 
     /**
-     * 说明:获取成员列表
+     * 说明：获取成员列表
      *
+     * @param array $where
      * @param $request
      * @return mixed
-     * @author 刘坤涛
+     * @author jacklin
      */
-    public function userList($request)
+    public function userList(User $user, $request)
     {
-        $result = $this->model->where('level', '!=', 1);
+        $result = $this->model;
+        if ($user->level === 2) {
+            // 获取该区域经理下的所有 门店
+            $store = Storefront::where('area_manager_id', $user->id)->get()->pluck('id')->toArray();
+            $result = User::whereIn('ascription_store', $store);
+        }
 
-        if (!empty($request->shop_id)) {
-            $result = $result->where('ascription_store', $request->shop_id);
+        if($user->level === 3) {
+            // 获取当前门店 下 除了自己的员工
+            $result = User::where('ascription_store', $user->ascription_store)->where('id', '!=', $user->id);
+        }
+
+        if (!empty($request->shopId)) {
+            $result = $result->where('ascription_store', $request->shopId);
         }
 
         if (!empty($request->name)) {
-            $result = $result->where('real_name', $request->name)->orWhere('nick_name', $request->name);
+            $result = $result->where('real_name', $request->name)->orWhere('tel', $request->name);
         }
 
         return $result->paginate($request->per_page??10);
