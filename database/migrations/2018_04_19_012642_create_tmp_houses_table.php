@@ -7,7 +7,7 @@ use Illuminate\Database\Migrations\Migration;
 class CreateTmpHousesTable extends Migration
 {
     /**
-     * Run the migrations.
+     * 中介老数据表
      *
      * @return void
      */
@@ -38,6 +38,7 @@ class CreateTmpHousesTable extends Migration
             $table->string('部门', 255)->nullable();
             $table->string('员工', 255)->nullable();
             $table->timestamps();
+            \DB::statement("alter table `storefronts` comment'中介老数据表'");
         });
     }
 
