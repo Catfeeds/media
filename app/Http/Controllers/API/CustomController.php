@@ -71,7 +71,9 @@ class CustomController extends APIBaseController
         if (empty(Common::user()->can('custom_show'))) {
             return $this->sendError('无客户详情权限','403');
         }
-
+        $custom->relBuildings = $custom->buildings->map(function($v){
+            return $v->building_id;
+        });
         return $this->sendResponse($custom, '获取成功');
     }
 

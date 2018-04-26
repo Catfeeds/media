@@ -16,14 +16,15 @@ class UserRepository extends BaseRepository
     /**
      * 说明：获取成员列表
      *
-     * @param array $where
+     * @param User $user
      * @param $request
      * @return mixed
      * @author jacklin
      */
     public function userList(User $user, $request)
     {
-        $result = $this->model;
+        $result = $this->model->where('level', '!=', 1);
+
         if ($user->level === 2) {
             // 获取该区域经理下的所有 门店
             $store = Storefront::where('area_manager_id', $user->id)->get()->pluck('id')->toArray();
