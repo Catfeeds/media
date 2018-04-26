@@ -60,7 +60,7 @@ class TracksRequest extends FormRequest
                     'house_model' => 'required|integer|between:1,3',
                     'house_id' => 'required|integer',
                     'custom_id' => [
-                        'required',
+                        'nullable',
                         'integer',
                         Rule::in(
                             Custom::all()->pluck('id')->toArray()
