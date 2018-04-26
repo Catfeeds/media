@@ -29,10 +29,10 @@ class OwnerViewRecordsRepository extends BaseRepository
                 $model = "App\\Models\\DwellingHouse";
                 break;
             case '2':
-                $model = "App\\Models\\DwellingHouse";
+                $model = "App\\Models\\OfficeBuildingHouse";
                 break;
             case '3':
-                $model = "App\\Models\\DwellingHouse";
+                $model = "App\\Models\\ShopHouse";
                 break;
             default;
                 break;
