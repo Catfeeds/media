@@ -91,6 +91,7 @@ class AddManager extends Command
                 self::create();
                 return ;
             }
+
             $result = self::$usersService->addManager($data);
             if (!empty($result)) {
                 $this->info('添加成功');

@@ -14,16 +14,55 @@ class RolesSeeder extends Seeder
      */
     public function run()
     {
+        $model = Permission::where('guard_name','web');
+
         $role= Role::create([
             'name_cn' => '总经理',
             'name' => 'manager',
             'name_en' => 'manager',
             'guard_name' => 'web',
         ]);
-        $role->givePermissionTo(Permission::where('guard_name','web')->pluck('name')->toArray());
+        $role->givePermissionTo($model->pluck('name')->toArray());
 
-//        $permissions = ['house_list', 'add_house', 'update_house'];
-//        $role->givePermissionTo($permissions);
+        // 区域经理
+        $areaManager = Role::create([
+            'name_cn' => '区域经理',
+            'name' => 'area_manager',
+            'name_en' => 'area_manager',
+            'guard_name' => 'web',
+        ]);
+        $areaManager->givePermissionTo($model->pluck('name')->toArray());
 
+        // 店长全部权限
+        $shopOwnerPermissions = $model->where('group_id', '!=', 5)->pluck('name')->toArray();
+
+        // 业务员所有权限
+        $salesManPermissions = $model->whereNotIn('group_id', [5, 6])->pluck('name')->toArray();
+        unset($salesManPermissions['del_house']);
+        unset($salesManPermissions['del_building']);
+        unset($salesManPermissions['del_building_block']);
+        unset($salesManPermissions['del_city']);
+        unset($salesManPermissions['del_area']);
+        unset($salesManPermissions['del_blocks']);
+        unset($salesManPermissions['del_storefronts']);
+        unset($salesManPermissions['del_user']);
+
+        // 店长
+        $shopOwner = Role::create([
+            'name_cn' => '区域经理',
+            'name' => 'shop_owner',
+            'name_en' => 'shop_owner',
+            'guard_name' => 'web',
+        ]);
+        $shopOwner->givePermissionTo($shopOwnerPermissions);
+
+        // 业务员
+        $salesMan = Role::create([
+            'name_cn' => '业务员',
+            'name' => 'sales_an',
+            'name_en' => 'sales_an',
+            'guard_name' => 'web',
+        ]);
+        $salesMan->givePermissionTo($salesManPermissions);
     }
 }

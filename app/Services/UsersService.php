@@ -52,7 +52,6 @@ class UsersService
             $user = User::create([
                 'tel' => $data['tel'],
                 'real_name' => $data['real_name'],
-                'nick_name' => $data['real_name'],
                 'level' => 1,
                 'password' => bcrypt($data['password']),
             ]);

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Handler\Common;
 use App\Http\Requests\API\UsersRequest;
+use App\Models\OwnerViewRecord;
 use App\Repositories\UserRepository;
 use App\Services\UsersService;
 use App\User;
@@ -45,6 +46,18 @@ class UserController extends APIBaseController
         if (empty($user = Common::user())) {
             return $this->sendError('登录账户异常', 401);
         }
+
+        // 查询跟进
+        $ownerViewRecord = OwnerViewRecord::where([
+            'user_id' => $user->id,
+            'status' => 1
+        ])->first();
+        if (!empty($ownerViewRecord)) {
+            $result['ownerViewRecord'] = false;
+        } else {
+            $result['ownerViewRecord'] = true;
+        }
+
         $result = $user->toArray();
         $result['access'] = $user->getAllPermissions()->pluck('name')->toArray()??[];
         return $this->sendResponse($result, '成功');
@@ -108,6 +121,7 @@ class UserController extends APIBaseController
         if(empty(Common::user()->can('update_user'))) {
             return $this->sendError('无修改成员权限', '403');
         }
+
         $res = $userRepository->updateUser($user, $request);
         if($res) {
             return $this->sendResponse($res, '修改成员成功');
@@ -155,6 +169,11 @@ class UserController extends APIBaseController
         User $user
     )
     {
+        // 检测手机号是否重复
+        if (!empty($request->tel) && $request->tel != $user->tel && in_array($request->tel, User::pluck('tel')->toArray())) {
+            return $this->sendError($request->tel . '已存在，请勿重复添加');
+        }
+
         $res = $userRepository->changeTel($user ,$request);
         if ($res) {
             return $this->sendResponse($res,'电话修改成功');

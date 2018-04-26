@@ -49,7 +49,6 @@ class UserRepository extends BaseRepository
             $user = $this->model->create([
                 'tel' => $request->tel,
                 'real_name' => $request->real_name,
-                'nick_name' => $request->nick_name,
                 'ascription_store' => $request->ascription_store,
                 'level' => $request->level,
                 'password' => bcrypt($request->password),
@@ -66,8 +65,7 @@ class UserRepository extends BaseRepository
                 }
             }
 
-            // $request->level
-            $user->assignRole(1);
+            $user->assignRole($request->level);
             \DB::commit();
             return true;
         } catch (\Exception $exception) {
@@ -90,7 +88,6 @@ class UserRepository extends BaseRepository
         \DB::beginTransaction();
         try {
                 $user->real_name = $request->real_name;
-                $user->nick_name = $request->nick_name;
                 $user->ascription_store = $request->ascription_store??null;
                 $user->level = $request->level;
                 $user->remark = $request->remark;
@@ -103,8 +100,7 @@ class UserRepository extends BaseRepository
                     throw new \Exception('添加店长失败');
                 }
             }
-            // $request->level
-            $user->syncRoles(1);
+            $user->syncRoles($request->level);
             \DB::commit();
             return true;
         } catch (\Exception $exception) {
