@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Handler\Common;
 use App\Http\Requests\API\UsersRequest;
+use App\Models\OwnerViewRecord;
 use App\Repositories\UserRepository;
 use App\Services\UsersService;
 use App\User;
@@ -45,6 +46,18 @@ class UserController extends APIBaseController
         if (empty($user = Common::user())) {
             return $this->sendError('登录账户异常', 401);
         }
+
+        // 查询跟进
+        $ownerViewRecord = OwnerViewRecord::where([
+            'user_id' => $user->id,
+            'status' => 1
+        ])->first();
+        if (!empty($ownerViewRecord)) {
+            $result['ownerViewRecord'] = false;
+        } else {
+            $result['ownerViewRecord'] = true;
+        }
+
         $result = $user->toArray();
         $result['access'] = $user->getAllPermissions()->pluck('name')->toArray()??[];
         return $this->sendResponse($result, '成功');
