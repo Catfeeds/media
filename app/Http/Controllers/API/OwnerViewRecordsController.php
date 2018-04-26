@@ -18,9 +18,8 @@ class OwnerViewRecordsController extends APIBaseController
     {
         $res = $ownerViewRecordsRepository->addRecords($request);
         if ($res) {
-            return $this->sendResponse($res, '查看房源记录添加成功');
+            return $this->sendResponse($res, '房源查看记录添加成功');
         }
-        return $this->sendError('记录添加失败');
-
+        return $this->sendError('房源查看记录添加失败');
     }
 }

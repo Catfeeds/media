@@ -37,7 +37,6 @@ class TracksController extends APIBaseController
         TracksRepository $tracksRepository
     )
     {
-        dd(123);
         $res = $tracksRepository->addTracks($request);
         if ($res) {
           return  $this->sendResponse($res,'房源跟进信息添加成功');

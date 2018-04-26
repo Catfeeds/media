@@ -35,14 +35,8 @@ class OwnerViewRecordsRequest extends FormRequest
                             User::all()->pluck('id')->toArray()
                         )
                     ],
-                    'house_model' => 'required',
-                    'house_id' => [
-                        'required',
-                        'integer',
-                        Rule::in(
-                            $this->house_model::make()::all()->pluck('id')->toArray()
-                        )
-                    ],
+                    'house_model' => 'required|integer',
+                    'house_id' => 'required|integer',
                 ];
             default:
                 {

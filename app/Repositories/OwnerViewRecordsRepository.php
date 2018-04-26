@@ -24,10 +24,19 @@ class OwnerViewRecordsRepository extends BaseRepository
      */
     public function addRecords($request)
     {
+        if ($request->house_model == 1) {
+            $model = "App\\Models\\DwellingHouse";
+        } elseif ($request->house_model == 2) {
+            $model = "App\\Models\\OfficeBuildingHouse";
+        } elseif ($request->house_model == 3) {
+            $model = "App\\Models\\ShopsHouse";
+        } else {
+            $model = '';
+        }
         return $this->model->create([
             'user_id' => Common::user()->id,
-            'house_id' => $request->id,
-            'house_model' => $request->house_model,
+            'house_id' => $request->house_id,
+            'house_model' => $model,
         ]);
     }
 }

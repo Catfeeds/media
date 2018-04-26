@@ -57,13 +57,10 @@ class TracksRequest extends FormRequest
         switch ($this->method()) {
             case 'POST':
                 return [
-                    'house_model' => 'required',
+                    'house_model' => 'required|integer',
                     'house_id' => [
                         'required',
                         'integer',
-                        Rule::in(
-                            $this->house_model::make()->all()->pluck('id')->toArray()
-                        )
                     ],
                     'user_id' => [
                         'required',
