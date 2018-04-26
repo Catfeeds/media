@@ -26,10 +26,14 @@ class User extends Authenticatable
     ];
 
     protected $appends = [
-        'level_cn'
+        'level_cn', 'store_name'
     ];
 
-    // , 'storefront_name'
+
+    public function storefront()
+    {
+        return $this->belongsTo(Storefront::class, 'ascription_store', 'id');
+    }
 
     /**
      * 说明: 获取token
@@ -88,23 +92,16 @@ class User extends Authenticatable
         }
     }
 
-//    /**
-//     * 说明: 所属门店
-//     *
-//     * @return string
-//     * @use storefront_name
-//     * @author 罗振
-//     */
-//    public function getStorefrontNameAttribute()
-//    {
-//        if ($this->level == 1) {
-//            return ;
-//        }
-//
-//        if ($this->level == 2) {
-//            return implode(',', Storefront::where('area_manager_id', $this->id)->pluck('storefront_name')->toArray());
-//        } else {
-//            return Storefront::where('id', $this->ascription_store)->first()->storefront_name;
-//        }
-//    }
+    /**
+     * 说明: 所属门店
+     *
+     * @return string
+     * @use storefront_name
+     * @author 罗振
+     */
+    public function getStoreNameAttribute()
+    {
+        if (empty($this->ascription_store)) return '';
+        return $this->storefront->storefront_name;
+    }
 }
