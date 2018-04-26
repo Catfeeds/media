@@ -44,9 +44,14 @@ class TracksController extends APIBaseController
         return $this->sendError('房源跟进信息添加失败');
     }
 
-    public function addCustomsTracks()
+
+    public function addCustomsTracks
+    (
+        TracksRequest $request,
+        TracksRepository $tracksRepository
+    )
     {
-            dd(123);
+        $res = $tracksRepository->addCustomsTracks($request);
     }
 
     /**

@@ -46,13 +46,17 @@ class TracksRepository extends BaseRepository
             if (empty($tracks)) {
                throw new \Exception('房源跟进信息添加失败');
            }
-            $res = OwnerViewRecord::where([
+            $OwnerViewRecord = OwnerViewRecord::where([
                 'user_id' => Common::user()->id,
                 'house_id' => $request->house_id,
-            ])->update(['status'=>2]);
-            if (!$res) {
-                throw new \Exception('查看房源记录更新失败');
+            ])->first();
+            if ($OwnerViewRecord) {
+                $res = $OwnerViewRecord->update(['status' => 2]);
+                if (!$res) {
+                    throw new \Exception('查看房源记录更新失败');
+                }
             }
+
             \DB::commit();
            return true;
         } catch (\Exception $e) {

@@ -75,6 +75,7 @@ Route::group(['namespace' => 'API'], function () {
         |--------------------------------------------------------------------------
         */
         Route::resource('tracks', 'TracksController');
+        Route::post('add_customs_tracks', 'TracksController@addCustomsTracks');
         Route::get('get_colleague', 'TracksController@getColleague');
 //    });
 
