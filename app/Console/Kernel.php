@@ -16,6 +16,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         MakeRepository::class,
         '\App\Console\Commands\AddManager',// 添加管理员
+        '\App\Console\Commands\HouseToPublic',
     ];
 
     /**
@@ -26,8 +27,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        $schedule->command('HouseToPublic')->everyMinute();
     }
 
     /**
