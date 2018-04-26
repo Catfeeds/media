@@ -19,11 +19,11 @@ class OwnerViewRecord extends Model
      */
     public function getModelTypeAttribute()
     {
-        if ($this->type == 'App\Models\DwellingHouse') {
+        if ($this->house_model == 'App\Models\DwellingHouse') {
             return 'residence';
-        } elseif ($this->type == 'App\Models\OfficeBuildingHouse') {
+        } elseif ($this->house_model == 'App\Models\OfficeBuildingHouse') {
             return 'officeBuild';
-        } elseif ($this->type == 'App\Models\ShopsHouse') {
+        } elseif ($this->house_model == 'App\Models\ShopsHouse') {
             return 'shopHouse';
         } else {
             return ;

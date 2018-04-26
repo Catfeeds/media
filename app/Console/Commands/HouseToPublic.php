@@ -48,6 +48,9 @@ class HouseToPublic extends Command
 
     public function houseToPublic()
     {
+        \Log::info('123123');
+
+
         // 房源
         // 1. 住宅房源
         $dwellingHouse = DwellingHouse::all();
