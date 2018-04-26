@@ -62,13 +62,6 @@ class TracksRequest extends FormRequest
                         'required',
                         'integer',
                     ],
-                    'user_id' => [
-                        'required',
-                        'integer',
-                        Rule::in(
-                            User::all()->pluck('id')->toArray()
-                        )
-                    ],
                     'custom_id' => [
                         'required',
                         'integer',
