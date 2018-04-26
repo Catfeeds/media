@@ -23,6 +23,34 @@ class TracksController extends APIBaseController
         return $this->sendResponse($result, '添加跟进相关数据获取成功');
     }
 
+    /**
+     * 说明:获取房源跟进记录表
+     *
+     * @param TracksRequest $request
+     * @param TracksRepository $tracksRepository
+     * @return \Illuminate\Http\JsonResponse
+     * @author 刘坤涛
+     */
+    public function index
+    (
+        TracksRequest $request,
+        TracksRepository $tracksRepository
+    )
+    {
+       $res= $tracksRepository->tracksList($request);
+        return $this->sendResponse($res,'房源跟进列表获取成功');
+
+    }
+
+    public function getCustomTracksList
+    (
+        TracksRequest $request,
+        TracksRepository $tracksRepository
+    )
+    {
+        $res = $tracksRepository->getCustomTracksList($request);
+        return $this->sendResponse($res, '客户跟进列表获取成功');
+    }
 
     /**
      * 说明:添加房源跟进信息

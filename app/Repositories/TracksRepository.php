@@ -16,6 +16,20 @@ class TracksRepository extends BaseRepository
     }
 
     /**
+     * 说明:获取房源跟进记录表
+     *
+     * @param $request
+     * @return mixed
+     * @author 刘坤涛
+     */
+    public function tracksList($request)
+    {
+        return Track::where('house_id',$request->house_id)->get();
+    }
+
+    
+
+    /**
      * 说明:添加房源跟进信息并修改查看房源记录状态
      *
      * @param $request
