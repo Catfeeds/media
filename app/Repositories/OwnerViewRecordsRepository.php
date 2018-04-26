@@ -27,6 +27,7 @@ class OwnerViewRecordsRepository extends BaseRepository
         return $this->model->create([
             'user_id' => Common::user()->id,
             'house_id' => $request->id,
+            'house_model' => $request->house_model,
         ]);
     }
 }

@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\API;
 
+use App\User;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class OwnerViewRecordsRequest extends FormRequest
 {
@@ -23,10 +25,29 @@ class OwnerViewRecordsRequest extends FormRequest
      */
     public function rules()
     {
-        $method = $this->route()->getActionMethod();
-
-        switch ($method) {
-
+        switch ($this->method()) {
+            case 'POST':
+                return [
+                    'user_id' => [
+                        'required',
+                        'integer',
+                        Rule::in(
+                            User::all()->pluck('id')->toArray()
+                        )
+                    ],
+                    'house_model' => 'required',
+                    'house_id' => [
+                        'required',
+                        'integer',
+                        Rule::in(
+                            $this->house_model::make()::all()->pluck('id')->toArray()
+                        )
+                    ],
+                ];
+            default:
+                {
+                    return [];
+                }
         }
     }
 }

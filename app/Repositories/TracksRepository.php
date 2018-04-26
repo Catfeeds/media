@@ -25,15 +25,15 @@ class TracksRepository extends BaseRepository
      */
     public function addTracks($request)
     {
+        dd(123);
         \DB::beginTransaction();
         try {
             $tracks = $this->model->create([
                 'house_id' => $request->house->id,
+                'house_model' => $request->house_model,
                 'user_id' => Common::user()->id,
                 'custom_id' => $request->custom_id,
                 'tracks_mode' => $request->tracks_mode,
-                'conscientious_id' => $request->conscientious_id,
-                'tracks_time' => $request->tracks_time,
                 'content' => $request->content,
             ]);
            if (empty($tracks)) {
