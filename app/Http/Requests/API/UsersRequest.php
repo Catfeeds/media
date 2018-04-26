@@ -33,11 +33,7 @@ class UsersRequest extends FormRequest
                     'real_name' => [
                         'required',
                         'max:32',
-                        Rule::notIn(
-                            User::all()->pluck('real_name')->toArray()
-                        )
                     ],
-                    'nick_name' => 'required|max:32',
                     'ascription_store' => [
                         'nullable',
                         'integer',
@@ -60,11 +56,7 @@ class UsersRequest extends FormRequest
                     'real_name' => [
                         'required',
                         'max:32',
-                        Rule::notIn(
-                            User::all()->pluck('real_name')->toArray()
-                        )
                     ],
-                    'nick_name' => 'required|max:32',
                     'ascription_store' => [
                         'nullable',
                         'integer',
@@ -84,9 +76,6 @@ class UsersRequest extends FormRequest
                     'tel' => [
                         'required',
                         'max:16',
-                        Rule::notIn(
-                            User::all()->pluck('tel')->toArray()
-                        )
                     ],
                 ];
             default:
