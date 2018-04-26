@@ -61,7 +61,7 @@ class HouseAndCustomToPublic extends Command
                     'user_id' => $v->guardian,
                 ])->first();
             }
-
+            dd($dwellingTemp);
             if (empty($dwellingTemp)) {
                 // 丢入公盘
                 $res = DwellingHouse::where('id', $v->id)->update(['guardian' => null]);
