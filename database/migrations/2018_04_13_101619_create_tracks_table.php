@@ -15,12 +15,11 @@ class CreateTracksTable extends Migration
     {
         Schema::create('tracks', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('house_model','128')->nullable()->comment('房源类型');
             $table->integer('house_id')->nullable()->comment('房源id');
             $table->integer('user_id')->nullable()->comment('用户id');
             $table->integer('custom_id')->nullable()->comment('客户id');
             $table->integer('tracks_mode')->nullable()->comment('跟进方式');
-            $table->integer('conscientious_id')->nullable()->comment('负责人');
-            $table->json('tracks_time')->nullable()->comment('跟进时间');
             $table->text('content')->nullable()->comment('跟进内容');
             $table->timestamps();
             $table->softDeletes();

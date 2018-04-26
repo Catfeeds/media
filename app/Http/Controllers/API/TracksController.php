@@ -38,11 +38,15 @@ class TracksController extends APIBaseController
     )
     {
         $res = $tracksRepository->addTracks($request);
-
         if ($res) {
           return  $this->sendResponse($res,'房源跟进信息添加成功');
         }
         return $this->sendError('房源跟进信息添加失败');
+    }
+
+    public function addCustomsTracks()
+    {
+            dd(123);
     }
 
     /**
