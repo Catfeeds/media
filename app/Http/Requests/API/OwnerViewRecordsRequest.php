@@ -28,14 +28,7 @@ class OwnerViewRecordsRequest extends FormRequest
         switch ($this->method()) {
             case 'POST':
                 return [
-                    'user_id' => [
-                        'required',
-                        'integer',
-                        Rule::in(
-                            User::all()->pluck('id')->toArray()
-                        )
-                    ],
-                    'house_model' => 'required|integer',
+                    'house_model' => 'required|integer|between:1,3',
                     'house_id' => 'required|integer',
                 ];
             default:

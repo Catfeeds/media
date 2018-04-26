@@ -57,7 +57,7 @@ class TracksRequest extends FormRequest
         switch ($this->route()->getActionMethod()) {
             case 'store':
                 return [
-                    'house_model' => 'required|integer',
+                    'house_model' => 'required|integer|between:1,3',
                     'house_id' => 'required|integer',
                     'custom_id' => [
                         'required',
