@@ -3,6 +3,7 @@
 namespace App\Http\Requests\API;
 
 use App\Models\Custom;
+use App\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -28,9 +29,7 @@ class TracksRequest extends FormRequest
     {
         switch ($this->method()) {
             case 'POST':
-                return [
 
-                ];
             case 'PUT':
             case 'PATCH':
                 {
@@ -58,20 +57,27 @@ class TracksRequest extends FormRequest
         switch ($this->method()) {
             case 'POST':
                 return [
+                    'house_model' => 'required|integer',
+                    'house_id' => [
+                        'required',
+                        'integer',
+                    ],
+                    'user_id' => [
+                        'required',
+                        'integer',
+                        Rule::in(
+                            User::all()->pluck('id')->toArray()
+                        )
+                    ],
                     'custom_id' => [
                         'required',
                         'integer',
-//                        Rule::in(
-//                            Custom::all()->pluck('id')->toArray()
-//                        )
+                        Rule::in(
+                            Custom::all()->pluck('id')->toArray()
+                        )
                     ],
-                    'conscientious_id' => [
-                        'nullable',
-                        'integer',
-                        // 用户必须存在
-                    ],
-                    'tracks_mode' => 'nullable|integer',
-                    'content' => 'max:65535'
+                    'tracks_mode' => 'required|integer',
+                    'content' => 'required',
                 ];
             case 'PUT':
             case 'PATCH':

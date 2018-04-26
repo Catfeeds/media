@@ -77,9 +77,9 @@ class UserController extends APIBaseController
         UserRepository $userRepository
     )
     {
-        if(empty(Common::user()->can('add_user'))) {
-            return $this->sendError('无添加成员权限','403');
-        }
+//        if(empty(Common::user()->can('add_user'))) {
+//            return $this->sendError('无添加成员权限','403');
+//        }
 
         if ($request->password != $request->password_confirmation) {
             return $this->sendError('密码与确认密码不一致,请重新输入');
