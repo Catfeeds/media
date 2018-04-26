@@ -32,7 +32,6 @@ class CustomRequest extends FormRequest
                     'status' => 'required|numeric|max:100',
                     'class' => 'required|numeric|max:100',
                     'source' => 'required|numeric|max:100',
-                    'belong' => 'required|numeric|max:100',
                     'name' => 'required|max:32',
                     'tel' => 'required|max:32',
                     'price_low' => 'nullable|numeric|max:99999999999',
