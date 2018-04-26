@@ -48,94 +48,121 @@ class HouseToPublic extends Command
 
     public function houseToPublic()
     {
-        \Log::info('123123');
-
-
-        // 房源
-        // 1. 住宅房源
-        $dwellingHouse = DwellingHouse::all();
-        foreach ($dwellingHouse as $v) {
-            // 查询最后一条
-            $dwellingTemp = Track::where([
-                'house_model' => 'App\Models\DwellingHouse',
-                'house_id' => $v->id,
-                'user_id' => $v->guardian,
-            ])->first();
-        }
-
-        if (empty($dwellingTemp)) {
-            // 丢入公盘
-            DwellingHouse::where('id', $v->id)->update(['guardian' => null]);
-        } else {
-            // 判断时间
-            if (strtotime($dwellingTemp->created_at) + 30*60*60*24 > time()) {
-                DwellingHouse::where('id', $v->id)->update(['guardian' => null]);
+        \DB::beginTransaction();
+        try {
+            // 房源
+            // 1. 住宅房源
+            $dwellingHouse = DwellingHouse::all();
+            foreach ($dwellingHouse as $v) {
+                // 查询最后一条
+                $dwellingTemp = Track::where([
+                    'house_model' => 'App\Models\DwellingHouse',
+                    'house_id' => $v->id,
+                    'user_id' => $v->guardian,
+                ])->first();
             }
-        }
 
-        // 2. 商铺房源
-        $shopsHouse = ShopsHouse::all();
-        foreach ($shopsHouse as $v) {
-            // 查询最后一条
-            $shopsTemp = Track::where([
-                'house_model' => 'App\Models\ShopsHouse',
-                'house_id' => $v->id,
-                'user_id' => $v->guardian,
-            ])->first();
-        }
-
-        if (empty($shopsTemp)) {
-            // 丢入公盘
-            ShopsHouse::where('id', $v->id)->update(['guardian' => null]);
-        } else {
-            // 判断时间
-            if (strtotime($shopsTemp->created_at) + 30*60*60*24 > time()) {
-                ShopsHouse::where('id', $v->id)->update(['guardian' => null]);
+            if (empty($dwellingTemp)) {
+                // 丢入公盘
+                $res = DwellingHouse::where('id', $v->id)->update(['guardian' => null]);
+                if (!$res) {
+                    throw new \Exception('id为:'.$v->id.'的住宅房源加入公盘失败');
+                }
+            } else {
+                // 判断时间
+                if (strtotime($dwellingTemp->created_at) + 30*60*60*24 > strtotime(date('Ymd'))) {
+                    $res = DwellingHouse::where('id', $v->id)->update(['guardian' => null]);
+                    if (!$res) {
+                        throw new \Exception('id为:'.$v->id.'的住宅房源加入公盘失败');
+                    }
+                }
             }
-        }
 
-        // 3. 写字楼
-        $officeBuildingHouse = OfficeBuildingHouse::all();
-        foreach ($officeBuildingHouse as $v) {
-            // 查询最后一条
-            $officeTemp = Track::where([
-                'house_model' => 'App\Models\OfficeBuildingHouse',
-                'house_id' => $v->id,
-                'user_id' => $v->guardian,
-            ])->first();
-        }
-
-        if (empty($officeTemp)) {
-            // 丢入公盘
-            OfficeBuildingHouse::where('id', $v->id)->update(['guardian' => null]);
-        } else {
-            // 判断时间
-            if (strtotime($officeTemp->created_at) + 30*60*60*24 > time()) {
-                OfficeBuildingHouse::where('id', $v->id)->update(['guardian' => null]);
+            // 2. 商铺房源
+            $shopsHouse = ShopsHouse::all();
+            foreach ($shopsHouse as $v) {
+                // 查询最后一条
+                $shopsTemp = Track::where([
+                    'house_model' => 'App\Models\ShopsHouse',
+                    'house_id' => $v->id,
+                    'user_id' => $v->guardian,
+                ])->first();
             }
-        }
 
-        // 4. 客户
-        $customs = Custom::all();
-        foreach ($customs as $v) {
-            $customTemp = Track::where([
-                'custom_id' => $v->id,
-                'user_id' => $v->guardian,
-            ])->first();
-        }
-
-        if (empty($customTemp)) {
-            // 丢入公盘
-            Custom::where('id', $v->id)->update(['guardian' => null]);
-        } else {
-            // 判断时间
-            if (strtotime($officeTemp->created_at) + 30*60*60*24 > time()) {
-                Custom::where('id', $v->id)->update(['guardian' => null]);
+            if (empty($shopsTemp)) {
+                // 丢入公盘
+                $res = ShopsHouse::where('id', $v->id)->update(['guardian' => null]);
+                if (!$res) {
+                    throw new \Exception('id为:'.$v->id.'的商铺房源加入公盘失败');
+                }
+            } else {
+                // 判断时间
+                if (strtotime($shopsTemp->created_at) + 30*60*60*24 > strtotime(date('Ymd'))) {
+                    $res = ShopsHouse::where('id', $v->id)->update(['guardian' => null]);
+                    if (!$res) {
+                        throw new \Exception('id为:'.$v->id.'的商铺房源加入公盘失败');
+                    }
+                }
             }
+
+            // 3. 写字楼
+            $officeBuildingHouse = OfficeBuildingHouse::all();
+            foreach ($officeBuildingHouse as $v) {
+                // 查询最后一条
+                $officeTemp = Track::where([
+                    'house_model' => 'App\Models\OfficeBuildingHouse',
+                    'house_id' => $v->id,
+                    'user_id' => $v->guardian,
+                ])->first();
+            }
+
+            if (empty($officeTemp)) {
+                // 丢入公盘
+                $res = OfficeBuildingHouse::where('id', $v->id)->update(['guardian' => null]);
+                if (!$res) {
+                    throw new \Exception('id为:'.$v->id.'的写字楼房源加入公盘失败');
+                }
+            } else {
+                // 判断时间
+                if (strtotime($officeTemp->created_at) + 30*60*60*24 > strtotime(date('Ymd'))) {
+                    $res = OfficeBuildingHouse::where('id', $v->id)->update(['guardian' => null]);
+                    if (!$res) {
+                        throw new \Exception('id为:'.$v->id.'的写字楼房源加入公盘失败');
+                    }
+                }
+            }
+
+            // 4. 客户
+            $customs = Custom::all();
+            foreach ($customs as $v) {
+                $customTemp = Track::where([
+                    'custom_id' => $v->id,
+                    'user_id' => $v->guardian,
+                ])->first();
+            }
+
+            if (empty($customTemp)) {
+                // 丢入公盘
+                $res = Custom::where('id', $v->id)->update(['guardian' => null]);
+                if (!$res) {
+                    throw new \Exception('id为:'.$v->id.'的客户加入公盘失败');
+                }
+            } else {
+                // 判断时间
+                if (strtotime($officeTemp->created_at) + 30*60*60*24 > strtotime(date('Ymd'))) {
+                    $res = Custom::where('id', $v->id)->update(['guardian' => null]);
+                    if (!$res) {
+                        throw new \Exception('id为:'.$v->id.'的客户加入公盘失败');
+                    }
+                }
+            }
+
+            \DB::commit();
+            return true;
+        } catch (\Exception $exception) {
+            \DB::rollBack();
+            \Log::error($exception->getMessage());
+            return false;
         }
-
-
-
-
     }
 }
