@@ -2,7 +2,6 @@
 namespace App\Repositories;
 
 use App\Handler\Common;
-use App\Models\Block;
 use App\Models\OwnerViewRecord;
 use App\Models\Track;
 
@@ -37,8 +36,7 @@ class TracksRepository extends BaseRepository
      */
     public function getCustomsTracksList($request)
     {
-        $res =  Track::where('custom_id', $request->custom_id)->paginate(10);
-
+        $res =  Track::where('custom_id', $request->custom_id)->paginate($request->per_page);
         foreach ($res as $v) {
             if ($v->house_id) {
                 $item = $v['house_model']::where('id', $v['house_id'])->first();
