@@ -17,7 +17,7 @@ class DwellingHouse extends BaseModel
         'indoor_img' => 'array',
         'check_in_time' => 'date',
         'rent_price' => 'float',
-        'constru_acreage' => 'float',
+        'constru_a`ge' => 'float',
         'pay_commission' => 'float',
         'storefront' => 'array'
     ];
