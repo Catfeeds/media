@@ -32,7 +32,7 @@ class LoginController extends APIBaseController
         $passport = $loginService->applyPasswordToken($request->tel, $request->password);
 
         if (empty($passport['success'])) {
-            return $this->sendError($passport['message'], 500);
+            return $this->sendError($passport['message']);
         }
 
         // 最后登录时间

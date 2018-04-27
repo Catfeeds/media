@@ -81,8 +81,8 @@ class OfficeBuildingHousesRequest extends FormRequest
                       'house_number' => 'required|max:32',
                       'owner_info' => 'required',
                       // 房子信息
-                      'room' => 'required|numeric|max:9999999999',
-                      'hall' => 'required|numeric|max:9999999999',
+                      'room' => 'nullable|numeric|max:9999999999',
+                      'hall' => 'nullable|numeric|max:9999999999',
                       'constru_acreage' => 'required|max:32',
                       'split' => 'nullable|integer|between:1,2',
                       'min_acreage' => 'nullable|numeric|max:99999999999',

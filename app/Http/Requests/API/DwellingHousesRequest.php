@@ -82,10 +82,10 @@ class DwellingHousesRequest extends FormRequest
                     'owner_info' => 'required|array',
                     // 房子信息
                     'room' => 'nullable|numeric|max:9999999999',
-                    'hall' => 'required|numeric|max:9999999999',
-                    'toilet' => 'required|numeric|max:9999999999',
-                    'kitchen' => 'required|numeric|max:9999999999',
-                    'balcony' => 'required|numeric|max:9999999999',
+                    'hall' => 'nullable|numeric|max:9999999999',
+                    'toilet' => 'nullable|numeric|max:9999999999',
+                    'kitchen' => 'nullable|numeric|max:9999999999',
+                    'balcony' => 'nullable|numeric|max:9999999999',
                     'constru_acreage' => 'required|max:32',
                     'floor' => 'nullable|numeric|max:99999999999',
 
