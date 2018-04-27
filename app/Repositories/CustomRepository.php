@@ -4,7 +4,6 @@ namespace App\Repositories;
 
 use App\Handler\Common;
 use App\Models\Custom;
-use App\Models\CustomRelArea;
 use App\Models\CustomRelBuilding;
 use App\Models\Storefront;
 use App\User;

@@ -337,6 +337,13 @@ class Custom extends BaseModel
         }
     }
 
+    /**
+     * 说明: 获取维护人真是姓名
+     *
+     * @return string
+     * @use guardian_name
+     * @author 罗振
+     */
     public function getGuardianNameAttribute()
     {
         if (empty($this->guardianData)) return '';
