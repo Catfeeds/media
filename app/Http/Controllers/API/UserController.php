@@ -27,12 +27,12 @@ class UserController extends APIBaseController
     )
     {
         $user = Common::user();
-        if(empty($user->can('user_list'))) {
-            return $this->sendError('无成员列表权限',403);
+        if (empty($user->can('user_list'))) {
+            return $this->sendError('无成员列表权限', 403);
         }
 
         $res = $userRepository->userList($user, $request);
-        return $this->sendResponse($res,'成员列表获取成功');
+        return $this->sendResponse($res, '成员列表获取成功');
     }
 
     /**
@@ -51,7 +51,7 @@ class UserController extends APIBaseController
         $result = $user->toArray();
         $result['access'] = $user->getAllPermissions()->pluck('name')->toArray()??[];
 
-        // 查询跟进
+        // 查看业主信息 必须跟进逻辑
         $ownerViewRecord = OwnerViewRecord::where([
             'user_id' => $user->id,
             'status' => 1
@@ -67,6 +67,23 @@ class UserController extends APIBaseController
                 'status' => false
             ];
         }
+
+        // 用户的称呼逻辑
+        switch ($user->level) {
+            case 1:
+                $result['user_info'] = '总经理:' . $user->real_name;
+                break;
+            case 2:
+                $result['user_info'] = '区域经理:' . $user->real_name;
+                break;
+            case 3:
+                $result['user_info'] = '（' . $user->storefront->storefront_name . ')' . '店长:' . $user->real_name;
+                break;
+            case 4:
+                $result['user_info'] = '（' . $user->storefront->storefront_name . ')' . '业务员:' . $user->real_name;
+                break;
+        }
+
 
         return $this->sendResponse($result, '成功');
     }
@@ -93,7 +110,7 @@ class UserController extends APIBaseController
         }
         $res = $userRepository->addUser($request);
         if ($res) {
-            return $this->sendResponse($res,'添加成员成功');
+            return $this->sendResponse($res, '添加成员成功');
         }
         return $this->sendError('添加成员失败');
     }
@@ -107,7 +124,7 @@ class UserController extends APIBaseController
      */
     public function edit(User $user)
     {
-        return $this->sendResponse($user,'成员修改之前原始数据');
+        return $this->sendResponse($user, '成员修改之前原始数据');
     }
 
     /**
@@ -126,12 +143,12 @@ class UserController extends APIBaseController
         UsersRequest $request
     )
     {
-        if(empty(Common::user()->can('update_user'))) {
+        if (empty(Common::user()->can('update_user'))) {
             return $this->sendError('无修改成员权限', '403');
         }
 
         $res = $userRepository->updateUser($user, $request);
-        if($res) {
+        if ($res) {
             return $this->sendResponse($res, '修改成员成功');
         }
         return $this->sendError('修改成员失败');
@@ -156,7 +173,7 @@ class UserController extends APIBaseController
     {
         $res = $userRepository->changePassword($user, $request);
         if ($res) {
-            return $this->sendResponse($res,'密码修改成功');
+            return $this->sendResponse($res, '密码修改成功');
         }
         return $this->sendError('密码修改失败');
     }
@@ -182,9 +199,9 @@ class UserController extends APIBaseController
             return $this->sendError($request->tel . '已存在，请勿重复添加');
         }
 
-        $res = $userRepository->changeTel($user ,$request);
+        $res = $userRepository->changeTel($user, $request);
         if ($res) {
-            return $this->sendResponse($res,'电话修改成功');
+            return $this->sendResponse($res, '电话修改成功');
         }
         return $this->sendError('修改电话失败');
     }
@@ -199,12 +216,12 @@ class UserController extends APIBaseController
      */
     public function destroy(User $user)
     {
-        if(empty(Common::user()->can('del_user'))) {
-            return $this->sendError('无删除成员权限','403');
+        if (empty(Common::user()->can('del_user'))) {
+            return $this->sendError('无删除成员权限', '403');
         }
 
         $res = $user->delete();
-        return $this->sendResponse($res,'成员删除成功');
+        return $this->sendResponse($res, '成员删除成功');
     }
 
     /**
@@ -220,12 +237,12 @@ class UserController extends APIBaseController
         UsersService $usersService
     )
     {
-        $result = $usersService->getInfo($request)->map(function($v) {
+        $result = $usersService->getInfo($request)->map(function ($v) {
             return [
-              'label' => $v->storefront_name,
-              'value'  => $v->id
+                'label' => $v->storefront_name,
+                'value' => $v->id
             ];
         });
-        return $this->sendResponse($result,'获取门店信息成功');
+        return $this->sendResponse($result, '获取门店信息成功');
     }
 }
