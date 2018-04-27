@@ -44,11 +44,11 @@ class DwellingHousesRepository extends BaseRepository
 
         // 最小面积
         if (!empty($condition->min_acreage)) {
-            $result = $result->where('constru_acreage', ">", (int)$condition->min_acreage);
+            $result = $result->where('constru_acreage', ">=", (int)$condition->min_acreage);
         }
         // 最大面积
         if (!empty($condition->max_acreage)) {
-            $result = $result->where('constru_acreage', "<", (int)$condition->max_acreage);
+            $result = $result->where('constru_acreage', "<=", (int)$condition->max_acreage);
         }
 
         // 排序
