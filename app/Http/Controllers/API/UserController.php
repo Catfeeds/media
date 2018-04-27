@@ -51,7 +51,7 @@ class UserController extends APIBaseController
         $result = $user->toArray();
         $result['access'] = $user->getAllPermissions()->pluck('name')->toArray()??[];
 
-        // 查询跟进
+        // 查看业主信息 必须跟进逻辑
         $ownerViewRecord = OwnerViewRecord::where([
             'user_id' => $user->id,
             'status' => 1
@@ -67,6 +67,9 @@ class UserController extends APIBaseController
                 'status' => false
             ];
         }
+
+        // 用户的称呼逻辑
+
 
         return $this->sendResponse($result, '成功');
     }
