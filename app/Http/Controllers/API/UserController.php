@@ -26,11 +26,12 @@ class UserController extends APIBaseController
         Request $request
     )
     {
-        if(empty(Common::user()->can('user_list'))) {
+        $user = Common::user();
+        if(empty($user->can('user_list'))) {
             return $this->sendError('无成员列表权限',403);
         }
 
-        $res = $userRepository->userList($request);
+        $res = $userRepository->userList($user, $request);
         return $this->sendResponse($res,'成员列表获取成功');
     }
 
@@ -47,19 +48,26 @@ class UserController extends APIBaseController
             return $this->sendError('登录账户异常', 401);
         }
 
+        $result = $user->toArray();
+        $result['access'] = $user->getAllPermissions()->pluck('name')->toArray()??[];
+
         // 查询跟进
         $ownerViewRecord = OwnerViewRecord::where([
             'user_id' => $user->id,
             'status' => 1
         ])->first();
         if (!empty($ownerViewRecord)) {
-            $result['ownerViewRecord'] = false;
+            $result['ownerViewRecord'] = [
+                'type' => $ownerViewRecord->model_type,
+                'house_id' => $ownerViewRecord->house_id,
+                'status' => true
+            ];
         } else {
-            $result['ownerViewRecord'] = true;
+            $result['ownerViewRecord'] = [
+                'status' => false
+            ];
         }
 
-        $result = $user->toArray();
-        $result['access'] = $user->getAllPermissions()->pluck('name')->toArray()??[];
         return $this->sendResponse($result, '成功');
     }
 

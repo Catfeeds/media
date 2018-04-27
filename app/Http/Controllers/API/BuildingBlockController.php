@@ -169,7 +169,7 @@ class BuildingBlockController extends APIBaseController
                     foreach ($buildingBlocks as $buildingBlock) {
                         $item = array(
                             'value' => $buildingBlock->id,
-                            'label' => $buildingBlock->name . $buildingBlock->name_unit . $buildingBlock->unit . $buildingBlock->unit_unit,
+                            'label' => $buildingBlock->block_info,
                         );
                         $buildingBlockBox[] = $item;
                     }

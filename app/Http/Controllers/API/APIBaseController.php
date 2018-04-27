@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\API;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class APIBaseController extends Controller
 {
+    // 发送成功请求
     public function sendResponse($result, $message)
     {
         $response = [
@@ -17,32 +17,13 @@ class APIBaseController extends Controller
         return response()->json($response, 200);
     }
 
+    // 发送失败请求
     public function sendError($errorMessages = '', $code = 415)
     {
         $response = [
             'success' => false,
             'message' => $errorMessages,
         ];
-
-        return response()->json($response, $code);
-    }
-
-    /**
-     * 说明: 手抛出validate验证错误信息
-     *
-     * @param $message
-     * @param array $errors
-     * @param int $code
-     * @return \Illuminate\Http\JsonResponse
-     * @author 郭庆
-     */
-    public function sendValidateErrors($message, $errors = [], $code = 422)
-    {
-        $response = [
-            'errors' => $errors,
-            'message' => $message,
-        ];
-
         return response()->json($response, $code);
     }
 }

@@ -111,7 +111,7 @@ class Building extends BaseModel
     public function getCityIdAttribute()
     {
         if (empty($this->area)) return;
-//        return $this->area->city->id;
+        return $this->area->city->id;
     }
 
     /**

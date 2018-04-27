@@ -67,6 +67,7 @@ class TracksRepository extends BaseRepository
             $OwnerViewRecord = OwnerViewRecord::where([
                 'user_id' => Common::user()->id,
                 'house_id' => $request->house_id,
+                'status' => 1
             ])->first();
             if ($OwnerViewRecord) {
                 $res = $OwnerViewRecord->update(['status' => 2]);

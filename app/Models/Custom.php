@@ -3,6 +3,8 @@
 namespace App\Models;
 
 
+use App\User;
+
 class Custom extends BaseModel
 {
     protected $casts = [
@@ -12,7 +14,7 @@ class Custom extends BaseModel
         'status_label', 'status_label', 'class_label', 'source_label',
         'belong_label', 'pay_type_label', 'commission_label', 'need_type_label',
         'need_type_info', 'area_label', 'building_label', 'acre_label', 'room_label',
-        'floor_label', 'reno_label', 'orien_label'
+        'floor_label', 'reno_label', 'orien_label', 'guardian_name'
     ];
 
     /**
@@ -35,6 +37,11 @@ class Custom extends BaseModel
     public function area()
     {
         return $this->belongsTo('App\Models\Area');
+    }
+
+    public function guardianData()
+    {
+        return $this->belongsTo(User::class, 'guardian', 'id');
     }
 
     /**
@@ -256,7 +263,10 @@ class Custom extends BaseModel
      */
     public function getAcreLabelAttribute()
     {
-       return $this->acre_low. '㎡-' . $this->acre_high . '㎡';
+        $str = '';
+        if (!empty($this->acre_low)) $str.=$this->acre_low . '㎡-';
+        if (!empty($this->acre_high)) $str.=$this->acre_high . '㎡';
+        return $str;
     }
 
     /**
@@ -267,7 +277,13 @@ class Custom extends BaseModel
      */
     public function getRoomLabelAttribute()
     {
-        return $this->room . '室' . $this->hall . '厅' . $this->toilet .'卫' . $this->kitchen .'厨' . $this->balcony . '阳台' ;
+        $str = '';
+        if (!empty($this->room)) $str .= $this->room . '室';
+        if (!empty($this->hall)) $str .= $this->hall . '厅';
+        if (!empty($this->toilet)) $str .= $this->toilet . '卫';
+        if (!empty($this->kitchen)) $str .= $this->kitchen . '厨';
+        if (!empty($this->balcony)) $str .= $this->balcony . '阳台';
+        return $str;
     }
 
     /**
@@ -278,7 +294,10 @@ class Custom extends BaseModel
      */
     public function getFloorLabelAttribute()
     {
-        return $this->floor_low . '层-' . $this->floor_high . '层';
+        $str = '';
+        if (!empty($this->floor_low)) $str .= $this->floor_low . '层-';
+        if (!empty($this->floor_high)) $str .= $this->floor_high . '层';
+        return $str;
     }
 
     /**
@@ -316,5 +335,11 @@ class Custom extends BaseModel
             case 7: return '东北';
             case 8: return '西北';
         }
+    }
+
+    public function getGuardianNameAttribute()
+    {
+        if (empty($this->guardianData)) return '';
+        return $this->guardianData->real_name;
     }
 }

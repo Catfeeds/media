@@ -10,6 +10,14 @@ use Illuminate\Http\Request;
 
 class CustomController extends APIBaseController
 {
+    /**
+     * 说明: 客户列表
+     *
+     * @param Request $request
+     * @param CustomRepository $repository
+     * @return \Illuminate\Http\JsonResponse
+     * @author 罗振
+     */
     public function index(Request $request, CustomRepository $repository)
     {
         if (empty(Common::user()->can('custom_list'))) {
@@ -71,7 +79,9 @@ class CustomController extends APIBaseController
         if (empty(Common::user()->can('custom_show'))) {
             return $this->sendError('无客户详情权限','403');
         }
-
+        $custom->relBuildings = $custom->buildings->map(function($v){
+            return $v->building_id;
+        });
         return $this->sendResponse($custom, '获取成功');
     }
 
