@@ -25,7 +25,7 @@ class DwellingHouse extends BaseModel
         'house_busine_state_cn', 'payment_type_cn', 'orientation_cn', 'prospecting_cn',
         'see_house_time_cn', 'house_proxy_type_cn', 'source_cn', 'certificate_type_cn',
         'pay_commission_unit_cn', 'shortest_lease_cn', 'house_type_img_cn', 'indoor_img_cn',
-        'building_name', 'tel_cn', 'house_number_info', 'address', 'guardian_cn'];
+        'building_name', 'tel_cn', 'house_number_info', 'address', 'guardian_cn', 'storefronts_cn'];
 
     /**
      * 说明: 楼座
@@ -38,22 +38,57 @@ class DwellingHouse extends BaseModel
         return $this->belongsTo('App\Models\BuildingBlock');
     }
 
-    public function user()
+    public function userInfo()
     {
-        return $this->belongsTo('App\User');
+        return User::find($this->guardian);
     }
 
+    /**
+     * 说明: 经纪人中文
+     *
+     * @return string
+     * @use guardian_cn
+     * @author 罗振
+     */
     public function getGuardianCnAttribute()
     {
-        if (!empty($this->guardian)) {
-            return User::find($this->guardian)->real_name;
-        }else {
+        if (!empty($this->userInfo())) {
+            return $this->userInfo()->real_name;
+        } else {
             return '';
         }
     }
+
+    /**
+     * 说明: 门店中文
+     *
+     * @return string
+     * @use storefronts_cn
+     * @author 罗振
+     */
+    public function getStorefrontsCnAttribute()
+    {
+        if (!empty($this->userInfo())) {
+            if (!empty($this->userInfo()->ascription_store)) {
+                return Storefront::find($this->userInfo()->ascription_store)->storefront_name;
+            } else {
+                return '';
+            }
+        }
+    }
+
+    public function getTracksTimeAttribute()
+    {
+        if (!empty($this->guardian)) {
+            Track::where([
+                'house_id' => $this->id,
+                'user_id' => $this->guardian
+            ])->orderBy('id','desc')->pluck('created_at');
+        }
+
+
+    }
     
-
-
     /**
      * 说明: 楼盘名
      *
