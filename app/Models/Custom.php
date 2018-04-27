@@ -14,7 +14,7 @@ class Custom extends BaseModel
         'status_label', 'status_label', 'class_label', 'source_label',
         'belong_label', 'pay_type_label', 'commission_label', 'need_type_label',
         'need_type_info', 'area_label', 'building_label', 'acre_label', 'room_label',
-        'floor_label', 'reno_label', 'orien_label', 'guardian_name'
+        'floor_label', 'reno_label', 'orien_label', 'guardian_name', 'class_label'
     ];
 
     /**
