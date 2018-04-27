@@ -469,6 +469,7 @@ class DwellingHouse extends BaseModel
      */
     public function getHouseNumberInfoAttribute()
     {
+        if (empty($this->buildingBlock)) return '';
         $block = $this->buildingBlock->block_info;
         if (!empty($this->house_number)) $block .= $this->house_number . '室';
         return $block;
@@ -482,6 +483,7 @@ class DwellingHouse extends BaseModel
      */
     public function getAddressAttribute()
     {
+        if (empty($this->buildingBlock)) return '';
         return $this->buildingBlock->building->address;
     }
 }

@@ -3,6 +3,8 @@
 namespace App\Models;
 
 
+use App\User;
+
 class Track extends BaseModel
 {
     protected $casts = [
@@ -10,12 +12,29 @@ class Track extends BaseModel
 
     ];
 
-    protected $appends = ['tracks_mode_label','custom_name'];
+    protected $appends = ['tracks_mode_label','custom_name','user_name'];
 
     public function custom()
     {
         return $this->belongsTo(Custom::class);
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+//    public function house()
+//    {
+//        \Log::info($this->house_model);
+//            if (empty($this->house_model)) return collect();
+//            return $this->belongsTo($this->house_model,'house_id','id');
+//
+//
+////        $model = new $this->house_model;
+////        dd($model);
+////        dd($this->house_model === "App\Models\DwellingHouse");
+//    }
 
     public function getTracksModeLabelAttribute()
     {
@@ -52,4 +71,17 @@ class Track extends BaseModel
         if (empty($this->custom)) return '';
         return $this->custom->name;
     }
+
+    public function getUserNameAttribute()
+    {
+        return $this->user->real_name;
+
+    }
+
+//    public function getHouseNameAttribute()
+//    {
+//        if (empty($this->house)) return'';
+//        return $this->house;
+//    }
+
 }

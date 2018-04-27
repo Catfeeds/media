@@ -2,6 +2,7 @@
 namespace App\Repositories;
 
 use App\Handler\Common;
+use App\Models\Block;
 use App\Models\OwnerViewRecord;
 use App\Models\Track;
 
@@ -24,8 +25,27 @@ class TracksRepository extends BaseRepository
      */
     public function tracksList($request)
     {
-        return Track::where('house_id',$request->house_id)->get();
+        return Track::where('house_id', $request->house_id)->paginate($request->per_page);
     }
+
+
+    public function customsTracksList($request)
+    {
+        $res =  Track::where('custom_id', $request->custom_id)->paginate(10)->toArray();
+            foreach($res['data'] as $k => $v) {
+                if ($v['house_id']) {
+                    $item = $v['house_model']::where('id', $v['house_id'])->get()->toArray();
+//                    foreach($item as $v) {
+//                        $block_name = Block::where('id', $v['building_block_id'])->find()->name;
+//                    }
+                    array_push($res['data'][$k],$item);
+                }
+            }
+
+//            dd($res);
+            return $res;
+    }
+
 
 
 
