@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 class StorefrontsController extends APIBaseController
 {
     /**
-     * 说明 :门店列表
+     * 说明: 门店列表
      *
      * @param Request $request
      * @param StorefrontsRepository $storefrontsRepository

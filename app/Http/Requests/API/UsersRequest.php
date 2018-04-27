@@ -20,6 +20,36 @@ class UsersRequest extends FormRequest
     }
 
     /**
+     * 说明: 验证错误信息
+     *
+     * @return array
+     * @author 罗振
+     */
+    public function messages()
+    {
+        switch ($this->route()->getActionMethod()) {
+            case 'POST':
+                return [
+                    'ascription_store.in' => '门店必须存在',
+                    'tel.not_in' => '手机号不能重复'
+                ];
+            case 'PUT':
+            case 'PATCH':
+                {
+                    return [
+                        'ascription_store.in' => '门店必须存在',
+                    ];
+                }
+            case 'GET':
+            case 'DELETE':
+            default:
+                {
+                    return [];
+                }
+        }
+    }
+
+    /**
      * 说明: 字段验证
      *
      * @return array

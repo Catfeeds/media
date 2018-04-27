@@ -27,16 +27,20 @@ class DwellingHousesRequest extends FormRequest
      */
     public function messages()
     {
-        switch ($this->method()) {
+        switch ($this->route()->getActionMethod()) {
+            case 'updateDwellingBusinessState':
+                return [
+                    'id.in' => '住宅房源必须存在'
+                ];
             case 'POST':
                 return [
-
+                    'building_block_id.in' => '楼座必须存在'
                 ];
             case 'PUT':
             case 'PATCH':
                 {
                     return [
-
+                        'building_block_id.in' => '楼座必须存在'
                     ];
                 }
             case 'GET':
@@ -74,9 +78,9 @@ class DwellingHousesRequest extends FormRequest
                     'building_block_id' => [
                         'required',
                         'integer',
-//                        Rule::in(
-//                            BuildingBlock::all()->pluck('id')->toArray()
-//                        )
+                        Rule::in(
+                            BuildingBlock::all()->pluck('id')->toArray()
+                        )
                     ],
                     'house_number' => 'required|max:32',
                     'owner_info' => 'required|array',
@@ -121,9 +125,9 @@ class DwellingHousesRequest extends FormRequest
                     // 核心信息
                     'building_block_id' => [
                         'integer',
-//                        Rule::in(
-//                            BuildingBlock::all()->pluck('id')->toArray()
-//                        )
+                        Rule::in(
+                            BuildingBlock::all()->pluck('id')->toArray()
+                        )
                     ],
                     'house_number' => 'max:32',
                     // 房子信息

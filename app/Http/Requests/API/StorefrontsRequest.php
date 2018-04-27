@@ -20,6 +20,36 @@ class StorefrontsRequest extends FormRequest
     }
 
     /**
+     * 说明: 验证错误信息
+     *
+     * @return array
+     * @author 罗振
+     */
+    public function messages()
+    {
+        switch ($this->method()) {
+            case 'POST':
+                return [
+                    'storefront_name.not_in' => '门店名称不能重复',
+                    'area_manager_id.in' => '区域经理必须存在'
+                ];
+            case 'PUT':
+            case 'PATCH':
+                {
+                    return [
+                        'area_manager_id.in' => '区域经理必须存在'
+                    ];
+                }
+            case 'GET':
+            case 'DELETE':
+            default:
+                {
+                    return [];
+                }
+        }
+    }
+
+    /**
      * 说明: 字段验证
      *
      * @return array

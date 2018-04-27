@@ -27,9 +27,15 @@ class TracksRequest extends FormRequest
      */
     public function messages()
     {
-        switch ($this->method()) {
+        switch ($this->route()->getActionMethod()) {
+            case 'addCustomsTracks':
+                return [
+                    'custom_id.in' => '客户必须存在'
+                ];
             case 'POST':
-
+                return [
+                    'custom_id.in' => '客户必须存在'
+                ];
             case 'PUT':
             case 'PATCH':
                 {
