@@ -49,7 +49,8 @@ class TracksController extends APIBaseController
         TracksRepository $tracksRepository
     )
     {
-        $res = $tracksRepository->
+        $res = $tracksRepository->customsTracksList($request);
+        return $this->sendResponse($res,'客户跟进列表获取成功');
     }
 
     public function getCustomTracksList
