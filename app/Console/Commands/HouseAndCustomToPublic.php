@@ -59,7 +59,6 @@ class HouseAndCustomToPublic extends Command
             // 计算一个月的时间戳
             $month = config('setting.house_to_public')*60*60*24;
 
-
             // 房源
             // 1. 住宅房源
             $dwellingHouse = DwellingHouse::all();
@@ -86,7 +85,7 @@ class HouseAndCustomToPublic extends Command
 
             foreach ($dwellingTemps as $dwellingTemp) {
                 if ($dwellingTemp['toPublic'] == true) {
-                    // 判断房源添加时间
+                    // 判断住宅房源添加时间
                     if (strtotime($dwellingTemp['createTime']) + $month < strtotime(date('Ymd'))) {
                         $res = DwellingHouse::where('id', $dwellingTemp['id'])->update(['guardian' => null]);
                         if (!$res) {
@@ -129,7 +128,7 @@ class HouseAndCustomToPublic extends Command
 
             foreach ($shopsTemps as $shopsTemp) {
                 if ($shopsTemp['toPublic'] == true) {
-                    // 判断房源添加时间
+                    // 判断商铺房源添加时间
                     if (strtotime($shopsTemp['createTime']) + $month < strtotime(date('Ymd'))) {
                         $res = ShopsHouse::where('id', $shopsTemp['id'])->update(['guardian' => null]);
                         if (!$res) {
@@ -172,7 +171,7 @@ class HouseAndCustomToPublic extends Command
 
             foreach ($officeBuildingTemps as $officeBuildingTemp) {
                 if ($officeBuildingTemp['toPublic'] == true) {
-                    // 判断房源添加时间
+                    // 判断写字楼房源添加时间
                     if (strtotime($officeBuildingTemp['createTime']) + $month < strtotime(date('Ymd'))) {
                         $res = OfficeBuildingHouse::where('id', $officeBuildingTemp['id'])->update(['guardian' => null]);
                         if (!$res) {
@@ -214,7 +213,7 @@ class HouseAndCustomToPublic extends Command
 
             foreach ($customsTemps as $customsTemp) {
                 if ($customsTemp['toPublic'] == true) {
-                    // 判断房源添加时间
+                    // 判断客户添加时间
                     if (strtotime($customsTemp['createTime']) + $month < strtotime(date('Ymd'))) {
                         $res = Custom::where('id', $customsTemp['id'])->update(['guardian' => null]);
                         if (!$res) {
