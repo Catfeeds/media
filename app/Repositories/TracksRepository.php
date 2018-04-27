@@ -28,8 +28,14 @@ class TracksRepository extends BaseRepository
         return Track::where('house_id', $request->house_id)->paginate($request->per_page);
     }
 
-
-    public function customsTracksList($request)
+    /**
+     * 说明:获取客户跟进表
+     *
+     * @param $request
+     * @return mixed
+     * @author 刘坤涛
+     */
+    public function getCustomsTracksList($request)
     {
         $res =  Track::where('custom_id', $request->custom_id)->paginate(10)->toArray();
             foreach($res['data'] as $k => $v) {
@@ -41,7 +47,6 @@ class TracksRepository extends BaseRepository
                     array_push($res['data'][$k],$item);
                 }
             }
-
 //            dd($res);
             return $res;
     }
