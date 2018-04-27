@@ -29,6 +29,7 @@ class DwellingHousesController extends APIBaseController
         }
 
         $result = $dwellingHousesRepository->dwellingHousesList($request->per_page??null, json_decode($request->condition));
+
         return $this->sendResponse($result,'住宅写字楼列表获取成功');
     }
 
