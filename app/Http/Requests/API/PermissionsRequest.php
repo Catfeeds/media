@@ -27,7 +27,7 @@ class PermissionsRequest extends FormRequest
      */
     public function messages()
     {
-        switch ($this->route()->getActionMethod()) {
+        switch ($this->method()) {
             case 'POST':
                 return [
                     'group_id.in' => '权限组必须存在'

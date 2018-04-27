@@ -32,19 +32,10 @@ class TracksRequest extends FormRequest
                 return [
                     'custom_id.in' => '客户必须存在'
                 ];
-            case 'POST':
+            case 'store':
                 return [
                     'custom_id.in' => '客户必须存在'
                 ];
-            case 'PUT':
-            case 'PATCH':
-                {
-                    return [
-
-                    ];
-                }
-            case 'GET':
-            case 'DELETE':
             default:
                 {
                     return [];

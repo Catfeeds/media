@@ -32,19 +32,16 @@ class OfficeBuildingHousesRequest extends FormRequest
                 return [
                     'id.in' => '写字楼房源必须存在'
                 ];
-            case 'POST':
+            case 'store':
                 return [
                     'building_block_id.in' => '楼座必须存在'
                 ];
-            case 'PUT':
-            case 'PATCH':
+            case 'update':
                 {
                     return [
                         'building_block_id.in' => '楼座必须存在'
                     ];
                 }
-            case 'GET':
-            case 'DELETE':
             default:
                 {
                     return [];

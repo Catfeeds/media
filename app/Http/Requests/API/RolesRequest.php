@@ -26,7 +26,7 @@ class RolesRequest extends FormRequest
      */
     public function messages()
     {
-        switch ($this->route()->getActionMethod()) {
+        switch ($this->method()) {
             case 'POST':
                 return [
                     'permissions.*.in' => '权限必须存在'

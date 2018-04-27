@@ -28,20 +28,17 @@ class UsersRequest extends FormRequest
     public function messages()
     {
         switch ($this->route()->getActionMethod()) {
-            case 'POST':
+            case 'store':
                 return [
                     'ascription_store.in' => '门店必须存在',
                     'tel.not_in' => '手机号不能重复'
                 ];
-            case 'PUT':
-            case 'PATCH':
+            case 'update':
                 {
                     return [
                         'ascription_store.in' => '门店必须存在',
                     ];
                 }
-            case 'GET':
-            case 'DELETE':
             default:
                 {
                     return [];
