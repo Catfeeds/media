@@ -27,20 +27,21 @@ class OfficeBuildingHousesRequest extends FormRequest
      */
     public function messages()
     {
-        switch ($this->method()) {
-            case 'POST':
+        switch ($this->route()->getActionMethod()) {
+            case 'updateOfficeBusinessState':
                 return [
-
+                    'id.in' => '写字楼房源必须存在'
                 ];
-            case 'PUT':
-            case 'PATCH':
+            case 'store':
+                return [
+                    'building_block_id.in' => '楼座必须存在'
+                ];
+            case 'update':
                 {
                     return [
-
+                        'building_block_id.in' => '楼座必须存在'
                     ];
                 }
-            case 'GET':
-            case 'DELETE':
             default:
                 {
                     return [];
@@ -74,15 +75,15 @@ class OfficeBuildingHousesRequest extends FormRequest
                       'building_block_id' => [
                           'required',
                           'integer',
-    //                        Rule::in(
-    //                            BuildingBlock::all()->pluck('id')->toArray()
-    //                        )
+                          Rule::in(
+                              BuildingBlock::all()->pluck('id')->toArray()
+                          )
                       ],
                       'house_number' => 'required|max:32',
                       'owner_info' => 'required',
                       // 房子信息
-                      'room' => 'required|numeric|max:9999999999',
-                      'hall' => 'required|numeric|max:9999999999',
+                      'room' => 'nullable|numeric|max:9999999999',
+                      'hall' => 'nullable|numeric|max:9999999999',
                       'constru_acreage' => 'required|max:32',
                       'split' => 'nullable|integer|between:1,2',
                       'min_acreage' => 'nullable|numeric|max:99999999999',
@@ -122,9 +123,9 @@ class OfficeBuildingHousesRequest extends FormRequest
                       // 核心信息
                       'building_block_id' => [
                           'integer',
-    //                            Rule::in(
-    //                                BuildingBlock::all()->pluck('id')->toArray()
-    //                            )
+                          Rule::in(
+                              BuildingBlock::all()->pluck('id')->toArray()
+                          )
                       ],
                       'house_number' => 'max:32',
                       // 房子信息

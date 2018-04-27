@@ -27,7 +27,7 @@ class TracksRepository extends BaseRepository
         return Track::where('house_id',$request->house_id)->get();
     }
 
-    
+
 
     /**
      * 说明:添加房源跟进信息并修改查看房源记录状态

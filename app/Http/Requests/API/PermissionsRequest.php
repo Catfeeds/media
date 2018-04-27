@@ -20,6 +20,35 @@ class PermissionsRequest extends FormRequest
     }
 
     /**
+     * 说明: 验证错误信息
+     *
+     * @return array
+     * @author 罗振
+     */
+    public function messages()
+    {
+        switch ($this->method()) {
+            case 'POST':
+                return [
+                    'group_id.in' => '权限组必须存在'
+                ];
+            case 'PUT':
+            case 'PATCH':
+                {
+                    return [
+                        'group_id.in' => '权限组必须存在'
+                    ];
+                }
+            case 'GET':
+            case 'DELETE':
+            default:
+                {
+                    return [];
+                }
+        }
+    }
+
+    /**
      * 说明: 字段验证
      *
      * @return array
@@ -40,7 +69,9 @@ class PermissionsRequest extends FormRequest
                     'label' => 'required|string|min:1|max:32',
                     'group_id' => [
                         'required',
-//                        Rule::in(PermissionGroup::where('guard_name', 'admin')->pluck('id')->toArray())
+                        Rule::in(
+                            PermissionGroup::where('guard_name', 'admin')->pluck('id')->toArray()
+                        )
                     ],
                 ];
             case 'PUT':
@@ -59,7 +90,9 @@ class PermissionsRequest extends FormRequest
                     'label' => 'required|string|min:1|max:32',
                     'group_id' => [
                         'required',
-//                        Rule::in(PermissionGroup::where('guard_name', 'admin')->pluck('id')->toArray())
+                        Rule::in(
+                            PermissionGroup::where('guard_name', 'admin')->pluck('id')->toArray()
+                        )
                     ],
                 ];
 

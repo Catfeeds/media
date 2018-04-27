@@ -53,27 +53,39 @@ class HouseAndCustomToPublic extends Command
             // 房源
             // 1. 住宅房源
             $dwellingHouse = DwellingHouse::all();
-            foreach ($dwellingHouse as $v) {
+            $dwellingTemps = array();
+            foreach ($dwellingHouse as $k => $v) {
                 // 查询最后一条
-                $dwellingTemp = Track::where([
+                $temp = Track::where([
                     'house_model' => 'App\Models\DwellingHouse',
                     'house_id' => $v->id,
                     'user_id' => $v->guardian,
-                ])->first();
-            }
-            dd($dwellingTemp);
-            if (empty($dwellingTemp)) {
-                // 丢入公盘
-                $res = DwellingHouse::where('id', $v->id)->update(['guardian' => null]);
-                if (!$res) {
-                    throw new \Exception('id为:'.$v->id.'的住宅房源加入公盘失败');
+                ])->orderBy('id', 'desc')
+                    ->first();
+
+                if (empty($temp)) {
+                    $dwellingTemps[$k] = $v->id;
+//                    $dwellingTemps['toPublic'] = true;
                 }
-            } else {
-                // 判断时间
-                if (strtotime($dwellingTemp->created_at) + config('setting.house_to_public')*60*60*24 > strtotime(date('Ymd'))) {
+
+                $dwellingTemps[$k] = $temp;
+            }
+            dd($dwellingTemps);
+
+            foreach ($dwellingTemps as $dwellingTemp) {
+                if (empty($dwellingTemp)) {
+                    // 丢入公盘
                     $res = DwellingHouse::where('id', $v->id)->update(['guardian' => null]);
                     if (!$res) {
                         throw new \Exception('id为:'.$v->id.'的住宅房源加入公盘失败');
+                    }
+                } else {
+                    // 判断时间
+                    if (strtotime($dwellingTemp->created_at) + config('setting.house_to_public')*60*60*24 > strtotime(date('Ymd'))) {
+                        $res = DwellingHouse::where('id', $v->id)->update(['guardian' => null]);
+                        if (!$res) {
+                            throw new \Exception('id为:'.$v->id.'的住宅房源加入公盘失败');
+                        }
                     }
                 }
             }

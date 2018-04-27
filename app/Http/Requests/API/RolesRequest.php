@@ -19,6 +19,35 @@ class RolesRequest extends FormRequest
     }
 
     /**
+     * 说明: 验证错误信息
+     *
+     * @return array
+     * @author 罗振
+     */
+    public function messages()
+    {
+        switch ($this->method()) {
+            case 'POST':
+                return [
+                    'permissions.*.in' => '权限必须存在'
+                ];
+            case 'PUT':
+            case 'PATCH':
+                {
+                    return [
+                        'permissions.*.in' => '权限必须存在'
+                    ];
+                }
+            case 'GET':
+            case 'DELETE':
+            default:
+                {
+                    return [];
+                }
+        }
+    }
+
+    /**
      * 说明: 字段验证
      *
      * @return array
@@ -76,7 +105,9 @@ class RolesRequest extends FormRequest
                     'permissions' => 'required|array',
                     'permissions.*' => [
                         'required',
-                        Rule::in(Permission::where('guard_name', 'web')->pluck('name')->toArray())
+                        Rule::in(
+                            Permission::where('guard_name', 'web')->pluck('name')->toArray()
+                        )
                     ]
                 ];
             case 'GET':

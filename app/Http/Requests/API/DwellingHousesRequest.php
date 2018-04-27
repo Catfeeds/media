@@ -27,20 +27,21 @@ class DwellingHousesRequest extends FormRequest
      */
     public function messages()
     {
-        switch ($this->method()) {
-            case 'POST':
+        switch ($this->route()->getActionMethod()) {
+            case 'updateDwellingBusinessState':
                 return [
-
+                    'id.in' => '住宅房源必须存在'
                 ];
-            case 'PUT':
-            case 'PATCH':
+            case 'store':
+                return [
+                    'building_block_id.in' => '楼座必须存在'
+                ];
+            case 'update':
                 {
                     return [
-
+                        'building_block_id.in' => '楼座必须存在'
                     ];
                 }
-            case 'GET':
-            case 'DELETE':
             default:
                 {
                     return [];
@@ -74,18 +75,18 @@ class DwellingHousesRequest extends FormRequest
                     'building_block_id' => [
                         'required',
                         'integer',
-//                        Rule::in(
-//                            BuildingBlock::all()->pluck('id')->toArray()
-//                        )
+                        Rule::in(
+                            BuildingBlock::all()->pluck('id')->toArray()
+                        )
                     ],
                     'house_number' => 'required|max:32',
                     'owner_info' => 'required|array',
                     // 房子信息
-                    'room' => 'required|numeric|max:9999999999',
-                    'hall' => 'required|numeric|max:9999999999',
-                    'toilet' => 'required|numeric|max:9999999999',
-                    'kitchen' => 'required|numeric|max:9999999999',
-                    'balcony' => 'required|numeric|max:9999999999',
+                    'room' => 'nullable|numeric|max:9999999999',
+                    'hall' => 'nullable|numeric|max:9999999999',
+                    'toilet' => 'nullable|numeric|max:9999999999',
+                    'kitchen' => 'nullable|numeric|max:9999999999',
+                    'balcony' => 'nullable|numeric|max:9999999999',
                     'constru_acreage' => 'required|max:32',
                     'floor' => 'nullable|numeric|max:99999999999',
 
@@ -121,9 +122,9 @@ class DwellingHousesRequest extends FormRequest
                     // 核心信息
                     'building_block_id' => [
                         'integer',
-//                        Rule::in(
-//                            BuildingBlock::all()->pluck('id')->toArray()
-//                        )
+                        Rule::in(
+                            BuildingBlock::all()->pluck('id')->toArray()
+                        )
                     ],
                     'house_number' => 'max:32',
                     // 房子信息

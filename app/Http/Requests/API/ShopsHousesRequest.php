@@ -27,20 +27,21 @@ class ShopsHousesRequest extends FormRequest
      */
     public function messages()
     {
-        switch ($this->method()) {
-            case 'POST':
+        switch ($this->route()->getActionMethod()) {
+            case 'updateShopsBusinessState':
                 return [
-
+                    'id.in' => '商铺房源必须存在'
                 ];
-            case 'PUT':
-            case 'PATCH':
+            case 'store':
+                return [
+                    'building_block_id.in' => '楼座必须存在'
+                ];
+            case 'update':
                 {
                     return [
-
+                        'building_block_id.in' => '楼座必须存在'
                     ];
                 }
-            case 'GET':
-            case 'DELETE':
             default:
                 {
                     return [];
@@ -74,9 +75,9 @@ class ShopsHousesRequest extends FormRequest
                     'building_block_id' => [
                         'required',
                         'integer',
-//                        Rule::in(
-//                            BuildingBlock::all()->pluck('id')->toArray()
-//                        )
+                        Rule::in(
+                            BuildingBlock::all()->pluck('id')->toArray()
+                        )
                     ],
                     'house_number' => 'required|max:32',
                     'owner_info' => 'required',
@@ -122,9 +123,9 @@ class ShopsHousesRequest extends FormRequest
                     // 核心信息
                     'building_block_id' => [
                         'integer',
-//                            Rule::in(
-//                                BuildingBlock::all()->pluck('id')->toArray()
-//                            )
+                        Rule::in(
+                            BuildingBlock::all()->pluck('id')->toArray()
+                        )
                     ],
                     'house_number' => 'max:32',
                     // 房子信息
