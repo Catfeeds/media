@@ -42,15 +42,15 @@ class TracksController extends APIBaseController
 
     }
 
-
-//    public function read
-//    (
-//        TracksRequest $request,
-//        TracksRepository $tracksRepository
-//    )
-//    {
-//        $res = $tracksRepository->
-//    }
+    public function read
+    (
+        TracksRequest $request,
+        TracksRepository $tracksRepository
+    )
+    {
+        $res = $tracksRepository->customsTracksList($request);
+        return $this->sendResponse($res,'客户跟进列表获取成功');
+    }
 
     public function getCustomTracksList
     (
