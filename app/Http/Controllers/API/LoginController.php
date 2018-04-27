@@ -23,9 +23,12 @@ class LoginController extends APIBaseController
         LoginService $loginService
     )
     {
-        $user = User::where('tel', $request->tel)->first();
+        $user = User::where([
+            'tel' => $request->tel,
+            'password' => bcrypt($request->pasword)
+        ])->first();
         if (empty($user)) {
-            return $this->sendError('用户不存在');
+            return $this->sendError('用户名或密码错误');
         }
 
         $passport = $loginService->applyPasswordToken($request->tel, $request->password);
@@ -36,7 +39,7 @@ class LoginController extends APIBaseController
             return $this->sendError('最后登录时间更新失败');
         }
 
-        return $this->sendResponse($passport['data'], '获取token成功！');
+        return $this->sendResponse($passport['message'], '获取token成功！');
     }
 
     /**
