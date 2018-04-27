@@ -2,9 +2,12 @@
 
 namespace App\Repositories;
 
+use App\Handler\Common;
 use App\Models\Custom;
 use App\Models\CustomRelArea;
 use App\Models\CustomRelBuilding;
+use App\Models\Storefront;
+use App\User;
 
 class CustomRepository extends BaseRepository
 {
@@ -26,12 +29,39 @@ class CustomRepository extends BaseRepository
      */
     public function getList($request, $perPage = null)
     {
-        // 拼接条件
         $query = $this->model;
+        $user = Common::user();
+        switch ($user->level) {
+            case 2:
+                //如果当前登录的是区域经理
+                //查询区域经理名下的所有门店ID
+                $storefrontId = Storefront::where('area_manager_id', $user->id)->pluck('id')->toArray();
+                //查询这些门店下员工ID和店长ID
+                $user_id = User::whereIn('ascription_store',$storefrontId)->pluck('id')->toArray();
+                $user_id[] = $user->id;
+                $query = $query->whereIn('guardian',$user_id)->Orwhere('guardian',null);
+                break;
+            case 3:
+                //如果当前登录的是店长
+                //查询门店ID
+                $storefrontId = Storefront::where('user_id', $user->id)->pluck('id')->first();
+                //查询这些门店下员工ID
+                $user_id = User::where('ascription_store',$storefrontId)->pluck('id')->toArray();
+//                dd($user_id);
+                $query = $query->whereIn('guardian',$user_id)->Orwhere('guardian',null);
+                break;
+            case 4:
+                //如果当前登录的是业务员
+                $query = $query->where('guardian',$user->id)->Orwhere('guardian',null);
+                break;
+            default;
+                break;
+        }
+        // 拼接条件
         if (!empty($request->status)) $query = $query->where('status', $request->status);
         if (!empty($request->name)) $query = $query->where('name', $request->name);
         if (!empty($request->tel)) $query = $query->where('tel', $request->tel);
-        if (!empty($request->area_id)) $query = $query->where('status', $request->area_id);
+        if (!empty($request->area_id)) $query = $query->where('area_id', $request->area_id);
         return $query->with('buildings')
             ->orderBy('updated_at', 'desc')
             ->paginate($perPage);

@@ -106,10 +106,11 @@ class CustomController extends APIBaseController
     }
 
     /**
-     * 说明：删除客户
+     * 说明:删除客户
      *
      * @param Custom $custom
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
      * @author jacklin
      */
     public function destroy(Custom $custom)
