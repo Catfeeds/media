@@ -14,28 +14,34 @@ class Track extends BaseModel
 
     protected $appends = ['tracks_mode_label','custom_name','user_name'];
 
+    /**
+     * 说明:获取客户信息
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @author 刘坤涛
+     */
     public function custom()
     {
         return $this->belongsTo(Custom::class);
     }
 
+    /**
+     * 说明:获取跟进人信息
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @author 刘坤涛
+     */
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-//    public function house()
-//    {
-//        \Log::info($this->house_model);
-//            if (empty($this->house_model)) return collect();
-//            return $this->belongsTo($this->house_model,'house_id','id');
-//
-//
-////        $model = new $this->house_model;
-////        dd($model);
-////        dd($this->house_model === "App\Models\DwellingHouse");
-//    }
-
+    /**
+     * 说明:匹配跟进方式
+     *
+     * @return string
+     * @author 刘坤涛
+     */
     public function getTracksModeLabelAttribute()
     {
         switch ($this->tracks_mode) {
@@ -66,22 +72,28 @@ class Track extends BaseModel
         }
     }
 
+    /**
+     * 说明:获取客户姓名
+     *
+     * @return string
+     * @author 刘坤涛
+     */
     public function getCustomNameAttribute()
     {
         if (empty($this->custom)) return '';
         return $this->custom->name;
     }
 
+    /**
+     * 说明:获取跟进人姓名
+     *
+     * @return mixed
+     * @author 刘坤涛
+     */
     public function getUserNameAttribute()
     {
         return $this->user->real_name;
 
     }
-
-//    public function getHouseNameAttribute()
-//    {
-//        if (empty($this->house)) return'';
-//        return $this->house;
-//    }
 
 }

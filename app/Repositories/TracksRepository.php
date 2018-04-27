@@ -102,6 +102,13 @@ class TracksRepository extends BaseRepository
         }
     }
 
+    /**
+     * 说明:添加客户跟进信息
+     *
+     * @param $request
+     * @return mixed
+     * @author 刘坤涛
+     */
     public function addCustomsTracks($request)
     {
             switch ($request->house_model) {
