@@ -4,7 +4,6 @@ namespace App\Repositories;
 
 use App\Handler\Common;
 use App\Models\Custom;
-use App\Models\CustomRelArea;
 use App\Models\CustomRelBuilding;
 use App\Models\Storefront;
 use App\User;
@@ -80,6 +79,7 @@ class CustomRepository extends BaseRepository
         try {
             // 添加客户表
             $res = $this->model->create([
+                'guardian' => Common::user()->id,
                 'status' => $request->status,
                 'class' => $request->class,
                 'source' => $request->source,
@@ -110,6 +110,7 @@ class CustomRepository extends BaseRepository
                 'walk_to_subway' => $request->walk_to_subway,
                 'bus' => $request->bus,
                 'walk_to_bus' => $request->walk_to_bus,
+                'like' => $request->like,
                 'not_like' => $request->not_like,
                 'area_id' => $request->area_id,
                 'other' => $request->other
@@ -178,6 +179,7 @@ class CustomRepository extends BaseRepository
                 'bus' => $request->bus,
                 'walk_to_bus' => $request->walk_to_bus,
                 'not_like' => $request->not_like,
+                'like' => $request->like,
                 'area_id' => $request->area_id,
                 'other' => $request->other
             ]);

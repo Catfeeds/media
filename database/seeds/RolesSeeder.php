@@ -42,7 +42,6 @@ class RolesSeeder extends Seeder
 
         // 店长
         $shopOwner = Role::create([
-
             'name_cn' => '区域经理',
             'name' => 'shop_owner',
             'name_en' => 'shop_owner',
