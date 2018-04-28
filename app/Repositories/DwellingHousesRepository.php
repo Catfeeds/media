@@ -51,6 +51,16 @@ class DwellingHousesRepository extends BaseRepository
             $result = $result->where('constru_acreage', "<=", (int)$condition->max_acreage);
         }
 
+        //几室
+        if (!empty($condition->room)) {
+            $result = $result->where('room',$condition->room);
+        }
+
+        //几厅
+        if (!empty($condition->hall)) {
+            $result = $result->where('hall', $condition->hall);
+        }
+
         // 排序
         if (!empty($condition->order)) {
             $result = $result->orderBy('updated_at', $condition->order);

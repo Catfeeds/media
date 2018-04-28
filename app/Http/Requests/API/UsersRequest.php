@@ -97,6 +97,7 @@ class UsersRequest extends FormRequest
             case 'updatePassword':
                 return [
                     'password' => 'required|min:6|max:18',
+                    'old_password' => 'required',
                 ];
             case 'updateTel':
                 return [

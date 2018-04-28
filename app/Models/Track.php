@@ -93,7 +93,6 @@ class Track extends BaseModel
     public function getUserNameAttribute()
     {
         return $this->user->real_name;
-
     }
 
 }
