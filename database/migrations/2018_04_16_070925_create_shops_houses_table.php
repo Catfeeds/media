@@ -43,7 +43,9 @@ class CreateShopsHousesTable extends Migration
             $table->tinyInteger('shortest_lease')->nullable()->comment('最短租期: 1: 1-2年 2: 2-3年 3: 3-4年 4: 5年以上');
             $table->tinyInteger('rent_free')->nullable()->comment('免租期: 1: 1个月 2: 2个月 3: 3个月 4: 4个月 5: 5个月 6: 6个月 7: 7个月 8: 8个月 9: 9个月 10: 10个月 11: 面谈');
             $table->string('increasing_situation', 32)->nullable()->comment('递增情况');
+            $table->string('increasing_situation_remark', 256)->nullable()->comment('递增情况备注');
             $table->decimal('transfer_fee', 10, 2)->nullable()->comment('转让费');
+            $table->string('transfer_fee_remark', 256)->nullable()->comment('转让费备注');
             $table->json('cost_detail')->nullable()->comment('费用明细:json');
             // 业务信息
             $table->tinyInteger('house_busine_state')->nullable()->comment('房源业务状态: 1: 有效 2: 暂缓 3: 已租 4: 收购 5: 托管 6: 无效');
@@ -57,6 +59,7 @@ class CreateShopsHousesTable extends Migration
             $table->tinyInteger('certificate_type')->nullable()->comment('证件类型: 1: 房地产证 2: 购房合同 3: 购房发票 4: 抵押合同 5: 认购书 6: 预售合同 7: 回迁合同');
             $table->tinyInteger('house_proxy_type')->nullable()->comment('房源状态: 1: 独家 2: 委托');
             $table->tinyInteger('guardian')->nullable()->comment('维护人');
+
             // 房源照片
             $table->json('house_type_img')->nullable()->comment('户型图:json');
             $table->json('indoor_img')->nullable()->comment('室内图:json');
