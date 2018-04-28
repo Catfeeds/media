@@ -146,17 +146,6 @@ class DwellingHouse extends BaseModel
         })->values();
     }
 
-
-    public function getHouseImgCnAttribute()
-    {
-        return collect(array_merge($this->house_type_img, $this->indoor_img))->map(function ($img) {
-            return [
-                'name' => $img,
-                'url' => config('setting.qiniu_url') . $img . config('setting.static')
-            ];
-        })->values();
-    }
-
     /**
      * 说明: 室内图拼接url
      *

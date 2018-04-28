@@ -168,6 +168,7 @@ class Custom extends BaseModel
      */
     public function getCommissionLabelAttribute()
     {
+        if (empty($this->pay_commission)) return '';
         switch ($this->pay_commission_unit) {
             case 1:
                 return (int)$this->pay_commission . '%';
