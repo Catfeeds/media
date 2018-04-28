@@ -96,6 +96,7 @@ class OfficeBuildingHousesRepository extends BaseRepository
                 'shortest_lease' => $request->shortest_lease,
                 'rent_free' => $request->rent_free,
                 'increasing_situation' => $request->increasing_situation,
+                'increasing_situation_remark' => $request->increasing_situation_remark,
                 'cost_detail' => $request->cost_detail??array(),
                 'house_busine_state' => $request->house_busine_state,
                 'pay_commission' => $request->pay_commission,
@@ -162,6 +163,7 @@ class OfficeBuildingHousesRepository extends BaseRepository
         $officeBuildingHouse->shortest_lease = $request->shortest_lease;
         $officeBuildingHouse->rent_free = $request->rent_free;
         $officeBuildingHouse->increasing_situation = $request->increasing_situation;
+        $officeBuildingHouse->increasing_situation_remark = $request->increasing_situation_remark;
         $officeBuildingHouse->cost_detail = $request->cost_detail??array();
         $officeBuildingHouse->house_busine_state = $request->house_busine_state;
         $officeBuildingHouse->pay_commission = $request->pay_commission;

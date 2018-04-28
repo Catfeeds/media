@@ -1,8 +1,10 @@
 <?php
 namespace App\Repositories;
 
+use App\Handler\Common;
 use App\Models\Storefront;
 use App\User;
+use Illuminate\Support\Facades\Hash;
 
 class UserRepository extends BaseRepository
 {
@@ -125,15 +127,16 @@ class UserRepository extends BaseRepository
     /**
      * 说明:修改密码
      *
-     * @param $user
      * @param $request
      * @return bool
      * @author 刘坤涛
      */
-    public function changePassword($user, $request)
+    public function changePassword($request)
     {
-         $user->password = bcrypt($request->password);
-         if ($user->save()) {
+        $user = Common::user();
+        if (!Hash::check($request->old_password, $user->password)) return false;
+        $res= $user->where('id', $user->id)->update(['password' =>bcrypt($request->password) ]);
+         if ($res) {
              return true;
          }
          return false;

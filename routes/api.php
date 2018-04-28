@@ -43,7 +43,7 @@ Route::group(['namespace' => 'API'], function () {
         */
         Route::resource('users', 'UserController');
         //更改用户密码
-        Route::post('update_password/{user}','UserController@updatePassword');
+        Route::post('update_password','UserController@updatePassword');
         //更新用户电话
         Route::post('update_tel/{user}','UserController@updateTel');
         // 获取所属门店

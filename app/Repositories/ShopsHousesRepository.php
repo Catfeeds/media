@@ -96,7 +96,9 @@ class ShopsHousesRepository extends BaseRepository
                 'shortest_lease' => $request->shortest_lease,
                 'rent_free' => $request->rent_free,
                 'increasing_situation' => $request->increasing_situation,
+                'increasing_situation_remark' => $request->increasing_situation_remark,
                 'transfer_fee' => $request->transfer_fee,
+                'transfer_fee_remark' => $request->transfer_fee_remark,
                 'cost_detail' => $request->cost_detail??array(),
                 'house_busine_state' => $request->house_busine_state,
                 'pay_commission' => $request->pay_commission,
@@ -164,7 +166,9 @@ class ShopsHousesRepository extends BaseRepository
         $shopsHouse->shortest_lease = $request->shortest_lease;
         $shopsHouse->rent_free = $request->rent_free;
         $shopsHouse->increasing_situation = $request->increasing_situation;
+        $shopsHouse->increasing_situation_remark = $request->increasing_situation_remark;
         $shopsHouse->transfer_fee = $request->transfer_fee;
+        $shopsHouse->transfer_fee_remark = $request->transfer_fee_remark;
         $shopsHouse->cost_detail = $request->cost_detail??array();
         $shopsHouse->house_busine_state = $request->house_busine_state;
         $shopsHouse->pay_commission = $request->pay_commission;

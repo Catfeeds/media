@@ -103,6 +103,7 @@ class OfficeBuildingHousesRequest extends FormRequest
                       'shortest_lease' => 'nullable|integer|between:1,5',
                       'rent_free' => 'nullable|integer|between:1,11',
                       'increasing_situation' => 'max:32',
+                      'increasing_situation_remark' => 'nullable|max:256',
                       // 业务信息
                       'house_busine_state' => 'required|integer|between:1,6',
                       'pay_commission' => 'nullable|numeric|max:9999999999',
@@ -150,6 +151,7 @@ class OfficeBuildingHousesRequest extends FormRequest
                       'shortest_lease' => 'nullable|integer|between:1,5',
                       'rent_free' => 'nullable|integer|between:1,11',
                       'increasing_situation' => 'max:32',
+                      'increasing_situation_remark' => 'nullable|max:256',
                       // 业务信息
                       'house_busine_state' => 'required|integer|between:1,6',
                       'pay_commission' => 'nullable|numeric|max:9999999999',

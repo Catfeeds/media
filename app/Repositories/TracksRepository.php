@@ -24,7 +24,7 @@ class TracksRepository extends BaseRepository
      */
     public function tracksList($request)
     {
-        return Track::where('house_id', $request->house_id)->paginate($request->per_page);
+        return Track::where('house_id', $request->house_id)->orderBy('created_at','desc')->paginate($request->per_page);
     }
 
     /**
@@ -36,7 +36,7 @@ class TracksRepository extends BaseRepository
      */
     public function getCustomsTracksList($request)
     {
-        $res =  Track::where('custom_id', $request->custom_id)->paginate($request->per_page);
+        $res =  Track::where('custom_id', $request->custom_id)->orderBy('created_at','desc')->paginate($request->per_page);
         foreach ($res as $v) {
             if ($v->house_id) {
                 $item = $v['house_model']::where('id', $v['house_id'])->first();

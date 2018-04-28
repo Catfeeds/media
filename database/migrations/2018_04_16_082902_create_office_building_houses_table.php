@@ -43,6 +43,7 @@ class CreateOfficeBuildingHousesTable extends Migration
             $table->tinyInteger('shortest_lease')->nullable()->comment('最短租期: 1: 1-2年 2: 2-3年 3: 3-4年 4: 5年以上');
             $table->tinyInteger('rent_free')->nullable()->comment('免租期: 1: 1个月 2: 2个月 3: 3个月 4: 4个月 5: 5个月 6: 6个月 7: 7个月 8: 8个月 9: 9个月 10: 10个月 11: 面谈');
             $table->string('increasing_situation', 32)->nullable()->comment('递增情况');
+            $table->string('increasing_situation_remark', 256)->nullable()->comment('递增情况备注');
             $table->json('cost_detail')->nullable()->comment('费用明细:json');
             // 业务信息
             $table->tinyInteger('house_busine_state')->nullable()->comment('房源业务状态: 1: 有效 2: 暂缓 3: 已租 4: 收购 5: 托管 6: 无效');

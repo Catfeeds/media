@@ -160,18 +160,16 @@ class UserController extends APIBaseController
      *
      * @param UserRepository $userRepository
      * @param UsersRequest $request
-     * @param User $user
      * @return \Illuminate\Http\JsonResponse
      * @author 刘坤涛
      */
     public function updatePassword
     (
         UserRepository $userRepository,
-        UsersRequest $request,
-        User $user
+        UsersRequest $request
     )
     {
-        $res = $userRepository->changePassword($user, $request);
+        $res = $userRepository->changePassword($request);
         if ($res) {
             return $this->sendResponse($res, '密码修改成功');
         }
