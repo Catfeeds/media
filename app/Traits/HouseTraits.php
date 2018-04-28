@@ -402,4 +402,22 @@ trait HouseTraits{
         }
     }
 
+    /**
+     * 说明:房屋图片
+     *
+     * @return static
+     * @author 刘坤涛
+     */
+    public function getHouseImgCnAttribute()
+    {
+        $arr1 = empty($this->house_type_img)?[]:$this->house_type_img;
+        $arr2 = empty($this->indoor_img)?[]:$this->indoor_img;
+        return collect(array_merge($arr1, $arr2))->map(function ($img) {
+            return [
+                'name' => $img,
+                'url' => config('setting.qiniu_url') . $img . config('setting.static')
+            ];
+        })->values();
+    }
+
 }

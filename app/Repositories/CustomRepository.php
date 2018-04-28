@@ -46,7 +46,6 @@ class CustomRepository extends BaseRepository
                 $storefrontId = Storefront::where('user_id', $user->id)->pluck('id')->first();
                 //查询这些门店下员工ID
                 $user_id = User::where('ascription_store',$storefrontId)->pluck('id')->toArray();
-//                dd($user_id);
                 $query = $query->whereIn('guardian',$user_id)->Orwhere('guardian',null);
                 break;
             case 4:

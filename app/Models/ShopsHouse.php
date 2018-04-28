@@ -33,7 +33,10 @@ class ShopsHouse extends BaseModel
         'pay_commission_cn', 'payment_type_cn', 'shortest_lease_cn', 'rent_free_cn',
         'frontage_cn', 'split_cn', 'orientation_cn', 'prospecting_cn', 'see_house_time_cn',
         'house_proxy_type_cn', 'source_cn', 'certificate_type_cn', 'house_type_img_cn',
-        'indoor_img_cn', 'building_name', 'house_busine_state_cn', 'house_number_info', 'address', 'check_in_time_cn', 'constru_acreage_cn', 'rent_price_cn', 'increasing_situation_cn', 'min_acreage_cn', 'wide_cn', 'depth_cn', 'transfer_fee_cn', 'guardian_cn', 'storefronts_cn', 'tracks_time',
+        'indoor_img_cn', 'building_name', 'house_busine_state_cn', 'house_number_info',
+        'address', 'check_in_time_cn', 'constru_acreage_cn', 'rent_price_cn',
+        'increasing_situation_cn', 'min_acreage_cn', 'wide_cn', 'depth_cn',
+        'transfer_fee_cn', 'guardian_cn', 'storefronts_cn', 'tracks_time','house_img_cn'
     ];
 
     /**
