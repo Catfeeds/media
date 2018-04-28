@@ -9,6 +9,7 @@ use App\Repositories\UserRepository;
 use App\Services\UsersService;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends APIBaseController
 {
@@ -169,7 +170,11 @@ class UserController extends APIBaseController
         UsersRequest $request
     )
     {
-        $res = $userRepository->changePassword($request);
+        $user = Common::user();
+        if (!Hash::check($request->old_password, $user->password)) {
+            return $this->sendError('旧密码输入错误');
+        }
+        $res = $userRepository->changePassword($user, $request);
         if ($res) {
             return $this->sendResponse($res, '密码修改成功');
         }
