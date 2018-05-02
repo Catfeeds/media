@@ -425,7 +425,7 @@ trait HouseTraits{
     }
 
     /**
-     * 说明: 房源公司盘标识
+     * 说明: 房源公私盘标识
      *
      * @return string
      * @author 刘坤涛
