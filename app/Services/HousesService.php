@@ -84,4 +84,65 @@ class HousesService
         if (empty($data)) return array('name' => '独', 'name_unit' => '栋');
         return $data;
     }
+
+    public function houseNumValidate($request)
+    {
+        $string = 'F701-7F'; // 房号
+        $floor = '7';   // 楼层
+        $block = 13;
+        $model = '\App\Models\DwellingHouse';
+        // 处理房号
+        $temp = explode('-', $string);
+//        dd($temp);
+
+        // 判断是否为整层
+        if (count($temp) > 1) {
+            $temp5 = strpos($string, 'F');
+            if ($temp5) {
+                dd(123);
+                return false;
+            }
+
+        }
+
+
+        foreach ($temp as $v) {
+            // 判断楼层
+            $temp2 = strpos($v, $floor);
+            // 楼层正确返回0(第一位)
+            if (empty($temp2)) {
+                // 英文验证规则
+                $preg2 = '/[A-Za-z]*/';
+                $string1 = '2sF';
+                if(preg_match($preg2,$string1)){
+                    // 包含英文
+                    $temp4 = strpos($string1, 'F');
+                    if ($temp4) {
+
+
+
+                        return false;
+                    }
+                }
+
+                return false;
+            }
+
+
+            // 判断楼座中否是有这个房号
+            $temp3 = $model::where([
+                'building_block_id' => $block,
+                'house_number' => $v,
+            ])->first();
+            if ($temp3) {
+                return false;
+            }
+        }
+
+
+
+
+
+
+    }
 }
