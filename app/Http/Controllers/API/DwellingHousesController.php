@@ -67,7 +67,8 @@ class DwellingHousesController extends APIBaseController
      * @return \Illuminate\Http\JsonResponse
      * @author 罗振
      */
-    public function edit(
+    public function edit
+    (
         DwellingHouse $dwellingHouse,
         HousesService $housesService
     )

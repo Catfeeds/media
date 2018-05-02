@@ -2,6 +2,10 @@
 
 namespace App\Traits;
 
+use App\Handler\Common;
+use App\Models\Storefront;
+use App\User;
+
 trait HouseTraits{
 
     /**
@@ -418,6 +422,62 @@ trait HouseTraits{
                 'url' => config('setting.qiniu_url') . $img . config('setting.static')
             ];
         })->values();
+    }
+
+    /**
+     * 说明: 房源公司盘标识
+     *
+     * @return string
+     * @author 刘坤涛
+     */
+    public function getDiscTypeCnAttribute()
+    {
+        if(empty($this->guardian)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    public function getSeePowerCnAttribute()
+    {
+        //如果当前登录人是总经理或者维护人是当前登录人
+        $current_user = Common::user();
+        //获取维护人心
+        $user = User::where('id',$this->guardian)->first();
+        //如果是私盘,判断当前登录人是否有权利查看
+        if (!empty($this->guardian)) {
+            //总经理或者维护人和登录人为同一人,可以查看私盘
+            if ($current_user->level == 1 || $current_user->id == $this->guardian) {
+                return true;
+            } else {
+                //判断维护人等级
+                switch ($user->level) {
+                    //如果是店长,他的区域经理可以查看
+                    case 3:
+                        //查询店长属于那个门店
+                        $storefront = Storefront::where('user_id', $this->guardian)->first();
+                        if ($current_user->id == $storefront->area_manager_id) {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                        break;
+                    //如果是业务员,他的店长和他的区域经理可以查看
+                    case 4:
+                        $storefront = Storefront::where('id', $user->ascription_store)->first();
+                        if ($current_user->id == $storefront->area_manager_id || $current_user->id == $storefront->user_id) {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                        break;
+                    default;
+                        break;
+                }
+            }
+        }
     }
 
 }
