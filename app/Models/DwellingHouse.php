@@ -28,7 +28,8 @@ class DwellingHouse extends BaseModel
         'see_house_time_cn', 'house_proxy_type_cn', 'source_cn', 'certificate_type_cn',
         'pay_commission_cn', 'shortest_lease_cn', 'house_type_img_cn', 'indoor_img_cn',
         'building_name', 'tel_cn', 'house_number_info', 'address', 'guardian_cn', 'storefronts_cn',
-        'tracks_time', 'constru_acreage_cn', 'rent_price_cn', 'check_in_time_cn','house_img_cn'];
+        'tracks_time', 'constru_acreage_cn', 'rent_price_cn', 'check_in_time_cn',
+        'house_img_cn', 'disc_type_cn','see_power_cn'];
 
     /**
      * 说明: 楼座

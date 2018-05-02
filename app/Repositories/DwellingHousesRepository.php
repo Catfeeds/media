@@ -30,6 +30,7 @@ class DwellingHousesRepository extends BaseRepository
         $condition
     )
     {
+
         $result = $this->model;
 
         if (!empty($condition->region) && !empty($condition->build)) {

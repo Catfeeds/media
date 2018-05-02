@@ -8,7 +8,6 @@ use App\Repositories\OwnerViewRecordsRepository;
 
 class OwnerViewRecordsController extends APIBaseController
 {
-
     /**
      * 说明:查看房源时添加查看记录
      *
@@ -24,9 +23,6 @@ class OwnerViewRecordsController extends APIBaseController
     )
     {
         $res = $ownerViewRecordsRepository->addRecords($request);
-        if ($res) {
-            return $this->sendResponse($res, '房源查看记录添加成功');
-        }
-        return $this->sendError('房源查看记录添加失败');
+        return $this->sendResponse($res, '房源查看记录添加成功');
     }
 }

@@ -3,6 +3,8 @@
 namespace App\Services;
 
 use App\Models\BuildingBlock;
+use App\Models\House;
+use App\Models\OwnerViewRecord;
 
 class HousesService
 {
@@ -85,6 +87,7 @@ class HousesService
         return $data;
     }
 
+
     public function houseNumValidate($request)
     {
         $string = 'F701-7F'; // 房号
@@ -114,11 +117,10 @@ class HousesService
                 // 英文验证规则
                 $preg2 = '/[A-Za-z]*/';
                 $string1 = '2sF';
-                if(preg_match($preg2,$string1)){
+                if (preg_match($preg2, $string1)) {
                     // 包含英文
                     $temp4 = strpos($string1, 'F');
                     if ($temp4) {
-
 
 
                         return false;
@@ -138,11 +140,45 @@ class HousesService
                 return false;
             }
         }
+    }
 
 
+    /**
+     * 说明:获取房源信息
+     *
+     * @param $request
+     * @return mixed
+     * @author 刘坤涛
+     */
+    public function getHouse($request)
+    {
+        switch ($request->house_model) {
+            case '1':
+                $model = "App\\Models\\DwellingHouse";
+                break;
+            case '2':
+                $model = "App\\Models\\OfficeBuildingHouse";
+                break;
+            case '3':
+                $model = "App\\Models\\ShopHouse";
+                break;
+            default;
+                break;
+        }
+        return  $model::find($request->house_id);
+    }
 
-
-
-
+    /**
+     * 说明:获取查看记录
+     *
+     * @param $house
+     * @param null $per_page
+     * @return mixed
+     * @author 刘坤涛
+     */
+    public function getViewRecord($house, $per_page = null)
+    {
+        $model = get_class($house);
+        return  OwnerViewRecord::where(['house_id' => $house->id, 'house_model' => $model])->paginate($per_page);
     }
 }

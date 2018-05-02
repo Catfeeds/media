@@ -60,6 +60,7 @@ Route::group(['namespace' => 'API'], function () {
         Route::resource('dwelling_houses', 'DwellingHousesController');
         //住宅房源业务状态
         Route::post('update_dwelling_business_state', 'DwellingHousesController@updateDwellingBusinessState');
+        Route::post('get_owner_info', 'DwellingHousesController@getOwnerInfo');
         // 商铺房源
         Route::resource('shops_houses', 'ShopsHousesController');
         //商铺房源业务状态
@@ -68,6 +69,9 @@ Route::group(['namespace' => 'API'], function () {
         Route::resource('office_building_houses', 'OfficeBuildingHousesController');
         // 写字楼房源业务状态修改
         Route::post('update_office_business_state', 'OfficeBuildingHousesController@updateOfficeBusinessState');
+        //三个房源获取业主信息和查看记录
+        Route::get('get_owner_info', 'HousesController@getOwnerInfo');
+
 
         /*
         |--------------------------------------------------------------------------

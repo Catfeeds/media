@@ -72,7 +72,8 @@ class DwellingHousesController extends APIBaseController
      * @return \Illuminate\Http\JsonResponse
      * @author 罗振
      */
-    public function edit(
+    public function edit
+    (
         DwellingHouse $dwellingHouse,
         HousesService $housesService
     )
@@ -145,6 +146,8 @@ class DwellingHousesController extends APIBaseController
         $res = $dwellingHousesRepository->updateState($request);
         return $this->sendResponse($res,'住宅房源业务状态修改成功');
     }
+
+
 
 
 }
