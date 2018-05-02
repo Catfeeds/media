@@ -7,7 +7,6 @@ use App\Models\DwellingHouse;
 use App\Repositories\DwellingHousesRepository;
 use App\Services\HousesService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 
 class DwellingHousesController extends APIBaseController
 {
@@ -25,7 +24,7 @@ class DwellingHousesController extends APIBaseController
         HousesService $housesService
     )
     {
-        $housesService->houseNumValidate($request);
+//        $housesService->houseNumValidate($request);
 
 
         // 判断用户权限
