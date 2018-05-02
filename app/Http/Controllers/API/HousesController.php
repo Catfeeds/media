@@ -1,24 +1,28 @@
 <?php
 namespace App\Http\Controllers\API;
 
-use App\Repositories\DwellingHousesRepository;
-use App\Repositories\OfficeBuildingHousesRepository;
-use App\Repositories\ShopsHousesRepository;
+use App\Http\Requests\API\HousesRequest;
 use App\Services\HousesService;
-use Illuminate\Http\Request;
 
 class HousesController extends APIBaseController
 {
-    public function index(
-        Request $request,
+
+    /**
+     * 说明:获取业主信息
+     *
+     * @param HousesRequest $request
+     * @param HousesService $housesService
+     * @return \Illuminate\Http\JsonResponse
+     * @author 刘坤涛
+     */
+    public function getOwnerInfo
+    (
+        HousesRequest $request,
         HousesService $housesService
-//        ShopsHousesRepository $shopsHousesRepository,   // 商铺房源
-//        DwellingHousesRepository $dwellingHousesRepository, // 住宅房源
-//        OfficeBuildingHousesRepository $officeBuildingHousesRepository  // 写字楼房源
     )
     {
-        $housesService->getAllTypeHouse();
-
-        return '房源控制器';
+        $res = $housesService->getOwnerInfo($request);
+        return $this->sendResponse($res,'业主信息获取成功');
     }
+
 }

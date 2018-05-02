@@ -84,4 +84,30 @@ class HousesService
         if (empty($data)) return array('name' => '独', 'name_unit' => '栋');
         return $data;
     }
+
+    /**
+     * 说明:获取业主信息
+     *
+     * @param $request
+     * @return mixed
+     * @author 刘坤涛
+     */
+    public function getOwnerInfo($request)
+    {
+        switch ($request->house_model) {
+            case '1':
+                $model = "App\\Models\\DwellingHouse";
+                break;
+            case '2':
+                $model = "App\\Models\\OfficeBuildingHouse";
+                break;
+            case '3':
+                $model = "App\\Models\\ShopHouse";
+                break;
+            default;
+                break;
+        }
+        return $model::find($request->house_id)->owner_info;
+
+    }
 }
