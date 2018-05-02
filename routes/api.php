@@ -69,8 +69,8 @@ Route::group(['namespace' => 'API'], function () {
         Route::resource('office_building_houses', 'OfficeBuildingHousesController');
         // 写字楼房源业务状态修改
         Route::post('update_office_business_state', 'OfficeBuildingHousesController@updateOfficeBusinessState');
-        //三个房源获取业主信息
-        Route::post('get_owner_info', 'HousesController@getOwnerInfo');
+        //三个房源获取业主信息和查看记录
+        Route::get('get_owner_info', 'HousesController@getOwnerInfo');
 
 
         /*

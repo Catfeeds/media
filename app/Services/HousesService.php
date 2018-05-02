@@ -3,6 +3,8 @@
 namespace App\Services;
 
 use App\Models\BuildingBlock;
+use App\Models\House;
+use App\Models\OwnerViewRecord;
 
 class HousesService
 {
@@ -86,13 +88,13 @@ class HousesService
     }
 
     /**
-     * 说明:获取业主信息
+     * 说明:获取房源信息
      *
      * @param $request
      * @return mixed
      * @author 刘坤涛
      */
-    public function getOwnerInfo($request)
+    public function getHouse($request)
     {
         switch ($request->house_model) {
             case '1':
@@ -107,7 +109,20 @@ class HousesService
             default;
                 break;
         }
-        return $model::find($request->house_id)->owner_info;
+        return  $model::find($request->house_id);
+    }
 
+    /**
+     * 说明:获取查看记录
+     *
+     * @param $house
+     * @param null $per_page
+     * @return mixed
+     * @author 刘坤涛
+     */
+    public function getViewRecord($house, $per_page = null)
+    {
+        $model = get_class($house);
+        return  OwnerViewRecord::where(['house_id' => $house->id, 'house_model' => $model])->paginate($per_page);
     }
 }
