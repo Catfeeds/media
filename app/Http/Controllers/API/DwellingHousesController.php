@@ -24,7 +24,7 @@ class DwellingHousesController extends APIBaseController
         HousesService $housesService
     )
     {
-//        $housesService->houseNumValidate($request);
+        $housesService->houseNumValidate($request);
 
 
         // 判断用户权限

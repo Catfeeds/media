@@ -90,7 +90,8 @@ class HousesService
 
     public function houseNumValidate($request)
     {
-        $string = '711F'; // 房号
+        $string = '711712'; // 房号
+//        $string = 'F'; // 房号
         $floor = '71';   // 楼层
         $block = 13;
         $model = '\App\Models\DwellingHouse';
@@ -100,9 +101,9 @@ class HousesService
 
         // 判断是否为整层
         if (count($temp) > 1) {
-            $temp5 = strpos($string, 'F');
-            if ($temp5 !== false) {
-//                dd(123);
+            $preg2= '/[A-Za-z]*/';
+            if(preg_match($preg2,$string)){
+                dd('有英文');
                 return false;
             }
 
@@ -125,18 +126,9 @@ class HousesService
                 }
             }
         } else {
-
             // 判断是否包含F
-            $temp5 = strpos($string, 'F');
-            if ($temp5 === false) {
+            if ($string !== 'F') {
 //                dd(123);
-                return false;
-            }
-
-            // 判断楼层
-            $temp2 = strpos($temp[0], $floor);
-            // 判断楼层是否正确(肯定是从第0位开始)
-            if ($temp2 === 0) {
                 return false;
             }
 
@@ -150,7 +142,7 @@ class HousesService
             }
         }
 
-
+        return true;
     }
 
 
