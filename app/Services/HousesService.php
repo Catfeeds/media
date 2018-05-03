@@ -98,7 +98,6 @@ class HousesService
 //        $model = '\App\Models\DwellingHouse';
         // 处理房号
         $temp = explode('-', $request->house_number);
-//        dd($temp);
 
         // 判断是否为整层
         if (count($temp) > 1) {
@@ -115,22 +114,43 @@ class HousesService
                 if ($temp2 !== 0) {
                     return false;
                 }
+
+                // 判断楼座中否是有这个房号
+                $temp3 = $request->model::where([
+                    'building_block_id' => $request->building_block_id,
+                    'house_number' => $v,
+                    'floor' => $request->floor
+                ])->first();
+                if ($temp3) {
+                    return false;
+                }
             }
         } else {
-            // 判断是否包含F
-            if ($request->house_number !== 'F') {
+            // 包含英文验证
+            $preg2= '/[A-Za-z]/';
+            if(preg_match($preg2, $request->house_number)){
+                // 判断是否包含F
+                if ($request->house_number !== 'F') {
+                    return false;
+                }
+            } else {
+                // 判断楼层
+                $temp2 = strpos($request->house_number, $request->floor);
+                // 判断楼层是否正确(肯定是从第0位开始)
+                if ($temp2 !== 0) {
+                    return false;
+                }
+            }
+
+            // 判断楼座中否是有这个房号
+            $temp3 = $request->model::where([
+                'building_block_id' => $request->building_block_id,
+                'house_number' => $request->house_number,
+                'floor' => $request->floor
+            ])->first();
+            if ($temp3) {
                 return false;
             }
-        }
-
-        // 判断楼座中否是有这个房号
-        $temp3 = $request->model::where([
-            'building_block_id' => $request->building_block_id,
-            'house_number' => $v,
-            'floor' => $request->floor
-        ])->first();
-        if ($temp3) {
-            return false;
         }
 
         return true;
