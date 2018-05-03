@@ -63,13 +63,14 @@ class StorefrontsController extends APIBaseController
             case 2:
                 $where = ['id' => $user->id];
         }
-             $result= $userRepository->getAllAreaManager($where)->map(function($v) {
-                return [
-                        'label' => $v->real_name,
-                        'value' => $v->id
-                        ];
-            });
-            return $this->sendResponse($result,'区域经理信息获取成功');
+
+        $result= $userRepository->getAllAreaManager($where)->map(function($v) {
+            return [
+                    'label' => $v->real_name,
+                    'value' => $v->id
+                    ];
+        });
+        return $this->sendResponse($result,'区域经理信息获取成功');
 	}
 
     /**
