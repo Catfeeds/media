@@ -30,8 +30,7 @@ class DwellingHousesRepository extends BaseRepository
         $condition
     )
     {
-
-        $result = $this->model;
+        $result = $this->model->where('house_busine_state', 1);
 
         if (!empty($condition->region) && !empty($condition->build)) {
             // 楼盘包含的楼座
@@ -67,7 +66,7 @@ class DwellingHousesRepository extends BaseRepository
             $result = $result->orderBy('updated_at', $condition->order);
         }
 
-        return $result->paginate($per_page??10)->makeHidden('owner_info');
+        return $result->paginate($per_page??10);
     }
 
     /**
