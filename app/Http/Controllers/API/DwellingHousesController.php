@@ -52,8 +52,8 @@ class DwellingHousesController extends APIBaseController
 
         $request->model = '\App\Models\DwellingHouse';
         $houseNumValidate = $housesService->houseNumValidate($request);
-        if (empty($houseNumValidate)) {
-            return $this->sendError('输入的房号不正确');
+        if (empty($houseNumValidate['status'])) {
+            return $this->sendError($houseNumValidate['message']);
         }
 
         if (!empty($result = $dwellingHousesRepository->addDwellingHouses($request, $housesService))) {

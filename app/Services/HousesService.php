@@ -87,15 +87,15 @@ class HousesService
         return $data;
     }
 
-
-
+    /**
+     * 说明: 房号验证
+     *
+     * @param $request
+     * @return array
+     * @author 罗振
+     */
     public function houseNumValidate($request)
     {
-//        $string = '711-712'; // 房号
-//        $string = 'F'; // 房号
-        $floor = '71';   // 楼层
-        $block = 13;
-//        $model = '\App\Models\DwellingHouse';
         // 处理房号
         $temp = explode('-', $request->house_number);
 
@@ -104,7 +104,10 @@ class HousesService
             // 包含英文验证
             $preg2= '/[A-Za-z]/';
             if(preg_match($preg2, $request->house_number)){
-                return false;
+                return [
+                    'status' => false,
+                    'message' => '所填房号格式不正确'
+                ];
             }
 
             foreach ($temp as $v) {
@@ -112,17 +115,23 @@ class HousesService
                 $temp2 = strpos($v, $request->floor);
                 // 判断楼层是否正确(肯定是从第0位开始)
                 if ($temp2 !== 0) {
-                    return false;
+                    return [
+                        'status' => false,
+                        'message' => '楼层与房号不是同一层',
+                    ];
                 }
 
-                // 判断楼座中否是有这个房号
+                // 判断是否有这个房号
                 $temp3 = $request->model::where([
                     'building_block_id' => $request->building_block_id,
                     'house_number' => $v,
                     'floor' => $request->floor
                 ])->first();
                 if ($temp3) {
-                    return false;
+                    return [
+                        'status' => false,
+                        'message' => '该房号已存在',
+                    ];
                 }
             }
         } else {
@@ -131,14 +140,20 @@ class HousesService
             if(preg_match($preg2, $request->house_number)){
                 // 判断是否包含F
                 if ($request->house_number !== 'F') {
-                    return false;
+                    return [
+                        'status' => false,
+                        'message' => '所填房号格式不正确',
+                    ];
                 }
             } else {
                 // 判断楼层
                 $temp2 = strpos($request->house_number, $request->floor);
                 // 判断楼层是否正确(肯定是从第0位开始)
                 if ($temp2 !== 0) {
-                    return false;
+                    return [
+                        'status' => false,
+                        'message' => '楼层与房号不是同一层',
+                    ];
                 }
             }
 
@@ -149,11 +164,16 @@ class HousesService
                 'floor' => $request->floor
             ])->first();
             if ($temp3) {
-                return false;
+                return [
+                    'status' => false,
+                    'message' => '该房号已存在',
+                ];
             }
         }
 
-        return true;
+        return [
+            'status' => true,
+        ];
     }
 
 

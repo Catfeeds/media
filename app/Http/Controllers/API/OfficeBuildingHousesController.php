@@ -51,6 +51,12 @@ class OfficeBuildingHousesController extends APIBaseController
             return $this->sendError('没有房源添加权限','403');
         }
 
+        $request->model = '\App\Models\OfficeBuildingHouse';
+        $houseNumValidate = $housesService->houseNumValidate($request);
+        if (empty($houseNumValidate['status'])) {
+            return $this->sendError($houseNumValidate['message']);
+        }
+
         $result = $officeBuildingHousesRepository->addOfficeBuildingHouses($request, $housesService);
         if (!empty($result)) {
             return $this->sendResponse($result, '写字楼房源添加成功');
