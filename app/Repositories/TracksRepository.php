@@ -154,8 +154,8 @@ class TracksRepository extends BaseRepository
             //如果跟进的客户为公盘,则将该客户的维护人跟新为跟进人
             if (empty($custom->guardian)) {
                 $custom->guardian = $user->id;
+                if (!$custom->save()) throw new \Exception('客户更新维护人失败');
             }
-            if (!$custom->save()) throw new \Exception('客户更新维护人失败');
             \DB::commit();
             return true;
         } catch (\Exception $e) {
