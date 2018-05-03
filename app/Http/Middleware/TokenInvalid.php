@@ -11,6 +11,14 @@ use Laravel\Passport\Token;
 class TokenInvalid extends Middleware
 {
 
+    /**
+     * 说明:设置用户访问系统有效时间(30分钟)
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param Closure $next
+     * @return mixed
+     * @author 刘坤涛
+     */
     public function handle($request, Closure $next)
     {
         //获取用户登录信息
