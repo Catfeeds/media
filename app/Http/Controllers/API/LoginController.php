@@ -40,7 +40,7 @@ class LoginController extends APIBaseController
 
         // 最后登录时间
         $user->last_login_time = date('Y.m.d H:i:s', time());
-
+        \Redis::SET($user->id.'time', time());
         if (!$user->save()) {
             return $this->sendError('最后登录时间更新失败');
         }
