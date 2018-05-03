@@ -20,13 +20,9 @@ class DwellingHousesController extends APIBaseController
      */
     public function index(
         Request $request,
-        DwellingHousesRepository $dwellingHousesRepository,
-        HousesService $housesService
+        DwellingHousesRepository $dwellingHousesRepository
     )
     {
-        $housesService->houseNumValidate($request);
-
-
         // 判断用户权限
         if (empty(Common::user()->can('house_list'))) {
             return $this->sendError('没有房源列表权限', '403');
@@ -56,6 +52,13 @@ class DwellingHousesController extends APIBaseController
             return $this->sendError('没有房源添加权限','403');
         }
 
+        $request->model = '\App\Models\DwellingHouse';
+
+        $houseNumValidate = $housesService->houseNumValidate($request);
+        if (empty($houseNumValidate)) {
+            return $this->sendError('输入的房号不正确');
+        }
+
         if (!empty($result = $dwellingHousesRepository->addDwellingHouses($request, $housesService))) {
             return $this->sendResponse($result,'添加成功');
         }
@@ -77,6 +80,7 @@ class DwellingHousesController extends APIBaseController
         HousesService $housesService
     )
     {
+        $dwellingHouse->makeVisible('owner_info');
         $dwellingHouse->allId = $housesService->adoptBuildingBlockGetCity($dwellingHouse->building_block_id);
         return $this->sendResponse($dwellingHouse, '修改之前原始数据返回成功!');
     }

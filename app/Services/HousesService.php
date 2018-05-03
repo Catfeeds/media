@@ -88,28 +88,29 @@ class HousesService
     }
 
 
+
     public function houseNumValidate($request)
     {
-        $string = '711-712'; // 房号
+//        $string = '711-712'; // 房号
 //        $string = 'F'; // 房号
         $floor = '71';   // 楼层
         $block = 13;
-        $model = '\App\Models\DwellingHouse';
+//        $model = '\App\Models\DwellingHouse';
         // 处理房号
-        $temp = explode('-', $string);
+        $temp = explode('-', $request->house_number);
 //        dd($temp);
 
         // 判断是否为整层
         if (count($temp) > 1) {
             // 包含英文验证
             $preg2= '/[A-Za-z]/';
-            if(preg_match($preg2,$string)){
+            if(preg_match($preg2, $request->house_number)){
                 return false;
             }
 
             foreach ($temp as $v) {
                 // 判断楼层
-                $temp2 = strpos($v, $floor);
+                $temp2 = strpos($v, $request->floor);
                 // 判断楼层是否正确(肯定是从第0位开始)
                 if ($temp2 !== 0) {
                     return false;
@@ -117,16 +118,16 @@ class HousesService
             }
         } else {
             // 判断是否包含F
-            if ($string !== 'F') {
+            if ($request->house_number !== 'F') {
                 return false;
             }
         }
 
         // 判断楼座中否是有这个房号
-        $temp3 = $model::where([
-            'building_block_id' => $block,
+        $temp3 = $request->model::where([
+            'building_block_id' => $request->building_block_id,
             'house_number' => $v,
-            'floor' => $floor
+            'floor' => $request->floor
         ])->first();
         if ($temp3) {
             return false;
