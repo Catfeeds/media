@@ -58,15 +58,18 @@ Route::group(['namespace' => 'API'], function () {
     */
         // 住宅房源
         Route::resource('dwelling_houses', 'DwellingHousesController');
+        Route::get('my_dwelling_houses_list' ,'DwellingHousesController@myDwellingHousesList');
         //住宅房源业务状态
         Route::post('update_dwelling_business_state', 'DwellingHousesController@updateDwellingBusinessState');
         Route::post('get_owner_info', 'DwellingHousesController@getOwnerInfo');
         // 商铺房源
         Route::resource('shops_houses', 'ShopsHousesController');
+        Route::get('my_shops_houses_list', 'ShopsHousesController@myShopsHousesList');
         //商铺房源业务状态
         Route::post('update_shops_business_state', 'ShopsHousesController@updateShopsBusinessState');
         // 写字楼房源
         Route::resource('office_building_houses', 'OfficeBuildingHousesController');
+        Route::get('my_office_building_houses_list', 'OfficeBuildingHousesController@myOfficeBuildingHousesList');
         // 写字楼房源业务状态修改
         Route::post('update_office_business_state', 'OfficeBuildingHousesController@updateOfficeBusinessState');
         //三个房源获取业主信息和查看记录
@@ -149,6 +152,7 @@ Route::group(['namespace' => 'API'], function () {
     */
     Route::resource('/customs', 'CustomController');
     Route::post('/custom_status/{custom}', 'CustomController@updateStatus');
+    Route::get('my_custom_list', 'CustomController@myCustomList');
 
     // 七牛token
     Route::resource('/qiniu', 'QiNiuController');

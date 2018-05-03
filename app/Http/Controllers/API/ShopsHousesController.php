@@ -142,4 +142,22 @@ class ShopsHousesController extends APIBaseController
         $res = $shopsHousesRepository->updateState($request);
         return $this->sendResponse($res, '商铺房源业务状态修改成功');
     }
+
+    /**
+     * 说明:获取我的商铺房源类表
+     *
+     * @param Request $request
+     * @param ShopsHousesRepository $shopsHousesRepository
+     * @return \Illuminate\Http\JsonResponse
+     * @author 刘坤涛
+     */
+    public function myShopsHousesList(
+        Request $request,
+        ShopsHousesRepository $shopsHousesRepository
+    )
+    {
+        $user_id = Common::user()->id;
+        $result = $shopsHousesRepository->shopsHousesList($request->per_page??null, json_decode($request->condition), $user_id);
+        return $this->sendResponse($result,'我的商铺房源列表获取成功!');
+    }
 }

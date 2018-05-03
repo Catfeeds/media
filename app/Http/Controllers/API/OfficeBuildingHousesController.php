@@ -142,4 +142,23 @@ class OfficeBuildingHousesController extends APIBaseController
         $res = $buildingHousesRepository->updateState($request);
         return $this->sendResponse($res, '写字楼房源业务状态修改成功');
     }
+
+    /**
+     * 说明:获取我的写字楼房源类表
+     *
+     * @param Request $request
+     * @param OfficeBuildingHousesRepository $officeBuildingHousesRepository
+     * @return \Illuminate\Http\JsonResponse
+     * @author 刘坤涛
+     */
+    public function myOfficeBuildingHousesList
+    (
+        Request $request,
+        OfficeBuildingHousesRepository $officeBuildingHousesRepository
+    )
+    {
+        $user_id = Common::user()->id;
+        $result = $officeBuildingHousesRepository->officeBuildingHousesList($request->per_page??null, json_decode($request->condition), $user_id);
+        return $this->sendResponse($result, '获取我的写字楼房源列表成功');
+    }
 }

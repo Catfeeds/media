@@ -27,9 +27,7 @@ class DwellingHousesController extends APIBaseController
         if (empty(Common::user()->can('house_list'))) {
             return $this->sendError('没有房源列表权限', '403');
         }
-
         $result = $dwellingHousesRepository->dwellingHousesList($request->per_page??null, json_decode($request->condition));
-
         return $this->sendResponse($result,'住宅写字楼列表获取成功');
     }
 
@@ -149,6 +147,28 @@ class DwellingHousesController extends APIBaseController
         return $this->sendResponse($res,'住宅房源业务状态修改成功');
     }
 
+    /**
+     * 说明:获取我的住宅房源列表
+     *
+     * @param Request $request
+     * @param DwellingHousesRepository $dwellingHousesRepository
+     * @param HousesService $housesService
+     * @return \Illuminate\Http\JsonResponse
+     * @author 刘坤涛
+     */
+    public function myDwellingHousesList
+    (
+        Request $request,
+        DwellingHousesRepository $dwellingHousesRepository,
+        HousesService $housesService
+    )
+    {
+        $housesService->houseNumValidate($request);
+        // 判断用户权限.
+        $user_id = Common::user()->id;
+        $result = $dwellingHousesRepository->dwellingHousesList($request->per_page??null, json_decode($request->condition), $user_id);
+        return $this->sendResponse($result,'我的住宅房源列表获取成功');
+    }
 
 
 

@@ -223,4 +223,24 @@ class CustomRepository extends BaseRepository
         $model->status = $request->status;
         return $model->save();
     }
+
+    /**
+     * 说明:获取我的客户列表
+     *
+     * @param $request
+     * @param $user
+     * @return mixed
+     * @author 刘坤涛
+     */
+    public function getMyCustomList($request, $user)
+    {
+        $query = $this->model->where('guardian', $user->id);
+        if (!empty($request->status)) $query = $query->where('status', $request->status);
+        if (!empty($request->name)) $query = $query->where('name', $request->name);
+        if (!empty($request->tel)) $query = $query->where('tel', $request->tel);
+        if (!empty($request->area_id)) $query = $query->where('area_id', $request->area_id);
+        return $query->with('buildings')
+                     ->orderBy('updated_at', 'desc')
+                     ->paginate($request->per_page??10);
+    }
 }

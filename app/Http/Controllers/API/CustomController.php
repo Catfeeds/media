@@ -118,4 +118,23 @@ class CustomController extends APIBaseController
         $res = $custom->delete();
         return $this->sendResponse($res, '删除成功');
     }
+
+    /**
+     * 说明:获取我的客户列表
+     *
+     * @param CustomRepository $customRepository
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @author 刘坤涛
+     */
+    public function myCustomList
+    (
+        CustomRepository $customRepository,
+        Request $request
+    )
+    {
+        $user = Common::user();
+        $res = $customRepository->getMyCustomList($request, $user);
+        return $this->sendResponse($res,'获取我的客户列表成功');
+    }
 }
