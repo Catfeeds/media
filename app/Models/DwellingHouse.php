@@ -31,13 +31,17 @@ class DwellingHouse extends BaseModel
         'tracks_time', 'constru_acreage_cn', 'rent_price_cn', 'check_in_time_cn',
         'house_img_cn', 'disc_type_cn','see_power_cn', 'owner_info_show'];
 
+    protected $hidden = [
+    ];
+
+
     public function getOwnerInfoShowAttribute()
     {
 
-//        if (empty($this->owner_info_show)) {
-            $this->hidden[] = 'owner_info';
-//        }
-        dd($this->hidden, $this->appends);
+        if (empty($this->owner_info_show)) {
+            $this->addHidden($this->hidden, 'owner_info');
+        }
+        dd($this->hidden);
     }
 
 

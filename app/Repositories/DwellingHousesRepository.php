@@ -30,8 +30,7 @@ class DwellingHousesRepository extends BaseRepository
         $condition
     )
     {
-
-        $result = $this->model;
+        $result = $this->model->where('house_busine_state', 1);
 
         if (!empty($condition->region) && !empty($condition->build)) {
             // 楼盘包含的楼座
