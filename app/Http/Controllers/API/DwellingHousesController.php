@@ -53,7 +53,6 @@ class DwellingHousesController extends APIBaseController
         }
 
         $request->model = '\App\Models\DwellingHouse';
-
         $houseNumValidate = $housesService->houseNumValidate($request);
         if (empty($houseNumValidate)) {
             return $this->sendError('输入的房号不正确');
