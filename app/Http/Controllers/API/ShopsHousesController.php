@@ -51,6 +51,12 @@ class ShopsHousesController extends APIBaseController
             return $this->sendError('没有房源添加权限','403');
         }
 
+        $request->model = '\App\Models\ShopsHouse';
+        $houseNumValidate = $housesService->houseNumValidate($request);
+        if (empty($houseNumValidate['status'])) {
+            return $this->sendError($houseNumValidate['message']);
+        }
+
         $result = $shopsHousesRepository->addShopsHouses($request, $housesService);
         if (!empty($result)) {
             return $this->sendResponse($result,'商铺房源添加成功!');
