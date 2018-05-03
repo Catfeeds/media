@@ -31,7 +31,7 @@ Route::group(['namespace' => 'API'], function () {
     | 登录后的操作
     |--------------------------------------------------------------------------
     */
-//    Route::group(['middleware' => ''], function () {
+    Route::group(['middleware' => ['auth:api', 'token_invalid']], function () {
 
         // 退出登录
         Route::post('/logout', 'LoginController@logout');
@@ -82,7 +82,7 @@ Route::group(['namespace' => 'API'], function () {
         Route::get('get', 'TracksController@get');
         Route::get('customs_tracks_list', 'TracksController@customsTracksList');
         Route::post('add_customs_tracks', 'TracksController@addCustomsTracks');
-//    });
+    });
 
     /*
     |--------------------------------------------------------------------------
@@ -193,6 +193,6 @@ Route::group(['namespace' => 'API'], function () {
     Route::get('/select_building_blocks', 'SelectDataController@buildingBlocks');
     Route::get('/select_block_houses', 'SelectDataController@blockHouses');
     Route::get('/select_customs', 'SelectDataController@selectCustoms');
-});
 
+});
 

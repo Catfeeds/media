@@ -4,8 +4,11 @@ namespace App\Http\Controllers\API;
 
 use App\Services\LoginService;
 use App\User;
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Redis;
 use Laravel\Passport\Token;
 
 class LoginController extends APIBaseController
@@ -37,6 +40,7 @@ class LoginController extends APIBaseController
 
         // 最后登录时间
         $user->last_login_time = date('Y.m.d H:i:s', time());
+
         if (!$user->save()) {
             return $this->sendError('最后登录时间更新失败');
         }

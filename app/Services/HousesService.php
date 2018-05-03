@@ -87,6 +87,73 @@ class HousesService
         return $data;
     }
 
+
+    public function houseNumValidate($request)
+    {
+        $string = '711F'; // 房号
+        $floor = '71';   // 楼层
+        $block = 13;
+        $model = '\App\Models\DwellingHouse';
+        // 处理房号
+        $temp = explode('-', $string);
+//        dd($temp);
+
+        // 判断是否为整层
+        if (count($temp) > 1) {
+            $temp5 = strpos($string, 'F');
+            if ($temp5 !== false) {
+//                dd(123);
+                return false;
+            }
+
+            foreach ($temp as $v) {
+                // 判断楼层
+                $temp2 = strpos($v, $floor);
+
+                // 判断楼层是否正确(肯定是从第0位开始)
+                if ($temp2 === 0) {
+                    return false;
+                }
+
+                // 判断楼座中否是有这个房号
+                $temp3 = $model::where([
+                    'building_block_id' => $block,
+                    'house_number' => $v,
+                ])->first();
+                if ($temp3) {
+                    return false;
+                }
+            }
+        } else {
+
+            // 判断是否包含F
+            $temp5 = strpos($string, 'F');
+            if ($temp5 === false) {
+//                dd(123);
+                return false;
+            }
+
+            // 判断楼层
+            $temp2 = strpos($temp[0], $floor);
+            // 判断楼层是否正确(肯定是从第0位开始)
+            if ($temp2 === 0) {
+                return false;
+            }
+
+            // 判断楼座中否是有这个房号
+            $temp3 = $model::where([
+                'building_block_id' => $block,
+                'house_number' => $temp,
+            ])->first();
+            if ($temp3) {
+                return false;
+            }
+        }
+
+
+    }
+
+
     /**
      * 说明:获取房源信息
      *

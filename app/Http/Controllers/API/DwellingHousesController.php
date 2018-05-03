@@ -20,9 +20,13 @@ class DwellingHousesController extends APIBaseController
      */
     public function index(
         Request $request,
-        DwellingHousesRepository $dwellingHousesRepository
+        DwellingHousesRepository $dwellingHousesRepository,
+        HousesService $housesService
     )
     {
+//        $housesService->houseNumValidate($request);
+
+
         // 判断用户权限
         if (empty(Common::user()->can('house_list'))) {
             return $this->sendError('没有房源列表权限', '403');
