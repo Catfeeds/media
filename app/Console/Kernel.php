@@ -27,7 +27,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('HouseAndCustomToPublic')->everyMinute();
+        $schedule->command('HouseAndCustomToPublic')->dailyAt('02:00');
     }
 
     /**
