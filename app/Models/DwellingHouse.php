@@ -41,7 +41,6 @@ class DwellingHouse extends BaseModel
         if (empty($this->owner_info_show)) {
             $this->addHidden($this->hidden, 'owner_info');
         }
-        dd($this->hidden);
     }
 
 
