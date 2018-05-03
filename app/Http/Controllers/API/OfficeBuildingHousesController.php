@@ -71,6 +71,8 @@ class OfficeBuildingHousesController extends APIBaseController
         HousesService $housesService
     )
     {
+
+        $officeBuildingHouse->makeVisible('owner_info');
         $officeBuildingHouse->allId = $housesService->adoptBuildingBlockGetCity($officeBuildingHouse->building_block_id);
 
         return $this->sendResponse($officeBuildingHouse, '写字楼修改之前原始数据!');

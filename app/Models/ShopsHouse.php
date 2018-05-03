@@ -40,6 +40,8 @@ class ShopsHouse extends BaseModel
         'tracks_time','house_img_cn','disc_type_cn','see_power_cn'
     ];
 
+    protected $hidden = ['owner_info'];
+
     /**
      * 说明: 楼座
      *
