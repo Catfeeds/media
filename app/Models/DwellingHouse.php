@@ -29,7 +29,17 @@ class DwellingHouse extends BaseModel
         'pay_commission_cn', 'shortest_lease_cn', 'house_type_img_cn', 'indoor_img_cn',
         'building_name', 'tel_cn', 'house_number_info', 'address', 'guardian_cn', 'storefronts_cn',
         'tracks_time', 'constru_acreage_cn', 'rent_price_cn', 'check_in_time_cn',
-        'house_img_cn', 'disc_type_cn','see_power_cn'];
+        'house_img_cn', 'disc_type_cn','see_power_cn', 'owner_info_show'];
+
+    public function getOwnerInfoShowAttribute()
+    {
+
+//        if (empty($this->owner_info_show)) {
+            $this->hidden[] = 'owner_info';
+//        }
+        dd($this->hidden, $this->appends);
+    }
+
 
     /**
      * 说明: 楼座

@@ -56,7 +56,7 @@ class ShopsHousesRepository extends BaseRepository
             $result = $result->orderBy('updated_at', $condition->order);
         }
 
-        return $result->paginate($per_page??10)->makeHidden('owner_info');
+        return $result->paginate($per_page??10);
     }
 
     /**
