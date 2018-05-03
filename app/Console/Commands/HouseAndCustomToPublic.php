@@ -54,7 +54,6 @@ class HouseAndCustomToPublic extends Command
      */
     public function houseAndCustomToPublic()
     {
-        \Log::info('开始搞公盘');
         \DB::beginTransaction();
         try {
             // 计算一个月的时间戳
