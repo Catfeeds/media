@@ -157,6 +157,13 @@ class PermissionSeeder extends Seeder
         ]);
 
         Permission::create([
+            'name' => 'update_custom_state',
+            'guard_name' => 'web',
+            'label' => '修改客户状态',
+            'group_id' => 3,
+        ]);
+
+        Permission::create([
             'name' => 'custom_add_tracks',
             'guard_name' => 'web',
             'label' => '客户添加跟进',
