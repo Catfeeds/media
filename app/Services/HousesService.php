@@ -153,7 +153,7 @@ class HousesService
                 $model = "App\\Models\\OfficeBuildingHouse";
                 break;
             case '3':
-                $model = "App\\Models\\ShopHouse";
+                $model = "App\\Models\\ShopsHouse";
                 break;
             default;
                 break;
