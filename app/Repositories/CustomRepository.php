@@ -61,8 +61,8 @@ class CustomRepository extends BaseRepository
         if (!empty($request->tel)) $query = $query->where('tel', $request->tel);
         if (!empty($request->area_id)) $query = $query->where('area_id', $request->area_id);
         return $query->with('buildings')
-            ->orderBy('updated_at', 'desc')
-            ->paginate($perPage);
+            ->orderBy('updated_at', 'desc');
+
     }
 
     /**
