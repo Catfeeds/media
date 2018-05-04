@@ -29,6 +29,6 @@ class HousesController extends APIBaseController
         $ownerInfo = $house->owner_info;
         // 获取查看记录
         $viewRecord = $housesService->getViewRecord($house, $request->per_page);
-        return $this->sendResponse( ['owner_info' => $ownerInfo, 'view_record' => $viewRecord],'业主信息,查看记录获取成功');
+        return $this->sendResponse( ['owner_info' => $ownerInfo, 'view_record' => s],'业主信息,查看记录获取成功');
     }
 }
