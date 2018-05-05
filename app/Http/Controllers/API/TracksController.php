@@ -3,23 +3,30 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Requests\API\TracksRequest;
+use App\Repositories\CustomRepository;
 use App\Repositories\TracksRepository;
 use App\Services\TracksService;
+use Illuminate\Support\Facades\Request;
 
 class TracksController extends APIBaseController
 {
     /**
-     * 说明: 添加跟进相关数据获取成功
+     * 说明：添加跟进相关数据获取成功
      *
      * @param TracksService $tracksService
+     * @param CustomRepository $repository
+     * @param Request $request
      * @return \Illuminate\Http\JsonResponse
-     * @author 罗振
+     * @author jacklin
      */
     public function create(
-        TracksService $tracksService
+        TracksService $tracksService,
+        CustomRepository $repository,
+        Request $request
     )
     {
-        $result = $tracksService->relevantData();
+        $res = $repository->getList($request)->get();
+        $result = $tracksService->selectForm($res);
         return $this->sendResponse($result, '添加跟进相关数据获取成功');
     }
 
