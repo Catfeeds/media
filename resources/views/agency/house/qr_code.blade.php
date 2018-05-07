@@ -8,6 +8,6 @@
     <title>Document</title>
 </head>
 <body>
-    <div>{!! $result !!}</div>
+<div>{!! $result !!}</div>
 </body>
 </html>
