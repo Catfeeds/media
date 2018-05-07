@@ -26,13 +26,12 @@ class TokenInvalid extends Middleware
         if (!empty($user)) {
             //判断redis中是否存在该用户对应的键
             if (\Redis::exists($user->id.'time')) {
-                //如果redis中的时间+30分钟>当前时间
-                if ((\Redis::get($user->id.'time') + 60*30) > time()) {
-                    //访问其他页面时刷新有效时间
+                //如果当前时间 > redis中的时间+30分钟 删除token 删除redis的key
+                if ((\Redis::get($user->id.'time') + 30 * 60) > time()) {
+                    //访问其他页面时刷新有效时间 并且刷新token
                     \Redis::set($user->id.'time',time());
                 } else {
-                    //如果30分钟有效期失效 删除redis中的键和token
-                    //判断没有token
+                    // 如果30分钟有效期失效 删除redis中的键和token
                     \Redis::del($user->id.'time');
                     $accessToken = $user->access_token;
                     if (!empty($accessToken)) {
@@ -41,7 +40,11 @@ class TokenInvalid extends Middleware
                             $token->delete();
                         }
                     }
+                    // 返回登录错误
+                    return response('token失效', 401);
                 }
+            } else {
+                \Redis::set($user->id.'time',time());
             }
         }
         return $next($request);

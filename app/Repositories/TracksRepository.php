@@ -2,6 +2,7 @@
 namespace App\Repositories;
 
 use App\Handler\Common;
+use App\Models\Custom;
 use App\Models\OwnerViewRecord;
 use App\Models\Track;
 
@@ -63,20 +64,21 @@ class TracksRepository extends BaseRepository
                $model = "App\\Models\\DwellingHouse";
                break;
            case '2':
-               $model = "App\\Models\\DwellingHouse";
+               $model = "App\\Models\\OfficeBuildingHouse";
                break;
            case '3':
-               $model = "App\\Models\\DwellingHouse";
+               $model = "App\\Models\\ShopsHouse";
                break;
            default;
                break;
        }
+        $user = Common::user();
         \DB::beginTransaction();
         try {
             $tracks = $this->model->create([
                 'house_model' => $model,
                 'house_id' => $request->house_id,
-                'user_id' => Common::user()->id,
+                'user_id' => $user->id,
                 'custom_id' => $request->custom_id,
                 'tracks_mode' => $request->tracks_mode,
                 'content' => $request->content,
@@ -84,6 +86,14 @@ class TracksRepository extends BaseRepository
             if (empty($tracks)) {
                throw new \Exception('房源跟进信息添加失败');
            }
+            //查询该房源
+            $house = $model::find($request->house_id);
+           //如果跟进的房源为公盘,则将该房源的维护人跟新为跟进人
+            if (empty($house->guardian)) {
+                $house->guardian = $user->id;
+                if (!$house->save()) throw new \Exception('房源更新维护人失败');
+            }
+
             $OwnerViewRecord = OwnerViewRecord::where([
                 'user_id' => Common::user()->id,
                 'house_id' => $request->house_id,
@@ -116,23 +126,43 @@ class TracksRepository extends BaseRepository
                     $model = "App\\Models\\DwellingHouse";
                     break;
                 case '2':
-                    $model = "App\\Models\\DwellingHouse";
+                    $model = "App\\Models\\OfficeBuildingHouse";
                     break;
                 case '3':
-                    $model = "App\\Models\\DwellingHouse";
+                    $model = "App\\Models\\ShopsHouse";
                     break;
                 default;
                     $model = null;
                     break;
         }
-        return $this->model->create([
-            'house_model' => $model,
-            'house_id' => $request->house_id,
-            'user_id' => Common::user()->id,
-            'custom_id' => $request->custom_id,
-            'tracks_mode' => $request->tracks_mode,
-            'content' => $request->content,
-        ]);
+        $user = Common::user();
+        \DB::beginTransaction();
+        try {
+            $tracks = $this->model->create([
+                'house_model' => $model,
+                'house_id' => $request->house_id,
+                'user_id' => $user->id,
+                'custom_id' => $request->custom_id,
+                'tracks_mode' => $request->tracks_mode,
+                'content' => $request->content,
+            ]);
+            if (empty($tracks)) {
+                throw new \Exception('客户跟进信息添加失败');
+            }
+            //查询该客户
+            $custom = Custom::find($request->custom_id);
+            //如果跟进的客户为公盘,则将该客户的维护人跟新为跟进人
+            if (empty($custom->guardian)) {
+                $custom->guardian = $user->id;
+                if (!$custom->save()) throw new \Exception('客户更新维护人失败');
+            }
+            \DB::commit();
+            return true;
+        } catch (\Exception $e) {
+            \DB::rollback();
+            \Log::error('客户跟进信息添加失败'. $e->getMessage());
+            return false;
+        }
     }
 
 }
