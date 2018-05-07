@@ -60,7 +60,7 @@ class HouseAndCustomToPublic extends Command
             $month = config('setting.house_to_public')*60*60*24;
 
             // 房源
-            // 1. 住宅房源
+            // 1. 住宅房源      TODO
             $dwellingHouse = DwellingHouse::all();
             $dwellingTemps = array();
             foreach ($dwellingHouse as $k => $v) {
