@@ -43,8 +43,6 @@ class TokenInvalid extends Middleware
                     // 返回登录错误
                     return response('token失效', 401);
                 }
-            } else {
-                \Redis::set($user->id.'time',time());
             }
         }
         return $next($request);

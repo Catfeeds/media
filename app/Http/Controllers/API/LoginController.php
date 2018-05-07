@@ -40,8 +40,8 @@ class LoginController extends APIBaseController
 
         // 最后登录时间
         $user->last_login_time = date('Y.m.d H:i:s', time());
-        // 删除控制30分钟登录时间的key
-        if(\Redis::SET($user->id.'time', time())) \Redis::del($user->id.'time');
+        // 登录设置redis中的键
+        \Redis::SET($user->id.'time', time());
         if (!$user->save()) {
             return $this->sendError('最后登录时间更新失败');
         }
@@ -70,8 +70,8 @@ class LoginController extends APIBaseController
         if (empty($token)) {
             return $this->sendError('暂无有效令牌', 403);
         }
-
-        if (\Redis::exists($user->id.'time'))
+        // 退出删除redis中的键
+        if(\Redis::exists($user->id.'time', time())) \Redis::del($user->id.'time');
 
         if (!empty($token->delete())) {
             return $this->sendResponse([], '退出成功！');
