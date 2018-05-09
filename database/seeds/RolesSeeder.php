@@ -35,7 +35,7 @@ class RolesSeeder extends Seeder
 
         // 店长全部权限
         $shopOwnerPermissions = $model->where('group_id', '!=', 5)->pluck('name')->toArray();
-        $shopOwnerPermissions = array_diff($shopOwnerPermissions, ['update_house', 'update_business_state', 'update_custom']);
+//        $shopOwnerPermissions = array_diff($shopOwnerPermissions, ['update_house', 'update_business_state', 'update_custom']);
 
         // 业务员所有权限
         $salesManPermissions = $model->whereNotIn('group_id', [5, 6])->pluck('name')->toArray();
@@ -43,7 +43,7 @@ class RolesSeeder extends Seeder
 
         // 店长
         $shopOwner = Role::create([
-            'name_cn' => '区域经理',
+            'name_cn' => '店长',
             'name' => 'shop_owner',
             'name_en' => 'shop_owner',
             'guard_name' => 'web',
