@@ -51,9 +51,7 @@ class HousesController extends APIBaseController
         $encryption = Crypt::encryptString($parameter);
 
         $url = 'http://192.168.0.142/api/house_img_update/'.$encryption;
-        $result = QrCode::size(200)->generate($url);
-
-        return view('agency.house.qr_code',['result' => $result]);
+        return QrCode::size(200)->generate($url);
     }
 
     public function houseImgUpdateView(
