@@ -3,10 +3,11 @@
 namespace App\Console\Commands;
 
 use App\Http\Controllers\API\HousesController;
-use App\Models\DwellingHouse;
+use App\Models\OfficeBuildingHouse;
+use App\Services\HousesService;
 use Illuminate\Console\Command;
 
-class OldHouseDataToNew extends Command
+class OldTableHouseDataToNewTable extends Command
 {
     /**
      * The name and signature of the console command.
@@ -48,11 +49,27 @@ class OldHouseDataToNew extends Command
      */
     public function oldTableHouseDataToNewTable()
     {
-        $dwellingHouse = DwellingHouse::all();
+        \DB::beginTransaction();
+        try {
+            $housesService = new HousesService();
 
-        $dwellingHouse->map(function($v) {
-            dd($v);
-        });
+            $officeBuildingHouse = OfficeBuildingHouse::all();
+            $officeBuildingHouse->map(function($v) use($housesService) {
+                $price = $housesService->getPrice($v->rent_price, $v->rent_price_unit, $v->constru_acreage);
+
+
+
+            });
+
+
+
+            \DB::commit();
+            return true;
+        } catch (\Exception $exception) {
+            \DB::rollBack();
+            \Log::error($exception->getMessage());
+            return false;
+        }
 
     }
 }

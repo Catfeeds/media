@@ -70,11 +70,11 @@ class OfficeBuildingHousesRepository extends BaseRepository
      */
     public function addOfficeBuildingHouses($request, HousesService $housesService)
     {
-        // 获取单价总价
-        $price = $housesService->getPrice($request);
-
         \DB::beginTransaction();
         try {
+            // 获取单价总价
+            $price = $housesService->getPrice($request->rent_price, $request->rent_price_unit, $request->constru_acreage);
+
             $house =  $this->model->create([
                 'building_block_id' => $request->building_block_id,
                 'house_number' => $request->house_number,
@@ -149,7 +149,7 @@ class OfficeBuildingHousesRepository extends BaseRepository
     )
     {
         // 获取单价总价
-        $price = $housesService->getPrice($request);
+        $price = $housesService->getPrice($request->rent_price, $request->rent_price_unit, $request->constru_acreage);
 
         $officeBuildingHouse->building_block_id = $request->building_block_id;
         $officeBuildingHouse->house_number = $request->house_number;

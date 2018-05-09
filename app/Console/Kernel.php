@@ -15,8 +15,9 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         MakeRepository::class,
-        '\App\Console\Commands\AddManager',// 添加管理员
+        '\App\Console\Commands\AddManager',// 添加管理员php
         '\App\Console\Commands\HouseAndCustomToPublic',
+        '\App\Console\Commands\OldTableHouseDataToNewTable',
     ];
 
     /**

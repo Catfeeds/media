@@ -219,18 +219,24 @@ class HousesService
     /**
      * 说明: 获取单价总价
      *
-     * @param $request
+     * @param $rent_price
+     * @param $rent_price_unit
+     * @param $constru_acreage
      * @return array
      * @author 罗振
      */
-    public function getPrice($request)
+    public function getPrice(
+        $rent_price,
+        $rent_price_unit,
+        $constru_acreage
+    )
     {
-        if ($request->rent_price_unit == 1) {
-            $unit_price = $request->rent_price;
-            $total_price = $request->rent_price * $request->constru_acreage;
+        if ($rent_price_unit == 1) {
+            $unit_price = $rent_price;
+            $total_price = $rent_price * $constru_acreage;
         } else {
-            $unit_price = $request->rent_price / $request->constru_acreage;
-            $total_price = $request->rent_price;
+            $unit_price = $rent_price / $constru_acreage;
+            $total_price = $rent_price;
         }
 
         return ['unit_price' => $unit_price, 'total_price' => $total_price];

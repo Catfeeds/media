@@ -75,7 +75,8 @@ class ShopsHousesRepository extends BaseRepository
     {
         \DB::beginTransaction();
         try {
-            $price = $housesService->getPrice($request);
+            // 获取单价总价
+            $price = $housesService->getPrice($request->rent_price, $request->rent_price_unit, $request->constru_acreage);
 
             $house = $this->model->create([
                 'building_block_id' => $request->building_block_id,
@@ -153,7 +154,8 @@ class ShopsHousesRepository extends BaseRepository
         HousesService $housesService
     )
     {
-        $price = $housesService->getPrice($request);
+        // 获取单价总价
+        $price = $housesService->getPrice($request->rent_price, $request->rent_price_unit, $request->constru_acreage);
 
         $shopsHouse->building_block_id = $request->building_block_id;
         $shopsHouse->house_number = $request->house_number;
