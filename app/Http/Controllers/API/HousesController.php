@@ -50,8 +50,12 @@ class HousesController extends APIBaseController
         // 加密
         $parameter = $request->houseType.'/'.$request->houseId.'/'.time();
         $encryption = Crypt::encryptString($parameter);
+<<<<<<< HEAD
 
         $url = config('setting.url').'/api/house_img_update/'.$encryption;
+=======
+        $url = 'http://192.168.0.188:9528/#/mobileEditImg?miyao='.$encryption;
+>>>>>>> origin/zxz
         $result = QrCode::size(200)->generate($url);
         return $this->sendResponse($result,'二维码生成成功');
     }
@@ -73,19 +77,21 @@ class HousesController extends APIBaseController
         } elseif ($temp[0] == 3) {
             $house = ShopsHouse::find($temp[1]);
         } else {
-            return view('agency.house.img_house_update', ['result' => '房源类型异常']);
+            return $this->sendError('房源类型异常');
         }
 
         if (empty($house)) {
-            return view('agency.house.img_house_update', ['result' => '房源异常']);
+            return $this->sendError('房源异常');
         }
-
         // 检测超时
-        if ($temp[2] + 120 > time()) {
-            return view('agency.house.img_house_update', ['result' => '二维码超时,请重新扫码']);
-        }
-
-        return view('agency.house.img_house_update', ['result' => $house]);
+        // if ($temp[2] + 120 < time()) {
+        //     return $this->sendError('二维码超时,请重新扫码');
+        // }
+        
+        // 七牛域名
+        $house->qiniu_url = config('setting.qiniu_url');
+        $house->type = $temp[0];
+        return $this->sendResponse($house->makeHidden('see_power_cn'), '获取房源图片编辑信息成功');
     }
 
     public function houseImgUpdate(
@@ -94,11 +100,21 @@ class HousesController extends APIBaseController
     {
         // 更新house的图片
         if ($request->houseType == 1) {
-            $result = DwellingHouse::where('id', $request->id)->update(['indoor_img' => $request->indoor_img]);
+            $temp = DwellingHouse::find($request->id);
         } elseif ($request->houseType == 2) {
-            $result = OfficeBuildingHouse::where('id', $request->id)->update(['indoor_img' => $request->indoor_img]);
+            $temp = OfficeBuildingHouse::find($request->id);
         } elseif ($request->houseType == 3) {
-            $result = ShopsHouse::where('id', $request->id)->update(['indoor_img' => $request->indoor_img]);
+            $temp = ShopsHouse::find($request->id);
+        }
+        
+        if (empty($temp)) {
+            return $this->sendError('房源异常');
+        }
+
+        $temp->indoor_img = $request->indoor_img;
+        $temp->house_type_img = $request->house_type_img;
+        if (empty($result = $temp->save())) {
+            return $this->sendError('修改失败');
         }
 
         return $this->sendResponse($result, '修改成功');
