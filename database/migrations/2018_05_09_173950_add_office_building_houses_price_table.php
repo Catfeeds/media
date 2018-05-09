@@ -14,8 +14,8 @@ class AddOfficeBuildingHousesPriceTable extends Migration
     public function up()
     {
         Schema::table('office_building_houses', function (Blueprint $table) {
-            $table->decimal('unit_price', 10, 2)->nullable()->comment('租金单价');
-            $table->decimal('total_price',10,2)->nullable()->comment('租金总价');
+            $table->decimal('unit_price', 10, 2)->nullable()->comment('租金单价')->after('rent_price_unit');
+            $table->decimal('total_price',10,2)->nullable()->comment('租金总价')->after('unit_price');
         });
     }
 
