@@ -95,11 +95,7 @@ Route::group(['namespace' => 'API'], function () {
         Route::post('update_office_business_state', 'OfficeBuildingHousesController@updateOfficeBusinessState');
         // 三个房源获取业主信息和查看记录
         Route::get('get_owner_info', 'HousesController@getOwnerInfo');
-<<<<<<< HEAD
-        // 更新房源照片操作
-        Route::post('/house_img_update', 'HousesController@houseImgUpdate');
-=======
->>>>>>> origin/zxz
+
 
         /*
         |--------------------------------------------------------------------------

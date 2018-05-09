@@ -41,7 +41,13 @@ class HousesController extends APIBaseController
         return $this->sendResponse( ['owner_info' => $ownerInfo, 'view_record' => $viewRecord],'业主信息,查看记录获取成功');
     }
 
-    // TODO
+    /**
+     * 说明: 生成二维码
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @author 罗振
+     */
     public function makeQrCode(
         Request $request
     )
@@ -50,16 +56,18 @@ class HousesController extends APIBaseController
         // 加密
         $parameter = $request->houseType.'/'.$request->houseId.'/'.time();
         $encryption = Crypt::encryptString($parameter);
-<<<<<<< HEAD
-
         $url = config('setting.url').'/api/house_img_update/'.$encryption;
-=======
-        $url = 'http://192.168.0.188:9528/#/mobileEditImg?miyao='.$encryption;
->>>>>>> origin/zxz
         $result = QrCode::size(200)->generate($url);
         return $this->sendResponse($result,'二维码生成成功');
     }
 
+    /**
+     * 说明: 修改图片视图
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @author 罗振
+     */
     public function houseImgUpdateView(
         Request $request
     )
@@ -83,10 +91,11 @@ class HousesController extends APIBaseController
         if (empty($house)) {
             return $this->sendError('房源异常');
         }
-        // 检测超时
-        // if ($temp[2] + 120 < time()) {
-        //     return $this->sendError('二维码超时,请重新扫码');
-        // }
+
+        //检测超时
+        if ($temp[2] + 120 < time()) {
+         return $this->sendError('二维码超时,请重新扫码');
+        }
         
         // 七牛域名
         $house->qiniu_url = config('setting.qiniu_url');
@@ -94,6 +103,13 @@ class HousesController extends APIBaseController
         return $this->sendResponse($house->makeHidden('see_power_cn'), '获取房源图片编辑信息成功');
     }
 
+    /**
+     * 说明: 扫码修改图片
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @author 罗振
+     */
     public function houseImgUpdate(
         Request $request
     )
