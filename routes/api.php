@@ -81,8 +81,6 @@ Route::group(['namespace' => 'API'], function () {
         // 更新房源照片操作
         Route::post('/house_img_update', 'HousesController@houseImgUpdate');
 
-
-
         /*
         |--------------------------------------------------------------------------
         | 跟进

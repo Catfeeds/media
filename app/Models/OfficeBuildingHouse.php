@@ -285,15 +285,7 @@ class OfficeBuildingHouse extends BaseModel
      */
     public function getRentPriceCnAttribute()
     {
-        if (empty($this->rent_price)) {
-            return '';
-        } else {
-            if ($this->rent_price_unit == 1) {
-                return $this->rent_price.'元/月';
-            } else {
-                return $this->rent_price.'元/m².月';
-            }
-        }
+        return $this->unit_price.'元/m².月';
     }
 
     /**

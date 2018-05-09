@@ -68,10 +68,15 @@ class ShopsHousesRepository extends BaseRepository
      * @return bool
      * @author 罗振
      */
-    public function addShopsHouses($request, HousesService $housesService)
+    public function addShopsHouses(
+        $request,
+        HousesService $housesService
+    )
     {
         \DB::beginTransaction();
         try {
+            $price = $housesService->getPrice($request);
+
             $house = $this->model->create([
                 'building_block_id' => $request->building_block_id,
                 'house_number' => $request->house_number,
@@ -90,8 +95,8 @@ class ShopsHousesRepository extends BaseRepository
                 'support_facilities' => $request->support_facilities??array(),
                 'fit_management' => $request->fit_management??array(),
                 'house_description' => $request->house_description,
-                'rent_price' => $request->rent_price,
-                'rent_price_unit' => $request->rent_price_unit,
+                'unit_price' => $price['unit_price'],    // 单价
+                'total_price' => $price['total_price'],  // 总价
                 'payment_type' => $request->payment_type,
                 'check_in_time' => $request->check_in_time,
                 'shortest_lease' => $request->shortest_lease,
@@ -138,11 +143,18 @@ class ShopsHousesRepository extends BaseRepository
      *
      * @param $shopsHouse
      * @param $request
+     * @param HousesService $housesService
      * @return bool
      * @author 罗振
      */
-    public function updateShopsHouses($shopsHouse, $request)
+    public function updateShopsHouses(
+        $shopsHouse,
+        $request,
+        HousesService $housesService
+    )
     {
+        $price = $housesService->getPrice($request);
+
         $shopsHouse->building_block_id = $request->building_block_id;
         $shopsHouse->house_number = $request->house_number;
         $shopsHouse->owner_info = $request->owner_info;
@@ -160,8 +172,8 @@ class ShopsHousesRepository extends BaseRepository
         $shopsHouse->support_facilities = $request->support_facilities??array();
         $shopsHouse->fit_management = $request->fit_management??array();
         $shopsHouse->house_description = $request->house_description;
-        $shopsHouse->rent_price = $request->rent_price;
-        $shopsHouse->rent_price_unit = $request->rent_price_unit;
+        $shopsHouse->unit_price = $price['unit_price']; // 单价
+        $shopsHouse->total_price = $price['total_price'];   // 总价
         $shopsHouse->payment_type = $request->payment_type;
         $shopsHouse->check_in_time = $request->check_in_time;
         $shopsHouse->shortest_lease = $request->shortest_lease;

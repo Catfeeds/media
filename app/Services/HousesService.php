@@ -215,4 +215,24 @@ class HousesService
         $model = get_class($house);
         return  OwnerViewRecord::where(['house_id' => $house->id, 'house_model' => $model])->paginate($per_page);
     }
+
+    /**
+     * 说明: 获取单价总价
+     *
+     * @param $request
+     * @return array
+     * @author 罗振
+     */
+    public function getPrice($request)
+    {
+        if ($request->rent_price_unit == 1) {
+            $unit_price = $request->rent_price;
+            $total_price = $request->rent_price * $request->constru_acreage;
+        } else {
+            $unit_price = $request->rent_price / $request->constru_acreage;
+            $total_price = $request->rent_price;
+        }
+
+        return ['unit_price' => $unit_price, 'total_price' => $total_price];
+    }
 }

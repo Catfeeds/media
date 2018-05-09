@@ -45,12 +45,13 @@ class HousesController extends APIBaseController
     public function makeQrCode(
         Request $request
     )
+
     {
         // 加密
         $parameter = $request->houseType.'/'.$request->houseId.'/'.time();
         $encryption = Crypt::encryptString($parameter);
 
-        $url = 'http://192.168.0.142/api/house_img_update/'.$encryption;
+        $url = config('setting.url').'/api/house_img_update/'.$encryption;
         $result = QrCode::size(200)->generate($url);
         return $this->sendResponse($result,'二维码生成成功');
     }
