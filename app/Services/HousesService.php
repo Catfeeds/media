@@ -231,7 +231,7 @@ class HousesService
         $constru_acreage
     )
     {
-        if ($rent_price_unit == 1) {
+        if ($rent_price_unit == 2) {
             $unit_price = $rent_price;
             $total_price = $rent_price * $constru_acreage;
         } else {
