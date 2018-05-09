@@ -23,6 +23,22 @@ header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
 //Route::group(['domain' => 'admin.agency.com', 'namespace' => 'API'], function () {
 Route::group(['namespace' => 'API'], function () {
 
+
+    /*
+    |--------------------------------------------------------------------------
+    | element下拉格式数据
+    |--------------------------------------------------------------------------
+    */
+    Route::get('/select_buildings', 'SelectDataController@areaBuildings');
+    Route::get('/select_building_blocks', 'SelectDataController@buildingBlocks');
+    // 某区域下拉数据
+    Route::get('/blocks_select', 'BlockController@blocksSelect');
+    // 楼盘下拉
+    Route::get('/buildings_select', 'BuildingController@buildingSelect');
+    // 楼盘搜索下拉
+    Route::get('/building_search_select', 'BuildingController@buildingSearchSelect');
+    Route::get('/cities_select', 'CityController@citiesSelect');
+    Route::get('/areas_select', 'AreaController@areasSelect');
     // 登录
     Route::resource('login', 'LoginController');
 
@@ -47,22 +63,21 @@ Route::group(['namespace' => 'API'], function () {
         */
         Route::resource('users', 'UserController');
         //更改用户密码
-        Route::post('update_password','UserController@updatePassword');
+        Route::post('update_password', 'UserController@updatePassword');
         //更新用户电话
-        Route::post('update_tel/{user}','UserController@updateTel');
+        Route::post('update_tel/{user}', 'UserController@updateTel');
         // 获取所属门店
-        Route::post('get_storefronts_info','UserController@getStorefrontsInfo');
+        Route::post('get_storefronts_info', 'UserController@getStorefrontsInfo');
 
 
-
-    /*
-    |--------------------------------------------------------------------------
-    | 房源管理
-    |--------------------------------------------------------------------------
-    */
+        /*
+        |--------------------------------------------------------------------------
+        | 房源管理
+        |--------------------------------------------------------------------------
+        */
         // 住宅房源
         Route::resource('dwelling_houses', 'DwellingHousesController');
-        Route::get('my_dwelling_houses_list' ,'DwellingHousesController@myDwellingHousesList');
+        Route::get('my_dwelling_houses_list', 'DwellingHousesController@myDwellingHousesList');
         // 住宅房源业务状态
         Route::post('update_dwelling_business_state', 'DwellingHousesController@updateDwellingBusinessState');
         Route::post('get_owner_info', 'DwellingHousesController@getOwnerInfo');
@@ -98,12 +113,8 @@ Route::group(['namespace' => 'API'], function () {
     |--------------------------------------------------------------------------
     */
     Route::resource('/buildings', 'BuildingController');
-    // 楼盘下拉
-    Route::get('/buildings_select', 'BuildingController@buildingSelect');
     // 某区下的所有楼楼盘
     Route::get('/area_buildings', 'BuildingController@areaBuildings');
-    // 楼盘搜索下拉
-    Route::get('/building_search_select', 'BuildingController@buildingSearchSelect');
 
 
     /*
@@ -126,7 +137,6 @@ Route::group(['namespace' => 'API'], function () {
     */
     // 城市一级下拉数据
     Route::resource('/cities', 'CityController');
-    Route::get('/cities_select', 'CityController@citiesSelect');
 
     /*
     |--------------------------------------------------------------------------
@@ -135,7 +145,6 @@ Route::group(['namespace' => 'API'], function () {
     */
     // 区域二级下拉数据
     Route::resource('/areas', 'AreaController');
-    Route::get('/areas_select', 'AreaController@areasSelect');
     Route::get('/areas_of_city', 'AreaController@areasOfCity');
 
 
@@ -147,8 +156,6 @@ Route::group(['namespace' => 'API'], function () {
     Route::resource('/blocks', 'BlockController');
     // 商圈三级下拉数据
     Route::get('/city_blocks', 'BlockController@cityBlocks');
-    // 某区域下拉数据
-    Route::get('/blocks_select', 'BlockController@blocksSelect');
 
     /*
     |--------------------------------------------------------------------------
@@ -168,7 +175,7 @@ Route::group(['namespace' => 'API'], function () {
     |--------------------------------------------------------------------------
     */
     Route::resource('storefronts', 'StorefrontsController');
-    Route::get('get_all_storefronts_info','StorefrontsController@getAllStorefrontsInfo');
+    Route::get('get_all_storefronts_info', 'StorefrontsController@getAllStorefrontsInfo');
 
 
     /*
@@ -198,8 +205,6 @@ Route::group(['namespace' => 'API'], function () {
     | element下拉格式数据
     |--------------------------------------------------------------------------
     */
-    Route::get('/select_buildings', 'SelectDataController@areaBuildings');
-    Route::get('/select_building_blocks', 'SelectDataController@buildingBlocks');
     Route::get('/select_block_houses', 'SelectDataController@blockHouses');
     Route::get('/select_customs', 'SelectDataController@selectCustoms');
 

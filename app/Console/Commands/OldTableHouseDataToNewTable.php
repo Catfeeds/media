@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
-use App\Http\Controllers\API\HousesController;
 use App\Models\OfficeBuildingHouse;
+use App\Models\ShopsHouse;
 use App\Services\HousesService;
 use Illuminate\Console\Command;
 
@@ -43,7 +43,7 @@ class OldTableHouseDataToNewTable extends Command
     }
 
     /**
-     * 说明: 添加总经理
+     * 说明: 写字楼,商铺房源加入单价总价
      *
      * @author 罗振
      */
@@ -55,13 +55,29 @@ class OldTableHouseDataToNewTable extends Command
 
             $officeBuildingHouse = OfficeBuildingHouse::all();
             $officeBuildingHouse->map(function($v) use($housesService) {
-                $price = $housesService->getPrice($v->rent_price, $v->rent_price_unit, $v->constru_acreage);
+                if (!empty($v->rent_price) && !empty($v->rent_price_unit) && !empty($v->constru_acreage)) {
+                    $price = $housesService->getPrice($v->rent_price, $v->rent_price_unit, $v->constru_acreage);
 
-
-
+                    $v->unit_price = $price['unit_price'];    // 单价
+                    $v->total_price = $price['total_price'];  // 总价
+                    if (!$v->save()) {
+                        \Log::info($v->id.'数据修改失败');
+                    }
+                }
             });
 
+            $shopsHouse = ShopsHouse::all();
+            $shopsHouse->map(function($v) use($housesService) {
+                if (!empty($v->rent_price) && !empty($v->rent_price_unit) && !empty($v->constru_acreage)) {
+                    $price = $housesService->getPrice($v->rent_price, $v->rent_price_unit, $v->constru_acreage);
 
+                    $v->unit_price = $price['unit_price'];    // 单价
+                    $v->total_price = $price['total_price'];  // 总价
+                    if (!$v->save()) {
+                        \Log::info($v->id.'数据修改失败');
+                    }
+                }
+            });
 
             \DB::commit();
             return true;
