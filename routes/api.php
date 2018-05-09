@@ -28,6 +28,8 @@ Route::group(['namespace' => 'API'], function () {
 
     // 更新房源照片
     Route::get('/house_img_update/{token}', 'HousesController@houseImgUpdateView');
+     // 更新房源照片操作
+     Route::post('/house_img_update', 'HousesController@houseImgUpdate');
     // 生成二维码
     Route::get('/make_qr_code', 'HousesController@makeQrCode');
     /*
@@ -78,10 +80,6 @@ Route::group(['namespace' => 'API'], function () {
         Route::post('update_office_business_state', 'OfficeBuildingHousesController@updateOfficeBusinessState');
         // 三个房源获取业主信息和查看记录
         Route::get('get_owner_info', 'HousesController@getOwnerInfo');
-        // 更新房源照片操作
-        Route::post('/house_img_update', 'HousesController@houseImgUpdate');
-
-
 
         /*
         |--------------------------------------------------------------------------

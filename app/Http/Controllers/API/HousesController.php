@@ -49,8 +49,7 @@ class HousesController extends APIBaseController
         // 加密
         $parameter = $request->houseType.'/'.$request->houseId.'/'.time();
         $encryption = Crypt::encryptString($parameter);
-        // http://192.168.0.188:9528/#/mobileEditImg?miyao=
-        $url = 'http://192.168.0.188/api/house_img_update/'.$encryption;
+        $url = 'http://192.168.0.188:9528/#/mobileEditImg?miyao='.$encryption;
         $result = QrCode::size(200)->generate($url);
         return $this->sendResponse($result,'二维码生成成功');
     }
@@ -86,7 +85,7 @@ class HousesController extends APIBaseController
         // 七牛域名
         $house->qiniu_url = config('setting.qiniu_url');
         $house->type = $temp[0];
-        return $this->sendResponse($house, '获取房源图片编辑信息成功');
+        return $this->sendResponse($house->makeHidden('see_power_cn'), '获取房源图片编辑信息成功');
     }
 
     public function houseImgUpdate(
