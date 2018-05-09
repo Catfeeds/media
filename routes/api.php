@@ -29,7 +29,7 @@ Route::group(['namespace' => 'API'], function () {
     // 更新房源照片
     Route::get('/house_img_update/{token}', 'HousesController@houseImgUpdateView');
     // 生成二维码
-    Route::get('/make_qr_code', 'HousesController@makeQrCode');
+    Route::get('/make_qr_code/{houseType}/{houseId}', 'HousesController@makeQrCode');
     /*
     |--------------------------------------------------------------------------
     | 登录后的操作
