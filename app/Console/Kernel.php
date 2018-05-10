@@ -18,6 +18,7 @@ class Kernel extends ConsoleKernel
         '\App\Console\Commands\AddManager',// 添加管理员php
         '\App\Console\Commands\HouseAndCustomToPublic',
         '\App\Console\Commands\OldTableHouseDataToNewTable',
+        '\App\Console\Commands\RoleAddPermission',
     ];
 
     /**
