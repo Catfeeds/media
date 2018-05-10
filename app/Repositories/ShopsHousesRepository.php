@@ -75,9 +75,6 @@ class ShopsHousesRepository extends BaseRepository
     {
         \DB::beginTransaction();
         try {
-            // 获取单价总价
-            $unit_price = $housesService->getPrice($request->rent_price, $request->rent_price_unit, $request->constru_acreage);
-
             $house = $this->model->create([
                 'building_block_id' => $request->building_block_id,
                 'house_number' => $request->house_number,
@@ -96,7 +93,7 @@ class ShopsHousesRepository extends BaseRepository
                 'support_facilities' => $request->support_facilities??array(),
                 'fit_management' => $request->fit_management??array(),
                 'house_description' => $request->house_description,
-                'unit_price' => $unit_price,    // 单价
+                'unit_price' => $request->unit_price,    // 单价
                 'payment_type' => $request->payment_type,
                 'check_in_time' => $request->check_in_time,
                 'shortest_lease' => $request->shortest_lease,
@@ -139,23 +136,19 @@ class ShopsHousesRepository extends BaseRepository
     }
 
     /**
-     * 说明: 商铺房源修改
+     * 说明：商铺房源修改
      *
      * @param $shopsHouse
      * @param $request
-     * @param HousesService $housesService
      * @return bool
-     * @author 罗振
+     * @author jacklin
      */
     public function updateShopsHouses(
         $shopsHouse,
-        $request,
-        HousesService $housesService
+        $request
     )
     {
         // 获取单价总价
-        $unit_price = $housesService->getPrice($request->rent_price, $request->rent_price_unit, $request->constru_acreage);
-
         $shopsHouse->building_block_id = $request->building_block_id;
         $shopsHouse->house_number = $request->house_number;
         $shopsHouse->owner_info = $request->owner_info;
@@ -173,7 +166,7 @@ class ShopsHousesRepository extends BaseRepository
         $shopsHouse->support_facilities = $request->support_facilities??array();
         $shopsHouse->fit_management = $request->fit_management??array();
         $shopsHouse->house_description = $request->house_description;
-        $shopsHouse->unit_price = $unit_price; // 单价
+        $shopsHouse->unit_price = $request->unit_price; // 单价
         $shopsHouse->payment_type = $request->payment_type;
         $shopsHouse->check_in_time = $request->check_in_time;
         $shopsHouse->shortest_lease = $request->shortest_lease;

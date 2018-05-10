@@ -22,5 +22,6 @@ return [
     'house_to_public' => 5,
     'custom_to_public' => 7,
 
-    'url' => 'http://192.168.0.67/'
+    'agency_host' => env('AGENCY_HOST'),
+    'host' => env('HOST')
 ];

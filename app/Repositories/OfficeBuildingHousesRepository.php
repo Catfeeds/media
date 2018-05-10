@@ -61,20 +61,17 @@ class OfficeBuildingHousesRepository extends BaseRepository
     }
 
     /**
-     * 说明: 写字楼房源添加
+     * 说明：写字楼房源添加
      *
      * @param $request
      * @param HousesService $housesService
      * @return bool
-     * @author 罗振
+     * @author jacklin
      */
     public function addOfficeBuildingHouses($request, HousesService $housesService)
     {
         \DB::beginTransaction();
         try {
-            // 获取单价总价
-            $unit_price = $housesService->getPrice($request->rent_price, $request->rent_price_unit, $request->constru_acreage);
-
             $house =  $this->model->create([
                 'building_block_id' => $request->building_block_id,
                 'house_number' => $request->house_number,
@@ -93,7 +90,7 @@ class OfficeBuildingHousesRepository extends BaseRepository
                 'orientation' => $request->orientation,
                 'support_facilities' => $request->support_facilities??array(),
                 'house_description' => $request->house_description,
-                'unit_price' => $unit_price,    // 单价
+                'unit_price' => $request->unit_price,    // 单价
                 'payment_type' => $request->payment_type,
                 'check_in_time' => $request->check_in_time,
                 'shortest_lease' => $request->shortest_lease,
@@ -133,23 +130,18 @@ class OfficeBuildingHousesRepository extends BaseRepository
     }
 
     /**
-     * 说明: 修改写字楼
+     * 说明：修改写字楼
      *
      * @param $officeBuildingHouse
      * @param $request
-     * @param HousesService $housesService
      * @return bool
-     * @author 罗振
+     * @author jacklin
      */
     public function updateOfficeBuildingHouses(
         $officeBuildingHouse,
-        $request,
-        HousesService $housesService
+        $request
     )
     {
-        // 获取单价总价
-        $unit_price = $housesService->getPrice($request->rent_price, $request->rent_price_unit, $request->constru_acreage);
-
         $officeBuildingHouse->building_block_id = $request->building_block_id;
         $officeBuildingHouse->house_number = $request->house_number;
         $officeBuildingHouse->owner_info = $request->owner_info;
@@ -167,7 +159,7 @@ class OfficeBuildingHousesRepository extends BaseRepository
         $officeBuildingHouse->orientation = $request->orientation;
         $officeBuildingHouse->support_facilities = $request->support_facilities??array();
         $officeBuildingHouse->house_description = $request->house_description;
-        $officeBuildingHouse->unit_price = $unit_price; // 单价
+        $officeBuildingHouse->unit_price = $request->unit_price; // 单价
         $officeBuildingHouse->payment_type = $request->payment_type;
         $officeBuildingHouse->check_in_time = $request->check_in_time;
         $officeBuildingHouse->shortest_lease = $request->shortest_lease;

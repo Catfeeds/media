@@ -95,8 +95,8 @@ class ShopsHousesRequest extends FormRequest
                     'storey' => 'max:32',
                     'house_description' => 'max:255',
                     // 租赁信息
-                    'rent_price' => 'required|numeric|max:9999999999',
-                    'rent_price_unit' => 'nullable|integer|between:1,2',
+//                    'rent_price' => 'required|numeric|max:9999999999',
+//                    'rent_price_unit' => 'nullable|integer|between:1,2',
                     'payment_type' => 'required|integer|between:1,12',
                     'check_in_time' => 'nullable|date',
                     'shortest_lease' => 'nullable|integer|between:1,5',
@@ -144,8 +144,8 @@ class ShopsHousesRequest extends FormRequest
                     'storey' => 'max:32',
                     'house_description' => 'max:255',
                     // 租赁信息
-                    'rent_price' => 'nullable|numeric|max:9999999999',
-                    'rent_price_unit' => 'nullable|integer|between:1,2',
+//                    'rent_price' => 'nullable|numeric|max:9999999999',
+//                    'rent_price_unit' => 'nullable|integer|between:1,2',
                     'payment_type' => 'nullable|integer|between:1,12',
                     'check_in_time' => 'nullable|date',
                     'shortest_lease' => 'nullable|integer|between:1,5',
