@@ -27,6 +27,6 @@ class AddOfficeBuildingHousesPriceTable extends Migration
     {
         Schema::table('office_building_houses', function (Blueprint $table) {
             $table->dropColumn('unit_price');
-        });
+       });
     }
 }
