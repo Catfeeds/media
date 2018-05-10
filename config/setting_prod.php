@@ -22,5 +22,6 @@ return [
     'house_to_public' => 5,
     'custom_to_public' => 7,
 
-    'url' => 'http://agency_api.chulouwang.com'
+    'agency_host' => env('AGENCY_HOST'),
+    'host' => env('HOST')
 ];
