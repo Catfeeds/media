@@ -15,7 +15,6 @@ class AddShopsHousesPriceTable extends Migration
     {
         Schema::table('shops_houses', function (Blueprint $table) {
             $table->decimal('unit_price', 10, 2)->nullable()->comment('租金单价')->after('rent_price_unit');
-            $table->decimal('total_price',10,2)->nullable()->comment('租金总价')->after('unit_price');
         });
     }
 
@@ -28,7 +27,6 @@ class AddShopsHousesPriceTable extends Migration
     {
         Schema::table('shops_houses', function (Blueprint $table) {
             $table->dropColumn('unit_price');
-            $table->dropColumn('total_price');
         });
     }
 }

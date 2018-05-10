@@ -73,7 +73,7 @@ class OfficeBuildingHousesRepository extends BaseRepository
         \DB::beginTransaction();
         try {
             // 获取单价总价
-            $price = $housesService->getPrice($request->rent_price, $request->rent_price_unit, $request->constru_acreage);
+            $unit_price = $housesService->getPrice($request->rent_price, $request->rent_price_unit, $request->constru_acreage);
 
             $house =  $this->model->create([
                 'building_block_id' => $request->building_block_id,
@@ -93,8 +93,7 @@ class OfficeBuildingHousesRepository extends BaseRepository
                 'orientation' => $request->orientation,
                 'support_facilities' => $request->support_facilities??array(),
                 'house_description' => $request->house_description,
-                'unit_price' => $price['unit_price'],    // 单价
-                'total_price' => $price['total_price'],  // 总价
+                'unit_price' => $unit_price,    // 单价
                 'payment_type' => $request->payment_type,
                 'check_in_time' => $request->check_in_time,
                 'shortest_lease' => $request->shortest_lease,
@@ -149,7 +148,7 @@ class OfficeBuildingHousesRepository extends BaseRepository
     )
     {
         // 获取单价总价
-        $price = $housesService->getPrice($request->rent_price, $request->rent_price_unit, $request->constru_acreage);
+        $unit_price = $housesService->getPrice($request->rent_price, $request->rent_price_unit, $request->constru_acreage);
 
         $officeBuildingHouse->building_block_id = $request->building_block_id;
         $officeBuildingHouse->house_number = $request->house_number;
@@ -168,8 +167,7 @@ class OfficeBuildingHousesRepository extends BaseRepository
         $officeBuildingHouse->orientation = $request->orientation;
         $officeBuildingHouse->support_facilities = $request->support_facilities??array();
         $officeBuildingHouse->house_description = $request->house_description;
-        $officeBuildingHouse->unit_price = $price['unit_price']; // 单价
-        $officeBuildingHouse->total_price = $price['total_price'];   // 总价
+        $officeBuildingHouse->unit_price = $unit_price; // 单价
         $officeBuildingHouse->payment_type = $request->payment_type;
         $officeBuildingHouse->check_in_time = $request->check_in_time;
         $officeBuildingHouse->shortest_lease = $request->shortest_lease;

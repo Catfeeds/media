@@ -222,7 +222,7 @@ class HousesService
      * @param $rent_price
      * @param $rent_price_unit
      * @param $constru_acreage
-     * @return array
+     * @return float|int
      * @author 罗振
      */
     public function getPrice(
@@ -233,12 +233,10 @@ class HousesService
     {
         if ($rent_price_unit == 2) {
             $unit_price = $rent_price;
-            $total_price = $rent_price * $constru_acreage;
         } else {
             $unit_price = $rent_price / $constru_acreage;
-            $total_price = $rent_price;
         }
 
-        return ['unit_price' => $unit_price, 'total_price' => $total_price];
+        return $unit_price;
     }
 }
