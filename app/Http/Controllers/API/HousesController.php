@@ -56,7 +56,7 @@ class HousesController extends APIBaseController
         // 加密
         $parameter = $request->houseType.'/'.$request->houseId.'/'.time();
         $encryption = Crypt::encryptString($parameter);
-        $url = config('setting.url').'/api/house_img_update/'.$encryption;
+        $url = config('setting.url').'api/house_img_update/'.$encryption;
         $result = QrCode::size(200)->generate($url);
         return $this->sendResponse($result,'二维码生成成功');
     }

@@ -22,5 +22,5 @@ return [
     'house_to_public' => 5,
     'custom_to_public' => 7,
 
-    'url' => 'http://agency_api.chulouwang.com'
+    'url' => 'http://192.168.0.67/'
 ];
