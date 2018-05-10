@@ -55,26 +55,18 @@ class OldTableHouseDataToNewTable extends Command
 
             $officeBuildingHouse = OfficeBuildingHouse::all();
             $officeBuildingHouse->map(function($v) use($housesService) {
-                if (!empty($v->rent_price) && !empty($v->rent_price_unit) && !empty($v->constru_acreage)) {
-                    $unit_price = $housesService->getPrice($v->rent_price, $v->rent_price_unit, $v->constru_acreage);
-
-                    $v->unit_price = $unit_price;    // 单价
+                    $v->unit_price = $v->rent_price;    // 单价
                     if (!$v->save()) {
                         \Log::info($v->id.'数据修改失败');
-                    }
                 }
             });
 
             $shopsHouse = ShopsHouse::all();
             $shopsHouse->map(function($v) use($housesService) {
-                if (!empty($v->rent_price) && !empty($v->rent_price_unit) && !empty($v->constru_acreage)) {
-                    $unit_price = $housesService->getPrice($v->rent_price, $v->rent_price_unit, $v->constru_acreage);
-
-                    $v->unit_price = $unit_price;    // 单价
+                    $v->unit_price = $v->rent_price;    // 单价
                     if (!$v->save()) {
                         \Log::info($v->id.'数据修改失败');
                     }
-                }
             });
 
             \DB::commit();
