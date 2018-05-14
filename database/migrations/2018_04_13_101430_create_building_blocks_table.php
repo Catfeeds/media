@@ -32,7 +32,6 @@ class CreateBuildingBlocksTable extends Migration
             $table->integer('cargo_lift')->nullable()->comment('货梯数量');
             $table->integer('president_lift')->nullable()->comment('总裁电梯数量');
 
-
             $table->timestamps();
             $table->softDeletes();
         });
