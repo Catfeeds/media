@@ -72,7 +72,9 @@ class BuildingRepository extends Building
                 'greening_rate' => $request->greening_rate,
 
                 'company' => $request->company,
-                'album' => $request->album
+                'album' => $request->album,
+
+                'describe' => $request->describe,
             ]);
             // 循环添加楼座表
             $buildingBlocks = $request->building_block;
@@ -125,7 +127,9 @@ class BuildingRepository extends Building
             'greening_rate' => $request->greening_rate,
 
             'company' => $request->company,
-            'album' => $request->album
+            'album' => $request->album,
+
+            'describe' => $request->describe,
         ]);
         return $res;
     }

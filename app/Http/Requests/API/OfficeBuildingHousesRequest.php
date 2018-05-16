@@ -42,6 +42,12 @@ class OfficeBuildingHousesRequest extends FormRequest
                         'building_block_id.in' => '楼座必须存在'
                     ];
                 }
+            case 'updateShelf':
+                {
+                    return [
+                        'id.in' => '楼座必须存在'
+                    ];
+                }
             default:
                 {
                     return [];
@@ -69,6 +75,16 @@ class OfficeBuildingHousesRequest extends FormRequest
                       ],
                       'house_busine_state' => 'required|integer|between:1,6',
                   ];
+              case 'updateShelf':
+                  return [
+                      'id' => [
+                          'required',
+                          'integer',
+                          Rule::in(
+                              OfficeBuildingHouse::all()->pluck('id')->toArray()
+                          )
+                      ],
+                  ];
               case 'store':
                   return [
                       // 核心信息
@@ -95,9 +111,6 @@ class OfficeBuildingHousesRequest extends FormRequest
                       'renovation' => 'nullable|integer|between:1,5',
                       'orientation' => 'nullable|integer|between:1,9',
                       'house_description' => 'max:255',
-                      // 租赁信息
-//                      'rent_price' => 'required|numeric|max:9999999999',
-//                      'rent_price_unit' => 'nullable|integer|between:1,2',
                       'payment_type' => 'required|integer|between:1,12',
                       'check_in_time' => 'nullable|date',
                       'shortest_lease' => 'nullable|integer|between:1,5',
@@ -118,6 +131,7 @@ class OfficeBuildingHousesRequest extends FormRequest
                       // 房源照片
                       'house_type_img' => 'max:1024',
                       'indoor_img' => 'max:1024',
+                      'shelf' => 'nullable|integer|between:1,2'
                   ];
               case 'update':
                   return [
@@ -143,9 +157,6 @@ class OfficeBuildingHousesRequest extends FormRequest
                       'renovation' => 'nullable|integer|between:1,5',
                       'orientation' => 'nullable|integer|between:1,9',
                       'house_description' => 'max:255',
-                      // 租赁信息
-//                      'rent_price' => 'nullable|numeric|max:9999999999',
-//                      'rent_price_unit' => 'nullable|integer|between:1,2',
                       'payment_type' => 'nullable|integer|between:1,12',
                       'check_in_time' => 'nullable|date',
                       'shortest_lease' => 'nullable|integer|between:1,5',
@@ -166,6 +177,7 @@ class OfficeBuildingHousesRequest extends FormRequest
                       // 房源照片
                       'house_type_img' => 'max:1024',
                       'indoor_img' => 'max:1024',
+                      'shelf' => 'nullable|integer|between:1,2'
                   ];
               default:
                   {
