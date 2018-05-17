@@ -141,7 +141,7 @@ trait HouseTraits{
         } elseif ($this->renovation == 3) {
             return '中装修';
         } elseif ($this->renovation == 4) {
-            return '间装修';
+            return '简装修';
         } elseif ($this->renovation == 5) {
             return '毛坯';
         } else {
