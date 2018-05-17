@@ -217,26 +217,62 @@ class HousesService
     }
 
     /**
-     * 说明: 获取单价总价
+     * 说明: 拼接房源名称
      *
-     * @param $rent_price
-     * @param $rent_price_unit
-     * @param $constru_acreage
-     * @return float|int
+     * @param $request
+     * @return string
      * @author 罗振
      */
-    public function getPrice(
-        $rent_price,
-        $rent_price_unit,
-        $constru_acreage
+    public function getTitle(
+        $request
     )
     {
-        if ($rent_price_unit == 2) {
-            $unit_price = $rent_price;
-        } else {
-            $unit_price = $rent_price / $constru_acreage;
+        $string = '';
+        $temp = BuildingBlock::with(['building.area'])->find($request->building_block_id);
+
+        $string .= $temp->Building->area->name;
+        $string .= '['.$temp->Building->name.']';
+
+        if (!empty($request->office_building_type)) {
+            if ($request->office_building_type == 1) {
+                $string .= '纯写字楼';
+            } elseif ($request->office_building_type == 2) {
+                $string .= '商住楼';
+            } elseif ($request->office_building_type == 3) {
+                $string .= '商业综合体楼';
+            } elseif ($request->office_building_type == 4) {
+                $string .= '酒店写字楼';
+            } elseif ($request->office_building_type == 5) {
+                $string .= '其他';
+            }
         }
 
-        return $unit_price;
+        if (!empty($request->renovation)) {
+            if ($request->renovation == 1) {
+                $string .= '-豪华装修';
+            } elseif ($request->renovation == 2) {
+                $string .= '-精装修';
+            } elseif ($request->renovation == 3) {
+                $string .= '-中装修';
+            } elseif ($request->renovation == 4) {
+                $string .= '-间装修';
+            } elseif ($request->renovation == 5) {
+                $string .= '-毛坯';
+            }
+        }
+
+        if (!empty($request->register_company)) {
+            if ($request->register_company == 1) {
+                $string .= '-可注册';
+            } elseif ($request->register_company == 2) {
+                $string .= '-不可注册';
+            }
+        }
+
+        if (!empty($request->constru_acreage)) {
+            $string .= '-'.$request->constru_acreage.'㎡';
+        }
+
+        return $string;
     }
 }

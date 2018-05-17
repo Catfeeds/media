@@ -19,6 +19,7 @@ class Kernel extends ConsoleKernel
         '\App\Console\Commands\HouseAndCustomToPublic',
         '\App\Console\Commands\OldTableHouseDataToNewTable',
         '\App\Console\Commands\RoleAddPermission',
+        '\App\Console\Commands\HouseTitle', // 老数据生成标题
     ];
 
     /**

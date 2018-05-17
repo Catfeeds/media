@@ -128,7 +128,7 @@ class OfficeBuildingHousesController extends APIBaseController
     }
 
     /**
-     * 说明:修改写字楼房源业务状态
+     * 说明: 修改写字楼房源业务状态
      *
      * @param OfficeBuildingHousesRepository $buildingHousesRepository
      * @param OfficeBuildingHousesRequest $request
@@ -150,7 +150,7 @@ class OfficeBuildingHousesController extends APIBaseController
     }
 
     /**
-     * 说明:获取我的写字楼房源类表
+     * 说明: 获取我的写字楼房源类表
      *
      * @param Request $request
      * @param OfficeBuildingHousesRepository $officeBuildingHousesRepository
@@ -166,5 +166,22 @@ class OfficeBuildingHousesController extends APIBaseController
         $user_id = Common::user()->id;
         $result = $officeBuildingHousesRepository->officeBuildingHousesList($request->per_page??null, json_decode($request->condition), $user_id);
         return $this->sendResponse($result, '获取我的写字楼房源列表成功');
+    }
+
+    /**
+     * 说明: 上线房源
+     *
+     * @param OfficeBuildingHousesRequest $request
+     * @param OfficeBuildingHousesRepository $repository
+     * @return \Illuminate\Http\JsonResponse
+     * @author 罗振
+     */
+    public function updateShelf(
+        OfficeBuildingHousesRequest $request,
+        OfficeBuildingHousesRepository $repository
+    )
+    {
+        $res = $repository->updateShelf($request);
+        return $this->sendResponse($res, '上线成功');
     }
 }

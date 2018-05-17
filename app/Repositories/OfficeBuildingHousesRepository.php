@@ -68,13 +68,20 @@ class OfficeBuildingHousesRepository extends BaseRepository
      * @return bool
      * @author jacklin
      */
-    public function addOfficeBuildingHouses($request, HousesService $housesService)
+    public function addOfficeBuildingHouses(
+        $request,
+        HousesService $housesService
+    )
     {
         \DB::beginTransaction();
         try {
+            // 获取房源名称
+            $title = $housesService->getTitle($request);
+
             $house =  $this->model->create([
                 'building_block_id' => $request->building_block_id,
                 'house_number' => $request->house_number,
+                'title' => $title,
                 'owner_info' => $request->owner_info,
                 'room' => $request->room,
                 'hall' => $request->hall,
@@ -111,6 +118,7 @@ class OfficeBuildingHousesRepository extends BaseRepository
                 'guardian' => Common::user()->id,
                 'house_type_img' => $request->house_type_img,
                 'indoor_img' => $request->indoor_img,
+                'shelf' => 2,   // 默认不上架
             ]);
             if (empty($house)) {
                 throw new \Exception('写字楼房源添加失败');
@@ -130,20 +138,25 @@ class OfficeBuildingHousesRepository extends BaseRepository
     }
 
     /**
-     * 说明：修改写字楼
+     * 说明: 修改写字楼
      *
      * @param $officeBuildingHouse
      * @param $request
      * @return bool
-     * @author jacklin
+     * @author 罗振
      */
     public function updateOfficeBuildingHouses(
         $officeBuildingHouse,
         $request
     )
     {
+        // 获取房源名称
+        $housesService = new HousesService();
+        $title = $housesService->getTitle($request);
+
         $officeBuildingHouse->building_block_id = $request->building_block_id;
         $officeBuildingHouse->house_number = $request->house_number;
+        $officeBuildingHouse->title = $title;
         $officeBuildingHouse->owner_info = $request->owner_info;
         $officeBuildingHouse->room = $request->room;
         $officeBuildingHouse->hall = $request->hall;
@@ -179,6 +192,7 @@ class OfficeBuildingHousesRepository extends BaseRepository
         $officeBuildingHouse->house_proxy_type = $request->house_proxy_type;
         $officeBuildingHouse->house_type_img = $request->house_type_img;
         $officeBuildingHouse->indoor_img = $request->indoor_img;
+        $officeBuildingHouse->shelf = $request->shelf;
 
         if (!$officeBuildingHouse->save()) {
             return false;
@@ -198,6 +212,20 @@ class OfficeBuildingHousesRepository extends BaseRepository
     {
         return $this->model->where('id', $request->id)->update([
             'house_busine_state' => $request->house_busine_state
+        ]);
+    }
+
+    /**
+     * 说明: 上线房源
+     *
+     * @param $request
+     * @return mixed
+     * @author 罗振
+     */
+    public function updateShelf($request)
+    {
+        return $this->model->where('id', $request->id)->update([
+            'shelf' => 1
         ]);
     }
 }

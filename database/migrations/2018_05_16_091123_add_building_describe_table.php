@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddOfficeBuildingHousesPriceTable extends Migration
+class AddBuildingDescribeTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddOfficeBuildingHousesPriceTable extends Migration
      */
     public function up()
     {
-        Schema::table('office_building_houses', function (Blueprint $table) {
-            $table->decimal('unit_price', 10, 2)->nullable()->comment('租金单价')->after('rent_price_unit');
+        Schema::table('buildings', function (Blueprint $table) {
+            $table->text('describe')->nullable()->comment('楼盘描述')->after('album');
         });
     }
 
@@ -25,8 +25,8 @@ class AddOfficeBuildingHousesPriceTable extends Migration
      */
     public function down()
     {
-        Schema::table('office_building_houses', function (Blueprint $table) {
-            $table->dropColumn('unit_price');
+        Schema::table('buildings', function (Blueprint $table) {
+            $table->dropColumn('describe');
         });
     }
 }

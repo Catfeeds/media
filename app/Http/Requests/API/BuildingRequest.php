@@ -47,7 +47,8 @@ class BuildingRequest extends FormRequest
 
                 'company' => 'array',
                 'album' => 'array',
-                'building_block' => 'array'
+                'building_block' => 'array',
+                'describe' => 'max:65535',
             ];
         }
     }
