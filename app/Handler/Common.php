@@ -27,4 +27,17 @@ class Common
         // 判断用户权限
         return Auth::guard('api')->user();
     }
+
+    public static function getCurl($url)
+    {
+        $curlobj = curl_init();
+        curl_setopt($curlobj, CURLOPT_URL, $url);
+        curl_setopt($curlobj, CURLOPT_RETURNTRANSFER, 1);
+        // 验证
+        curl_setopt($curlobj, CURLOPT_SSL_VERIFYPEER, 0);
+        curl_setopt($curlobj, CURLOPT_SSL_VERIFYHOST, 0);
+        $res = curl_exec($curlobj);
+        curl_close($curlobj);
+        return $res;
+    }
 }
