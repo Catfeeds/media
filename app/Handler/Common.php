@@ -8,6 +8,7 @@
 namespace App\Handler;
 
 use Illuminate\Support\Facades\Auth;
+use Qiniu\Storage\UploadManager;
 
 /**
  * Class Common
@@ -28,6 +29,13 @@ class Common
         return Auth::guard('api')->user();
     }
 
+    /**
+     * 说明: curl请求获取数据
+     *
+     * @param $url
+     * @return mixed
+     * @author 罗振
+     */
     public static function getCurl($url)
     {
         $curlobj = curl_init();
@@ -38,6 +46,60 @@ class Common
         curl_setopt($curlobj, CURLOPT_SSL_VERIFYHOST, 0);
         $res = curl_exec($curlobj);
         curl_close($curlobj);
+        return $res;
+    }
+
+    /**
+     * 说明: 获取七牛token
+     *
+     * @param null $accessKey
+     * @param null $secretKey
+     * @param null $bucket
+     * @return string
+     * @author 罗振
+     */
+    public static function getToken($accessKey = null, $secretKey = null, $bucket = null)
+    {
+        if (empty($accessKey)) {
+            $accessKey = config('setting.qiniu_access_key');
+        }
+        if (empty($secretKey)) {
+            $secretKey = config('setting.qiniu_secret_key');
+        }
+        if (empty($bucket)) {
+            $bucket = config('setting.qiniu_bucket');
+        }
+        // 构建鉴权对象
+        $auth = new \Qiniu\Auth($accessKey, $secretKey);
+
+        // 生成上传 Token
+        $token = $auth->uploadToken($bucket);
+        return $token;
+    }
+
+    /**
+     * 说明: 七牛上传图片
+     *
+     * @param $filePath
+     * @param $key
+     * @return array
+     * @throws \Exception
+     * @author 罗振
+     */
+    public static function QiniuUpload($filePath, $key)
+    {
+        //获得token
+        $token = self::getToken();
+
+        // 初始化 UploadManager 对象并进行文件的上传
+        $uploadMgr = new UploadManager();
+
+        // 调用 UploadManager 的 putFile 方法进行文件的上传
+        list($ret, $err) = $uploadMgr->putFile($token, $key, $filePath);
+        $res = ['status' => true, 'url' => config('setting.qiniu_url') . $key];
+
+        if (!$err == null) return ['status' => false, 'msg' => $err];
+
         return $res;
     }
 }
