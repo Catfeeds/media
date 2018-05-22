@@ -23,5 +23,10 @@ return [
     'custom_to_public' => 7,
 
     'agency_host' => env('AGENCY_HOST'),
-    'host' => env('HOST')
+    'host' => env('HOST'),
+
+    // 楼盘默认图片
+    'building_default_img' => 'https://cdn.chulouwang.com/app/imgs/building_none.jpg',
+    // 房源默认图
+    'house_default_img' => 'https://cdn.chulouwang.com/app/imgs/house_none.jpg'
 ];
