@@ -54,8 +54,10 @@ class HouseTitle extends Command
         $houses = OfficeBuildingHouse::all();
         foreach ($houses as $house) {
             $title = $houseService->getTitle($house);
+            $totalPrice = $house->unit_price * $house->constru_acreage;
 
             $house->title = $title;
+            $house->total_price = $totalPrice;
             if (!$house->save()) {
                 \Log::error($house->id.'生成房源标题失败');
             }

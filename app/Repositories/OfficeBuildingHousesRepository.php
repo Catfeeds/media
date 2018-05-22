@@ -98,6 +98,7 @@ class OfficeBuildingHousesRepository extends BaseRepository
                 'support_facilities' => $request->support_facilities??array(),
                 'house_description' => $request->house_description,
                 'unit_price' => $request->unit_price,    // 单价
+                'total_price' => $request->unit_price * $request->constru_acreage,  // 总价
                 'payment_type' => $request->payment_type,
                 'check_in_time' => $request->check_in_time,
                 'shortest_lease' => $request->shortest_lease,
@@ -173,6 +174,7 @@ class OfficeBuildingHousesRepository extends BaseRepository
         $officeBuildingHouse->support_facilities = $request->support_facilities??array();
         $officeBuildingHouse->house_description = $request->house_description;
         $officeBuildingHouse->unit_price = $request->unit_price; // 单价
+        $officeBuildingHouse->total_price = $request->unit_price * $request->constru_acreage;   // 总价
         $officeBuildingHouse->payment_type = $request->payment_type;
         $officeBuildingHouse->check_in_time = $request->check_in_time;
         $officeBuildingHouse->shortest_lease = $request->shortest_lease;

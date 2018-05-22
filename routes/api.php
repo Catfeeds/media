@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 //Route::middleware('auth:api')->get('/user', function (Request $request) {
 //    return $request->user();
 //});
-header('Access-Control-Allow-Origin: ' . env('ORIGIN'));
+header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Headers:X-Token,Content-Type,Authorization');
 header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
 
