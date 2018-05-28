@@ -9,6 +9,28 @@ use App\User;
 trait HouseTraits{
 
     /**
+     * 说明: 浏览记录
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @author 罗振
+     */
+    public function BrowseRecord()
+    {
+        return $this->hasMany('App\Models\BrowseRecord','house_id','id');
+    }
+
+    /**
+     * 说明: 收藏
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @author 罗振
+     */
+    public function Collection()
+    {
+        return $this->hasMany('App\Models\Collection','house_id','id');
+    }
+
+    /**
      * 说明: 维护人
      *
      * @return \Illuminate\Database\Eloquent\Model|null|object|static

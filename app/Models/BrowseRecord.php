@@ -6,10 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class BrowseRecord extends Model
 {
+    protected $table = 'browse_records';
+
     protected $guarded = [];
 
-    public function officeBuildingHouse()
-    {
-        return $this->belongsTo(OfficeBuildingHouse::class, 'house_id', 'id');
-    }
+    protected $connection = 'clw';
 }

@@ -2,8 +2,10 @@
 
 namespace App\Services;
 
+use App\Models\BrowseRecord;
 use App\Models\BuildingBlock;
-use App\Models\House;
+use App\Models\Collection;
+use App\Models\OfficeBuildingHouse;
 use App\Models\OwnerViewRecord;
 
 class HousesService
@@ -274,5 +276,47 @@ class HousesService
         }
 
         return $string;
+    }
+
+    /**
+     * 说明: 删除房源
+     *
+     * @param OfficeBuildingHouse $officeBuildingHouse
+     * @return bool
+     * @author 罗振
+     */
+    public function delHouse(
+        OfficeBuildingHouse $officeBuildingHouse
+    )
+    {
+        \DB::connection('mysql')->beginTransaction();
+        \DB::connection('clw')->beginTransaction();
+        try {
+            $delHouse = $officeBuildingHouse->delete();
+            if (empty($delHouse)) throw new \Exception('删除写字楼房源失败');
+
+            // 获取房源相关的浏览记录
+            $browseRecordId = $officeBuildingHouse->BrowseRecord->pluck('id')->toArray();
+            if (!empty($browseRecordId)) {
+                $delBrowseRecord = BrowseRecord::destroy($browseRecordId);
+                if (empty($delBrowseRecord)) throw new \Exception('房源相关的浏览记录删除失败');
+            }
+
+            // 获取房源相关的收藏
+            $collectionId = $officeBuildingHouse->Collection->pluck('id')->toArray();
+            if (!empty($collectionId)) {
+                $delCollection = Collection::destroy($collectionId);
+                if (empty($delCollection)) throw new \Exception('房源相关的收藏记录删除失败');
+            }
+
+            \DB::connection('mysql')->commit();
+            \DB::connection('clw')->commit();
+            return true;
+        } catch (\Exception $e) {
+            \DB::connection('mysql')->rollBack();
+            \DB::connection('clw')->rollBack();
+            \Log::error('写字楼房源删除失败'. $e->getMessage());
+            return false;
+        }
     }
 }
