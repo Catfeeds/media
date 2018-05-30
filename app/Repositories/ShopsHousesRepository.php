@@ -22,6 +22,7 @@ class ShopsHousesRepository extends BaseRepository
      *
      * @param $per_page
      * @param $condition
+     * @param null $user_id
      * @return mixed
      * @author 罗振
      */

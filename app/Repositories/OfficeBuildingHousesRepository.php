@@ -31,7 +31,7 @@ class OfficeBuildingHousesRepository extends BaseRepository
         $user_id = null
     )
     {
-        $result = $this->model->where('house_busine_state', 1);
+        $result = $this->model->where(['house_busine_state' => 1, 'shelf' => 1]);
         if (!empty($user_id)) $result = $result->where('guardian', $user_id);
         if (!empty($condition->region) && !empty($condition->build)) {
             // 楼盘包含的楼座

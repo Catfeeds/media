@@ -58,6 +58,10 @@ class HouseTitle extends Command
 
             $house->title = $title;
             $house->total_price = $totalPrice;
+            if (empty($house->shelf)) {
+                $house->shelf = 1;
+            }
+
             if (!$house->save()) {
                 \Log::error($house->id.'生成房源标题失败');
             }
