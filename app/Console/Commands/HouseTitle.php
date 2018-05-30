@@ -53,11 +53,6 @@ class HouseTitle extends Command
         // 获取所有房源
         $houses = OfficeBuildingHouse::all();
         foreach ($houses as $house) {
-            $title = $houseService->getTitle($house);
-            $totalPrice = $house->unit_price * $house->constru_acreage;
-
-            $house->title = $title;
-            $house->total_price = $totalPrice;
             if (empty($house->shelf)) {
                 $house->shelf = 1;
             }
