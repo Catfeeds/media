@@ -54,14 +54,12 @@ class GetWbHouseData extends Command
         }
         $this->info('登录成功！');
 
-        $page = 187;
+        $page = 100;
         $count = 1;
         for($i = 1; $i <= $page; $i++) {
-//            dump($i);
             $data = Common::getCurl('https://www.haozu.com/bj/cooperation/wuba/?callback=jQuery11240025335480915851694_'.time().'&page_size=20&city_id=158&district_id=158&page_no='.$i.'&_='.time());
             $search ='/\{.+\}/';
             preg_match($search,$data,$r);
-//            dump(json_decode($r[0])->data);
             // 房源数据
             $houses = json_decode($r[0])->data;
 
@@ -125,19 +123,21 @@ class GetWbHouseData extends Command
                     $img = explode('@', 'https://'.$img);
 
                     // 图片类型
-                    $filetype= strtolower(strrchr($img[0],"."));
+                    $imgType= strtolower(strrchr($img[0],"."));
 
                     // 下载图片
-                    Storage::put('public/' . $imgName . $filetype, file_get_contents($img[0]));
-                    $keyNew = 'houseImg/' . $imgName . $filetype;
-                    $res = Common::QiniuUpload(storage_path() . '/app/public/' . $imgName . $filetype, $keyNew);
+                    Storage::put('public/' . $imgName . $imgType, file_get_contents($img[0]));
+                    $keyNew = 'houseImg/' . $imgName . $imgType;
+                    $res = Common::QiniuUpload(storage_path() . '/app/public/' . $imgName . $imgType, $keyNew);
+                    dump($res);
+
                     // 上传成功删除
                     if ($res['status'] == false) {
-                        \Log::info($imgName . $filetype. '上传失败');
+                        \Log::info($imgName . $imgType. '上传失败');
                     } else {
                         // 图片数据
                         $tempData['indoor_img'][0] = $keyNew;
-                        unlink(storage_path() . '/app/public/' . $imgName . $filetype);
+                        unlink(storage_path() . '/app/public/' . $imgName . $imgType);
                     }
                 }
 

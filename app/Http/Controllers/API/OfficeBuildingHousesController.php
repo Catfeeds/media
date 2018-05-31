@@ -110,20 +110,21 @@ class OfficeBuildingHousesController extends APIBaseController
     /**
      * 说明: 删除写字楼房源
      *
-     * @param  OfficeBuildingHouse $officeBuildingHouse
+     * @param OfficeBuildingHouse $officeBuildingHouse
+     * @param HousesService $housesService
      * @return \Illuminate\Http\JsonResponse
-     * @throws \Exception
      * @author 罗振
      */
     public function destroy(
-        OfficeBuildingHouse $officeBuildingHouse
+        OfficeBuildingHouse $officeBuildingHouse,
+        HousesService $housesService
     )
     {
         if(empty(Common::user()->can('del_house'))) {
             return $this->sendError('没有房源删除权限','403');
         }
 
-        $res = $officeBuildingHouse->delete();
+        if (empty($res = $housesService->delHouse($officeBuildingHouse))) return $this->sendError('写字楼房源删除失败');
         return $this->sendResponse($res, '删除成功');
     }
 
