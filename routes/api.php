@@ -91,7 +91,8 @@ Route::group(['namespace' => 'API'], function () {
         Route::get('get_owner_info', 'HousesController@getOwnerInfo');
 
         // 房号验证
-        Route::get('room_number_verification','HousesController@roomNumberVerification');
+        Route::post('room_number_validate','HousesController@roomNumberValidate');
+
 
 
         /*

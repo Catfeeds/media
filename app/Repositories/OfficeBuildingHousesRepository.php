@@ -22,6 +22,7 @@ class OfficeBuildingHousesRepository extends BaseRepository
      *
      * @param $per_page
      * @param $condition
+     * @param null $user_id
      * @return mixed
      * @author 罗振
      */
@@ -31,15 +32,11 @@ class OfficeBuildingHousesRepository extends BaseRepository
         $user_id = null
     )
     {
-        $result = $this->model->where(['house_busine_state' => 1, 'shelf' => 1]);
+        $result = $this->model->where('house_busine_state', 1);
         if (!empty($user_id)) $result = $result->where('guardian', $user_id);
-        if (!empty($condition->region) && !empty($condition->build)) {
+        if (!empty($condition->build)) {
             // 楼盘包含的楼座
             $blockId = array_column(Building::find($condition->build)->buildingBlocks->toArray(), 'id');
-            $result = $result->whereIn('building_block_id', $blockId);
-        } elseif (!empty($condition->region) && empty($condition->build)) {
-            // 区域包含的楼座
-            $blockId = array_column(Area::find($condition->region)->building_block->flatten()->toArray(), 'id');
             $result = $result->whereIn('building_block_id', $blockId);
         }
 
@@ -50,6 +47,21 @@ class OfficeBuildingHousesRepository extends BaseRepository
         // 最大面积
         if (!empty($condition->max_acreage)) {
             $result = $result->where('constru_acreage', "<=", (int)$condition->max_acreage);
+        }
+
+        // 最小单价
+        if (!empty($condition->min_unit_price)) {
+            $result = $result->where('unit_price', '>=', $condition->min_unit_price);
+        }
+
+        // 最大单价
+        if (!empty($condition->max_unit_price)) {
+            $result = $result->where('unit_price', '<=', $condition->max_unit_price);
+        }
+
+        // 房源编号
+        if (!empty($condition->house_identifier)) {
+            $result = $result->where('house_identifier', $condition->house_identifier);
         }
 
         // 排序

@@ -93,11 +93,25 @@ class HousesService
      * 说明: 房号验证
      *
      * @param $request
+     * @param null $officeBuildingHouse
      * @return array
      * @author 罗振
      */
-    public function houseNumValidate($request)
+    public function houseNumValidate(
+        $request,
+        $officeBuildingHouse = null
+    )
     {
+        // 修改验证
+        if (!empty($officeBuildingHouse)) {
+            if ($request->house_number == $officeBuildingHouse->house_number && $request->floor == $officeBuildingHouse->floor && $request->building_block_id == $officeBuildingHouse->building_block_id) {
+                return [
+                    'status' => true,
+                    'message' => '验证成功'
+                ];
+            }
+        }
+
         // 处理房号
         $temp = explode('-', $request->house_number);
 
@@ -149,7 +163,7 @@ class HousesService
                 }
             } else {
                 // 判断楼层
-                $temp2 = strpos($request->house_number, $request->floor);
+                $temp2 = strpos($request->house_number, $request->house_number);
                 // 判断楼层是否正确(肯定是从第0位开始)
                 if ($temp2 !== 0) {
                     return [
@@ -175,6 +189,7 @@ class HousesService
 
         return [
             'status' => true,
+            'message' => '验证成功'
         ];
     }
 
