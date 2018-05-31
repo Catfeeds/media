@@ -77,6 +77,7 @@ class DwellingHousesController extends APIBaseController
         HousesService $housesService
     )
     {
+        if (empty($dwellingHouse->see_power_cn)) return $this->sendError('您不能编辑该房源');
         $dwellingHouse->makeVisible('owner_info');
         $dwellingHouse->allId = $housesService->adoptBuildingBlockGetCity($dwellingHouse->building_block_id);
         return $this->sendResponse($dwellingHouse, '修改之前原始数据返回成功!');
@@ -88,17 +89,25 @@ class DwellingHousesController extends APIBaseController
      * @param DwellingHousesRequest $request
      * @param DwellingHousesRepository $dwellingHousesRepository
      * @param DwellingHouse $dwellingHouse
+     * @param HousesService $housesService
      * @return \Illuminate\Http\JsonResponse
      * @author 罗振
      */
     public function update(
         DwellingHousesRequest $request,
         DwellingHousesRepository $dwellingHousesRepository,
-        DwellingHouse $dwellingHouse
+        DwellingHouse $dwellingHouse,
+        HousesService $housesService
     )
     {
         if(empty(Common::user()->can('update_house'))) {
             return $this->sendError('没有房源修改权限','403');
+        }
+
+        $request->model = '\App\Models\DwellingHouse';
+        $houseNumValidate = $housesService->houseNumValidate($request, $dwellingHouse);
+        if (empty($houseNumValidate['status'])) {
+            return $this->sendError($houseNumValidate['message']);
         }
 
         $result = $dwellingHousesRepository->updateDwellingHouses($dwellingHouse, $request);

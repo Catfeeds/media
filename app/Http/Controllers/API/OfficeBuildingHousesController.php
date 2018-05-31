@@ -77,7 +77,8 @@ class OfficeBuildingHousesController extends APIBaseController
         HousesService $housesService
     )
     {
-
+        // 本人或上级
+        if (empty($officeBuildingHouse->see_power_cn)) return $this->sendError('您不能编辑该房源');
         $officeBuildingHouse->makeVisible('owner_info');
         $officeBuildingHouse->allId = $housesService->adoptBuildingBlockGetCity($officeBuildingHouse->building_block_id);
 
@@ -90,17 +91,25 @@ class OfficeBuildingHousesController extends APIBaseController
      * @param OfficeBuildingHousesRequest $request
      * @param OfficeBuildingHousesRepository $officeBuildingHousesRepository
      * @param OfficeBuildingHouse $officeBuildingHouse
+     * @param HousesService $housesService
      * @return \Illuminate\Http\JsonResponse
      * @author 罗振
      */
     public function update(
         OfficeBuildingHousesRequest $request,
         OfficeBuildingHousesRepository $officeBuildingHousesRepository,
-        OfficeBuildingHouse $officeBuildingHouse
+        OfficeBuildingHouse $officeBuildingHouse,
+        HousesService $housesService
     )
     {
         if(empty(Common::user()->can('update_house'))) {
             return $this->sendError('没有房源修改权限','403');
+        }
+
+        $request->model = '\App\Models\OfficeBuildingHouse';
+        $houseNumValidate = $housesService->houseNumValidate($request, $officeBuildingHouse);
+        if (empty($houseNumValidate['status'])) {
+            return $this->sendError($houseNumValidate['message']);
         }
 
         $result = $officeBuildingHousesRepository->updateOfficeBuildingHouses($officeBuildingHouse, $request);
