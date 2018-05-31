@@ -72,6 +72,25 @@ class OfficeBuildingHousesController extends APIBaseController
      * @return \Illuminate\Http\JsonResponse
      * @author 罗振
      */
+    public function show(
+        OfficeBuildingHouse $officeBuildingHouse,
+        HousesService $housesService
+    )
+    {
+        $officeBuildingHouse->makeVisible('owner_info');
+        $officeBuildingHouse->allId = $housesService->adoptBuildingBlockGetCity($officeBuildingHouse->building_block_id);
+
+        return $this->sendResponse($officeBuildingHouse, '写字楼修改之前原始数据!');
+    }
+    
+    /**
+     * 说明: 写字楼修改之前原始数据
+     *
+     * @param OfficeBuildingHouse $officeBuildingHouse
+     * @param HousesService $housesService
+     * @return \Illuminate\Http\JsonResponse
+     * @author 罗振
+     */
     public function edit(
         OfficeBuildingHouse $officeBuildingHouse,
         HousesService $housesService
