@@ -64,6 +64,25 @@ class DwellingHousesController extends APIBaseController
     }
 
     /**
+     * 说明: 住宅房源详情
+     *
+     * @param DwellingHouse $dwellingHouse
+     * @param HousesService $housesService
+     * @return \Illuminate\Http\JsonResponse
+     * @author 罗振
+     */
+    public function show
+    (
+        DwellingHouse $dwellingHouse,
+        HousesService $housesService
+    )
+    {
+        $dwellingHouse->makeVisible('owner_info');
+        $dwellingHouse->allId = $housesService->adoptBuildingBlockGetCity($dwellingHouse->building_block_id);
+        return $this->sendResponse($dwellingHouse, '修改之前原始数据返回成功!');
+    }
+
+    /**
      * 说明: 住宅房源修改之前数据
      *
      * @param DwellingHouse $dwellingHouse

@@ -65,7 +65,7 @@ class OfficeBuildingHousesController extends APIBaseController
     }
 
     /**
-     * 说明: 写字楼修改之前原始数据
+     * 说明: 写字楼房源详情
      *
      * @param OfficeBuildingHouse $officeBuildingHouse
      * @param HousesService $housesService
@@ -82,7 +82,7 @@ class OfficeBuildingHousesController extends APIBaseController
 
         return $this->sendResponse($officeBuildingHouse, '写字楼修改之前原始数据!');
     }
-    
+
     /**
      * 说明: 写字楼修改之前原始数据
      *

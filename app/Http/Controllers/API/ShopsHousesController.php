@@ -66,6 +66,25 @@ class ShopsHousesController extends APIBaseController
     }
 
     /**
+     * 说明: 商铺房源详情
+     *
+     * @param ShopsHouse $shopsHouse
+     * @param HousesService $housesService
+     * @return \Illuminate\Http\JsonResponse
+     * @author 罗振
+     */
+    public function show(
+        ShopsHouse $shopsHouse,
+        HousesService $housesService
+    )
+    {
+        $shopsHouse->makeVisible('owner_info');
+        $shopsHouse->allId = $housesService->adoptBuildingBlockGetCity($shopsHouse->building_block_id);
+
+        return $this->sendResponse($shopsHouse, '商铺房源修改之前原始数据!');
+    }
+
+    /**
      * 说明: 商铺房源修改之前原始数据
      *
      * @param ShopsHouse $shopsHouse
