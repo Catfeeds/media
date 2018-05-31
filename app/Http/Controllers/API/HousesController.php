@@ -110,16 +110,12 @@ class HousesController extends APIBaseController
      * @return \Illuminate\Http\JsonResponse
      * @author 罗振
      */
-    public function houseImgUpdate(
-        Request $request
-    )
+    public function houseImgUpdate(Request $request)
     {
         // 更新house的图片
         if ($request->houseType == 1) {
             $temp = DwellingHouse::find($request->id);
         } elseif ($request->houseType == 2) {
-            $temp = OfficeBuildingHouse::find($request->id);
-        } elseif ($request->houseType == 3) {
             $temp = ShopsHouse::find($request->id);
         }
         
@@ -134,5 +130,19 @@ class HousesController extends APIBaseController
         }
 
         return $this->sendResponse($result, '修改成功');
+    }
+
+    /**
+     * 说明:房号验证
+     *
+     * @param HousesService $housesService
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @author 李振
+     */
+    public function roomNumberVerification(HousesService $housesService,Request $request)
+    {
+        $res = $housesService->houseNumValidate($request);
+        return $this->sendResponse($res,'验证成功');
     }
 }
