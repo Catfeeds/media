@@ -31,7 +31,7 @@ class HousesController extends APIBaseController
     )
     {
         // 拿到房子
-        $house = $housesService->getHouse($request);
+        $house = $housesService->getHouse ($request);
         // 判断当前登录用户是否有权限查看该房源业主信息和查看记录
         if (empty($house) || empty($house->see_power_cn)) return $this->sendError('房源异常');
         // 获取业主信息
