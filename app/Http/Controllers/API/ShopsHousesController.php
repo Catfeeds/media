@@ -78,6 +78,7 @@ class ShopsHousesController extends APIBaseController
         HousesService $housesService
     )
     {
+        if (empty($shopsHouse->see_power_cn)) return $this->sendError('您不能编辑该房源');
         $shopsHouse->makeVisible('owner_info');
         $shopsHouse->allId = $housesService->adoptBuildingBlockGetCity($shopsHouse->building_block_id);
 
@@ -90,17 +91,25 @@ class ShopsHousesController extends APIBaseController
      * @param ShopsHousesRequest $request
      * @param ShopsHousesRepository $shopsHousesRepository
      * @param ShopsHouse $shopsHouse
+     * @param HousesService $housesService
      * @return \Illuminate\Http\JsonResponse
      * @author 罗振
      */
     public function update(
         ShopsHousesRequest $request,
         ShopsHousesRepository $shopsHousesRepository,
-        ShopsHouse $shopsHouse
+        ShopsHouse $shopsHouse,
+        HousesService $housesService
     )
     {
         if(empty(Common::user()->can('update_house'))) {
             return $this->sendError('没有房源修改权限','403');
+        }
+
+        $request->model = '\App\Models\ShopsHouse';
+        $houseNumValidate = $housesService->houseNumValidate($request, $shopsHouse);
+        if (empty($houseNumValidate['status'])) {
+            return $this->sendError($houseNumValidate['message']);
         }
 
         $result = $shopsHousesRepository->updateShopsHouses($shopsHouse, $request);

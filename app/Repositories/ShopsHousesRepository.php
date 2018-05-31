@@ -34,13 +34,9 @@ class ShopsHousesRepository extends BaseRepository
     {
         $result = $this->model->where('house_busine_state', 1);
         if (!empty($user_id)) $result = $result->where('guardian', $user_id);
-        if (!empty($condition->region) && !empty($condition->build)) {
+        if (!empty($condition->build)) {
             // 楼盘包含的楼座
             $blockId = array_column(Building::find($condition->build)->buildingBlocks->toArray(), 'id');
-            $result = $result->whereIn('building_block_id', $blockId);
-        } elseif (!empty($condition->region) && empty($condition->build)) {
-            // 区域包含的楼座
-            $blockId = array_column(Area::find($condition->region)->building_block->flatten()->toArray(), 'id');
             $result = $result->whereIn('building_block_id', $blockId);
         }
 
