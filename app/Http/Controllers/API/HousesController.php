@@ -1,16 +1,14 @@
 <?php
 namespace App\Http\Controllers\API;
 
-use App\Handler\Common;
 use App\Http\Requests\API\HousesRequest;
 use App\Models\DwellingHouse;
 use App\Models\OfficeBuildingHouse;
 use App\Models\ShopsHouse;
 use App\Services\HousesService;
-use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
-use Qiniu\Auth;
+use Illuminate\Support\Facades\Auth;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class HousesController extends APIBaseController
@@ -51,10 +49,11 @@ class HousesController extends APIBaseController
     public function makeQrCode(
         Request $request
     )
-
     {
+        // 登录用户
+        $user = Auth::guard('api')->user();
         // 加密
-        $parameter = $request->houseType.'/'.$request->houseId.'/'.time();
+        $parameter = $request->houseType.'/'.$request->houseId.'/'.time().'/'.$user->id;
         $encryption = Crypt::encryptString($parameter);
         $url = config('setting.agency_host') . '/mobileEditImg?miyao=' . $encryption;
         $result = QrCode::size(200)->generate($url);
@@ -74,7 +73,6 @@ class HousesController extends APIBaseController
     {
         // 解密
         $decrypt = Crypt::decryptString($request->token);
-
         // 处理数据
         $temp = explode('/', $decrypt);
         //
@@ -93,13 +91,14 @@ class HousesController extends APIBaseController
         }
 
         //检测超时
-        if ($temp[2] + 120 < time()) {
-         return $this->sendError('二维码超时,请重新扫码');
-        }
+//        if ($temp[2] + 120 < time()) {
+//         return $this->sendError('二维码超时,请重新扫码');
+//        }
         
         // 七牛域名
         $house->qiniu_url = config('setting.qiniu_url');
         $house->type = $temp[0];
+        $house->user_id = $temp[3];
         return $this->sendResponse($house->makeHidden('see_power_cn'), '获取房源图片编辑信息成功');
     }
 
