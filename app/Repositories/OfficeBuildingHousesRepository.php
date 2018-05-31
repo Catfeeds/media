@@ -22,6 +22,7 @@ class OfficeBuildingHousesRepository extends BaseRepository
      *
      * @param $per_page
      * @param $condition
+     * @param null $user_id
      * @return mixed
      * @author 罗振
      */
@@ -31,7 +32,7 @@ class OfficeBuildingHousesRepository extends BaseRepository
         $user_id = null
     )
     {
-        $result = $this->model->where(['house_busine_state' => 1, 'shelf' => 1]);
+        $result = $this->model->where('house_busine_state', 1);
         if (!empty($user_id)) $result = $result->where('guardian', $user_id);
         if (!empty($condition->region) && !empty($condition->build)) {
             // 楼盘包含的楼座
@@ -50,6 +51,16 @@ class OfficeBuildingHousesRepository extends BaseRepository
         // 最大面积
         if (!empty($condition->max_acreage)) {
             $result = $result->where('constru_acreage', "<=", (int)$condition->max_acreage);
+        }
+
+        // 最小单价
+        if (!empty($condition->min_unit_price)) {
+            $result = $result->where('unit_price', '>=', $condition->min_unit_price);
+        }
+
+        // 最大单价
+        if (!empty($condition->max_unit_price)) {
+            $result = $result->where('unit_price', '<=', $condition->max_unit_price);
         }
 
         // 排序
