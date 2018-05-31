@@ -149,7 +149,7 @@ class HousesService
                 }
             } else {
                 // 判断楼层
-                $temp2 = strpos($request->house_number, $request->floor);
+                $temp2 = strpos($request->house_number, $request->house_number);
                 // 判断楼层是否正确(肯定是从第0位开始)
                 if ($temp2 !== 0) {
                     return [
@@ -175,6 +175,7 @@ class HousesService
 
         return [
             'status' => true,
+            'message' => '验证成功'
         ];
     }
 

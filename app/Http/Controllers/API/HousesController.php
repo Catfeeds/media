@@ -3,6 +3,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Requests\API\HousesRequest;
 use App\Models\DwellingHouse;
+use App\Models\HouseImgRecord;
 use App\Models\OfficeBuildingHouse;
 use App\Models\ShopsHouse;
 use App\Services\HousesService;
@@ -111,37 +112,58 @@ class HousesController extends APIBaseController
      */
     public function houseImgUpdate(Request $request)
     {
+        // 验证房源图片数量
+        if (count($request->indoor_img) < 4) {
+            return $this->sendError('图片数量最少四张');
+        }
+
         // 更新house的图片
         if ($request->houseType == 1) {
-            $temp = DwellingHouse::find($request->id);
+            $model = 'App\Models\DwellingHouse';
         } elseif ($request->houseType == 2) {
-            $temp = ShopsHouse::find($request->id);
+            $model = 'App\Models\OfficeBuildingHouse';
+        } elseif ($request->houseType == 3) {
+            $model = 'App\Models\ShopsHouse';
         }
-        
-        if (empty($temp)) {
-            return $this->sendError('房源异常');
+        // 查询房源数据
+        $temp = $model::find($request->id);
+
+        if (empty($temp)) return $this->sendError('房源异常');
+
+        // 新房源十二小时跟进人可以操作
+        if ($temp->guardian == (int)$request->user_id && strtotime($temp->created_at->format('Y-m-d H:i:s')) + 12*60*60 > time()) {
+            $temp->indoor_img = $request->indoor_img;
+            $temp->house_type_img = $request->house_type_img;
+            if (empty($result = $temp->save())) return $this->sendError('修改失败');
+
+        } elseif ($temp->guardian != (int)$request->user_id && strtotime($temp->created_at->format('Y-m-d H:i:s')) + 12*60*60 > time()) {
+            return $this->sendError('该房源还处于保护期');
+        } elseif (strtotime($temp->created_at->format('Y-m-d H:i:s')) + 12*60*60 < time()) {
+            // 写入修改记录
+            $result = HouseImgRecord::create([
+                'user_id' => $request->user_id,
+                'model' => $model,
+                'house_id' => $temp->id,
+                'indoor_img' => $request->indoor_img
+            ]);
+            if (empty($result)) return $this->sendError('记录表写入失败');
         }
 
-        $temp->indoor_img = $request->indoor_img;
-        $temp->house_type_img = $request->house_type_img;
-        if (empty($result = $temp->save())) {
-            return $this->sendError('修改失败');
-        }
-
-        return $this->sendResponse($result, '修改成功');
+        return $this->sendResponse(true, '操作成功');
     }
 
     /**
-     * 说明:房号验证
+     * 说明: 房号验证
      *
      * @param HousesService $housesService
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      * @author 李振
      */
-    public function roomNumberVerification(HousesService $housesService,Request $request)
+    public function roomNumberValidate(HousesService $housesService,Request $request)
     {
+        $request->model = '\App\Models\OfficeBuildingHouse';
         $res = $housesService->houseNumValidate($request);
-        return $this->sendResponse($res,'验证成功');
+        return $this->sendResponse($res['status'],$res['message']);
     }
 }

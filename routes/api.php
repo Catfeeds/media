@@ -90,8 +90,8 @@ Route::group(['namespace' => 'API'], function () {
         // 三个房源获取业主信息和查看记录
         Route::get('get_owner_info', 'HousesController@getOwnerInfo');
 
-        //房号验证
-        Route::get('room_number_verification','HousesController@roomNumberVerification');
+        // 房号验证
+        Route::post('room_number_validate','HousesController@roomNumberValidate');
 
 
         /*
