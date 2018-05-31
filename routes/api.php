@@ -203,5 +203,8 @@ Route::group(['namespace' => 'API'], function () {
     Route::get('/select_block_houses', 'SelectDataController@blockHouses');
     Route::get('/select_customs', 'SelectDataController@selectCustoms');
 
+    //微信接口
+    Route::any('wechat', 'WechatController@index');
+
 });
 
