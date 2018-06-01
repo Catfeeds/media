@@ -62,6 +62,9 @@ Route::group(['namespace' => 'API'], function () {
         // 获取所属门店
         Route::post('get_storefronts_info', 'UserController@getStorefrontsInfo');
 
+        // 业务统计
+        Route::post('business_statistics','UserController@businessStatistics');
+
 
         /*
         |--------------------------------------------------------------------------
