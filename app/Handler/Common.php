@@ -110,7 +110,7 @@ class Common
      * @return array
      * @author 李振
      */
-    public function getTime($day)
+    public static function getTime($day)
     {
         // 今天往前推n天的日期
        return [

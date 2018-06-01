@@ -257,12 +257,12 @@ class UserController extends APIBaseController
      * @return \Illuminate\Http\JsonResponse
      * @author 李振
      */
-    public function businessStatistics(Request $request , UsersService $usersService)
+    public function businessStatistics(
+        Request $request,
+        UsersService $usersService
+    )
     {
-        dd(
-            date('Y-m-d H:i:s')
-        );
-        $res = $usersService -> businessStatistics($request);
+        $res = $usersService->businessStatistics($request);
         return $this->sendResponse($res,'获取信息成功');
     }
 }

@@ -9,6 +9,7 @@ use App\Models\OfficeBuildingHouse;
 use App\Models\Storefront;
 use App\Models\Track;
 use App\User;
+use Illuminate\Support\Facades\Auth;
 use Qiniu\Http\Request;
 
 class UsersService
@@ -77,21 +78,18 @@ class UsersService
     /**
      * 说明:业务统计
      *
-     * @param Request $request
-     * @param Handler $handler
-     * @param $day
+     * @param $request
      * @return array
      * @author 李振
      */
+    // TODO 统计逻辑
     public function businessStatistics
     (
-        Request $request,
-        Handler $handler,
-        $day
+        $request
     )
     {
         $user = Auth::guard('api')->user();
-        $date = $handler->getTime($day);
+        $date = Common::getTime(time());
         $new_house = OfficeBuildingHouse::where([
             ['guardian'.$user->id],
             ['created','>',$date],
