@@ -94,6 +94,7 @@ Route::group(['namespace' => 'API'], function () {
         Route::post('room_number_validate','HousesController@roomNumberValidate');
 
 
+
         /*
         |--------------------------------------------------------------------------
         | 跟进
