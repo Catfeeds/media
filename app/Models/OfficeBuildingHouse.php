@@ -31,7 +31,8 @@ class OfficeBuildingHouse extends BaseModel
         'open_bill_cn', 'house_number_info', 'address', 'check_in_time_cn',
         'constru_acreage_cn', 'rent_price_cn', 'increasing_situation_cn',
         'min_acreage_cn', 'guardian_cn', 'storefronts_cn',
-        'tracks_time','house_img_cn','disc_type_cn','see_power_cn'
+        'tracks_time','house_img_cn','disc_type_cn','see_power_cn', 'new_house', 'start_track_time_cn',
+        'created_at_cn'
     ];
 
     protected $hidden = ['owner_info'];
@@ -320,5 +321,46 @@ class OfficeBuildingHouse extends BaseModel
         }
     }
 
+    /**
+     * 说明: 新老房源
+     *
+     * @return string
+     * @author 罗振
+     */
+    public function getNewHouseAttribute()
+    {
+        if (strtotime($this->created_at->toDateString()) > strtotime('yesterday')){
+            return '新房源';
+        } else {
+            return '老房源';
+        }
+    }
+
+    /**
+     * 说明: 跟进时间
+     *
+     * @return false|string
+     * @author 罗振
+     */
+    public function getStartTrackTimeCnAttribute()
+    {
+        if (!empty($this->start_track_time)) return date('Y-m-d', $this->start_track_time);
+    }
+
+    // TODO   要修改
+    public function getCreatedAtCnAttribute()
+    {
+        // 创建房源时间戳
+        $createTime = strtotime($this->created_at->toDateString());
+        // 当前时间戳
+        $nowTime = time();
+
+
+        if ($createTime + 60 < $nowTime) {
+            return '刚刚';
+        } elseif ($createTime + 60 > time() && $createTime + 60*60 < time()) {
+            return '1~59分钟之前';
+        }
+    }
 
 }
