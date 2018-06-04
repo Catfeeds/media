@@ -103,19 +103,4 @@ class Common
 
         return $res;
     }
-
-    /**
-     * 说明: 封装一个时间限制
-     *
-     * @return array
-     * @author 李振
-     */
-    public static function getTime($day)
-    {
-        // 今天往前推n天的日期
-       return [
-            mktime(0, 0, 0, date('m')-6, date('d'), date('Y')),
-            date("Y-m-d H:i:s", strtotime("-6 month"))
-        ];
-    }
 }

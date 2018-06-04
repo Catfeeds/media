@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\HouseTraits;
+use Carbon\Carbon;
 
 class OfficeBuildingHouse extends BaseModel
 {
@@ -347,20 +348,32 @@ class OfficeBuildingHouse extends BaseModel
         if (!empty($this->start_track_time)) return date('Y-m-d', $this->start_track_time);
     }
 
-    // TODO   要修改
+    /**
+     * 说明: 时间处理
+     *
+     * @return string
+     * @author 罗振
+     */
     public function getCreatedAtCnAttribute()
     {
         // 创建房源时间戳
-        $createTime = strtotime($this->created_at->toDateString());
-        // 当前时间戳
-        $nowTime = time();
+        $createTime = strtotime($this->created_at->format('Y-m-d H:i:s'));
 
-
-        if ($createTime + 60 < $nowTime) {
+        if (time() > $createTime && time() <= $createTime + 60) {
             return '刚刚';
-        } elseif ($createTime + 60 > time() && $createTime + 60*60 < time()) {
+        } elseif (time() > $createTime + 60 && time() <= $createTime + 3600) {
+            // 创建时间在当前时间一分钟于一小时之间
             return '1~59分钟之前';
+        } elseif (time() > $createTime + 3600 && strtotime(date("Y-m-d",strtotime("-1 day")) . ' 23:59:59') <= $createTime) {
+            // 创建时间在昨天结束于当前时间一分钟之后
+            return '今日'.$this->created_at->format('H:i:s');
+        } elseif (strtotime(date("Y-m-d",strtotime("-1 day"))  . ' 23:59:59') > $createTime && strtotime(date("Y-m-d",strtotime("-1 day"))) <= $createTime) {
+            return '昨日'.$this->created_at->format('H:i:s');
+        } elseif (strtotime(date("Y-m-d",strtotime("-1 day"))) > $createTime  &&  strtotime(date('Y-12-31',strtotime('-1 year'))) < $createTime) {
+            // 创建时间在去年结束于昨天开始时间
+            return $this->created_at->format('m-d H:i:s');
+        } else {
+            return $this->created_at->format('Y-m-d H:i:s');
         }
     }
-
 }
