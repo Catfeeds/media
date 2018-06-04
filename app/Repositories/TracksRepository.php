@@ -59,7 +59,7 @@ class TracksRepository extends BaseRepository
      */
     public function addTracks($request)
     {
-       switch ($request->house_model) {
+        switch ($request->house_model) {
            case '1':
                $model = "App\\Models\\DwellingHouse";
                break;
@@ -71,7 +71,7 @@ class TracksRepository extends BaseRepository
                break;
            default;
                break;
-       }
+        }
         $user = Common::user();
         \DB::beginTransaction();
         try {
@@ -85,10 +85,10 @@ class TracksRepository extends BaseRepository
             ]);
             if (empty($tracks)) {
                throw new \Exception('房源跟进信息添加失败');
-           }
+            }
             //查询该房源
             $house = $model::find($request->house_id);
-           //如果跟进的房源为公盘,则将该房源的维护人跟新为跟进人
+            //如果跟进的房源为公盘,则将该房源的维护人跟新为跟进人
             if (empty($house->guardian)) {
                 $house->guardian = $user->id;
                 if (!$house->save()) throw new \Exception('房源更新维护人失败');
@@ -103,8 +103,16 @@ class TracksRepository extends BaseRepository
                 $res = $OwnerViewRecord->update(['status' => 2]);
                 if (!$res) throw new \Exception('查看房源记录更新失败');
             }
+
+            // 跟新房源跟进时间
+            if (empty($request->custom_id) || (!empty($model) && !empty($request->custom_id))) {
+                $houseInfo = $model::find($request->house_id);
+                $houseInfo->start_track_time = time();
+                $houseInfo->end_track_time = time() + config('setting.house_to_public')*24*60*60;
+                if (!$houseInfo->save()) throw new \Exception('房源跟进时间跟新失败');
+            }
             \DB::commit();
-           return true;
+            return true;
         } catch (\Exception $e) {
             \DB::rollback();
             \Log::error('房源跟进信息添加失败'. $e->getMessage());
@@ -155,6 +163,14 @@ class TracksRepository extends BaseRepository
             if (empty($custom->guardian)) {
                 $custom->guardian = $user->id;
                 if (!$custom->save()) throw new \Exception('客户更新维护人失败');
+            }
+
+            // 跟新房源跟进时间
+            if (empty($request->custom_id) || (!empty($model) && !empty($request->custom_id))) {
+                $houseInfo = $model::find($request->house_id);
+                $houseInfo->start_track_time = time();
+                $houseInfo->end_track_time = time() + config('setting.house_to_public')*24*60*60;
+                if (!$houseInfo->save()) throw new \Exception('房源跟进时间跟新失败');
             }
             \DB::commit();
             return true;

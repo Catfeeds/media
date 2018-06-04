@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\HouseTraits;
+use Carbon\Carbon;
 
 class OfficeBuildingHouse extends BaseModel
 {
@@ -31,7 +32,8 @@ class OfficeBuildingHouse extends BaseModel
         'open_bill_cn', 'house_number_info', 'address', 'check_in_time_cn',
         'constru_acreage_cn', 'rent_price_cn', 'increasing_situation_cn',
         'min_acreage_cn', 'guardian_cn', 'storefronts_cn',
-        'tracks_time','house_img_cn','disc_type_cn','see_power_cn'
+        'tracks_time','house_img_cn','disc_type_cn','see_power_cn', 'new_house', 'start_track_time_cn',
+        'created_at_cn'
     ];
 
     protected $hidden = ['owner_info'];
@@ -320,5 +322,58 @@ class OfficeBuildingHouse extends BaseModel
         }
     }
 
+    /**
+     * 说明: 新老房源
+     *
+     * @return string
+     * @author 罗振
+     */
+    public function getNewHouseAttribute()
+    {
+        if (strtotime($this->created_at->toDateString()) > strtotime('yesterday')){
+            return '新房源';
+        } else {
+            return '老房源';
+        }
+    }
 
+    /**
+     * 说明: 跟进时间
+     *
+     * @return false|string
+     * @author 罗振
+     */
+    public function getStartTrackTimeCnAttribute()
+    {
+        if (!empty($this->start_track_time)) return date('Y-m-d', $this->start_track_time);
+    }
+
+    /**
+     * 说明: 时间处理
+     *
+     * @return string
+     * @author 罗振
+     */
+    public function getCreatedAtCnAttribute()
+    {
+        // 创建房源时间戳
+        $createTime = strtotime($this->created_at->format('Y-m-d H:i:s'));
+
+        if (time() > $createTime && time() <= $createTime + 60) {
+            return '刚刚';
+        } elseif (time() > $createTime + 60 && time() <= $createTime + 3600) {
+            // 创建时间在当前时间一分钟于一小时之间
+            return '1~59分钟之前';
+        } elseif (time() > $createTime + 3600 && strtotime(date("Y-m-d",strtotime("-1 day")) . ' 23:59:59') <= $createTime) {
+            // 创建时间在昨天结束于当前时间一分钟之后
+            return '今日'.$this->created_at->format('H:i:s');
+        } elseif (strtotime(date("Y-m-d",strtotime("-1 day"))  . ' 23:59:59') > $createTime && strtotime(date("Y-m-d",strtotime("-1 day"))) <= $createTime) {
+            return '昨日'.$this->created_at->format('H:i:s');
+        } elseif (strtotime(date("Y-m-d",strtotime("-1 day"))) > $createTime  &&  strtotime(date('Y-12-31',strtotime('-1 year'))) < $createTime) {
+            // 创建时间在去年结束于昨天开始时间
+            return $this->created_at->format('m-d H:i:s');
+        } else {
+            return $this->created_at->format('Y-m-d H:i:s');
+        }
+    }
 }

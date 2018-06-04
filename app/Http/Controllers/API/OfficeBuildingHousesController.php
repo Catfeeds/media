@@ -213,4 +213,26 @@ class OfficeBuildingHousesController extends APIBaseController
         $res = $repository->updateShelf($request);
         return $this->sendResponse($res, '上线成功');
     }
+
+    /**
+     * 说明: 新增房源列表
+     *
+     * @param Request $request
+     * @param OfficeBuildingHousesRepository $officeBuildingHousesRepository
+     * @return \Illuminate\Http\JsonResponse
+     * @author 罗振
+     */
+    public function newHousesList(
+        Request $request,
+        OfficeBuildingHousesRepository $officeBuildingHousesRepository
+    )
+    {
+        // 判断用户权限
+        if (empty(Common::user()->can('house_list'))) {
+            return $this->sendError('没有房源列表权限', '403');
+        }
+
+        $result = $officeBuildingHousesRepository->newHousesList($request->per_page??null, json_decode($request->condition));
+        return $this->sendResponse($result, '写字楼新增房源列表获取成功');
+    }
 }
