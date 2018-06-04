@@ -51,7 +51,7 @@ class HomePagesController extends APIBaseController
         return $this->sendResponse($res, '待跟进房源数据获取成功');
     }
 
-    
+
 
 
 }
