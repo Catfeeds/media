@@ -12,53 +12,89 @@ use App\Models\Track;
 
 class HomePagesService
 {
+    private $year;
+    private $month;
+    private $day;
+
+    public function __construct()
+    {
+        $this->year =  date('Y');//当前年份
+        $this->month = date('m');//当前月份
+        $this->day = date('d');  //当前日期
+    }
+
     /**
-     * 说明: 获取对应的时间日期
+     * 说明: 转换日期格式
      *
      * @param $time
      * @return mixed
      * @author 刘坤涛
      */
-    public function getTime($time)
+    public function getDate($start, $end)
     {
-        $year = date('Y'); //当前年份
-        $month = date('m');//当前月份
-        $day = date('d');  //当前日期
-        switch ($time) {
-            case 1:
-                //计算今天0:0:0 和 23:59:59秒的时间戳
-                $start = mktime(0, 0, 0, $month, $day, $year);
-                $end = mktime(23, 59, 59, $month, $day, $year);
-                break;
-            case 2:
-                //计算本周星期一0:0:0 和 星期天23:59:59秒的时间戳
-                $start = strtotime('Sunday -6 day',strtotime($year.'-'.$month.'-'.$day));
-                $end = strtotime('Monday 7 day',strtotime($year.'-'.$month.'-'.$day)) - 1;
-                break;
-            case 3:
-                //计算本月1号 0:0:0 和本月最后一天23:59:59秒的时间戳
-                $start = mktime(0,0,0,$month,1,$year);
-                $end = mktime(23,59,59,$month,date('t'), $year);
-                break;
-            case 4:
-                //如果是上半年
-                //计算1月1号 0:0:0 和6月30号23:59:59的时间戳
-                if ($month <= 6) {
-                    $start = mktime(0,0,0,1,1,$year);
-                    $end = mktime(23,59,59,6,30,$year);
-                } else {
-                    //如果是下半年
-                    //计算7月1号 和12月31号23:59:59秒的时间戳
-                    $start = mktime(0,0,0,7,1,$year);
-                    $end = mktime(23,59,59,12,31,$year);
-                }
-                break;
-                default;
-                break;
-        }
+
         $date['start'] = date('Y-m-d H:i:s', $start);
         $date['end'] = date('Y-m-d H:i:s', $end);
         return $date;
+    }
+
+    /**
+     * 说明: 获取本周时间戳
+     *
+     * @return mixed
+     * @author 刘坤涛
+     */
+    public function getWeekTime()
+    {
+        $start = strtotime('Sunday -6 day',strtotime($this->year.'-'.$this->month.'-'.$this->day));
+        $end = strtotime('Monday 7 day',strtotime($this->year.'-'.$this->month.'-'.$this->day)) - 1;
+        return $this->getDate($start, $end);
+    }
+
+    /**
+     * 说明: 获取当天时间戳
+     *
+     * @return mixed
+     * @author 刘坤涛
+     */
+    public function getDayTime()
+    {
+        $start = mktime(0, 0, 0, $this->month, $this->day, $this->year);
+        $end = mktime(23, 59, 59, $this->month, $this->day, $this->year);
+        return $this->getDate($start, $end);
+    }
+
+    /**
+     * 说明: 获取本月时间戳
+     *
+     * @return mixed
+     * @author 刘坤涛
+     */
+    public function getMonthTime()
+    {
+        $start = mktime(0,0,0, $this->month,1, $this->year);
+        $end = mktime(23,59,59, $this->month, date('t'), $this->year);
+        return $this->getDate($start, $end);
+    }
+
+    /**
+     * 说明: 获取本年度半年时间戳
+     *
+     * @return mixed
+     * @author 刘坤涛
+     */
+    public function getYearTime()
+    {
+        if ($this->month <= 6) {
+            $start = mktime(0,0,0,1,1,$this->year);
+            $end = mktime(23,59,59,6,30,$this->year);
+        } else {
+            //如果是下半年
+            //计算7月1号 和12月31号23:59:59秒的时间戳
+            $start = mktime(0,0,0,7,1,$this->year);
+            $end = mktime(23,59,59,12,31,$this->year);
+        }
+        return $this->getDate($start, $end);
     }
 
 
@@ -73,10 +109,10 @@ class HomePagesService
         $timestamps = $second / (24*3600);
         if ($timestamps > 1) {
             $day = (int)substr($timestamps,0,1);
-            $hour = floatval(($timestamps - $day) * 24);
-            $time = $day . '天' . $hour . '小时';
+            $hour = ($timestamps - $day) * 24;
+            $time = $day . '天' . (int)$hour . '小时';
         } else {
-            $time = (int)$timestamps * 24 . '小时';
+            $time = (int)($timestamps * 24) . '小时';
         }
         return $time;
     }
@@ -91,7 +127,22 @@ class HomePagesService
      */
     public function getData($time, $id)
     {
-        $date = $this->getTime($time);
+        switch ($time) {
+            case 1:
+                $date =   $this->getDayTime();
+                break;
+            case 2:
+                $date = $this->getWeekTime();
+                break;
+            case 3:
+                $date = $this->getMonthTime();
+                break;
+            case 4:
+                $date = $this->getYearTime();
+                break;
+                default;
+                break;
+        }
         $data = [];
         //获取该用户的新增房源数量
         $data['house_num'] = OfficeBuildingHouse::where('guardian', $id)->whereBetween('created_at', $date)->count();
@@ -112,7 +163,13 @@ class HomePagesService
         return $data;
     }
 
-
+    /**
+     * 说明: 获取待跟进房源数据
+     *
+     * @param $id
+     * @return array
+     * @author 刘坤涛
+     */
     public function waitTrackHouse($id)
     {
         //查询该用户的待跟进房源并且逾期时间在2天以内的房源ID
@@ -122,8 +179,8 @@ class HomePagesService
         $data = [];
         foreach($house as $k => $v) {
             $data[$k]['house_id'] = $v->id;
-            $data[$k]['name'] = $v->buildingBlock->building->name. ' '. $v->buildingBlock->name .$v->buildingBlock->name_unit.$v->house_number.'室';
-            $data[$k]['time'] = $this->time($v->end_track_time - time());
+            $data[$k]['house_name'] = $v->buildingBlock->building->name. ' '. $v->buildingBlock->name .$v->buildingBlock->name_unit.$v->house_number.'室';
+            $data[$k]['over_time'] = $this->time($v->end_track_time - time());
         }
         return $data;
     }
