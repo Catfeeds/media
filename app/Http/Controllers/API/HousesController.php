@@ -199,4 +199,16 @@ class HousesController extends APIBaseController
         $res = $housesService->houseNumValidate($request);
         return $this->sendResponse($res['status'],$res['message']);
     }
+
+    // TODO
+    public function houseImgAuditing(
+        HousesService $housesService
+    )
+    {
+
+
+
+
+
+    }
 }
