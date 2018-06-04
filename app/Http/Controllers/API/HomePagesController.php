@@ -16,7 +16,14 @@ class HomePagesController extends APIBaseController
         $this->id= 4;
     }
 
-
+    /**
+     * 说明: 后台首页数据
+     *
+     * @param HomePagesService $service
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @author 刘坤涛
+     */
     public function index
     (
         HomePagesService $service,
@@ -28,14 +35,23 @@ class HomePagesController extends APIBaseController
         return $this->sendResponse($res, '获取成功');
     }
 
+    /**
+     * 说明: 后台首页待跟进房源数据
+     *
+     * @param HomePagesService $service
+     * @return \Illuminate\Http\JsonResponse
+     * @author 刘坤涛
+     */
     public function waitTrackHouse
     (
         HomePagesService $service
     )
     {
         $res = $service->waitTrackHouse($this->id);
-        return $this->sendResponse($res, '获取待跟进房源数据成功');
+        return $this->sendResponse($res, '待跟进房源数据获取成功');
     }
+
+
 
 
 }
