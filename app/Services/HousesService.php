@@ -353,6 +353,7 @@ class HousesService
             $v->buildingName = $v->buildingBlock->building->name;
             $v->record_status_cn = $v->houseImgRecord->status_cn;
             $v->create_time = $v->houseImgRecord->created_at->format('Y-m-d H:i:s');
+            $v->record_id = $v->houseImgRecord->id;
         }
 
         return $officeBuildingHouse;
