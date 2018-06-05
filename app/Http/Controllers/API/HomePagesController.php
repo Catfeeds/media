@@ -12,8 +12,7 @@ class HomePagesController extends APIBaseController
 
     public function __construct()
     {
-//        $this->id= Auth::guard('api')->user()->id;
-        $this->id= 4;
+        $this->id= Auth::guard('api')->user()->id;
     }
 
     /**
@@ -49,6 +48,24 @@ class HomePagesController extends APIBaseController
     {
         $res = $service->waitTrackHouse($this->id);
         return $this->sendResponse($res, '待跟进房源数据获取成功');
+    }
+
+    /**
+     * 说明: 写字楼统计数据
+     *
+     * @param HomePagesService $service
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @author 刘坤涛
+     */
+    public function officeStatistic
+    (
+        HomePagesService $service,
+        Request $request
+    )
+    {
+        $res = $service->officeStatistic($request->class, $this->id);
+        return $this->sendResponse($res, '写字楼统计数据获取成功');
     }
 
 

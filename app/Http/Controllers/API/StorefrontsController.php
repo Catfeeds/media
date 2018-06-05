@@ -25,9 +25,9 @@ class StorefrontsController extends APIBaseController
         StorefrontsRepository $storefrontsRepository
     )
 	{
-	    if (empty(Common::user()->can('storefronts_list'))) {
-	        return $this->sendError('无门店列表权限','403');
-        }
+//	    if (empty(Common::user()->can('storefronts_list'))) {
+//	        return $this->sendError('无门店列表权限','403');
+//        }
 
         // 获取当前权限等级
         $user = Common::user();

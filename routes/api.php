@@ -220,6 +220,7 @@ Route::group(['namespace' => 'API'], function () {
     */
     Route::resource('home_page', 'HomePagesController');
     Route::get('wait_track_house', 'HomePagesController@waitTrackHouse');
+    Route::get('office_statistic', 'HomePagesController@officeStatistic');
 
 });
 
