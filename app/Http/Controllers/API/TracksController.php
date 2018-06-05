@@ -99,7 +99,7 @@ class TracksController extends APIBaseController
         TracksRepository $tracksRepository
     )
     {
-        //验证house_id是否存,如果存在,必须存在house_model
+        //验证house_id是否存在,如果存在,必须存在house_model
         if (empty($request->house_id) && !empty($request->house_model) || !empty($request->house_id) && empty($request->house_model)) {
             return $this->sendError('房源参数错误');
         }
