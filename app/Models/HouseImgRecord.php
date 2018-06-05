@@ -14,4 +14,14 @@ class HouseImgRecord extends Model
     ];
 
 
+    public function officeBuildingHouse()
+    {
+        return $this->hasOne('App\Models\OfficeBuildingHouse', 'id', 'house_id');
+    }
+
+    public function user()
+    {
+        return $this->hasOne('App\User','id', 'user_id');
+    }
+
 }

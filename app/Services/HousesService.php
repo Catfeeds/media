@@ -344,8 +344,16 @@ class HousesService
      */
     public function houseImgAuditing()
     {
-        $houseId = HouseImgRecord::where(['model' => 'App\Models\OfficeBuildingHouse', 'status' => 1])->pluck('house_id')->toArray();
+        $houseImgRecord = HouseImgRecord::where(['model' => 'App\Models\OfficeBuildingHouse'])->with('officeBuildingHouse.buildingBlock.building')->paginate(10);
 
-        return OfficeBuildingHouse::whereIn('id', $houseId)->paginate(10);
+        foreach ($houseImgRecord as $v) {
+            $v->applicant = $v->user->real_name;
+            $v->houseName = $v->officeBuildingHouse->house_number;
+            $v->guardian_cn = $v->officeBuildingHouse->guardian_cn;
+            $v->building = $v->officeBuildingHouse->buildingBlock->building->name;
+        }
+
+        return $houseImgRecord;
+
     }
 }
