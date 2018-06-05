@@ -8,14 +8,6 @@ use Illuminate\Support\Facades\Auth;
 
 class HomePagesController extends APIBaseController
 {
-    private $id;
-
-    public function __construct()
-    {
-//        $this->id= Auth::guard('api')->user()->id;
-        $this->id= 4;
-    }
-
     /**
      * 说明: 后台首页数据
      *
@@ -31,7 +23,7 @@ class HomePagesController extends APIBaseController
     )
     {
 
-        $res = $service->getData($request->time, $this->id);
+        $res = $service->getData($request->time);
         return $this->sendResponse($res, '获取成功');
     }
 
@@ -47,7 +39,7 @@ class HomePagesController extends APIBaseController
         HomePagesService $service
     )
     {
-        $res = $service->waitTrackHouse($this->id);
+        $res = $service->waitTrackHouse();
         return $this->sendResponse($res, '待跟进房源数据获取成功');
     }
 

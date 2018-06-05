@@ -330,7 +330,7 @@ class OfficeBuildingHouse extends BaseModel
      */
     public function getNewHouseAttribute()
     {
-        if (strtotime($this->created_at->toDateString()) > strtotime('yesterday')){
+        if (strtotime($this->created_at->format('Y-m-d H:i:s')) >= strtotime('yesterday')){
             return '新房源';
         } else {
             return '老房源';
