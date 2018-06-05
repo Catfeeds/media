@@ -19,6 +19,7 @@ class CreateHouseImgRecordsTable extends Migration
             $table->string('model',32)->nullable()->comment('房源model');
             $table->integer('house_id')->nullable()->comment('房源id');
             $table->json('indoor_img')->nullable()->comment('修改房源的图片');
+            $table->string('remarks')->nullable()->comment('审核备注');
             $table->tinyInteger('status')->default(1)->comment('审核状态 1: 审核中 2: 审核失败 3: 审核通过');
             $table->timestamps();
         });

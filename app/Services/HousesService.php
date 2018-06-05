@@ -342,19 +342,20 @@ class HousesService
      * @return mixed
      * @author 罗振
      */
-    public function houseImgAuditing()
+    public function houseImgAuditing($request)
     {
-        $houseImgRecord = HouseImgRecord::where(['model' => 'App\Models\OfficeBuildingHouse'])->with('officeBuildingHouse.buildingBlock.building.area.city')->paginate(10);
+        $houseId = HouseImgRecord::where(['model' => 'App\Models\OfficeBuildingHouse'])->pluck('house_id')->toArray();
 
-        foreach ($houseImgRecord as $v) {
-            $v->applicant = $v->user->real_name;
-            $v->houseName = $v->officeBuildingHouse->house_number;
-            $v->guardian_cn = $v->officeBuildingHouse->guardian_cn;
-            $v->building = $v->officeBuildingHouse->buildingBlock->building->name;
-            $v->house_identifier = $v->officeBuildingHouse->house_identifier;
+        $officeBuildingHouse = OfficeBuildingHouse::where('id', $houseId)->paginate(1);
+
+        foreach ($officeBuildingHouse as $v) {
+            $v->applicant = $v->houseImgRecord->user->real_name;
+            $v->buildingName = $v->buildingBlock->building->name;
+            $v->record_status_cn = $v->houseImgRecord->status_cn;
+            $v->create_time = $v->houseImgRecord->created_at->format('Y-m-d H:i:s');
         }
 
-        return $houseImgRecord;
+        return $officeBuildingHouse;
     }
 
     /**
@@ -391,6 +392,6 @@ class HousesService
         $request
     )
     {
-        return HouseImgRecord::where(['id' => $request->id])->update(['status' => $request->status]);
+        return HouseImgRecord::where(['id' => $request->id])->update(['status' => $request->status, 'remarks' => $request->remarks]);
     }
 }

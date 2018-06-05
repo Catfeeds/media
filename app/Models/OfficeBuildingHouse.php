@@ -49,6 +49,11 @@ class OfficeBuildingHouse extends BaseModel
         return $this->belongsTo('App\Models\BuildingBlock');
     }
 
+    public function houseImgRecord()
+    {
+        return $this->hasOne('App\Models\HouseImgRecord','house_id','id');
+    }
+
     /**
      * 说明: 户型拼接
      *

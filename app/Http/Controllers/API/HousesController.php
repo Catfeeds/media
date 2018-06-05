@@ -93,9 +93,9 @@ class HousesController extends APIBaseController
         }
 
         //检测超时
-//        if ($temp[2] + 120 < time()) {
-//         return $this->sendError('二维码超时,请重新扫码');
-//        }
+        if ($temp[2] + 120 < time()) {
+         return $this->sendError('二维码超时,请重新扫码');
+        }
 
 
         if ($house->guardian != (int)$temp[3] && strtotime($house->created_at->format('Y-m-d H:i:s')) + 12*60*60 > time()) {
@@ -178,11 +178,13 @@ class HousesController extends APIBaseController
     /**
      * 说明: 房源图片审核列表
      *
+     * @param Request $request
      * @param HousesService $housesService
      * @return \Illuminate\Http\JsonResponse
      * @author 罗振
      */
     public function houseImgAuditing(
+        Request $request,
         HousesService $housesService
     )
     {
@@ -191,7 +193,7 @@ class HousesController extends APIBaseController
             return $this->sendError('没有房源修改图片审核列表权限','403');
         }
 
-        $res = $housesService->houseImgAuditing();
+        $res = $housesService->houseImgAuditing($request);
         return $this->sendResponse($res,'房源图片审核列表获取成功');
     }
 
