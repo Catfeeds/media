@@ -137,7 +137,9 @@ class OfficeBuildingHousesRepository extends BaseRepository
                 'indoor_img' => $request->indoor_img,
                 'shelf' => 2,   // 默认不上架
                 'start_track_time' => time(),
-                'end_track_time' => time() + config('setting.house_to_public')*24*60*60
+                'end_track_time' => time() + config('setting.house_to_public')*24*60*60,
+                'rent_time' => strtotime($request->rent_time),  // 可租时间
+                'remarks' => $request->remarks, // 信息不明确备注
             ]);
             if (empty($house)) {
                 throw new \Exception('写字楼房源添加失败');
@@ -213,6 +215,8 @@ class OfficeBuildingHousesRepository extends BaseRepository
         $officeBuildingHouse->house_type_img = $request->house_type_img;
         $officeBuildingHouse->indoor_img = $request->indoor_img;
         $officeBuildingHouse->shelf = $request->shelf;
+        $officeBuildingHouse->rent_time = $request->rent_time;  // 可租时间
+        $officeBuildingHouse->remarks = $request->remarks;  // 信息不明确备注
 
         if (!$officeBuildingHouse->save()) {
             return false;

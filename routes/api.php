@@ -99,7 +99,10 @@ Route::group(['namespace' => 'API'], function () {
         // 房号验证
         Route::post('room_number_validate','HousesController@roomNumberValidate');
 
-
+        // 修改房源图片审核列表
+        Route::get('house_img_auditing', 'HousesController@houseImgAuditing');
+        Route::get('house_img_auditing_details/{id}', 'HousesController@houseImgAuditingDetails');
+        Route::post('auditing_operation', 'HousesController@auditingOperation');
 
         /*
         |--------------------------------------------------------------------------
@@ -219,7 +222,14 @@ Route::group(['namespace' => 'API'], function () {
     |--------------------------------------------------------------------------
     */
     Route::resource('home_page', 'HomePagesController');
+    //待跟进房源数据
     Route::get('wait_track_house', 'HomePagesController@waitTrackHouse');
+    //待跟进客户数据
+    Route::get('wait_track_customer', 'HomePagesController@waitTrackCustomer');
+    //写字楼统计数据
+    Route::get('office_statistic', 'HomePagesController@officeStatistic');
+    //客户统计数据
+    Route::get('customer_statistic', 'HomePagesController@customerStatistic');
 
 });
 

@@ -165,6 +165,11 @@ class TracksRepository extends BaseRepository
                 if (!$custom->save()) throw new \Exception('客户更新维护人失败');
             }
 
+            //跟新客户跟进时间
+            $custom->start_track_time = time();
+            $custom->end_track_time = time() + config('setting.house_to_public')*24*60*60;
+            if (!$custom->save()) throw new \Exception('客户跟进时间跟进失败');
+
             // 跟新房源跟进时间
             if (empty($request->custom_id) || (!empty($model) && !empty($request->custom_id))) {
                 $houseInfo = $model::find($request->house_id);

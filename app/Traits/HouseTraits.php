@@ -183,15 +183,17 @@ trait HouseTraits{
         if ($this->house_busine_state == 1) {
             return '有效';
         } elseif ($this->house_busine_state == 2) {
-            return '暂缓';
+            return '信息不明确';
         } elseif ($this->house_busine_state == 3) {
-            return '已租';
+            return '暂缓';
         } elseif ($this->house_busine_state == 4) {
-            return '收购';
+            return '已租';
         } elseif ($this->house_busine_state == 5) {
-            return '托管';
+            return '出售';
         } elseif ($this->house_busine_state == 6) {
             return '无效';
+        } elseif ($this->house_busine_state == 7) {
+            return '签约';
         } else {
             return '';
         }

@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\BrowseRecord;
 use App\Models\BuildingBlock;
 use App\Models\Collection;
+use App\Models\HouseImgRecord;
 use App\Models\OfficeBuildingHouse;
 use App\Models\OwnerViewRecord;
 
@@ -333,5 +334,64 @@ class HousesService
             \Log::error('写字楼房源删除失败'. $e->getMessage());
             return false;
         }
+    }
+
+    /**
+     * 说明: 房源图片审核列表
+     *
+     * @return mixed
+     * @author 罗振
+     */
+    public function houseImgAuditing($request)
+    {
+        $houseId = HouseImgRecord::where(['model' => 'App\Models\OfficeBuildingHouse'])->pluck('house_id')->toArray();
+
+        $officeBuildingHouse = OfficeBuildingHouse::where('id', $houseId)->paginate(1);
+
+        foreach ($officeBuildingHouse as $v) {
+            $v->applicant = $v->houseImgRecord->user->real_name;
+            $v->buildingName = $v->buildingBlock->building->name;
+            $v->record_status_cn = $v->houseImgRecord->status_cn;
+            $v->create_time = $v->houseImgRecord->created_at->format('Y-m-d H:i:s');
+        }
+
+        return $officeBuildingHouse;
+    }
+
+    /**
+     * 说明: 房源图片审核详情
+     *
+     * @param $request
+     * @return mixed
+     * @author 罗振
+     */
+    public function houseImgAuditingDetails(
+        $request
+    )
+    {
+        $houseImgRecord = HouseImgRecord::where(['model' => 'App\Models\OfficeBuildingHouse', 'id' => $request->id])->with('officeBuildingHouse.buildingBlock.building.area.city')->first();
+
+        $houseImgRecord->applicant = $houseImgRecord->user->real_name;
+        $houseImgRecord->houseName = $houseImgRecord->officeBuildingHouse->house_number;
+        $houseImgRecord->guardian_cn = $houseImgRecord->officeBuildingHouse->guardian_cn;
+        $houseImgRecord->building = $houseImgRecord->officeBuildingHouse->buildingBlock->building->name;
+        $houseImgRecord->house_identifier = $houseImgRecord->officeBuildingHouse->house_identifier;
+        $houseImgRecord->old_indoor_img_cn = $houseImgRecord->officeBuildingHouse->indoor_img_cn;
+
+        return $houseImgRecord;
+    }
+
+    /**
+     * 说明: 审核操作
+     *
+     * @param $request
+     * @return mixed
+     * @author 罗振
+     */
+    public function auditingOperation(
+        $request
+    )
+    {
+        return HouseImgRecord::where(['id' => $request->id])->update(['status' => $request->status, 'remarks' => $request->remarks]);
     }
 }
