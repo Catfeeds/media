@@ -127,13 +127,8 @@ class HomePagesService
             $hour = ($timestamps - $day) * 24;
             $time = $day . '天' . (int)$hour . '小时';
             //剩余时间小于一天
-        } elseif ($timestamps < 1 && $timestamps > 0) {
-            $time = (int)($timestamps * 24) . '小时';
-            //已经逾期
         } else {
-            dd($timestamps * 24 );
-            //逾期未超过1小时
-
+            $time = (int)($timestamps * 24) . '小时';
         }
         return $time;
     }
@@ -197,17 +192,16 @@ class HomePagesService
     {
         // 获取用户id
         $id = $this->user()->id;
-        //查询该用户的待跟进房源并且逾期时间在2天以内的房源ID
+        //查询该用户的待跟进房源id
         $houseId = OwnerViewRecord::where(['user_id' => $id, 'status' => 1, 'house_model' => 'App\Models\OfficeBuildingHouse'])->pluck('house_id')->toArray();
-        //查询出对应的房子
-        $house = OfficeBuildingHouse::whereIn('id',$houseId)->with('buildingBlock','buildingBlock.building')->where('end_track_time','<', (time() + 48*3600))->get();
+        //查询出对应的房子并且逾期剩余时间在2天以内的房源
+        $house = OfficeBuildingHouse::whereIn('id',$houseId)->with('buildingBlock','buildingBlock.building')->where('end_track_time','>', time())->where('end_track_time', '<=', (time() + 48*3600))->get();
         $data = [];
         foreach($house as $k => $v) {
             $data[$k]['house_id'] = $v->id;
             $data[$k]['house_name'] = $v->buildingBlock->building->name. ' '. $v->buildingBlock->name .$v->buildingBlock->name_unit.$v->house_number.'室';
             $data[$k]['over_time'] = $this->time($v->end_track_time - time());
         }
-        $data['count'] = count($data);
         return $data;
     }
 
@@ -220,7 +214,7 @@ class HomePagesService
     {
         $id = $this->user()->id;
         //查询出维护人为该用户,结束跟进时间在2天以内的客户
-        $customer = Custom::where('end_track_time','<', (time() + 48*3600))->where('guardian', $id)->get();
+        $customer = Custom::where('end_track_time','>', time())->where('end_track_time', '<=', (time() + 48*3600))->where('guardian', $id)->get();
         $data = [];
         foreach($customer as $k => $v) {
             $data[$k]['id'] = $v->id;
@@ -228,7 +222,6 @@ class HomePagesService
             $data[$k]['tel'] = $v->tel;
             $data[$k]['over_time'] = $this->time($v->end_track_time - time());
         }
-        $data['count'] = count($data);
         return $data;
     }
 
