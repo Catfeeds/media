@@ -120,13 +120,20 @@ class HomePagesService
      */
     public function time($second)
     {
-        $timestamps = $second / (24*3600);
+        $timestamps = $second / (24*3600); //多少天
+        //剩余时间大于一天
         if ($timestamps > 1) {
             $day = (int)substr($timestamps,0,1);
             $hour = ($timestamps - $day) * 24;
             $time = $day . '天' . (int)$hour . '小时';
-        } else {
+            //剩余时间小于一天
+        } elseif ($timestamps < 1 && $timestamps > 0) {
             $time = (int)($timestamps * 24) . '小时';
+            //已经逾期
+        } else {
+            dd($timestamps * 24 );
+            //逾期未超过1小时
+
         }
         return $time;
     }
@@ -200,6 +207,7 @@ class HomePagesService
             $data[$k]['house_name'] = $v->buildingBlock->building->name. ' '. $v->buildingBlock->name .$v->buildingBlock->name_unit.$v->house_number.'室';
             $data[$k]['over_time'] = $this->time($v->end_track_time - time());
         }
+        $data['count'] = count($data);
         return $data;
     }
 
@@ -215,10 +223,12 @@ class HomePagesService
         $customer = Custom::where('end_track_time','<', (time() + 48*3600))->where('guardian', $id)->get();
         $data = [];
         foreach($customer as $k => $v) {
+            $data[$k]['id'] = $v->id;
             $data[$k]['name'] = $v->name;
             $data[$k]['tel'] = $v->tel;
             $data[$k]['over_time'] = $this->time($v->end_track_time - time());
         }
+        $data['count'] = count($data);
         return $data;
     }
 
@@ -304,7 +314,7 @@ class HomePagesService
         switch ($class) {
             case 1:
                 //查询该业务员所属门店的房源新增数据
-                $userId = $this->getUserId();
+                $userId = $this->adoptStorefrontGetUserId();
                 //今日新增
                 $data['day_added'] = $this->getAddedData($model, $userId, $day);
                 //本周新增
