@@ -46,7 +46,8 @@ class CreateOfficeBuildingHousesTable extends Migration
             $table->string('increasing_situation_remark', 256)->nullable()->comment('递增情况备注');
             $table->json('cost_detail')->nullable()->comment('费用明细:json');
             // 业务信息
-            $table->tinyInteger('house_busine_state')->nullable()->comment('房源业务状态: 1: 有效 2: 暂缓 3: 已租 4: 收购 5: 托管 6: 无效');
+//            $table->tinyInteger('house_busine_state')->nullable()->comment('房源业务状态: 1: 有效 2: 暂缓 3: 已租 4: 收购 5: 托管 6: 无效');
+            $table->tinyInteger('house_busine_state')->nullable()->comment('房源业务状态: 1. 有效 2. 信息不明确 3. 暂缓 4. 已租 5. 出售 6. 无效 7. 签约');
             $table->decimal('pay_commission', 10, 2)->nullable()->comment('付佣');
             $table->tinyInteger('pay_commission_unit')->nullable()->comment('付佣单位: 1: % 2: 多少元');
             $table->tinyInteger('prospecting')->nullable()->comment('是否实勘 1: 是 2: 否');
