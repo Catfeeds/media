@@ -213,5 +213,13 @@ Route::group(['namespace' => 'API'], function () {
     Route::get('/select_block_houses', 'SelectDataController@blockHouses');
     Route::get('/select_customs', 'SelectDataController@selectCustoms');
 
+    /*
+    |--------------------------------------------------------------------------
+    | 后台首页管理
+    |--------------------------------------------------------------------------
+    */
+    Route::resource('home_page', 'HomePagesController');
+    Route::get('wait_track_house', 'HomePagesController@waitTrackHouse');
+
 });
 
