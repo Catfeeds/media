@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\API;
 
+use App\Handler\Common;
 use App\Http\Requests\API\HousesRequest;
 use App\Models\DwellingHouse;
 use App\Models\HouseImgRecord;
@@ -92,9 +93,9 @@ class HousesController extends APIBaseController
         }
 
         //检测超时
-        if ($temp[2] + 120 < time()) {
-         return $this->sendError('二维码超时,请重新扫码');
-        }
+//        if ($temp[2] + 120 < time()) {
+//         return $this->sendError('二维码超时,请重新扫码');
+//        }
         
         // 七牛域名
         $house->qiniu_url = config('setting.qiniu_url');
@@ -200,15 +201,23 @@ class HousesController extends APIBaseController
         return $this->sendResponse($res['status'],$res['message']);
     }
 
-    // TODO
+    /**
+     * 说明: 房源图片审核列表
+     *
+     * @param HousesService $housesService
+     * @return \Illuminate\Http\JsonResponse
+     * @author 罗振
+     */
     public function houseImgAuditing(
         HousesService $housesService
     )
     {
+        //判断用户权限
+        if (empty(Common::user()->can('house_img_auditing'))) {
+            return $this->sendError('没有房源修改图片审核列表权限','403');
+        }
 
-
-
-
-
+        $res = $housesService->houseImgAuditing();
+        return $this->sendResponse($res,'房源图片审核列表获取成功');
     }
 }

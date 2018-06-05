@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\BrowseRecord;
 use App\Models\BuildingBlock;
 use App\Models\Collection;
+use App\Models\HouseImgRecord;
 use App\Models\OfficeBuildingHouse;
 use App\Models\OwnerViewRecord;
 
@@ -333,5 +334,18 @@ class HousesService
             \Log::error('写字楼房源删除失败'. $e->getMessage());
             return false;
         }
+    }
+
+    /**
+     * 说明: 房源图片审核列表
+     *
+     * @return mixed
+     * @author 罗振
+     */
+    public function houseImgAuditing()
+    {
+        $houseId = HouseImgRecord::where(['model' => 'App\Models\OfficeBuildingHouse', 'status' => 1])->pluck('house_id')->toArray();
+
+        return OfficeBuildingHouse::whereIn('id', $houseId)->paginate(10);
     }
 }

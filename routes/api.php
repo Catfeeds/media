@@ -99,6 +99,8 @@ Route::group(['namespace' => 'API'], function () {
         // 房号验证
         Route::post('room_number_validate','HousesController@roomNumberValidate');
 
+        // 修改房源图片审核列表
+        Route::get('house_img_auditing', 'HousesController@houseImgAuditing');
 
 
         /*

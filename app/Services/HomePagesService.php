@@ -2,8 +2,6 @@
 
 namespace App\Services;
 
-
-
 use App\Models\Custom;
 use App\Models\HouseImgRecord;
 use App\Models\OfficeBuildingHouse;
@@ -11,6 +9,8 @@ use App\Models\OwnerViewRecord;
 use App\Models\Storefront;
 use App\Models\Track;
 use App\User;
+use Illuminate\Support\Facades\Auth;
+
 
 class HomePagesService
 {
@@ -26,9 +26,21 @@ class HomePagesService
     }
 
     /**
+     * 说明: 获取用户信息
+     *
+     * @return mixed
+     * @author 罗振
+     */
+    public function user()
+    {
+        return Auth::guard('api')->user();
+    }
+
+    /**
      * 说明: 转换日期格式
      *
-     * @param $time
+     * @param $start
+     * @param $end
      * @return mixed
      * @author 刘坤涛
      */
@@ -99,11 +111,11 @@ class HomePagesService
         return $this->getDate($start, $end);
     }
 
-
     /**
      * 说明: 获取逾期时间(天,小时)
      *
-     * @param $time
+     * @param $second
+     * @return string
      * @author 刘坤涛
      */
     public function time($second)
@@ -122,12 +134,11 @@ class HomePagesService
     /**
      * 说明: 后台首页数据
      *
-     * @param $date
-     * @param $user
+     * @param $time
      * @return array
      * @author 刘坤涛
      */
-    public function getData($time, $id)
+    public function getData($time)
     {
         switch ($time) {
             case 1:
@@ -146,6 +157,10 @@ class HomePagesService
                 break;
         }
         $data = [];
+
+        // 获取用户id
+        $id = $this->user()->id;
+
         //获取该用户的新增房源数量
         $data['house_num'] = OfficeBuildingHouse::where('guardian', $id)->whereBetween('created_at', $date)->count();
         //获取该用户新增客源
@@ -168,12 +183,18 @@ class HomePagesService
     /**
      * 说明: 获取待跟进房源数据
      *
-     * @param $id
      * @return array
      * @author 刘坤涛
      */
-    public function waitTrackHouse($id)
+    public function waitTrackHouse()
     {
+        
+    }
+
+    public function waitTrackCustomer()
+    {
+        // 获取用户id
+        $id = $this->user()->id;
         //查询该用户的待跟进房源并且逾期时间在2天以内的房源ID
         $houseId = OwnerViewRecord::where(['user_id' => $id, 'status' => 1, 'house_model' => 'App\Models\OfficeBuildingHouse'])->pluck('house_id')->toArray();
         //查询出对应的房子
@@ -211,8 +232,10 @@ class HomePagesService
      * @return array
      * @author 刘坤涛
      */
-    public function officeStatistic($class, $id)
+    public function officeStatistic($class)
     {
+        //登录用户id
+        $id = $this->user()->id;
         $storefrontId = User::where('id', $id)->first()->ascription_store;
         $model = 'App\Models\OfficeBuildingHouse';
         //今日时间
@@ -266,6 +289,4 @@ class HomePagesService
 
 
 
-
-    
 }
