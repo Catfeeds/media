@@ -221,8 +221,14 @@ Route::group(['namespace' => 'API'], function () {
     |--------------------------------------------------------------------------
     */
     Route::resource('home_page', 'HomePagesController');
+    //待跟进房源数据
     Route::get('wait_track_house', 'HomePagesController@waitTrackHouse');
+    //待跟进客户数据
+    Route::get('wait_track_customer', 'HomePagesController@waitTrackCustomer');
+    //写字楼统计数据
     Route::get('office_statistic', 'HomePagesController@officeStatistic');
+    //客户统计数据
+    Route::get('customer_statistic', 'HomePagesController@customerStatistic');
 
 });
 
