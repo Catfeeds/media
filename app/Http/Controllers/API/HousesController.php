@@ -194,4 +194,38 @@ class HousesController extends APIBaseController
         $res = $housesService->houseImgAuditing();
         return $this->sendResponse($res,'房源图片审核列表获取成功');
     }
+
+    /**
+     * 说明: 房源图片审核详情
+     *
+     * @param Request $request
+     * @param HousesService $housesService
+     * @return \Illuminate\Http\JsonResponse
+     * @author 罗振
+     */
+    public function houseImgAuditingDetails(
+        Request $request,
+        HousesService $housesService
+    )
+    {
+        $res = $housesService->houseImgAuditingDetails($request);
+        return $this->sendResponse($res,'房源图片审核详情获取成功');
+    }
+
+    /**
+     * 说明: 审核操作
+     *
+     * @param Request $request
+     * @param HousesService $housesService
+     * @return \Illuminate\Http\JsonResponse
+     * @author 罗振
+     */
+    public function auditingOperation(
+        Request $request,
+        HousesService $housesService
+    )
+    {
+        $res = $housesService->auditingOperation($request);
+        return $this->sendResponse($res,'审核操作成功');
+    }
 }

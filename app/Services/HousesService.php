@@ -344,16 +344,53 @@ class HousesService
      */
     public function houseImgAuditing()
     {
-        $houseImgRecord = HouseImgRecord::where(['model' => 'App\Models\OfficeBuildingHouse'])->with('officeBuildingHouse.buildingBlock.building')->paginate(10);
+        $houseImgRecord = HouseImgRecord::where(['model' => 'App\Models\OfficeBuildingHouse'])->with('officeBuildingHouse.buildingBlock.building.area.city')->paginate(10);
 
         foreach ($houseImgRecord as $v) {
             $v->applicant = $v->user->real_name;
             $v->houseName = $v->officeBuildingHouse->house_number;
             $v->guardian_cn = $v->officeBuildingHouse->guardian_cn;
             $v->building = $v->officeBuildingHouse->buildingBlock->building->name;
+            $v->house_identifier = $v->officeBuildingHouse->house_identifier;
         }
 
         return $houseImgRecord;
+    }
 
+    /**
+     * 说明: 房源图片审核详情
+     *
+     * @param $request
+     * @return mixed
+     * @author 罗振
+     */
+    public function houseImgAuditingDetails(
+        $request
+    )
+    {
+        $houseImgRecord = HouseImgRecord::where(['model' => 'App\Models\OfficeBuildingHouse', 'id' => $request->id])->with('officeBuildingHouse.buildingBlock.building.area.city')->first();
+
+        $houseImgRecord->applicant = $houseImgRecord->user->real_name;
+        $houseImgRecord->houseName = $houseImgRecord->officeBuildingHouse->house_number;
+        $houseImgRecord->guardian_cn = $houseImgRecord->officeBuildingHouse->guardian_cn;
+        $houseImgRecord->building = $houseImgRecord->officeBuildingHouse->buildingBlock->building->name;
+        $houseImgRecord->house_identifier = $houseImgRecord->officeBuildingHouse->house_identifier;
+        $houseImgRecord->old_indoor_img_cn = $houseImgRecord->officeBuildingHouse->indoor_img_cn;
+
+        return $houseImgRecord;
+    }
+
+    /**
+     * 说明: 审核操作
+     *
+     * @param $request
+     * @return mixed
+     * @author 罗振
+     */
+    public function auditingOperation(
+        $request
+    )
+    {
+        return HouseImgRecord::where(['id' => $request->id])->update(['status' => $request->status]);
     }
 }

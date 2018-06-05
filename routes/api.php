@@ -101,7 +101,8 @@ Route::group(['namespace' => 'API'], function () {
 
         // 修改房源图片审核列表
         Route::get('house_img_auditing', 'HousesController@houseImgAuditing');
-
+        Route::get('house_img_auditing_details/{id}', 'HousesController@houseImgAuditingDetails');
+        Route::post('auditing_operation', 'HousesController@auditingOperation');
 
         /*
         |--------------------------------------------------------------------------
