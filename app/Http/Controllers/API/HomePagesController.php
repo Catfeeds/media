@@ -90,9 +90,4 @@ class HomePagesController extends APIBaseController
         $res = $service->customerStatistic($request->class);
         return $this->sendResponse($res, '客户统计数据获取成功');
     }
-    
-
-
-
-
 }

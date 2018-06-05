@@ -338,6 +338,13 @@ class HomePagesService
         return $data;
     }
 
+    /**
+     * 说明: 客户统计数据
+     *
+     * @param $class
+     * @return mixed
+     * @author 刘坤涛
+     */
     public function customerStatistic($class)
     {
         $model = 'App\Models\Custom';
