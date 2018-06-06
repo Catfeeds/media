@@ -233,6 +233,11 @@ Route::group(['namespace' => 'API'], function () {
     Route::get('office_statistic', 'HomePagesController@officeStatistic');
     //客户统计数据
     Route::get('customer_statistic', 'HomePagesController@customerStatistic');
-
+    //获取环比数据
+    Route::get('get_ring_than_data', 'HomePagesController@getRingThanData');
+    //根据本周或者本月获取房源、客户X轴数据
+    Route::get('get_chart_data', 'HomePagesController@getChartData');
+    //根据登录人级别获取对应业务员数据
+    Route::get('get_salesman_data', 'HomePagesController@getSalesmanData');
 });
 

@@ -79,7 +79,66 @@ class HomePagesService
     }
 
     /**
-     * 说明: 获取本月时间戳
+     * 说明: 获取上周第一天和最后一天时间戳
+     *
+     * @return mixed
+     * @author 刘坤涛
+     */
+    public function getLastWeekTime()
+    {
+        $start = mktime(0,0,0,$this->month,$this->day - date('w')+1-7,$this->year);
+        $end = mktime(23,59,59,$this->month,$this->day - date('w')+7-7,$this->year);
+        return $this->getDate($start, $end);
+    }
+
+    /**
+     * 说明: 获取本周每天时间戳
+     *
+     * @return array
+     * @author 刘坤涛
+     */
+    public function getWeekDayTime()
+    {
+        $arr[0]= time()-((date('w')==0?7:date('w'))-1)*24*3600;
+        $arr[1]= time()-((date('w')==0?7:date('w'))-2)*24*3600;
+        $arr[2]= time()-((date('w')==0?7:date('w'))-3)*24*3600;
+        $arr[3]= time()-((date('w')==0?7:date('w'))-4)*24*3600;
+        $arr[4]= time()-((date('w')==0?7:date('w'))-5)*24*3600;
+        $arr[5]= time()-((date('w')==0?7:date('w'))-6)*24*3600;
+        $arr[6]= time()-((date('w')==0?7:date('w'))-7)*24*3600;
+        $new = [];
+        foreach ($arr as $k => $v) {
+            $new[$k] = $this->getDate(mktime(0,0,0,date("m",$v),date("d",$v),date("Y",$v)), mktime(23,59,59,date("m",$v),date("d",$v),date("Y",$v)));
+        }
+        return $new;
+    }
+
+    public function getMonthDayTime()
+    {
+        $start_time = strtotime(date('Y-m-01'));  //获取本月第一天时间戳
+        $array = [];
+        for($i=0; $i< date('t'); $i++){
+            $time = $start_time+$i*86400; //循环加一天的时间描述
+            $array[] = $this->getDate(mktime(0,0,0,date("m",$time),date("d",$time),date("Y",$time)), mktime(23,59,59,date("m",$time),date("d",$time),date("Y",$time)));
+        }
+        return $array;
+    }
+
+    /**
+     * 说明: 获取上月第一天和最后一天时间戳
+     *
+     * @return mixed
+     * @author 刘坤涛
+     */
+    public function getLastMonthTime()
+    {
+        $start = mktime(0,0,0,$this->month-1,1, $this->year);
+        $end = mktime(23,59,59,$this->month-1, date("t",$start),date("Y",$start));
+        return $this->getDate($start, $end);
+    }
+
+    /**
+     * 说明: 获取本月第一天和最后一天时间戳
      *
      * @return mixed
      * @author 刘坤涛
@@ -92,7 +151,7 @@ class HomePagesService
     }
 
     /**
-     * 说明: 获取本年度半年时间戳
+     * 说明: 获取本年度半年内第一天和最后一天时间戳
      *
      * @return mixed
      * @author 刘坤涛
@@ -140,29 +199,36 @@ class HomePagesService
      * @return array
      * @author 刘坤涛
      */
-    public function getData($time)
+    public function getData($time, $id = null)
     {
-        switch ($time) {
-            case 1:
-                $date = $this->getDayTime();
-                break;
-            case 2:
-                $date = $this->getWeekTime();
-                break;
-            case 3:
-                $date = $this->getMonthTime();
-                break;
-            case 4:
-                $date = $this->getYearTime();
-                break;
+        if (is_int((int)$time)) {
+            switch ($time) {
+                case 1:
+                    $date = $this->getDayTime();
+                    break;
+                case 2:
+                    $date = $this->getWeekTime();
+                    break;
+                case 3:
+                    $date = $this->getMonthTime();
+                    break;
+                case 4:
+                    $date = $this->getYearTime();
+                    break;
                 default;
-                break;
+                    break;
+            }
+        }
+
+        if (is_array($time)) {
+            $date = $time;
+        }
+
+        if (!$id) {
+            // 获取用户id
+            $id = $this->user()->id;
         }
         $data = [];
-
-        // 获取用户id
-        $id = $this->user()->id;
-
         //获取该用户的新增房源数量
         $data['house_num'] = OfficeBuildingHouse::where('guardian', $id)->whereBetween('created_at', $date)->count();
         //获取该用户新增客源
@@ -387,4 +453,123 @@ class HomePagesService
         }
         return $data;
     }
+
+    /**
+     * 说明: 获取房源或客户平台本周、本月环比数据
+     *
+     * @param $model
+     * @return array
+     * @author 刘坤涛
+     */
+    public function getRingThanData($model)
+    {
+        $data = [];
+        //获取本月平台新增房源
+        $month_num = $this->getAddedData($model,null, $this->getMonthTime());
+        //获取本周平台新增房源
+        $week_num  = $this->getAddedData($model, null, $this->getWeekTime());
+        //获取上月新增数量
+        $last_month_num = $this->getAddedData($model, null, $this->getLastMonthTime());
+        //获取上周新增数量
+        $last_week_num = $this->getAddedData($model, null, $this->getLastWeekTime());
+        $data['month_num'] = $month_num;
+        $data['week_num'] = $week_num;
+        //环比上月数据
+        if ($last_month_num == 0) {
+            $data['ring_than_month'] = 0 . '%';
+        } else {
+            $data['ring_than_month'] = (int)(($month_num - $last_month_num) / $last_month_num * 100) . '%';
+        }
+        //环比上周数据
+        if ($last_week_num == 0) {
+            $data['ring_than_week'] = 0 . '%';
+        } else {
+            $data['ring_than_week'] = (int)(($week_num - $last_week_num) / $last_week_num * 100) . '%';
+        }
+        return $data;
+    }
+
+    /**
+     * 说明: 根据房源或客源数量确定Y轴坐标
+     *
+     * @param $num
+     * @return array
+     * @author 刘坤涛
+     */
+    public function getCoordinate($num)
+    {
+        if ($num < 20) {
+            $num = 20;
+        } else {
+            $end = substr($num, -1, 1);
+            $value = substr($num, -2, 1);
+            if ($end != 0 || $value % 2 != 0) {
+                if ($value >= 0 && $value < 2 ) {
+                    $num = substr_replace($num, 20, -2);
+                } elseif ($value >= 2 && $value < 4) {
+                    $num = substr_replace($num, 40, -2);
+                } elseif ($value >= 4 && $value < 6) {
+                    $num = substr_replace($num, 60, -2);
+                } elseif ($value >= 6 && $value < 8)  {
+                    $num = substr_replace($num, 80, -2);
+                } elseif ( $value >= 8) {
+                    $num = substr_replace($num, 80, -2) + 20;
+                }
+            }
+        }
+        $data[] = 0;
+        $data[] = $num / 4;
+        $data[] = (int)$num;
+        return $data;
+    }
+
+    /**
+     * 说明: 获取本周或者本月图表数据
+     *
+     * @param $model
+     * @param $time
+     * @return array
+     * @author 刘坤涛
+     */
+    public function getChartData($model, $time)
+    {
+        $weekArr=array("周日","周一","周二","周三","周四","周五","周六");
+        $data = [];
+        $item = [];
+        switch ($time) {
+            //获取本周数据
+            case 1:
+                $date = $this->getWeekDayTime();
+                foreach ($date as $v) {
+                    $item[date('m-d',strtotime($v['start'])) . $weekArr[date('w',strtotime($v['start']))]] = $this->getAddedData($model,null,$v);
+                }
+                $num = $this->getAddedData($model,null, $this->getWeekTime());
+                break;
+            //获取本月数据
+            case 2:
+                $date = $this->getMonthDayTime();
+                foreach ($date as $v) {
+                    $item[date('Y-m-d',strtotime($v['start']))] = $this->getAddedData($model,null,$v);
+                }
+                $num = $this->getAddedData($model,null, $this->getMonthTime());
+                break;
+                default;
+                break;
+        }
+        $data ['y'] =  $this->getCoordinate($num);
+        $data['x'] = $item;
+        return $data;
+    }
+
+    public function getSalesmanData($request)
+    {
+        $time = $this->getDayTime();
+        //获取登录人等级
+        $level = $this->user()->level;
+        switch ($level) {
+
+
+        }
+    }
+
 }
