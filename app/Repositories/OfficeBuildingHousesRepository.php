@@ -82,34 +82,35 @@ class OfficeBuildingHousesRepository extends BaseRepository
 //    }
     public function officeBuildingHousesList(
         $per_page,
-        $condition,
-        $request
+        $condition
     )
     {
         $result = $this->model;
 
-        if (!empty($request->validList)) {
-            // 有效房源
-            if (!empty($condition->order)) {
-                $result = $result->orderBy('start_track_time', $condition->start_track_time);
+        if (!empty($condition->validList)) {
+            if ($condition->status == 1 || $condition->status == 2) {
+                // 有效房源
+                if (!empty($condition->order)) {
+                    $result = $result->orderBy('start_track_time', $condition->start_track_time);
+                } else {
+                    $result = $result->orderBy('start_track_time', 'desc');
+                }
             } else {
-                $result = $result->orderBy('start_track_time', 'desc');
+                // 房源状态
+                if (!empty($condition->order)) {
+                    $result = $result->orderBy('updated_at', $condition->order);
+                } else {
+                    $result = $result->orderBy('updated_at', 'desc');
+                }
             }
-        } elseif (!empty($request->houseStatusList)) {
-            // 房源状态
-            if (!empty($condition->order)) {
-                $result = $result->orderBy('updated_at', $condition->order);
-            } else {
-                $result = $result->orderBy('updated_at', 'desc');
-            }
-        } elseif (!empty($request->newHoustList)) {
+        } elseif (!empty($condition->newHoustList)) {
             // 最新房源
-            $result = $request->whereBetween('created_at', [date('Y-m-d H:i:s', strtotime('yesterday')), date('Y-m-d H:i:s', time())]);
+            $result = $result->whereBetween('created_at', [date('Y-m-d H:i:s', strtotime('yesterday')), date('Y-m-d H:i:s', time())]);
 
             if (!empty($condition->order)) {
                 $result = $result->orderBy('created_at', $condition->order);
             }
-        } elseif (!empty($request->myHoustList)) {
+        } elseif (!empty($condition->myHoustList)) {
             // 我的房源
             $result = $result->where('guardian', Common::user()->id);
 
