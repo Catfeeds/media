@@ -49,10 +49,17 @@ class ManagerAddPermission extends Command
     public function managerAddPermission()
     {
         // 加入权限
+//        Permission::create([
+//            'name' => 'house_img_auditing',
+//            'guard_name' => 'web',
+//            'label' => '房源修改图片审核列表',
+//            'group_id' => 1,
+//        ]);
+
         Permission::create([
-            'name' => 'house_img_auditing',
+            'name' => 'house_state_list',
             'guard_name' => 'web',
-            'label' => '房源修改图片审核列表',
+            'label' => '房源状态列表',
             'group_id' => 1,
         ]);
 
@@ -64,6 +71,6 @@ class ManagerAddPermission extends Command
             'guard_name' => 'web',
         ])->first();
 
-        $role->givePermissionTo(['house_img_auditing']);
+        $role->givePermissionTo(['house_state_list']);
     }
 }

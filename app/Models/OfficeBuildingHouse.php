@@ -336,9 +336,9 @@ class OfficeBuildingHouse extends BaseModel
     public function getNewHouseAttribute()
     {
         if (strtotime($this->created_at->format('Y-m-d H:i:s')) >= strtotime('yesterday')){
-            return '新房源';
+            return '新';
         } else {
-            return '老房源';
+            return '';
         }
     }
 
