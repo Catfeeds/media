@@ -33,7 +33,8 @@ class HousesController extends APIBaseController
         // 拿到房子
         $house = $housesService->getHouse ($request);
         // 判断当前登录用户是否有权限查看该房源业主信息和查看记录
-        if (empty($house) || empty($house->see_power_cn)) return $this->sendError('房源异常');
+//        if (empty($house) || empty($house->see_power_cn)) return $this->sendError('房源异常');
+        if (empty($house)) return $this->sendError('房源异常');
         // 获取业主信息
         $ownerInfo = $house->owner_info;
         // 获取查看记录
@@ -157,7 +158,7 @@ class HousesController extends APIBaseController
             if (empty($result)) return $this->sendError('记录表写入失败');
         }
 
-        return $this->sendResponse(true, '操作成功');
+        return $this->sendResponse(true, '操作成功,正在审核中');
     }
 
     /**
@@ -193,7 +194,7 @@ class HousesController extends APIBaseController
             return $this->sendError('没有房源修改图片审核列表权限','403');
         }
 
-        $res = $housesService->houseImgAuditing(json_decode($request->condition));
+        $res = $housesService->houseImgAuditing($request);
         return $this->sendResponse($res,'房源图片审核列表获取成功');
     }
 
