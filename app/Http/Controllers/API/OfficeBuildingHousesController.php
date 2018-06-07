@@ -30,6 +30,7 @@ class OfficeBuildingHousesController extends APIBaseController
 
 //        $result = $officeBuildingHousesRepository->officeBuildingHousesList($request->per_page??null, json_decode($request->condition),[1,2]);
 
+
         $result = $officeBuildingHousesRepository->officeBuildingHousesList($request->per_page??null, json_decode($request->condition));
 
         return $this->sendResponse($result, '写字楼房源列表获取成功');

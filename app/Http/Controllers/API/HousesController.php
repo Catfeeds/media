@@ -228,6 +228,7 @@ class HousesController extends APIBaseController
     )
     {
         $res = $housesService->auditingOperation($request);
+        if (empty($res)) return $this->sendError('审核操作失败');
         return $this->sendResponse($res,'审核操作成功');
     }
 }
