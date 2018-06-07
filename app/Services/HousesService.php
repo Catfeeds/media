@@ -53,6 +53,25 @@ class HousesService
     }
 
     /**
+     * 说明: 房源图片最后修改人
+     *
+     * @param $id
+     * @return string
+     * @author 罗振
+     */
+    public function officeHouseDetails(
+        $id
+    )
+    {
+        $houseImgRecord = HouseImgRecord::where(['house_id' => $id, 'model' => 'App\Models\OfficeBuildingHouse', 'status' => 3])->get()->last();
+        if (!empty($houseImgRecord)) {
+            return User::find($houseImgRecord->user_id)->real_name;
+        }
+
+        return '';
+    }
+    
+    /**
      * 说明：通过表格楼栋分割成标准数据
      *
      * @param $str
@@ -120,15 +139,6 @@ class HousesService
 
         // 判断是否为整层
         if (count($temp) > 1) {
-            // 包含英文验证
-            $preg2= '/[A-Za-z]/';
-            if(preg_match($preg2, $request->house_number)){
-                return [
-                    'status' => false,
-                    'message' => '所填房号格式不正确'
-                ];
-            }
-
             foreach ($temp as $v) {
                 // 判断楼层
                 $temp2 = strpos($v, $request->floor);
@@ -166,7 +176,7 @@ class HousesService
                 }
             } else {
                 // 判断楼层
-                $temp2 = strpos($request->house_number, $request->house_number);
+                $temp2 = strpos($request->house_number, $request->floor);
                 // 判断楼层是否正确(肯定是从第0位开始)
                 if ($temp2 !== 0) {
                     return [
@@ -233,7 +243,7 @@ class HousesService
     public function getViewRecord($house, $per_page = null)
     {
         $model = get_class($house);
-        return  OwnerViewRecord::where(['house_id' => $house->id, 'house_model' => $model])->paginate($per_page);
+        return  OwnerViewRecord::where(['house_id' => $house->id, 'house_model' => $model])->orderBy('created_at', 'desc')->paginate($per_page);
     }
 
     /**
@@ -341,54 +351,51 @@ class HousesService
     /**
      * 说明: 房源图片审核列表
      *
+     * @param $request
      * @return mixed
      * @author 罗振
      */
-    public function houseImgAuditing($condition)
+    public function houseImgAuditing($request)
     {
         $temp = HouseImgRecord::where(['model' => 'App\Models\OfficeBuildingHouse']);
+
         // 申请人
-        if (!empty($condition->applicant)) {
-            $userId = User::where('real_name', $condition->applicant)->pluck('id')->toArray();
+        if (!empty($request->applicant)) {
+            $userId = User::where('real_name', $request->applicant)->pluck('id')->toArray();
             $temp = $temp->whereIn('user_id', $userId);
         }
 
         // 排序
-        if (!empty($condition->order)) {
-            $temp = $temp->orderBy('created_at', $condition->order);
+        if (!empty($request->order)) {
+            $temp = $temp->orderBy('created_at', $request->order);
         }
 
-        $houseId = $temp->pluck('house_id')->toArray();
+        $officeBuildingHouse = $temp->with('officeBuildingHouse.buildingBlock.building')->whereHas('officeBuildingHouse', function ($house) use($request) {
+            // 楼盘
+            if (!empty($request->build)) {
+                // 楼盘包含的楼座
+                $blockId = array_column(Building::find($request->build)->buildingBlocks->toArray(), 'id');
+                $house = $house->whereIn('building_block_id', $blockId);
+            }
 
-        $res = OfficeBuildingHouse::whereIn('id', $houseId)->orderByRaw("FIELD(id, " . implode(", ", $houseId) . ")");
+            // 维护人
+            if (!empty($request->guardian_cn)) {
+                $userId = User::where('real_name', $request->guardian_cn)->pluck('id')->toArray();
+                $house = $house->whereIn('guardian', $userId);
+            }
 
-        // 楼盘
-        if (!empty($condition->build)) {
-            // 楼盘包含的楼座
-            $blockId = array_column(Building::find($condition->build)->buildingBlocks->toArray(), 'id');
-            $res = $res->whereIn('building_block_id', $blockId);
-        }
-
-        // 维护人
-        if (!empty($condition->guardian_cn)) {
-            $userId = User::where('real_name', $condition->guardian_cn)->pluck('id')->toArray();
-            $res = $res->whereIn('guardian', $userId);
-        }
-
-        // 房源编号
-        if (!empty($condition->house_number)) {
-            $res = $res->where('house_identifier', $condition->house_number);
-        }
-
-        $officeBuildingHouse = $res->paginate(10);
-
+            // 房源编号
+            if (!empty($request->house_number)) {
+                $house->where('house_identifier', $request->house_number);
+            }
+        })->paginate($request->per_page);
 
         foreach ($officeBuildingHouse as $v) {
-            $v->applicant = $v->houseImgRecord->user->real_name;
-            $v->buildingName = $v->buildingBlock->building->name;
-            $v->record_status_cn = $v->houseImgRecord->status_cn;
-            $v->create_time = $v->houseImgRecord->created_at->format('Y-m-d H:i:s');
-            $v->record_id = $v->houseImgRecord->id;
+            $v->applicant = $v->user->real_name;
+            $v->houseName = $v->officeBuildingHouse->house_number;
+            $v->guardian_cn = $v->officeBuildingHouse->guardian_cn;
+            $v->buildingName = $v->officeBuildingHouse->buildingBlock->building->name;
+            $v->house_identifier = $v->officeBuildingHouse->house_identifier;
         }
 
         return $officeBuildingHouse;
@@ -428,6 +435,25 @@ class HousesService
         $request
     )
     {
-        return HouseImgRecord::where(['id' => $request->id])->update(['status' => $request->status, 'remarks' => $request->remarks]);
+        \DB::beginTransaction();
+        try {
+            $houseImgRecord = HouseImgRecord::find($request->id);
+            $houseImgRecord->status = $request->status;
+            $houseImgRecord->remarks = $request->remarks;
+            if (!$houseImgRecord->save()) throw new \Exception('状态修改失败');
+
+            if ($request->status == 3) {
+                $house = OfficeBuildingHouse::find($houseImgRecord->house_id);
+                $house->indoor_img = $houseImgRecord->indoor_img;
+                if (!$house->save()) throw new \Exception('写字楼房源图片修改失败');
+            }
+
+            \DB::commit();
+            return true;
+        } catch (\Exception $exception) {
+            \DB::rollBack();
+            \Log::error($exception->getMessage());
+            return false;
+        }
     }
 }

@@ -28,9 +28,7 @@ class OfficeBuildingHousesController extends APIBaseController
             return $this->sendError('没有房源列表权限', '403');
         }
 
-//        $result = $officeBuildingHousesRepository->officeBuildingHousesList($request->per_page??null, json_decode($request->condition),[1,2]);
-
-        $result = $officeBuildingHousesRepository->officeBuildingHousesList($request->per_page??null, json_decode($request->condition));
+        $result = $officeBuildingHousesRepository->officeBuildingHousesList($request->per_page??null, $request);
 
         return $this->sendResponse($result, '写字楼房源列表获取成功');
     }
@@ -81,6 +79,7 @@ class OfficeBuildingHousesController extends APIBaseController
     )
     {
         $officeBuildingHouse->makeVisible('owner_info');
+        $officeBuildingHouse->updateImgUserName = $housesService->officeHouseDetails($officeBuildingHouse->id);
         $officeBuildingHouse->allId = $housesService->adoptBuildingBlockGetCity($officeBuildingHouse->building_block_id);
 
         return $this->sendResponse($officeBuildingHouse, '写字楼修改之前原始数据!');
@@ -182,25 +181,6 @@ class OfficeBuildingHousesController extends APIBaseController
     }
 
     /**
-     * 说明: 获取我的写字楼房源类表
-     *
-     * @param Request $request
-     * @param OfficeBuildingHousesRepository $officeBuildingHousesRepository
-     * @return \Illuminate\Http\JsonResponse
-     * @author 刘坤涛
-     */
-    public function myOfficeBuildingHousesList
-    (
-        Request $request,
-        OfficeBuildingHousesRepository $officeBuildingHousesRepository
-    )
-    {
-        $user_id = Common::user()->id;
-        $result = $officeBuildingHousesRepository->officeBuildingHousesList($request->per_page??null, json_decode($request->condition), [1,2,7], $user_id);
-        return $this->sendResponse($result, '获取我的写字楼房源列表成功');
-    }
-
-    /**
      * 说明: 上线房源
      *
      * @param OfficeBuildingHousesRequest $request
@@ -215,52 +195,5 @@ class OfficeBuildingHousesController extends APIBaseController
     {
         $res = $repository->updateShelf($request);
         return $this->sendResponse($res, '上线成功');
-    }
-
-    /**
-     * 说明: 新增房源列表
-     *
-     * @param Request $request
-     * @param OfficeBuildingHousesRepository $officeBuildingHousesRepository
-     * @return \Illuminate\Http\JsonResponse
-     * @author 罗振
-     */
-    public function newHousesList(
-        Request $request,
-        OfficeBuildingHousesRepository $officeBuildingHousesRepository
-    )
-    {
-        // 判断用户权限
-        if (empty(Common::user()->can('house_list'))) {
-            return $this->sendError('没有房源列表权限', '403');
-        }
-
-        $result = $officeBuildingHousesRepository->newHousesList($request->per_page??null, json_decode($request->condition));
-        return $this->sendResponse($result, '写字楼新增房源列表获取成功');
-    }
-
-    /**
-     * 说明: 房源状态列表
-     *
-     * @param Request $request
-     * @param OfficeBuildingHousesRepository $officeBuildingHousesRepository
-     * @return \Illuminate\Http\JsonResponse
-     * @author 罗振
-     */
-    public function houseStateList(
-        Request $request,
-        OfficeBuildingHousesRepository $officeBuildingHousesRepository
-    )
-    {
-        // 判断用户权限
-        if (empty(Common::user()->can('house_state_list'))) {
-            return $this->sendError('没有房源状态列表权限', '403');
-        }
-
-        $result = $officeBuildingHousesRepository->houseStateList($request->per_page??null, json_decode($request->condition));
-        return $this->sendResponse($result, '写字楼新增房源列表获取成功');
-
-
-
     }
 }

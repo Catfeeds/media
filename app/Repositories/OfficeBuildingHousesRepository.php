@@ -4,7 +4,9 @@ namespace App\Repositories;
 use App\Handler\Common;
 use App\Models\Building;
 use App\Models\OfficeBuildingHouse;
+use App\Models\Storefront;
 use App\Services\HousesService;
+use App\User;
 use Carbon\Carbon;
 
 class OfficeBuildingHousesRepository extends BaseRepository
@@ -21,139 +23,101 @@ class OfficeBuildingHousesRepository extends BaseRepository
      * 说明: 写字楼房源列表
      *
      * @param $per_page
-     * @param $condition
-     * @param $houseStatus
-     * @param null $user_id
+     * @param $request
      * @return mixed
      * @author 罗振
      */
-//    public function officeBuildingHousesList(
-//        $per_page,
-//        $condition,
-//        $houseStatus,
-//        $user_id = null
-//    )
-//    {
-//        $result = $this->model->orderBy('start_track_time', 'desc');
-//        if (!empty($user_id)) $result = $result->where('guardian', $user_id);
-//        if (!empty($condition->build)) {
-//            // 楼盘包含的楼座
-//            $blockId = array_column(Building::find($condition->build)->buildingBlocks->toArray(), 'id');
-//            $result = $result->whereIn('building_block_id', $blockId);
-//        }
-//
-//        // 最小面积
-//        if (!empty($condition->min_acreage)) {
-//            $result = $result->where('constru_acreage', ">=", (int)$condition->min_acreage);
-//        }
-//        // 最大面积
-//        if (!empty($condition->max_acreage)) {
-//            $result = $result->where('constru_acreage', "<=", (int)$condition->max_acreage);
-//        }
-//
-//        // 最小单价
-//        if (!empty($condition->min_unit_price)) {
-//            $result = $result->where('unit_price', '>=', $condition->min_unit_price);
-//        }
-//
-//        // 最大单价
-//        if (!empty($condition->max_unit_price)) {
-//            $result = $result->where('unit_price', '<=', $condition->max_unit_price);
-//        }
-//
-//        // 房源编号
-//        if (!empty($condition->house_identifier)) {
-//            $result = $result->where('house_identifier', $condition->house_identifier);
-//        }
-//
-//        // 房源业务状态
-//        if (!empty($condition->status)) {
-//            $result = $result->where('house_busine_state', $condition->status);
-//        } else {
-//            $result = $result->whereIn('house_busine_state', $houseStatus);
-//        }
-//
-//        // 跟进排序排序
-//        if (!empty($condition->order)) {
-//            $result = $result->orderBy('start_track_time', $condition->start_track_time);
-//        }
-//
-//        return $result->paginate($per_page??10);
-//    }
     public function officeBuildingHousesList(
         $per_page,
-        $condition
+        $request
     )
     {
-        $result = $this->model;
+        $result = $this->model->where('house_busine_state', $request->status);
+        // 用户信息
+        $user = Common::user();
 
-        if (!empty($condition->validList)) {
-            if ($condition->status == 1 || $condition->status == 2) {
+        if (!empty($request->validList)) {
+            if ($request->status == 7) {
+                if ($user->level == 2) {
+                    $storefront = Storefront::where(['area_manager_id' => $user->id])->first();
+                    $users = User::where(['ascription_store' => $storefront->id])->pluck('id')->toArray();
+                    $users[] = $user->id;
+                    $result = $result->whereIn('guardian', $users);
+                } elseif ($user->level == 3) {
+                    $storefront = Storefront::where('user_id', $user->id)->first();
+                    $users = User::where(['ascription_store' => $storefront->id])->pluck('id')->toArray();
+                    $result = $result->whereIn('guardian', $users);
+                } elseif ($user->level == 4) {
+                    $result = $result->where('guardian', $user->id);
+                }
+            }
+
+            if ($request->status == 1 || $request->status == 2) {
                 // 有效房源
-                if (!empty($condition->order)) {
-                    $result = $result->orderBy('start_track_time', $condition->start_track_time);
+                if (!empty($request->order)) {
+                    $result = $result->orderBy('start_track_time', $request->order);
                 } else {
                     $result = $result->orderBy('start_track_time', 'desc');
                 }
             } else {
                 // 房源状态
-                if (!empty($condition->order)) {
-                    $result = $result->orderBy('updated_at', $condition->order);
+                if (!empty($request->order)) {
+                    $result = $result->orderBy('updated_at', $request->order);
                 } else {
                     $result = $result->orderBy('updated_at', 'desc');
                 }
             }
-        } elseif (!empty($condition->newHoustList)) {
+        } elseif (!empty($request->newHoustList)) {
             // 最新房源
             $result = $result->whereBetween('created_at', [date('Y-m-d H:i:s', strtotime('yesterday')), date('Y-m-d H:i:s', time())]);
 
-            if (!empty($condition->order)) {
-                $result = $result->orderBy('created_at', $condition->order);
+            if (!empty($request->order)) {
+                $result = $result->orderBy('created_at', $request->order);
             }
-        } elseif (!empty($condition->myHoustList)) {
+        } elseif (!empty($request->myHoustList)) {
             // 我的房源
-            $result = $result->where('guardian', Common::user()->id);
-
-            if (!empty($condition->order)) {
-                $result = $result->orderBy('start_track_time', $condition->start_track_time);
+            $result = $result->where('guardian', $user->id);
+            if ($request->status != 7) {
+                $orderBy = 'start_track_time';  // 排序
             } else {
-                $result = $result->orderBy('start_track_time', 'desc');
+                $orderBy = 'updated_at';    // 排序
+            }
+
+            if (!empty($request->order)) {
+                $result = $result->orderBy($orderBy, $request->order);
+            } else {
+                $result = $result->orderBy($orderBy, 'desc');
             }
         }
 
-        // 房源业务状态
-        if (!empty($condition->status)) {
-            $result = $result->where('house_busine_state', $condition->status);
-        }
-
-        if (!empty($condition->build)) {
+        if (!empty($request->build)) {
             // 楼盘包含的楼座
-            $blockId = array_column(Building::find($condition->build)->buildingBlocks->toArray(), 'id');
+            $blockId = array_column(Building::find($request->build)->buildingBlocks->toArray(), 'id');
             $result = $result->whereIn('building_block_id', $blockId);
         }
 
         // 最小面积
-        if (!empty($condition->min_acreage)) {
-            $result = $result->where('constru_acreage', ">=", (int)$condition->min_acreage);
+        if (!empty($request->min_acreage)) {
+            $result = $result->where('constru_acreage', ">=", (int)$request->min_acreage);
         }
         // 最大面积
-        if (!empty($condition->max_acreage)) {
-            $result = $result->where('constru_acreage', "<=", (int)$condition->max_acreage);
+        if (!empty($request->max_acreage)) {
+            $result = $result->where('constru_acreage', "<=", (int)$request->max_acreage);
         }
 
         // 最小单价
-        if (!empty($condition->min_unit_price)) {
-            $result = $result->where('unit_price', '>=', $condition->min_unit_price);
+        if (!empty($request->min_unit_price)) {
+            $result = $result->where('unit_price', '>=', $request->min_unit_price);
         }
 
         // 最大单价
-        if (!empty($condition->max_unit_price)) {
-            $result = $result->where('unit_price', '<=', $condition->max_unit_price);
+        if (!empty($request->max_unit_price)) {
+            $result = $result->where('unit_price', '<=', $request->max_unit_price);
         }
 
         // 房源编号
-        if (!empty($condition->house_identifier)) {
-            $result = $result->where('house_identifier', $condition->house_identifier);
+        if (!empty($request->house_identifier)) {
+            $result = $result->where('house_identifier', $request->house_identifier);
         }
 
         return $result->paginate($per_page??10);
@@ -342,127 +306,5 @@ class OfficeBuildingHousesRepository extends BaseRepository
         return $this->model->where('id', $request->id)->update([
             'shelf' => 1
         ]);
-    }
-
-    /**
-     * 说明: 新增房源列表
-     *
-     * @param $per_page
-     * @param $condition
-     * @return mixed
-     * @author 罗振
-     */
-    public function newHousesList(
-        $per_page,
-        $condition
-    )
-    {
-        $result = $this->model->whereBetween('created_at', [date('Y-m-d H:i:s', strtotime('yesterday')), date('Y-m-d H:i:s', time())]);
-
-        if (!empty($condition->build)) {
-            // 楼盘包含的楼座
-            $blockId = array_column(Building::find($condition->build)->buildingBlocks->toArray(), 'id');
-            $result = $result->whereIn('building_block_id', $blockId);
-        }
-
-        // 最小面积
-        if (!empty($condition->min_acreage)) {
-            $result = $result->where('constru_acreage', ">=", (int)$condition->min_acreage);
-        }
-        // 最大面积
-        if (!empty($condition->max_acreage)) {
-            $result = $result->where('constru_acreage', "<=", (int)$condition->max_acreage);
-        }
-
-        // 最小单价
-        if (!empty($condition->min_unit_price)) {
-            $result = $result->where('unit_price', '>=', $condition->min_unit_price);
-        }
-
-        // 最大单价
-        if (!empty($condition->max_unit_price)) {
-            $result = $result->where('unit_price', '<=', $condition->max_unit_price);
-        }
-
-        // 房源编号
-        if (!empty($condition->house_identifier)) {
-            $result = $result->where('house_identifier', $condition->house_identifier);
-        }
-
-        // 房源业务状态
-        if (!empty($condition->status)) {
-            $result = $result->where('house_busine_state', $condition->status);
-        } else {
-            $result = $result->whereIn('house_busine_state', [1,2]);
-        }
-
-        // 跟进排序排序
-        if (!empty($condition->order)) {
-            $result = $result->orderBy('created_at', $condition->order);
-        }
-
-        return $result->paginate($per_page??10);
-    }
-
-    /**
-     * 说明: 房源状态列表
-     *
-     * @param $per_page
-     * @param $condition
-     * @return mixed
-     * @author 罗振
-     */
-    public function houseStateList(
-        $per_page,
-        $condition
-    )
-    {
-        $result = $this->model;
-
-        if (!empty($condition->build)) {
-            // 楼盘包含的楼座
-            $blockId = array_column(Building::find($condition->build)->buildingBlocks->toArray(), 'id');
-            $result = $result->whereIn('building_block_id', $blockId);
-        }
-
-        // 最小面积
-        if (!empty($condition->min_acreage)) {
-            $result = $result->where('constru_acreage', ">=", (int)$condition->min_acreage);
-        }
-        // 最大面积
-        if (!empty($condition->max_acreage)) {
-            $result = $result->where('constru_acreage', "<=", (int)$condition->max_acreage);
-        }
-
-        // 最小单价
-        if (!empty($condition->min_unit_price)) {
-            $result = $result->where('unit_price', '>=', $condition->min_unit_price);
-        }
-
-        // 最大单价
-        if (!empty($condition->max_unit_price)) {
-            $result = $result->where('unit_price', '<=', $condition->max_unit_price);
-        }
-
-        // 房源编号
-        if (!empty($condition->house_identifier)) {
-            $result = $result->where('house_identifier', $condition->house_identifier);
-        }
-
-        // 房源业务状态
-        if (!empty($condition->status)) {
-            $result = $result->where('house_busine_state', $condition->status);
-        } else {
-            $result = $result->whereIn('house_busine_state', [3,4,5,6]);
-        }
-
-        // 排序
-        if (!empty($condition->order)) {
-            $result = $result->orderBy('updated_at', $condition->order);
-        } else {
-            $result = $result->orderBy('updated_at', 'desc');
-        }
-
-        return $result->paginate($per_page??10);
     }
 }
