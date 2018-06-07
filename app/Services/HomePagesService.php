@@ -383,6 +383,7 @@ class HomePagesService
                 break;
             case 2:
                 $userId = $this->adoptAreaGetUserId();
+                if ($this->user()->level == 2) $userId = $this->adoptAreaGetUserId($this->user()->id);
                 //查询今日新增
                 $data['day_added'] = $this->getAddedData($model, $userId, $day);
                 $data['week_added'] = $this->getAddedData($model, $userId, $week);
