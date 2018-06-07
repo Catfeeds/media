@@ -223,10 +223,8 @@ Route::group(['namespace' => 'API'], function () {
     Route::get('wait_track_house', 'HomePagesController@waitTrackHouse');
     //待跟进客户数据
     Route::get('wait_track_customer', 'HomePagesController@waitTrackCustomer');
-    //写字楼统计数据
-    Route::get('office_statistic', 'HomePagesController@officeStatistic');
-    //客户统计数据
-    Route::get('customer_statistic', 'HomePagesController@customerStatistic');
+    //写字楼统或客户计数据
+    Route::get('statistic_data', 'HomePagesController@statisticData');
     //获取环比数据
     Route::get('get_ring_than_data', 'HomePagesController@getRingThanData');
     //根据本周或者本月获取房源、客户X轴数据

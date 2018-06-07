@@ -193,7 +193,7 @@ class HomePagesService
     }
 
     /**
-     * 说明: 后台首页数据
+     * 说明: 后台首页数据个人新增数据
      *
      * @param $time
      * @return array
@@ -339,30 +339,28 @@ class HomePagesService
      * @return mixed
      * @author 刘坤涛
      */
-    public function adoptAreaGetUserId()
+    public function adoptAreaGetUserId($managerId = null)
     {
         //通过门店查到区域经理id
-        $managerId = Storefront::where('id', $this->getStorefrontId())->first()->area_manager_id;
+        if (!$managerId) $managerId = Storefront::where('id', $this->getStorefrontId())->first()->area_manager_id;
         //查询该区域经理下的所有门店
         $storefrontsId = Storefront::where('area_manager_id', $managerId)->pluck('id')->toArray();
         //查询所有门店下的人员
         $userId = User::whereIn('ascription_store', $storefrontsId)->pluck('id')->toArray();
-        array_push($userId, $managerId);
+        if (!$managerId) array_push($userId, $managerId);
         return $userId;
     }
 
     /**
-     * 说明: 写字楼统计数据
+     * 说明: 写字楼或客源统计数据
      *
      * @param $class
      * @param $id
      * @return array
      * @author 刘坤涛
      */
-    public function officeStatistic($class)
+    public function statisticData($model, $class)
     {
-        //登录用户id
-        $model = 'App\Models\OfficeBuildingHouse';
         //今日时间
         $day = $this->getDayTime();
         //本周时间
@@ -396,59 +394,9 @@ class HomePagesService
                 $data['day_added'] = $this->getAddedData($model, null, $day);
                 $data['week_added'] = $this->getAddedData($model, null, $week);
                 $data['month_added'] = $this->getAddedData($model, null, $month);
-                $data['all_added'] = OfficeBuildingHouse::count();
+                $data['all_added'] = $model::count();
                 break;
                 default;
-                break;
-        }
-        return $data;
-    }
-
-    /**
-     * 说明: 客户统计数据
-     *
-     * @param $class
-     * @return mixed
-     * @author 刘坤涛
-     */
-    public function customerStatistic($class)
-    {
-        $model = 'App\Models\Custom';
-        //今日时间
-        $day = $this->getDayTime();
-        //本周时间
-        $week = $this->getWeekTime();
-        //本月时间
-        $month = $this->getMonthTime();
-        switch ($class) {
-            case 1:
-                //门店数据
-                $userId = $this->adoptStorefrontGetUserId();
-                //今日新增
-                $data['day_added'] = $this->getAddedData($model, $userId, $day);
-                //本周新增
-                $data['week_added'] = $this->getAddedData($model, $userId, $week);
-                //本月新增
-                $data['month_added'] = $this->getAddedData($model, $userId, $month);
-                //全部客户
-                $data['all_added'] = $this->getAddedData($model, $userId);
-                break;
-            case 2:
-                //区域数据
-                $userId = $this->adoptAreaGetUserId();
-                $data['day_added'] = $this->getAddedData($model, $userId, $day);
-                $data['week_added'] = $this->getAddedData($model, $userId, $week);
-                $data['month_added'] = $this->getAddedData($model, $userId, $month);
-                $data['all_added'] = $this->getAddedData($model, $userId);
-                break;
-            case 3:
-                //查询平台新增
-                $data['day_added'] = $this->getAddedData($model, null, $day);
-                $data['week_added'] = $this->getAddedData($model, null, $week);
-                $data['month_added'] = $this->getAddedData($model, null, $month);
-                $data['all_added'] = Custom::count();
-                break;
-            default;
                 break;
         }
         return $data;
@@ -523,6 +471,7 @@ class HomePagesService
         return $data;
     }
 
+
     /**
      * 说明: 获取本周或者本月图表数据
      *
@@ -561,15 +510,65 @@ class HomePagesService
         return $data;
     }
 
+    /**
+     * 说明: 获取业务员业务数据
+     *
+     * @param null $user_id
+     * @param null $time
+     * @param null $name
+     * @param null $ascription_store
+     * @param $per_page
+     * @return User
+     * @author 刘坤涛
+     */
+    public function getUserData($user_id = null, $time = null, $name = null, $ascription_store = null, $per_page)
+    {
+        $user = new User();
+        if (!empty($name)) $user = $user->where('real_name', $name);
+        if (!empty($ascription_store))  $user = $user->where('ascription_store', $ascription_store);
+        if (!empty($user_id)) $user = $user->whereIn('id', $user_id);
+        $user = $user->paginate($per_page);
+        foreach ($user as $v) {
+            $v->item = $this->getData($this->getDayTime(), $v->id);
+        }
+        if ($time)
+            foreach ($user as $v) {
+                $v->item = $this->getData($time, $v->id);
+            }
+        return $user;
+    }
+
+    /**
+     * 说明: 根据登录人等级获取下属业务数据
+     *
+     * @param $request
+     * @return User
+     * @author 刘坤涛
+     */
     public function getSalesmanData($request)
     {
-        $time = $this->getDayTime();
+        $id = $this->user()->id;
         //获取登录人等级
         $level = $this->user()->level;
         switch ($level) {
-
-
+            //总经理查看全部人员数据
+            case 1:
+                $user = $this->getUserData(null,$request->time,$request->name,$request->ascription_store,$request->per_page);
+                break;
+            //区域经理查看其管理下的门店成员数据
+            case 2:
+                //获取区域经理id
+                //查询区域经理管理门店的成员id
+                $user_id = $this->adoptAreaGetUserId($id);
+                $user = $this->getUserData($user_id,$request->time,$request->name,$request->ascription_store,$request->per_page);
+                break;
+            case 3:
+            //店长查看店员数据
+                $user_id = $this->adoptStorefrontGetUserId($this->getStorefrontId());
+                $user = $this->getUserData($user_id,$request->time,$request->name,null,$request->per_page);
+                break;
         }
+        return $user;
     }
 
 }
