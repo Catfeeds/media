@@ -63,32 +63,14 @@ class HomePagesController extends APIBaseController
      * @return \Illuminate\Http\JsonResponse
      * @author 刘坤涛
      */
-    public function officeStatistic
+    public function statisticData
     (
         HomePagesService $service,
         Request $request
     )
     {
-        $res = $service->officeStatistic($request->class);
-        return $this->sendResponse($res, '写字楼统计数据获取成功');
-    }
-
-    /**
-     * 说明: 客户统计数据
-     *
-     * @param HomePagesService $service
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     * @author 刘坤涛
-     */
-    public function customerStatistic
-    (
-        HomePagesService $service,
-        Request $request
-    )
-    {
-        $res = $service->customerStatistic($request->class);
-        return $this->sendResponse($res, '客户统计数据获取成功');
+        $res = $service->statisticData($request->model, $request->class);
+        return $this->sendResponse($res, '统计数据获取成功');
     }
 
     /**
