@@ -85,13 +85,13 @@ class OfficeBuildingHousesRepository extends BaseRepository
         $condition
     )
     {
-        $result = $this->model;
+        $result = $this->model->where('house_busine_state', $condition->status);
 
         if (!empty($condition->validList)) {
             if ($condition->status == 1 || $condition->status == 2) {
                 // 有效房源
                 if (!empty($condition->order)) {
-                    $result = $result->orderBy('start_track_time', $condition->start_track_time);
+                    $result = $result->orderBy('start_track_time', $condition->order);
                 } else {
                     $result = $result->orderBy('start_track_time', 'desc');
                 }
@@ -115,15 +115,10 @@ class OfficeBuildingHousesRepository extends BaseRepository
             $result = $result->where('guardian', Common::user()->id);
 
             if (!empty($condition->order)) {
-                $result = $result->orderBy('start_track_time', $condition->start_track_time);
+                $result = $result->orderBy('start_track_time', $condition->order);
             } else {
                 $result = $result->orderBy('start_track_time', 'desc');
             }
-        }
-
-        // 房源业务状态
-        if (!empty($condition->status)) {
-            $result = $result->where('house_busine_state', $condition->status);
         }
 
         if (!empty($condition->build)) {

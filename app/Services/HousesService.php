@@ -428,6 +428,25 @@ class HousesService
         $request
     )
     {
-        return HouseImgRecord::where(['id' => $request->id])->update(['status' => $request->status, 'remarks' => $request->remarks]);
+        \DB::beginTransaction();
+        try {
+            $houseImgRecord = HouseImgRecord::find($request->id);
+            $houseImgRecord->status = $request->status;
+            $houseImgRecord->remarks = $request->remarks;
+            if (!$houseImgRecord->save()) throw new \Exception('状态修改失败');
+
+            if ($request->status == 3) {
+                $house = OfficeBuildingHouse::find($houseImgRecord->house_id);
+                $house->indoor_img = $houseImgRecord->indoor_img;
+                if (!$house->save()) throw new \Exception('写字楼房源图片修改失败');
+            }
+
+            \DB::commit();
+            return true;
+        } catch (\Exception $exception) {
+            \DB::rollBack();
+            \Log::error($exception->getMessage());
+            return false;
+        }
     }
 }
