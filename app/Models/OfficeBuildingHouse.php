@@ -32,7 +32,7 @@ class OfficeBuildingHouse extends BaseModel
         'constru_acreage_cn', 'rent_price_cn', 'increasing_situation_cn',
         'min_acreage_cn', 'guardian_cn', 'storefronts_cn',
         'tracks_time','house_img_cn','disc_type_cn','see_power_cn', 'new_house', 'start_track_time_cn',
-        'created_at_cn'
+        'created_at_cn', 'rent_time_cn'
     ];
 
     protected $hidden = ['owner_info'];
@@ -375,5 +375,16 @@ class OfficeBuildingHouse extends BaseModel
         } else {
             return $this->created_at->format('Y-m-d H:i:s');
         }
+    }
+
+    /**
+     * 说明: 跟进时间
+     *
+     * @return false|string
+     * @author 罗振
+     */
+    public function getRentTimeCnAttribute()
+    {
+        if (!empty($this->rent_time)) return date('Y-m-d', $this->rent_time);
     }
 }
