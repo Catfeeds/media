@@ -3,11 +3,13 @@
 namespace App\Services;
 
 use App\Models\BrowseRecord;
+use App\Models\Building;
 use App\Models\BuildingBlock;
 use App\Models\Collection;
 use App\Models\HouseImgRecord;
 use App\Models\OfficeBuildingHouse;
 use App\Models\OwnerViewRecord;
+use App\User;
 
 class HousesService
 {
@@ -342,11 +344,44 @@ class HousesService
      * @return mixed
      * @author 罗振
      */
-    public function houseImgAuditing($request)
+    public function houseImgAuditing($condition)
     {
-        $houseId = HouseImgRecord::where(['model' => 'App\Models\OfficeBuildingHouse'])->pluck('house_id')->toArray();
+        $temp = HouseImgRecord::where(['model' => 'App\Models\OfficeBuildingHouse']);
+        // 申请人
+        if (!empty($condition->applicant)) {
+            $userId = User::where('real_name', $condition->applicant)->pluck('id')->toArray();
+            $temp = $temp->whereIn('user_id', $userId);
+        }
 
-        $officeBuildingHouse = OfficeBuildingHouse::where('id', $houseId)->paginate(1);
+        // 排序
+        if (!empty($condition->order)) {
+            $temp = $temp->orderBy('created_at', $condition->order);
+        }
+
+        $houseId = $temp->pluck('house_id')->toArray();
+
+        $res = OfficeBuildingHouse::whereIn('id', $houseId)->orderByRaw("FIELD(id, " . implode(", ", $houseId) . ")");
+
+        // 楼盘
+        if (!empty($condition->build)) {
+            // 楼盘包含的楼座
+            $blockId = array_column(Building::find($condition->build)->buildingBlocks->toArray(), 'id');
+            $res = $res->whereIn('building_block_id', $blockId);
+        }
+
+        // 维护人
+        if (!empty($condition->guardian_cn)) {
+            $userId = User::where('real_name', $condition->guardian_cn)->pluck('id')->toArray();
+            $res = $res->whereIn('guardian', $userId);
+        }
+
+        // 房源编号
+        if (!empty($condition->house_number)) {
+            $res = $res->where('house_identifier', $condition->house_number);
+        }
+
+        $officeBuildingHouse = $res->paginate(10);
+
 
         foreach ($officeBuildingHouse as $v) {
             $v->applicant = $v->houseImgRecord->user->real_name;

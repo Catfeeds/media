@@ -31,6 +31,8 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('HouseAndCustomToPublic')->dailyAt('02:00');
+        // 房源业务状态
+        $schedule->command('houseBusineStateHandle')->dailyAt('02:00');
     }
 
     /**

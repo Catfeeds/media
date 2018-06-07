@@ -5,6 +5,7 @@ use App\Handler\Common;
 use App\Models\Building;
 use App\Models\OfficeBuildingHouse;
 use App\Services\HousesService;
+use Carbon\Carbon;
 
 class OfficeBuildingHousesRepository extends BaseRepository
 {
@@ -21,18 +22,110 @@ class OfficeBuildingHousesRepository extends BaseRepository
      *
      * @param $per_page
      * @param $condition
+     * @param $houseStatus
      * @param null $user_id
      * @return mixed
      * @author 罗振
      */
+//    public function officeBuildingHousesList(
+//        $per_page,
+//        $condition,
+//        $houseStatus,
+//        $user_id = null
+//    )
+//    {
+//        $result = $this->model->orderBy('start_track_time', 'desc');
+//        if (!empty($user_id)) $result = $result->where('guardian', $user_id);
+//        if (!empty($condition->build)) {
+//            // 楼盘包含的楼座
+//            $blockId = array_column(Building::find($condition->build)->buildingBlocks->toArray(), 'id');
+//            $result = $result->whereIn('building_block_id', $blockId);
+//        }
+//
+//        // 最小面积
+//        if (!empty($condition->min_acreage)) {
+//            $result = $result->where('constru_acreage', ">=", (int)$condition->min_acreage);
+//        }
+//        // 最大面积
+//        if (!empty($condition->max_acreage)) {
+//            $result = $result->where('constru_acreage', "<=", (int)$condition->max_acreage);
+//        }
+//
+//        // 最小单价
+//        if (!empty($condition->min_unit_price)) {
+//            $result = $result->where('unit_price', '>=', $condition->min_unit_price);
+//        }
+//
+//        // 最大单价
+//        if (!empty($condition->max_unit_price)) {
+//            $result = $result->where('unit_price', '<=', $condition->max_unit_price);
+//        }
+//
+//        // 房源编号
+//        if (!empty($condition->house_identifier)) {
+//            $result = $result->where('house_identifier', $condition->house_identifier);
+//        }
+//
+//        // 房源业务状态
+//        if (!empty($condition->status)) {
+//            $result = $result->where('house_busine_state', $condition->status);
+//        } else {
+//            $result = $result->whereIn('house_busine_state', $houseStatus);
+//        }
+//
+//        // 跟进排序排序
+//        if (!empty($condition->order)) {
+//            $result = $result->orderBy('start_track_time', $condition->start_track_time);
+//        }
+//
+//        return $result->paginate($per_page??10);
+//    }
     public function officeBuildingHousesList(
         $per_page,
-        $condition,
-        $user_id = null
+        $condition
     )
     {
-        $result = $this->model->orderBy('start_track_time', 'desc');
-        if (!empty($user_id)) $result = $result->where('guardian', $user_id);
+        $result = $this->model;
+
+        if (!empty($condition->validList)) {
+            if ($condition->status == 1 || $condition->status == 2) {
+                // 有效房源
+                if (!empty($condition->order)) {
+                    $result = $result->orderBy('start_track_time', $condition->start_track_time);
+                } else {
+                    $result = $result->orderBy('start_track_time', 'desc');
+                }
+            } else {
+                // 房源状态
+                if (!empty($condition->order)) {
+                    $result = $result->orderBy('updated_at', $condition->order);
+                } else {
+                    $result = $result->orderBy('updated_at', 'desc');
+                }
+            }
+        } elseif (!empty($condition->newHoustList)) {
+            // 最新房源
+            $result = $result->whereBetween('created_at', [date('Y-m-d H:i:s', strtotime('yesterday')), date('Y-m-d H:i:s', time())]);
+
+            if (!empty($condition->order)) {
+                $result = $result->orderBy('created_at', $condition->order);
+            }
+        } elseif (!empty($condition->myHoustList)) {
+            // 我的房源
+            $result = $result->where('guardian', Common::user()->id);
+
+            if (!empty($condition->order)) {
+                $result = $result->orderBy('start_track_time', $condition->start_track_time);
+            } else {
+                $result = $result->orderBy('start_track_time', 'desc');
+            }
+        }
+
+        // 房源业务状态
+        if (!empty($condition->status)) {
+            $result = $result->where('house_busine_state', $condition->status);
+        }
+
         if (!empty($condition->build)) {
             // 楼盘包含的楼座
             $blockId = array_column(Building::find($condition->build)->buildingBlocks->toArray(), 'id');
@@ -63,26 +156,17 @@ class OfficeBuildingHousesRepository extends BaseRepository
             $result = $result->where('house_identifier', $condition->house_identifier);
         }
 
-        // 房源业务状态
-        if (!empty($condition->status)) {
-            $result = $result->where('house_busine_state', $condition->status);
-        }
-
-        // 跟进排序排序
-        if (!empty($condition->order)) {
-            $result = $result->orderBy('start_track_time', $condition->start_track_time);
-        }
-
         return $result->paginate($per_page??10);
     }
 
+
     /**
-     * 说明：写字楼房源添加
+     * 说明: 写字楼房源添加
      *
      * @param $request
      * @param HousesService $housesService
-     * @return bool
-     * @author jacklin
+     * @return array
+     * @author 罗振
      */
     public function addOfficeBuildingHouses(
         $request,
@@ -91,6 +175,13 @@ class OfficeBuildingHousesRepository extends BaseRepository
     {
         \DB::beginTransaction();
         try {
+            // 暂缓状态
+            if ($request->house_busine_state == 3) {
+                if (strtotime(date('Y-m-d', $request->rent_time)) - strtotime(Carbon::today()) < 60*24*60*60) {
+                    return ['status' => false, 'message' => '暂缓状态到期时间必须大于今天60天'];
+                }
+            }
+
             // 获取房源名称
             $title = $housesService->getTitle($request);
 
@@ -151,10 +242,10 @@ class OfficeBuildingHousesRepository extends BaseRepository
             }
 
             \DB::commit();
-            return $house;
+            return ['status' => true, 'message' => '写字楼房源添加成功'];
         } catch (\Exception $e) {
             \Log::error('写字楼房源添加失败：' . $e->getFile() . $e->getLine() . $e->getMessage());
-            return false;
+            return ['status' => false, 'message' => '写字楼房源添加失败'];
         }
     }
 
@@ -301,11 +392,75 @@ class OfficeBuildingHousesRepository extends BaseRepository
         // 房源业务状态
         if (!empty($condition->status)) {
             $result = $result->where('house_busine_state', $condition->status);
+        } else {
+            $result = $result->whereIn('house_busine_state', [1,2]);
         }
 
         // 跟进排序排序
         if (!empty($condition->order)) {
             $result = $result->orderBy('created_at', $condition->order);
+        }
+
+        return $result->paginate($per_page??10);
+    }
+
+    /**
+     * 说明: 房源状态列表
+     *
+     * @param $per_page
+     * @param $condition
+     * @return mixed
+     * @author 罗振
+     */
+    public function houseStateList(
+        $per_page,
+        $condition
+    )
+    {
+        $result = $this->model;
+
+        if (!empty($condition->build)) {
+            // 楼盘包含的楼座
+            $blockId = array_column(Building::find($condition->build)->buildingBlocks->toArray(), 'id');
+            $result = $result->whereIn('building_block_id', $blockId);
+        }
+
+        // 最小面积
+        if (!empty($condition->min_acreage)) {
+            $result = $result->where('constru_acreage', ">=", (int)$condition->min_acreage);
+        }
+        // 最大面积
+        if (!empty($condition->max_acreage)) {
+            $result = $result->where('constru_acreage', "<=", (int)$condition->max_acreage);
+        }
+
+        // 最小单价
+        if (!empty($condition->min_unit_price)) {
+            $result = $result->where('unit_price', '>=', $condition->min_unit_price);
+        }
+
+        // 最大单价
+        if (!empty($condition->max_unit_price)) {
+            $result = $result->where('unit_price', '<=', $condition->max_unit_price);
+        }
+
+        // 房源编号
+        if (!empty($condition->house_identifier)) {
+            $result = $result->where('house_identifier', $condition->house_identifier);
+        }
+
+        // 房源业务状态
+        if (!empty($condition->status)) {
+            $result = $result->where('house_busine_state', $condition->status);
+        } else {
+            $result = $result->whereIn('house_busine_state', [3,4,5,6]);
+        }
+
+        // 排序
+        if (!empty($condition->order)) {
+            $result = $result->orderBy('updated_at', $condition->order);
+        } else {
+            $result = $result->orderBy('updated_at', 'desc');
         }
 
         return $result->paginate($per_page??10);

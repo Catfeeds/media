@@ -28,7 +28,10 @@ class OfficeBuildingHousesController extends APIBaseController
             return $this->sendError('没有房源列表权限', '403');
         }
 
+//        $result = $officeBuildingHousesRepository->officeBuildingHousesList($request->per_page??null, json_decode($request->condition),[1,2]);
+
         $result = $officeBuildingHousesRepository->officeBuildingHousesList($request->per_page??null, json_decode($request->condition));
+
         return $this->sendResponse($result, '写字楼房源列表获取成功');
     }
 
@@ -58,10 +61,10 @@ class OfficeBuildingHousesController extends APIBaseController
         }
 
         $result = $officeBuildingHousesRepository->addOfficeBuildingHouses($request, $housesService);
-        if (!empty($result)) {
-            return $this->sendResponse($result, '写字楼房源添加成功');
+        if (!empty($result['status'])) {
+            return $this->sendResponse($result['status'], $result['message']);
         }
-        return $this->sendError('写字楼添加失败');
+        return $this->sendError($result['message']);
     }
 
     /**
@@ -193,7 +196,7 @@ class OfficeBuildingHousesController extends APIBaseController
     )
     {
         $user_id = Common::user()->id;
-        $result = $officeBuildingHousesRepository->officeBuildingHousesList($request->per_page??null, json_decode($request->condition), $user_id);
+        $result = $officeBuildingHousesRepository->officeBuildingHousesList($request->per_page??null, json_decode($request->condition), [1,2,7], $user_id);
         return $this->sendResponse($result, '获取我的写字楼房源列表成功');
     }
 
@@ -234,5 +237,30 @@ class OfficeBuildingHousesController extends APIBaseController
 
         $result = $officeBuildingHousesRepository->newHousesList($request->per_page??null, json_decode($request->condition));
         return $this->sendResponse($result, '写字楼新增房源列表获取成功');
+    }
+
+    /**
+     * 说明: 房源状态列表
+     *
+     * @param Request $request
+     * @param OfficeBuildingHousesRepository $officeBuildingHousesRepository
+     * @return \Illuminate\Http\JsonResponse
+     * @author 罗振
+     */
+    public function houseStateList(
+        Request $request,
+        OfficeBuildingHousesRepository $officeBuildingHousesRepository
+    )
+    {
+        // 判断用户权限
+        if (empty(Common::user()->can('house_state_list'))) {
+            return $this->sendError('没有房源状态列表权限', '403');
+        }
+
+        $result = $officeBuildingHousesRepository->houseStateList($request->per_page??null, json_decode($request->condition));
+        return $this->sendResponse($result, '写字楼新增房源列表获取成功');
+
+
+
     }
 }

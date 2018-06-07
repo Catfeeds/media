@@ -193,7 +193,7 @@ class HousesController extends APIBaseController
             return $this->sendError('没有房源修改图片审核列表权限','403');
         }
 
-        $res = $housesService->houseImgAuditing($request);
+        $res = $housesService->houseImgAuditing(json_decode($request->condition));
         return $this->sendResponse($res,'房源图片审核列表获取成功');
     }
 
