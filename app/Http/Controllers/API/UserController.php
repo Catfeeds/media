@@ -248,4 +248,50 @@ class UserController extends APIBaseController
         });
         return $this->sendResponse($result, '获取门店信息成功');
     }
+
+    /**
+     * 说明: 获取可指定组长信息
+     *
+     * @param Request $request
+     * @param UsersService $usersService
+     * @return \Illuminate\Http\JsonResponse
+     * @author 罗振
+     */
+    public function getGroupLeader(
+        Request $request,
+        UsersService $usersService
+    )
+    {
+        $result = $usersService->getGroupLeader($request)->map(function ($v) {
+            return [
+                'label' => $v->real_name,
+                'value' => $v->id
+            ];
+        });
+
+        return $this->sendResponse($result, '获取可指定组长信息成功');
+    }
+
+    /**
+     * 说明: 通过门店获取组信息
+     *
+     * @param Request $request
+     * @param UsersService $usersService
+     * @return \Illuminate\Http\JsonResponse
+     * @author 罗振
+     */
+    public function adoptStorefrontsGetGroup(
+        Request $request,
+        UsersService $usersService
+    )
+    {
+        $result = $usersService->adoptStorefrontsGetGroup($request)->map(function ($v) {
+            return [
+                'label' => $v->name,
+                'value' => $v->id
+            ];
+        });
+
+        return $this->sendResponse($result, '获取门店下组信息成功');
+    }
 }

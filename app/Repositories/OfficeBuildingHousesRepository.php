@@ -270,7 +270,7 @@ class OfficeBuildingHousesRepository extends BaseRepository
         $officeBuildingHouse->house_type_img = $request->house_type_img;
         $officeBuildingHouse->indoor_img = $request->indoor_img;
         $officeBuildingHouse->shelf = $request->shelf;
-        $officeBuildingHouse->rent_time = $request->rent_time;  // 可租时间
+        $officeBuildingHouse->rent_time = strtotime($request->rent_time);  // 可租时间
         $officeBuildingHouse->remarks = $request->remarks;  // 信息不明确备注
 
         if (!$officeBuildingHouse->save()) {

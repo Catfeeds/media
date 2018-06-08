@@ -118,7 +118,7 @@ class OfficeBuildingHousesRequest extends FormRequest
                       'increasing_situation' => 'max:32',
                       'increasing_situation_remark' => 'nullable|max:256',
                       // 业务信息
-                      'house_busine_state' => 'required|integer|between:1,6',
+                      'house_busine_state' => 'required|integer|between:1,7',
                       'pay_commission' => 'nullable|numeric|max:9999999999',
                       'pay_commission_unit' => 'nullable|integer|between:1,2',
                       'prospecting' => 'nullable|integer|between:1,2',
@@ -164,7 +164,7 @@ class OfficeBuildingHousesRequest extends FormRequest
                       'increasing_situation' => 'max:32',
                       'increasing_situation_remark' => 'nullable|max:256',
                       // 业务信息
-                      'house_busine_state' => 'required|integer|between:1,6',
+                      'house_busine_state' => 'required|integer|between:1,7',
                       'pay_commission' => 'nullable|numeric|max:9999999999',
                       'pay_commission_unit' => 'nullable|integer|between:1,2',
                       'prospecting' => 'nullable|integer|between:1,2',

@@ -66,6 +66,7 @@ class UserRepository extends BaseRepository
                 'level' => $request->level,
                 'password' => bcrypt($request->password),
                 'remark' => $request->remark,
+                'group_id' => $request->group_id    // 所属组
             ]);
             if (!$user) {
                 throw new \Exception('用户添加失败');

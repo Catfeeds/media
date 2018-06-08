@@ -65,6 +65,11 @@ Route::group(['namespace' => 'API'], function () {
         // 业务统计
         Route::post('business_statistics','UserController@businessStatistics');
 
+        // 获取组长
+        Route::get('get_group_leader', 'UserController@getGroupLeader');
+        // 通过门店获取组信息
+        Route::post('adopt_storefronts_get_group', 'UserController@adoptStorefrontsGetGroup');
+
 
         /*
         |--------------------------------------------------------------------------
@@ -110,6 +115,14 @@ Route::group(['namespace' => 'API'], function () {
         Route::get('get', 'TracksController@get');
         Route::get('customs_tracks_list', 'TracksController@customsTracksList');
         Route::post('add_customs_tracks', 'TracksController@addCustomsTracks');
+
+        /*
+        |--------------------------------------------------------------------------
+        | 组管理
+        |--------------------------------------------------------------------------
+        */
+        Route::resource('group_associations', 'GroupAssociationsController');
+
     });
 
     /*
