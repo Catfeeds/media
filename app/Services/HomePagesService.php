@@ -347,7 +347,7 @@ class HomePagesService
         $storefrontsId = Storefront::where('area_manager_id', $managerId)->pluck('id')->toArray();
         //查询所有门店下的人员
         $userId = User::whereIn('ascription_store', $storefrontsId)->pluck('id')->toArray();
-        if (!$managerId) array_push($userId, $managerId);
+        array_push($userId, $managerId);
         return $userId;
     }
 
@@ -382,8 +382,12 @@ class HomePagesService
                 $data['all_added'] = $this->getAddedData($model, $userId);
                 break;
             case 2:
-                $userId = $this->adoptAreaGetUserId();
-                if ($this->user()->level == 2) $userId = $this->adoptAreaGetUserId($this->user()->id);
+                //如果登录人是区域经理
+                if ($this->user()->level == 2) {
+                    $userId = $this->adoptAreaGetUserId($this->user()->id);
+                } else {
+                    $userId = $this->adoptAreaGetUserId();
+                }
                 //查询今日新增
                 $data['day_added'] = $this->getAddedData($model, $userId, $day);
                 $data['week_added'] = $this->getAddedData($model, $userId, $week);
