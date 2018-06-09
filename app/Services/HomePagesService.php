@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Custom;
+use App\Models\GroupAssociation;
 use App\Models\HouseImgRecord;
 use App\Models\OfficeBuildingHouse;
 use App\Models\OwnerViewRecord;
@@ -242,7 +243,7 @@ class HomePagesService
         //客源带看
         $data['lead_customer'] = Track::where(['house_model' => null, 'tracks_mode' => 7, 'user_id' => $id])->whereBetween('created_at', $date)->count();
         //上传图片
-        $data['upload_img'] = HouseImgRecord::where(['user_id' => $id, 'status' => 2])->whereBetween('created_at', $date)->count();
+        $data['upload_img'] = HouseImgRecord::where(['user_id' => $id, 'status' => 3])->whereBetween('created_at', $date)->count();
         //查看信息次数
         $data['view_record_num'] = OwnerViewRecord::where('user_id', $id)->whereBetween('created_at', $date)->count();
         return $data;
@@ -355,7 +356,7 @@ class HomePagesService
      * 说明: 写字楼或客源统计数据
      *
      * @param $class
-     * @param $id
+     * @param $model
      * @return array
      * @author 刘坤涛
      */
@@ -526,7 +527,13 @@ class HomePagesService
      * @return User
      * @author 刘坤涛
      */
-    public function getUserData($user_id = null, $time = null, $name = null, $ascription_store = null, $per_page)
+    public function getUserData(
+        $user_id = null,
+        $time = null,
+        $name = null,
+        $ascription_store = null,
+        $per_page
+    )
     {
         $user = new User();
         if (!empty($name)) $user = $user->where('real_name', $name);
@@ -536,10 +543,12 @@ class HomePagesService
         foreach ($user as $v) {
             $v->item = $this->getData($this->getDayTime(), $v->id);
         }
-        if ($time)
+        if ($time) {
             foreach ($user as $v) {
                 $v->item = $this->getData($time, $v->id);
             }
+        }
+
         return $user;
     }
 
@@ -573,12 +582,29 @@ class HomePagesService
                 $user = $this->getUserData($user_id,$request->time,$request->name,null,$request->per_page);
                 break;
             case 5:
-//                $user_id = $;
-
-
+                $user_id = $this->getGroup($id);
+                $user = $this->getUserData($user_id,$request->time,$request->name,null,$request->per_page);
+                break;
+            case 4:
+                $ids[] = $id;
+                $user = $this->getUserData($ids,$request->time,$request->name,null,$request->per_page);
                 break;
         }
         return $user;
+    }
+
+    /**
+     * 说明: 获取组下面业务员
+     *
+     * @param $id
+     * @return mixed
+     * @author 罗振
+     */
+    public function getGroup($id)
+    {
+        $groupAssociation = GroupAssociation::where('group_leader_id', $id)->pluck('id');
+
+        return User::where('group_id', $groupAssociation)->pluck('id')->toArray();
     }
 
 }

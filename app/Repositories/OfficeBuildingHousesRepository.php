@@ -3,6 +3,7 @@ namespace App\Repositories;
 
 use App\Handler\Common;
 use App\Models\Building;
+use App\Models\GroupAssociation;
 use App\Models\OfficeBuildingHouse;
 use App\Models\Storefront;
 use App\Services\HousesService;
@@ -49,6 +50,12 @@ class OfficeBuildingHousesRepository extends BaseRepository
                     $result = $result->whereIn('guardian', $users);
                 } elseif ($user->level == 4) {
                     $result = $result->where('guardian', $user->id);
+                } elseif ($user->level == 5) {
+                    // 组长
+                    $groupAssociation = GroupAssociation::where('group_leader_id', $user->id)->pluck('id');
+                    $userId = User::where('group_id', $groupAssociation)->pluck('id')->toArray();
+                    $userId[] = $user->id;
+                    $result = $result->whereIn('guardian', $userId);
                 }
             }
 

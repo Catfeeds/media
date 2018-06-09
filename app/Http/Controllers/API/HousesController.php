@@ -94,9 +94,9 @@ class HousesController extends APIBaseController
         }
 
         //检测超时
-        if ($temp[2] + 120 < time()) {
-         return $this->sendError('二维码超时,请重新扫码');
-        }
+//        if ($temp[2] + 120 < time()) {
+//         return $this->sendError('二维码超时,请重新扫码');
+//        }
 
 
         if ($house->guardian != (int)$temp[3] && strtotime($house->created_at->format('Y-m-d H:i:s')) + 12*60*60 > time()) {
