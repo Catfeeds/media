@@ -1,6 +1,7 @@
 <?php
 namespace App\Repositories;
 
+use App\Handler\Common;
 use App\Models\Storefront;
 use App\User;
 
@@ -62,21 +63,24 @@ class UserRepository extends BaseRepository
             $user = $this->model->create([
                 'tel' => $request->tel,
                 'real_name' => $request->real_name,
-                'ascription_store' => $request->ascription_store,
+                'ascription_store' => $request->ascription_store??Common::user()->storefront->id,
                 'level' => $request->level,
                 'password' => bcrypt($request->password),
                 'remark' => $request->remark,
                 'group_id' => $request->group_id    // 所属组
             ]);
-            if (!$user) {
-                throw new \Exception('用户添加失败');
-            }
+            if (!$user) throw new \Exception('用户添加失败');
 
             if ($request->level == 3) {
                 $storefront = Storefront::where('id', $request->ascription_store)->update(['user_id' => $user->id]);
                 if (!$storefront) {
                     throw new \Exception('添加店长失败');
                 }
+            }
+
+            // 组长权限跟业务员一样
+            if ($request->level == 5) {
+                $request->level = 4;
             }
 
             $user->assignRole($request->level);
