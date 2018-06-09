@@ -13,6 +13,8 @@ return [
     // 开发 七牛存储空间
     'qiniu_bucket' => env('QINIU_BUCKET'),     // 七牛访问url
     'qiniu_url' => env('QINIU_URL'),
+    //慢查询请求地址
+    'http_url'  => env('HTTP_URL'),
 
     /*
     |--------------------------------------------------------------------------
