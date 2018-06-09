@@ -24,7 +24,7 @@ class SlowQuery
         $response =  $next($request);
         $time = (microtime(true) - $t1) * 1000;
         //如果时间大于1s,请求query接口,将该接口插入数据表中
-        if ($time >= 300) {
+        if ($time >= 1000) {
             $data = [
                 'app_name' => env('APP_NAME'),
                 'url' => $request->getRequestUri(),
