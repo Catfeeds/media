@@ -57,13 +57,6 @@ class ManagerAddPermission extends Command
             'group_id' => 1,
         ]);
 
-//        Permission::create([
-//            'name' => 'house_state_list',
-//            'guard_name' => 'web',
-//            'label' => '房源状态列表',
-//            'group_id' => 1,
-//        ]);
-//
         // 查询总经理
         $role = Role::where([
             'name_cn' => '总经理',
@@ -75,41 +68,41 @@ class ManagerAddPermission extends Command
         $role->givePermissionTo(['house_img_auditing']);
 
         // 添加组相关权限
-//        PermissionGroup::create([
-//            'id' => 7,
-//            'group_name' => '组管理',
-//            'parent_id' => null,
-//            'stage' => 1,
-//        ]);
-//
-//        Permission::create([
-//            'name' => 'group_list',
-//            'guard_name' => 'web',
-//            'label' => '组列表',
-//            'group_id' => 7,
-//        ]);
-//
-//        Permission::create([
-//            'name' => 'add_group',
-//            'guard_name' => 'web',
-//            'label' => '组添加',
-//            'group_id' => 7,
-//        ]);
-//
-//        Permission::create([
-//            'name' => 'update_group',
-//            'guard_name' => 'web',
-//            'label' => '组修',
-//            'group_id' => 7,
-//        ]);
-//
-//        $role = Role::where([
-//            'name_cn' => '店长',
-//            'name' => 'shop_owner',
-//            'name_en' => 'shop_owner',
-//            'guard_name' => 'web',
-//        ])->first();
-//
-//        $role->givePermissionTo(['group_list', 'add_group', 'update_group']);
+        PermissionGroup::create([
+            'id' => 7,
+            'group_name' => '组管理',
+            'parent_id' => null,
+            'stage' => 1,
+        ]);
+
+        Permission::create([
+            'name' => 'group_list',
+            'guard_name' => 'web',
+            'label' => '组列表',
+            'group_id' => 7,
+        ]);
+
+        Permission::create([
+            'name' => 'add_group',
+            'guard_name' => 'web',
+            'label' => '组添加',
+            'group_id' => 7,
+        ]);
+
+        Permission::create([
+            'name' => 'update_group',
+            'guard_name' => 'web',
+            'label' => '组修',
+            'group_id' => 7,
+        ]);
+
+        $role = Role::where([
+            'name_cn' => '店长',
+            'name' => 'shop_owner',
+            'name_en' => 'shop_owner',
+            'guard_name' => 'web',
+        ])->first();
+
+        $role->givePermissionTo(['group_list', 'add_group', 'update_group']);
     }
 }
