@@ -65,6 +65,11 @@ Route::group(['namespace' => 'API'], function () {
         // 业务统计
         Route::post('business_statistics','UserController@businessStatistics');
 
+        // 获取组长
+        Route::get('get_group_leader', 'UserController@getGroupLeader');
+        // 通过门店获取组信息
+        Route::post('adopt_storefronts_get_group', 'UserController@adoptStorefrontsGetGroup');
+
 
         /*
         |--------------------------------------------------------------------------
@@ -84,12 +89,6 @@ Route::group(['namespace' => 'API'], function () {
         Route::post('update_shops_business_state', 'ShopsHousesController@updateShopsBusinessState');
         // 写字楼房源
         Route::resource('office_building_houses', 'OfficeBuildingHousesController');
-        // 新增房源列表
-        Route::get('new_office_building_houses_list', 'OfficeBuildingHousesController@newHousesList');
-        // 我的房源列表
-        Route::get('my_office_building_houses_list', 'OfficeBuildingHousesController@myOfficeBuildingHousesList');
-        // 房源状态列表
-        Route::get('house_state_list', 'OfficeBuildingHousesController@houseStateList');
 
         // 写字楼房源业务状态修改
         Route::post('update_office_business_state', 'OfficeBuildingHousesController@updateOfficeBusinessState');
@@ -116,6 +115,14 @@ Route::group(['namespace' => 'API'], function () {
         Route::get('get', 'TracksController@get');
         Route::get('customs_tracks_list', 'TracksController@customsTracksList');
         Route::post('add_customs_tracks', 'TracksController@addCustomsTracks');
+
+        /*
+        |--------------------------------------------------------------------------
+        | 组管理
+        |--------------------------------------------------------------------------
+        */
+        Route::resource('group_associations', 'GroupAssociationsController');
+
     });
 
     /*
@@ -229,10 +236,8 @@ Route::group(['namespace' => 'API'], function () {
     Route::get('wait_track_house', 'HomePagesController@waitTrackHouse');
     //待跟进客户数据
     Route::get('wait_track_customer', 'HomePagesController@waitTrackCustomer');
-    //写字楼统计数据
-    Route::get('office_statistic', 'HomePagesController@officeStatistic');
-    //客户统计数据
-    Route::get('customer_statistic', 'HomePagesController@customerStatistic');
+    //写字楼统或客户计数据
+    Route::get('statistic_data', 'HomePagesController@statisticData');
     //获取环比数据
     Route::get('get_ring_than_data', 'HomePagesController@getRingThanData');
     //根据本周或者本月获取房源、客户X轴数据

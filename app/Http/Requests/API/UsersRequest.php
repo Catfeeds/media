@@ -68,7 +68,7 @@ class UsersRequest extends FormRequest
                             Storefront::all()->pluck('id')->toArray()
                         )
                     ],
-                    'level' => 'required|integer|between:1,4',
+                    'level' => 'required|integer|between:1,5',
                     'tel' => [
                         'required',
                         'max:16',
@@ -91,7 +91,7 @@ class UsersRequest extends FormRequest
                             Storefront::all()->pluck('id')->toArray()
                         )
                     ],
-                    'level' => 'required|integer|between:1,4',
+                    'level' => 'required|integer|between:1,5',
                     'remark' => 'nullable|max:255',
                 ];
             case 'updatePassword':

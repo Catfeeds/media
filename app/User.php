@@ -87,8 +87,8 @@ class User extends Authenticatable
             return '店长';
         } elseif ($this->level == 4) {
             return '业务员';
-        } else {
-            return '成员级别异常';
+        } elseif ($this->level == 5) {
+            return '组长';
         }
     }
 
