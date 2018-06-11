@@ -58,7 +58,7 @@ class GroupAssociationsRequest extends FormRequest
                 ];
             case 'update':
                 return [
-                    'name' => 'required|unique:group_associations,name|max:32',
+                    'name' => 'required|max:32|unique:group_associations,name,'.$this->id,
                     'group_leader_id' => 'required|integer|exists:users,id'
                 ];
             default:

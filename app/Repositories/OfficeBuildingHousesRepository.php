@@ -197,7 +197,7 @@ class OfficeBuildingHousesRepository extends BaseRepository
                 'guardian' => Common::user()->id,
                 'house_type_img' => $request->house_type_img,
                 'indoor_img' => $request->indoor_img,
-                'shelf' => 2,   // 默认不上架
+                'shelf' => $request->shelf,   // 默认不上架
                 'start_track_time' => time(),
                 'end_track_time' => time() + config('setting.house_to_public')*24*60*60,
                 'rent_time' => strtotime($request->rent_time),  // 可租时间

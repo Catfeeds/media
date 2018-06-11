@@ -47,6 +47,8 @@ class UpdateUserPwd extends Command
      */
     public function updateUserPwd()
     {
+        if (app()->environment() == 'production') return false;
+
         $users = User::get();
 
         foreach ($users as $user) {

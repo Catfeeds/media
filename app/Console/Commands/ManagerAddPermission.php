@@ -92,7 +92,7 @@ class ManagerAddPermission extends Command
         Permission::create([
             'name' => 'update_group',
             'guard_name' => 'web',
-            'label' => '组修',
+            'label' => '组修改',
             'group_id' => 7,
         ]);
 

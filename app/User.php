@@ -29,7 +29,6 @@ class User extends Authenticatable
         'level_cn', 'store_name'
     ];
 
-
     public function storefront()
     {
         return $this->belongsTo(Storefront::class, 'ascription_store', 'id');
@@ -96,7 +95,7 @@ class User extends Authenticatable
      * 说明: 所属门店
      *
      * @return string
-     * @use storefront_name
+     * @use store_name
      * @author 罗振
      */
     public function getStoreNameAttribute()
