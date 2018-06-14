@@ -244,5 +244,9 @@ Route::group(['namespace' => 'API'], function () {
     Route::get('get_chart_data', 'HomePagesController@getChartData');
     //根据登录人级别获取对应业务员数据
     Route::get('get_salesman_data', 'HomePagesController@getSalesmanData');
+
+    //客服工单
+    Route::resource('raw_custom', 'RawCustomsController');
+    Route::get('get_shopkeeper', 'RawCustomsController@getShopkeeper');
 });
 
