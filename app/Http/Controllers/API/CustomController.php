@@ -24,7 +24,7 @@ class CustomController extends APIBaseController
             return $this->sendError('无客户列表权限','403');
         }
 
-        $res = $repository->getList($request)->paginate($request->per_page);;
+        $res = $repository->getList($request)->paginate($request->per_page);
         return $this->sendResponse($res, '获取成功');
     }
 

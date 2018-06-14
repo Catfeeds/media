@@ -22,11 +22,10 @@ class CustomRepository extends BaseRepository
      * 说明：获取列表
      *
      * @param $request
-     * @param null $perPage
      * @return mixed
      * @author jacklin
      */
-    public function getList($request, $perPage = null)
+    public function getList($request)
     {
         $query = $this->model;
         $user = Common::user();
@@ -46,7 +45,7 @@ class CustomRepository extends BaseRepository
                 $storefrontId = Storefront::where('user_id', $user->id)->pluck('id')->first();
                 //查询这些门店下员工ID
                 $user_id = User::where('ascription_store',$storefrontId)->pluck('id')->toArray();
-                $query = $query->whereIn('guardian',$user_id)->Orwhere('guardian',null);
+                $query = $query->whereIn('guardian',$user_id);
                 break;
             case 4:
                 //如果当前登录的是业务员

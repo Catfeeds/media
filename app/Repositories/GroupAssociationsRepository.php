@@ -24,7 +24,7 @@ class GroupAssociationsRepository extends BaseRepository
         $per_page
     )
     {
-        return $this->model->paginate($per_page);
+        return $this->model->where('storefronts_id', Common::user()->storefront->id)->paginate($per_page);
     }
 
     /**
@@ -58,7 +58,7 @@ class GroupAssociationsRepository extends BaseRepository
         GroupAssociation $groupAssociation
     )
     {
-        $groupAssociation->storefronts_id = $request->storefronts_id;
+        $groupAssociation->storefronts_id = Common::user()->storefront->id;
         $groupAssociation->name = $request->name;
         $groupAssociation->group_leader_id = $request->group_leader_id;
 
