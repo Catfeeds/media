@@ -7,7 +7,6 @@ use App\Http\Requests\API\RawCustomsRequest;
 use App\Repositories\RawCustomsRepository;
 use App\Services\HousesService;
 use App\Services\RawCustomsService;
-use App\Services\UsersService;
 
 class RawCustomsController extends APIBaseController
 {
@@ -30,19 +29,19 @@ class RawCustomsController extends APIBaseController
     )
     {
         $res = $repository->addRawCustom($request, $service);
-        $url= 'http://www.baidu.com';
-        $data = array(
-            'first' => array('您好,您有新的客户', '#555555'),
-            'keyword1' => array('贾456456464','#336699') ,
-            'keyword2' => array('110','#ff0000'),
-            'keyword3' => array('写字楼租赁','#888888'),
-            'keyword4' => array(date('Y-m-d H:i:s',time()),'#888888'),
-            'remark'   => array('感谢您的使用','#5599ff')
-        );
-        $arr['url'] = $url;
-        $arr['data'] = $data;
-        $arr['openid'] = 'oPRyPwyGIy7pf2Ei-xG1lNjHdmo4';
-        dd(getData('http://msg_manager.jacklin.club/weSend', 'post', json_encode($arr)));
+//        $url= 'http://www.baidu.com';
+//        $data = array(
+//            'first' => array('您好,您有新的客户', '#555555'),
+//            'keyword1' => array('贾456456464','#336699') ,
+//            'keyword2' => array('110','#ff0000'),
+//            'keyword3' => array('写字楼租赁','#888888'),
+//            'keyword4' => array(date('Y-m-d H:i:s',time()),'#888888'),
+//            'remark'   => array('感谢您的使用','#5599ff')
+//        );
+//        $arr['url'] = $url;
+//        $arr['data'] = $data;
+//        $arr['openid'] = 'oPRyPwyGIy7pf2Ei-xG1lNjHdmo4';
+//        dd(getData('http://msg_manager.jacklin.club/weSend', 'post', json_encode($arr)));
         return $this->sendResponse($res, '客户录入成功');
     }
 
@@ -92,6 +91,18 @@ class RawCustomsController extends APIBaseController
     {
         $res = $repository->shopkeeperList($request, $service);
         return $this->sendResponse($res, '店长处理页面获取成功');
+    }
+
+    //业务员能处理页面
+    public function staffList
+    (
+        RawCustomsRequest $request,
+        RawCustomsRepository $repository,
+        RawCustomsService $service
+    )
+    {
+        $res = $repository->staffList($request, $service);
+        return $this->sendResponse($res, '业务员处理页面获取成功');
     }
     
 }

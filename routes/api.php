@@ -250,5 +250,14 @@ Route::group(['namespace' => 'API'], function () {
     Route::get('get_shopkeeper', 'RawCustomsController@getShopkeeper');
     //获取店长下属业务员
     Route::get('get_staff', 'RawCustomsController@getStaff');
+    //店长分配工单
+    Route::post('distribution', 'RawCustomsController@distribution');
+    //业务员确定工单
+    Route::post('determine', 'RawCustomsController@determine');
+    //店长处理页面
+    Route::get('shopkeeper_list', 'RawCustomsController@shopkeeperList');
+    //业务员处理页面
+    Route::get('staff_list', 'RawCustomsController@staffList');
+
 });
 
