@@ -171,14 +171,15 @@ class HousesService
                 // 判断是否有这个房号
                 $temp3 = $request->model::where([
                     'building_block_id' => $request->building_block_id,
-                    'house_number' => $v,
                     'floor' => $request->floor
-                ])->first();
-                if ($temp3) {
-                    return [
-                        'status' => false,
-                        'message' => '该房号已存在',
-                    ];
+                ])->pluck('house_number')->toArray();
+                foreach ($temp3 as $val) {
+                    if (stristr($val, $v)) {
+                        return [
+                            'status' => false,
+                            'message' => '该房号已存在',
+                        ];
+                    }
                 }
             }
         } else {
@@ -204,18 +205,19 @@ class HousesService
                 }
             }
 
-            // 判断楼座中否是有这个房号
             $temp3 = $request->model::where([
                 'building_block_id' => $request->building_block_id,
-                'house_number' => $request->house_number,
                 'floor' => $request->floor
-            ])->first();
-            if ($temp3) {
-                return [
-                    'status' => false,
-                    'message' => '该房号已存在',
-                ];
+            ])->pluck('house_number')->toArray();
+            foreach ($temp3 as $v) {
+                if (stristr($v, $request->house_number)) {
+                    return [
+                        'status' => false,
+                        'message' => '该房号已存在',
+                    ];
+                }
             }
+
         }
 
         return [
