@@ -90,7 +90,6 @@ class BuildingRepository extends Building
                     ]);
             }
         } catch (\Exception $exception) {
-            dd($exception);
             DB::rollBack();
             return false;
         }

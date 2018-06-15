@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\API;
 
+use App\Models\Building;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class BuildingRequest extends FormRequest
 {
@@ -27,6 +29,9 @@ class BuildingRequest extends FormRequest
 
         switch ($method) {
             case 'update':
+                return [
+
+                ];
             case 'store':
             return [
                 'name' => 'required|max:128',

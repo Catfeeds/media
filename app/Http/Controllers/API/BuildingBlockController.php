@@ -64,9 +64,10 @@ class BuildingBlockController extends APIBaseController
     )
     {
         $role = Auth::guard('api')->user()->can('update_building_block');
-        if (empty($role)) {
-            return $this->sendError('无修改楼座权限','403');
-        }
+        if (empty($role)) return $this->sendError('无修改楼座权限','403');
+
+        if (!empty($request->name) && $request->name != $buildingBlock->name && BuildingBlock::where(['building_id' => $request->building_id, 'name' => $request->name, 'name_unit' => $request->name_unit])->first()) return $this->sendError('同一楼盘下楼座名称不能重复');
+
         $res = $repository->changeNameUnit($buildingBlock, $request);
         return $this->sendResponse($res, '修改成功');
     }
@@ -81,8 +82,11 @@ class BuildingBlockController extends APIBaseController
      */
     public function addNameUnit(BuildingBlockRequest $request, BuildingBlockRepository $repository)
     {
-        if (empty(Common::user()->can('add_building_block'))) {
-            return $this->sendError('无添加楼座权限','403');
+        if (empty(Common::user()->can('add_building_block'))) return $this->sendError('无添加楼座权限','403');
+
+        $temp = BuildingBlock::where(['building_id' => $request->building_id, 'name' => $request->name, 'name_unit' => $request->name_unit])->first();
+        if ($temp) {
+            return $this->sendError('同一楼盘下楼座名称不能重复');
         }
 
         $res = $repository->addNameUnit($request);

@@ -134,6 +134,24 @@ class HousesService
             }
         }
 
+        // 验证中文
+        $chineseValidate = "/[".chr(0xa1)."-".chr(0xff)."]/";
+        if(preg_match($chineseValidate, $request->house_number)){
+            return [
+                'status' => false,
+                'message' => '房号不能包含中文',
+            ];
+        }
+
+        // 验证符号
+        $validate = "/[,\.;\:\"'!~@$%^&*(){}\[\]\【\】\=+，。\/]/";
+        if(preg_match($validate, $request->house_number)){
+            return [
+                'status' => false,
+                'message' => '房号不能包含特殊符号',
+            ];
+        }
+
         // 处理房号
         $temp = explode('-', $request->house_number);
 
