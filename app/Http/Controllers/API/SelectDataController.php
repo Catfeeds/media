@@ -53,6 +53,7 @@ class SelectDataController extends APIBaseController
     {
         $buildingId = $request->building_id;
         $buildingBlocks = BuildingBlock::where('building_id', $buildingId)->get();
+        $buildingBlocks = $buildingBlocks->sortBy('name')->values();
         $res = array();
         foreach ($buildingBlocks as $buildingBlock) {
             $item = array(
