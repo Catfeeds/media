@@ -94,9 +94,9 @@ class HousesController extends APIBaseController
         }
 
         //检测超时
-//        if ($temp[2] + 120 < time()) {
-//         return $this->sendError('二维码超时,请重新扫码');
-//        }
+        if ($temp[2] + 120 < time()) {
+         return $this->sendError('二维码超时,请重新扫码');
+        }
 
 
         if ($house->guardian != (int)$temp[3] && strtotime($house->created_at->format('Y-m-d H:i:s')) + 12*60*60 > time()) {
@@ -144,7 +144,7 @@ class HousesController extends APIBaseController
             $temp->indoor_img = $request->indoor_img;
             $temp->house_type_img = $request->house_type_img;
             if (empty($result = $temp->save())) return $this->sendError('修改失败');
-
+            return $this->sendResponse(true, '图片修改成功');
         } elseif ($temp->guardian != (int)$request->user_id && strtotime($temp->created_at->format('Y-m-d H:i:s')) + 12*60*60 > time()) {
             return $this->sendError('该房源还处于保护期');
         } elseif (strtotime($temp->created_at->format('Y-m-d H:i:s')) + 12*60*60 < time()) {
@@ -156,9 +156,9 @@ class HousesController extends APIBaseController
                 'indoor_img' => $request->indoor_img
             ]);
             if (empty($result)) return $this->sendError('记录表写入失败');
+            return $this->sendResponse(true, '操作成功,正在审核中');
         }
 
-        return $this->sendResponse(true, '操作成功,正在审核中');
     }
 
     /**
