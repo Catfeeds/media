@@ -4,7 +4,6 @@ namespace App\Repositories;
 
 use App\Handler\Common;
 use App\Models\RawCustom;
-use EasyWeChat\Message\Raw;
 
 class RawCustomsRepository extends BaseRepository
 {
@@ -16,7 +15,7 @@ class RawCustomsRepository extends BaseRepository
     public function __construct(RawCustom $model)
     {
         $this->model = $model;
-        $this->user = Common::user();
+//        $this->user = Common::user();
     }
 
     public function addRawCustom($request, $service)
@@ -51,7 +50,7 @@ class RawCustomsRepository extends BaseRepository
     //工单列表
     public function getList($request, $service)
     {
-        $model = $this->model->where('user_id', $this->user->id)->with('shopkeeperUser','staffUser');
+        $model = $this->model->with('shopkeeperUser','staffUser')->where('user_id', 3);
         if ($request->tel) $model = $model->where('tel', $request->tel);
         if ($request->demand) $model = $model->where('demand', $request->demand);
         if ($request->time) $model = $model->whereBetween('created_at', $request->time);
@@ -62,26 +61,42 @@ class RawCustomsRepository extends BaseRepository
     //店长分配工单
     public function distribution($request)
     {
-        return RawCustom::where('id', $request->id)->update(['staff_id'=> $request->staff_id, 'shopkeeper_deal' => time()]);
+        return $this->model->where('id', $request->id)->update(['staff_id'=> $request->staff_id, 'shopkeeper_deal' => time()]);
     }
 
     //店员确认工单
     public function determine($request)
     {
-        return RawCustom::where('id', $request->id)->update(['staff_deal' => time()]);
+        return $this->model->where('id', $request->id)->update(['staff_deal' => time()]);
     }
 
-    public function shopkeeperList($request)
+    //手机端店长处理工单界面
+    public function shopkeeperList($request, $service)
     {
         switch ($request->status) {
             //待处理页面
             case 1 :
-                return RawCustom::where(['shopkeeper_id' => $this->user->id, 'shopkeeper_deal' => null])->get();
+                return $this->model->where(['shopkeeper_id' => 3, 'shopkeeper_deal' => null])->get();
+                break;
+            //已处理
+            case 2:
+                $item = $this->model->with('staffUser')->where('shopkeeper_id', 3)->where('shopkeeper_deal','!=', null)->get();
+                return $service->getInfo($item);
+                break;
+        }
+    }
+
+    //业务员处理页面
+    public function staffList($request, $service)
+    {
+        switch ($request->status) {
+            case 1:
+                return $this->model->where(['staff_deal' => null, 'staff_id' => 3])->get();
                 break;
             case 2:
-                $item = RawCustom::where('shopkeeper_id', $this->user->id)->where('shopkeeper_deal','!=', null)->get();
-
-
+                $item = $this->model->with('custom')->where('staff_deal', '!=', null)->where('staff_id', $this->user->id)->get();
+                return $service->getStaffInfo($item);
+                break;
         }
     }
 }

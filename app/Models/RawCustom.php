@@ -18,9 +18,16 @@ class RawCustom extends Model
         return $this->belongsTo(User::class,'shopkeeper_id', 'id');
     }
 
+    //业务员关联user表
     public function staffUser()
     {
         return $this->belongsTo(User::class,'staff_id', 'id');
+    }
+
+    //关联工单hao
+    public function custom()
+    {
+        return $this->hasOne(Custom::class,'identifier', 'identifier');
     }
 
     public function getSourceCnAttribute()
