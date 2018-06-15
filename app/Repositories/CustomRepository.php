@@ -111,7 +111,8 @@ class CustomRepository extends BaseRepository
                 'like' => $request->like,
                 'not_like' => $request->not_like,
                 'area_id' => $request->area_id,
-                'other' => $request->other
+                'other' => $request->other,
+                'identifier' => $request->identifier
             ]);
 
             if (!empty($request->buildings)) {

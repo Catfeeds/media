@@ -129,33 +129,4 @@ class UsersService
 
         return GroupAssociation::where(['storefronts_id' => $storefrontsId])->get();
     }
-
-    //获取店长名称
-    public function getShopkeeper()
-    {
-        $id = Storefront::pluck('user_id')->toArray();
-        $res = User::whereIn('id', $id)->get();
-        return $res->map(function ($v) {
-            return [
-                'label' => $v->real_name,
-                'value' => $v->id
-            ];
-        });
-    }
-
-    //获取工单列表相关信息
-    public function getGdInfo($item)
-    {
-        foreach($item as $v) {
-            $v->real_name = Common::user()->real_name;
-            if (!$v->shopkeeper_deal) $v->status = '已发送给组长'.'('.$v->shopkeeperUser->real_name.')';
-            if ($v->staff_id) $v->status = '组长'.'('.$v->shopkeeperUser->real_name.')'.'已收到转交给'.$v->staffUser->real_name;
-            if ($v->staff_deal) $v->status = $v->staffUser->real_name.'已收到';
-
-        }
-
-        return $item;
-    }
-
-
 }
