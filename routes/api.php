@@ -10,29 +10,9 @@ header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Headers:X-Token,Content-Type,Authorization');
 header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
 
-Route::get('/test', function(){
-    $url = 'http://msg_manager.jacklin.club/weSend';
-    $tmpData = array(
-        'first' => array('您好,您有新的客户', '#555555'),
-        'keyword1' => array('贾456456464','#336699') ,
-        'keyword2' => array('110','#ff0000'),
-        'keyword3' => array('写字楼租赁','#888888'),
-        'keyword4' => array(date('Y-m-d H:i:s',time()),'#888888'),
-        'remark'   => array('感谢您的使用','#5599ff')
-    );
-$data = array(
-    'url' => 'http://wechat.jacklin.club',
-    'openid' => 'oPRyPwyGIy7pf2Ei-xG1lNjHdmo4',
-    'data' => json_encode($tmpData)
-);
-    $res = curl($url, 'post', $data);
-    dd($res);
-});
-Route::post('/test2', 'TestController@test2');
 Route::resource('/logs', 'LogController');
 //Route::group(['domain' => 'admin.agency.com', 'namespace' => 'API'], function () {
 Route::group(['namespace' => 'API'], function () {
-
 
     /*
     |--------------------------------------------------------------------------
