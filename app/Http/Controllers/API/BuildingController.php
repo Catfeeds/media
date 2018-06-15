@@ -66,13 +66,11 @@ class BuildingController extends APIBaseController
         }
 
         $validate = [];
-        foreach($request->building_block as $k => $v) {
-            $validate[] = $v['name'].'|'.$v['name_unit'];
-            if ($k >= 1) {
-                if(in_array($v['name'].'|'.$v['name_unit'], $validate)){
-                    return $this->sendError('楼座信息不能重复添加');
-                }
+        foreach ($request->building_block as $v) {
+            if (in_array($v['name'].'|'.$v['name_unit'].'|'.$v['unit'].'|'.$v['unit_unit'], $validate)) {
+                return $this->sendError('楼座信息不能重复添加');
             }
+            $validate[] = $v['name'].'|'.$v['name_unit'].'|'.$v['unit'].'|'.$v['unit_unit'];
         }
 
         $res = $repository->add($request);
