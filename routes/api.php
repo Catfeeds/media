@@ -247,6 +247,9 @@ Route::group(['namespace' => 'API'], function () {
 
     //客服工单
     Route::resource('raw_custom', 'RawCustomsController');
+    //获取店长信息
     Route::get('get_shopkeeper', 'RawCustomsController@getShopkeeper');
+    //获取店长下属业务员
+    Route::get('get_staff', 'RawCustomsController@getStaff');
 });
 
