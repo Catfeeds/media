@@ -45,7 +45,10 @@ class BuildingController extends APIBaseController
      * @return \Illuminate\Http\JsonResponse
      * @author jacklin
      */
-    public function store(BuildingRequest $request, BuildingRepository $repository)
+    public function store(
+        BuildingRequest $request,
+        BuildingRepository $repository
+    )
     {
         if (empty(Common::user()->can('add_building'))) {
             return $this->sendError('无添加楼盘权限','403');
@@ -53,15 +56,27 @@ class BuildingController extends APIBaseController
 
         // 楼栋信息不能为空
         if (empty($request->building_block)) return $this->sendError('楼栋信息不能为空');
-        // 楼盘名不允许重复
-        $res = Building::where(['name' => $request->name, 'area_id' => $request->area_id])->first();
-        if (!empty($res)) return $this->sendError('该城区下已有此楼盘，请勿重复添加');
+
+        // 楼盘名
+        $temp = City::find(1)->area->pluck('id')->toArray();
+        if (in_array($request->area_id,$temp)) {
+            // 楼盘名不允许重复
+            $res = Building::where(['name' => $request->name])->first();
+            if (!empty($res)) return $this->sendError('该城市下已有此楼盘，请勿重复添加');
+        }
+
+        $validate = [];
+        foreach ($request->building_block as $v) {
+            if (in_array($v['name'].'|'.$v['name_unit'].'|'.$v['unit'].'|'.$v['unit_unit'], $validate)) {
+                return $this->sendError('楼座信息不能重复添加');
+            }
+            $validate[] = $v['name'].'|'.$v['name_unit'].'|'.$v['unit'].'|'.$v['unit_unit'];
+        }
 
         $res = $repository->add($request);
         if (empty($res)) return $this->sendError('添加失败');
         return $this->sendResponse($res, 200);
     }
-
 
     /**
      * 说明：修改楼盘数据
@@ -72,11 +87,21 @@ class BuildingController extends APIBaseController
      * @return \Illuminate\Http\JsonResponse
      * @author jacklin
      */
-    public function update(BuildingRequest $request, Building $building, BuildingRepository $repository)
+    public function update(
+        BuildingRequest $request,
+        Building $building,
+        BuildingRepository $repository
+    )
     {
         if (empty(Common::user()->can('update_building'))) {
             return $this->sendError('无修改楼盘权限','403');
         }
+
+        // 获取楼盘城市
+        $new = Area::find($request->area_id)->city->id;
+        $old = $building->area->city->id;
+
+        if (!empty($request->name) && $request->name != $building->name && $new === $old && in_array($request->name, Building::where([])->pluck('name')->toArray())) return $this->sendError($request->name . '已存在，请勿重复添加');
 
         $res = $repository->updateData($building, $request);
         return $this->sendResponse($res, '修改成功');
