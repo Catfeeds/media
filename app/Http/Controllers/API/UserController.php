@@ -72,19 +72,19 @@ class UserController extends APIBaseController
         // 用户的称呼逻辑
         switch ($user->level) {
             case 1:
-                $result['user_info'] = '总经理:' . $user->real_name;
+                $result['user_info'] = '市场总监:' . $user->real_name;
                 break;
             case 2:
                 $result['user_info'] = '区域经理:' . $user->real_name;
                 break;
             case 3:
-                $result['user_info'] = '（' . $user->storefront->storefront_name . ')' . '店长:' . $user->real_name;
+                $result['user_info'] = '（' . $user->storefront->storefront_name . ')' . '商圈经理:' . $user->real_name;
                 break;
             case 4:
-                $result['user_info'] = '（' . $user->storefront->storefront_name . ')' . '业务员:' . $user->real_name;
+                $result['user_info'] = '（' . $user->storefront->storefront_name . ')' . '业务经理:' . $user->real_name;
                 break;
             case 5:
-                $result['user_info'] = '（' . $user->storefront->storefront_name . ')' . '组长:' . $user->real_name;
+                $result['user_info'] = '（' . $user->storefront->storefront_name . ')' . '门店经理:' . $user->real_name;
                 break;
         }
 
