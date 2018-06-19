@@ -116,7 +116,7 @@ class BuildingController extends APIBaseController
      */
     public function show(Building $building)
     {
-        $building->building_blocks = $building->buildingBlocks;
+        $building->floor_info = $building->buildingBlocks;
         return $this->sendResponse($building, '获取成功');
     }
 
