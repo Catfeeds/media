@@ -13,6 +13,12 @@ header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
 Route::resource('/logs', 'LogController');
 //Route::group(['domain' => 'admin.agency.com', 'namespace' => 'API'], function () {
 Route::group(['namespace' => 'API'], function () {
+    /*
+    |--------------------------------------------------------------------------
+    | clw平台权限管理操作成功运行系统命令
+    |--------------------------------------------------------------------------
+    */
+    Route::post('/run_command', 'HomePagesController@runCommand');
 
     /*
     |--------------------------------------------------------------------------

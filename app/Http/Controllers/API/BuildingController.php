@@ -116,11 +116,7 @@ class BuildingController extends APIBaseController
      */
     public function show(Building $building)
     {
-<<<<<<< HEAD
-        $building->floor_info = $building->buildingBlocks;
-=======
-        $building->building_blocks = $building->buildingBlocks->sortBy('name')->values();
->>>>>>> origin/master
+        $building->floor_info = $building->buildingBlocks->sortBy('name')->values();
         return $this->sendResponse($building, '获取成功');
     }
 
