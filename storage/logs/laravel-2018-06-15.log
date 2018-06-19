@@ -1,0 +1,620 @@
+[2018-06-15 17:45:45] local.INFO: select * from `oauth_access_tokens` where `oauth_access_tokens`.`id` = ? limit 1  
+[2018-06-15 17:45:45] local.INFO: select * from `users` where `id` = ? limit 1  
+[2018-06-15 17:45:45] local.INFO: select * from `oauth_access_tokens` where `oauth_access_tokens`.`id` = ? limit 1  
+[2018-06-15 17:45:45] local.INFO: select * from `oauth_clients` where `oauth_clients`.`id` = ? limit 1  
+[2018-06-15 17:45:45] local.INFO: select `permissions`.*, `model_has_permissions`.`model_id` as `pivot_model_id`, `model_has_permissions`.`permission_id` as `pivot_permission_id` from `permissions` inner join `model_has_permissions` on `permissions`.`id` = `model_has_permissions`.`permission_id` where `model_has_permissions`.`model_id` = ? and `model_has_permissions`.`model_type` = ?  
+[2018-06-15 17:45:45] local.INFO: select `roles`.*, `model_has_roles`.`model_id` as `pivot_model_id`, `model_has_roles`.`role_id` as `pivot_role_id` from `roles` inner join `model_has_roles` on `roles`.`id` = `model_has_roles`.`role_id` where `model_has_roles`.`model_id` in (?) and `model_has_roles`.`model_type` = ?  
+[2018-06-15 17:45:45] local.INFO: select `permissions`.*, `role_has_permissions`.`role_id` as `pivot_role_id`, `role_has_permissions`.`permission_id` as `pivot_permission_id` from `permissions` inner join `role_has_permissions` on `permissions`.`id` = `role_has_permissions`.`permission_id` where `role_has_permissions`.`role_id` in (?)  
+[2018-06-15 17:45:45] local.INFO: select * from `owner_view_records` where (`user_id` = ? and `status` = ?) limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `cities` where `cities`.`deleted_at` is null  
+[2018-06-15 17:45:46] local.INFO: select * from `oauth_access_tokens` where `oauth_access_tokens`.`id` = ? limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `areas` where `city_id` = ? and `areas`.`deleted_at` is null  
+[2018-06-15 17:45:46] local.INFO: select * from `users` where `id` = ? limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `buildings` where `buildings`.`area_id` = ? and `buildings`.`area_id` is not null and `buildings`.`deleted_at` is null  
+[2018-06-15 17:45:46] local.INFO: select * from `oauth_access_tokens` where `oauth_access_tokens`.`id` = ? limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `oauth_clients` where `oauth_clients`.`id` = ? limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `buildings` where `buildings`.`area_id` = ? and `buildings`.`area_id` is not null and `buildings`.`deleted_at` is null  
+[2018-06-15 17:45:46] local.INFO: select * from `buildings` where `buildings`.`area_id` = ? and `buildings`.`area_id` is not null and `buildings`.`deleted_at` is null  
+[2018-06-15 17:45:46] local.INFO: select * from `buildings` where `buildings`.`area_id` = ? and `buildings`.`area_id` is not null and `buildings`.`deleted_at` is null  
+[2018-06-15 17:45:46] local.INFO: select * from `buildings` where `buildings`.`area_id` = ? and `buildings`.`area_id` is not null and `buildings`.`deleted_at` is null  
+[2018-06-15 17:45:46] local.INFO: select * from `buildings` where `buildings`.`area_id` = ? and `buildings`.`area_id` is not null and `buildings`.`deleted_at` is null  
+[2018-06-15 17:45:46] local.INFO: select * from `buildings` where `buildings`.`area_id` = ? and `buildings`.`area_id` is not null and `buildings`.`deleted_at` is null  
+[2018-06-15 17:45:46] local.INFO: select * from `buildings` where `buildings`.`area_id` = ? and `buildings`.`area_id` is not null and `buildings`.`deleted_at` is null  
+[2018-06-15 17:45:46] local.INFO: select * from `buildings` where `buildings`.`area_id` = ? and `buildings`.`area_id` is not null and `buildings`.`deleted_at` is null  
+[2018-06-15 17:45:46] local.INFO: select * from `buildings` where `buildings`.`area_id` = ? and `buildings`.`area_id` is not null and `buildings`.`deleted_at` is null  
+[2018-06-15 17:45:46] local.INFO: select * from `buildings` where `buildings`.`area_id` = ? and `buildings`.`area_id` is not null and `buildings`.`deleted_at` is null  
+[2018-06-15 17:45:46] local.INFO: select * from `permissions`  
+[2018-06-15 17:45:46] local.INFO: select * from `buildings` where `buildings`.`area_id` = ? and `buildings`.`area_id` is not null and `buildings`.`deleted_at` is null  
+[2018-06-15 17:45:46] local.INFO: select * from `buildings` where `buildings`.`area_id` = ? and `buildings`.`area_id` is not null and `buildings`.`deleted_at` is null  
+[2018-06-15 17:45:46] local.INFO: select * from `oauth_access_tokens` where `oauth_access_tokens`.`id` = ? limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `users` where `id` = ? limit 1  
+[2018-06-15 17:45:46] local.INFO: select `roles`.*, `role_has_permissions`.`permission_id` as `pivot_permission_id`, `role_has_permissions`.`role_id` as `pivot_role_id` from `roles` inner join `role_has_permissions` on `roles`.`id` = `role_has_permissions`.`role_id` where `role_has_permissions`.`permission_id` in (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  
+[2018-06-15 17:45:46] local.INFO: select * from `oauth_access_tokens` where `oauth_access_tokens`.`id` = ? limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `oauth_clients` where `oauth_clients`.`id` = ? limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `customs` where `customs`.`deleted_at` is null order by `updated_at` desc  
+[2018-06-15 17:45:46] local.INFO: select * from `custom_rel_buildings` where `custom_rel_buildings`.`custom_id` in (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)  
+[2018-06-15 17:45:46] local.INFO: select `permissions`.*, `model_has_permissions`.`model_id` as `pivot_model_id`, `model_has_permissions`.`permission_id` as `pivot_permission_id` from `permissions` inner join `model_has_permissions` on `permissions`.`id` = `model_has_permissions`.`permission_id` where `model_has_permissions`.`model_id` = ? and `model_has_permissions`.`model_type` = ?  
+[2018-06-15 17:45:46] local.INFO: select `roles`.*, `model_has_roles`.`model_id` as `pivot_model_id`, `model_has_roles`.`role_id` as `pivot_role_id` from `roles` inner join `model_has_roles` on `roles`.`id` = `model_has_roles`.`role_id` where `model_has_roles`.`model_id` = ? and `model_has_roles`.`model_type` = ?  
+[2018-06-15 17:45:46] local.INFO: select count(*) as aggregate from `office_building_houses` where `house_busine_state` = ? and `office_building_houses`.`deleted_at` is null  
+[2018-06-15 17:45:46] local.INFO: select * from `office_building_houses` where `house_busine_state` = ? and `office_building_houses`.`deleted_at` is null order by `start_track_time` desc limit 10 offset 0  
+[2018-06-15 17:45:46] local.INFO: select * from `building_blocks` where `building_blocks`.`id` = ? and `building_blocks`.`deleted_at` is null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `buildings` where `buildings`.`id` = ? and `buildings`.`deleted_at` is null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `users` where `users`.`id` = ? and `users`.`id` is not null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `users` where `users`.`id` = ? and `users`.`id` is not null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `users` where `users`.`id` = ? and `users`.`id` is not null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `users` where `users`.`id` = ? and `users`.`id` is not null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `tracks` where `tracks`.`house_id` = ? and `tracks`.`house_id` is not null and `tracks`.`deleted_at` is null order by `id` desc limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `users` where `id` = ? limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `areas` where `areas`.`id` = ? and `areas`.`deleted_at` is null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `blocks` where `blocks`.`id` = ? and `blocks`.`deleted_at` is null limit 1  
+[2018-06-15 17:45:46] local.INFO: select count(*) as aggregate from `building_blocks` where `building_blocks`.`building_id` = ? and `building_blocks`.`building_id` is not null and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:45:46] local.INFO: select * from `cities` where `cities`.`id` = ? and `cities`.`deleted_at` is null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `building_blocks` where `building_blocks`.`id` = ? and `building_blocks`.`deleted_at` is null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `buildings` where `buildings`.`id` = ? and `buildings`.`deleted_at` is null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `users` where `users`.`id` = ? and `users`.`id` is not null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `users` where `users`.`id` = ? and `users`.`id` is not null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `users` where `users`.`id` = ? and `users`.`id` is not null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `users` where `users`.`id` = ? and `users`.`id` is not null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `tracks` where `tracks`.`house_id` = ? and `tracks`.`house_id` is not null and `tracks`.`deleted_at` is null order by `id` desc limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `users` where `id` = ? limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `areas` where `areas`.`id` = ? and `areas`.`deleted_at` is null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `blocks` where `blocks`.`id` = ? and `blocks`.`deleted_at` is null limit 1  
+[2018-06-15 17:45:46] local.INFO: select count(*) as aggregate from `building_blocks` where `building_blocks`.`building_id` = ? and `building_blocks`.`building_id` is not null and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:45:46] local.INFO: select * from `cities` where `cities`.`id` = ? and `cities`.`deleted_at` is null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `building_blocks` where `building_blocks`.`id` = ? and `building_blocks`.`deleted_at` is null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `buildings` where `buildings`.`id` = ? and `buildings`.`deleted_at` is null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `users` where `users`.`id` = ? and `users`.`id` is not null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `users` where `users`.`id` = ? and `users`.`id` is not null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `users` where `users`.`id` = ? and `users`.`id` is not null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `users` where `users`.`id` = ? and `users`.`id` is not null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `users` where `users`.`id` = ? and `users`.`id` is not null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `storefronts` where `storefronts`.`id` = ? and `storefronts`.`deleted_at` is null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `tracks` where `tracks`.`house_id` = ? and `tracks`.`house_id` is not null and `tracks`.`deleted_at` is null order by `id` desc limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `users` where `id` = ? limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `areas` where `areas`.`id` = ? and `areas`.`deleted_at` is null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `blocks` where `blocks`.`id` = ? and `blocks`.`deleted_at` is null limit 1  
+[2018-06-15 17:45:46] local.INFO: select count(*) as aggregate from `building_blocks` where `building_blocks`.`building_id` = ? and `building_blocks`.`building_id` is not null and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:45:46] local.INFO: select * from `cities` where `cities`.`id` = ? and `cities`.`deleted_at` is null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `building_blocks` where `building_blocks`.`id` = ? and `building_blocks`.`deleted_at` is null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `buildings` where `buildings`.`id` = ? and `buildings`.`deleted_at` is null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `users` where `users`.`id` = ? and `users`.`id` is not null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `users` where `users`.`id` = ? and `users`.`id` is not null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `users` where `users`.`id` = ? and `users`.`id` is not null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `users` where `users`.`id` = ? and `users`.`id` is not null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `users` where `users`.`id` = ? and `users`.`id` is not null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `storefronts` where `storefronts`.`id` = ? and `storefronts`.`deleted_at` is null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `tracks` where `tracks`.`house_id` = ? and `tracks`.`house_id` is not null and `tracks`.`deleted_at` is null order by `id` desc limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `users` where `id` = ? limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `areas` where `areas`.`id` = ? and `areas`.`deleted_at` is null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `blocks` where `blocks`.`id` = ? and `blocks`.`deleted_at` is null limit 1  
+[2018-06-15 17:45:46] local.INFO: select count(*) as aggregate from `building_blocks` where `building_blocks`.`building_id` = ? and `building_blocks`.`building_id` is not null and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:45:46] local.INFO: select * from `cities` where `cities`.`id` = ? and `cities`.`deleted_at` is null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `building_blocks` where `building_blocks`.`id` = ? and `building_blocks`.`deleted_at` is null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `buildings` where `buildings`.`id` = ? and `buildings`.`deleted_at` is null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `users` where `users`.`id` = ? and `users`.`id` is not null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `users` where `users`.`id` = ? and `users`.`id` is not null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `users` where `users`.`id` = ? and `users`.`id` is not null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `users` where `users`.`id` = ? and `users`.`id` is not null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `users` where `users`.`id` = ? and `users`.`id` is not null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `storefronts` where `storefronts`.`id` = ? and `storefronts`.`deleted_at` is null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `tracks` where `tracks`.`house_id` = ? and `tracks`.`house_id` is not null and `tracks`.`deleted_at` is null order by `id` desc limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `users` where `id` = ? limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `areas` where `areas`.`id` = ? and `areas`.`deleted_at` is null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `blocks` where `blocks`.`id` = ? and `blocks`.`deleted_at` is null limit 1  
+[2018-06-15 17:45:46] local.INFO: select count(*) as aggregate from `building_blocks` where `building_blocks`.`building_id` = ? and `building_blocks`.`building_id` is not null and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:45:46] local.INFO: select * from `cities` where `cities`.`id` = ? and `cities`.`deleted_at` is null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `building_blocks` where `building_blocks`.`id` = ? and `building_blocks`.`deleted_at` is null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `buildings` where `buildings`.`id` = ? and `buildings`.`deleted_at` is null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `users` where `users`.`id` = ? and `users`.`id` is not null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `users` where `users`.`id` = ? and `users`.`id` is not null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `users` where `users`.`id` = ? and `users`.`id` is not null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `users` where `users`.`id` = ? and `users`.`id` is not null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `users` where `users`.`id` = ? and `users`.`id` is not null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `storefronts` where `storefronts`.`id` = ? and `storefronts`.`deleted_at` is null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `tracks` where `tracks`.`house_id` = ? and `tracks`.`house_id` is not null and `tracks`.`deleted_at` is null order by `id` desc limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `users` where `id` = ? limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `areas` where `areas`.`id` = ? and `areas`.`deleted_at` is null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `blocks` where `blocks`.`id` = ? and `blocks`.`deleted_at` is null limit 1  
+[2018-06-15 17:45:46] local.INFO: select count(*) as aggregate from `building_blocks` where `building_blocks`.`building_id` = ? and `building_blocks`.`building_id` is not null and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:45:46] local.INFO: select * from `cities` where `cities`.`id` = ? and `cities`.`deleted_at` is null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `building_blocks` where `building_blocks`.`id` = ? and `building_blocks`.`deleted_at` is null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `buildings` where `buildings`.`id` = ? and `buildings`.`deleted_at` is null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `users` where `users`.`id` = ? and `users`.`id` is not null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `users` where `users`.`id` = ? and `users`.`id` is not null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `users` where `users`.`id` = ? and `users`.`id` is not null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `users` where `users`.`id` = ? and `users`.`id` is not null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `users` where `users`.`id` = ? and `users`.`id` is not null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `storefronts` where `storefronts`.`id` = ? and `storefronts`.`deleted_at` is null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `tracks` where `tracks`.`house_id` = ? and `tracks`.`house_id` is not null and `tracks`.`deleted_at` is null order by `id` desc limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `users` where `id` = ? limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `areas` where `areas`.`id` = ? and `areas`.`deleted_at` is null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `blocks` where `blocks`.`id` = ? and `blocks`.`deleted_at` is null limit 1  
+[2018-06-15 17:45:46] local.INFO: select count(*) as aggregate from `building_blocks` where `building_blocks`.`building_id` = ? and `building_blocks`.`building_id` is not null and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:45:46] local.INFO: select * from `cities` where `cities`.`id` = ? and `cities`.`deleted_at` is null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `building_blocks` where `building_blocks`.`id` = ? and `building_blocks`.`deleted_at` is null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `buildings` where `buildings`.`id` = ? and `buildings`.`deleted_at` is null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `users` where `users`.`id` = ? and `users`.`id` is not null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `users` where `users`.`id` = ? and `users`.`id` is not null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `users` where `users`.`id` = ? and `users`.`id` is not null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `users` where `users`.`id` = ? and `users`.`id` is not null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `users` where `users`.`id` = ? and `users`.`id` is not null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `storefronts` where `storefronts`.`id` = ? and `storefronts`.`deleted_at` is null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `tracks` where `tracks`.`house_id` = ? and `tracks`.`house_id` is not null and `tracks`.`deleted_at` is null order by `id` desc limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `users` where `id` = ? limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `areas` where `areas`.`id` = ? and `areas`.`deleted_at` is null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `blocks` where `blocks`.`id` = ? and `blocks`.`deleted_at` is null limit 1  
+[2018-06-15 17:45:46] local.INFO: select count(*) as aggregate from `building_blocks` where `building_blocks`.`building_id` = ? and `building_blocks`.`building_id` is not null and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:45:46] local.INFO: select * from `cities` where `cities`.`id` = ? and `cities`.`deleted_at` is null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `building_blocks` where `building_blocks`.`id` = ? and `building_blocks`.`deleted_at` is null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `buildings` where `buildings`.`id` = ? and `buildings`.`deleted_at` is null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `users` where `users`.`id` = ? and `users`.`id` is not null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `users` where `users`.`id` = ? and `users`.`id` is not null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `users` where `users`.`id` = ? and `users`.`id` is not null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `users` where `users`.`id` = ? and `users`.`id` is not null limit 1  
+[2018-06-15 17:45:46] local.INFO: select * from `users` where `users`.`id` = ? and `users`.`id` is not null limit 1  
+[2018-06-15 17:45:47] local.INFO: select * from `storefronts` where `storefronts`.`id` = ? and `storefronts`.`deleted_at` is null limit 1  
+[2018-06-15 17:45:47] local.INFO: select * from `tracks` where `tracks`.`house_id` = ? and `tracks`.`house_id` is not null and `tracks`.`deleted_at` is null order by `id` desc limit 1  
+[2018-06-15 17:45:47] local.INFO: select * from `users` where `id` = ? limit 1  
+[2018-06-15 17:45:47] local.INFO: select * from `areas` where `areas`.`id` = ? and `areas`.`deleted_at` is null limit 1  
+[2018-06-15 17:45:47] local.INFO: select * from `blocks` where `blocks`.`id` = ? and `blocks`.`deleted_at` is null limit 1  
+[2018-06-15 17:45:47] local.INFO: select count(*) as aggregate from `building_blocks` where `building_blocks`.`building_id` = ? and `building_blocks`.`building_id` is not null and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:45:47] local.INFO: select * from `cities` where `cities`.`id` = ? and `cities`.`deleted_at` is null limit 1  
+[2018-06-15 17:45:47] local.INFO: select * from `building_blocks` where `building_blocks`.`id` = ? and `building_blocks`.`deleted_at` is null limit 1  
+[2018-06-15 17:45:47] local.INFO: select * from `buildings` where `buildings`.`id` = ? and `buildings`.`deleted_at` is null limit 1  
+[2018-06-15 17:45:47] local.INFO: select * from `users` where `users`.`id` = ? and `users`.`id` is not null limit 1  
+[2018-06-15 17:45:47] local.INFO: select * from `users` where `users`.`id` = ? and `users`.`id` is not null limit 1  
+[2018-06-15 17:45:47] local.INFO: select * from `users` where `users`.`id` = ? and `users`.`id` is not null limit 1  
+[2018-06-15 17:45:47] local.INFO: select * from `users` where `users`.`id` = ? and `users`.`id` is not null limit 1  
+[2018-06-15 17:45:47] local.INFO: select * from `users` where `users`.`id` = ? and `users`.`id` is not null limit 1  
+[2018-06-15 17:45:47] local.INFO: select * from `storefronts` where `storefronts`.`id` = ? and `storefronts`.`deleted_at` is null limit 1  
+[2018-06-15 17:45:47] local.INFO: select * from `tracks` where `tracks`.`house_id` = ? and `tracks`.`house_id` is not null and `tracks`.`deleted_at` is null order by `id` desc limit 1  
+[2018-06-15 17:45:47] local.INFO: select * from `tracks` where `tracks`.`house_id` = ? and `tracks`.`house_id` is not null and `tracks`.`deleted_at` is null order by `id` desc limit 1  
+[2018-06-15 17:45:47] local.INFO: select * from `users` where `id` = ? limit 1  
+[2018-06-15 17:45:47] local.INFO: select * from `areas` where `areas`.`id` = ? and `areas`.`deleted_at` is null limit 1  
+[2018-06-15 17:45:47] local.INFO: select * from `blocks` where `blocks`.`id` = ? and `blocks`.`deleted_at` is null limit 1  
+[2018-06-15 17:45:47] local.INFO: select count(*) as aggregate from `building_blocks` where `building_blocks`.`building_id` = ? and `building_blocks`.`building_id` is not null and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:45:47] local.INFO: select * from `cities` where `cities`.`id` = ? and `cities`.`deleted_at` is null limit 1  
+[2018-06-15 17:48:26] local.INFO: select * from `cities` where `cities`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `areas` where `city_id` = ? and `areas`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `buildings` where `area_id` = ? and `buildings`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `buildings` where `area_id` = ? and `buildings`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `buildings` where `area_id` = ? and `buildings`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `buildings` where `area_id` = ? and `buildings`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `buildings` where `area_id` = ? and `buildings`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `buildings` where `area_id` = ? and `buildings`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `buildings` where `area_id` = ? and `buildings`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `buildings` where `area_id` = ? and `buildings`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `buildings` where `area_id` = ? and `buildings`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `buildings` where `area_id` = ? and `buildings`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `buildings` where `area_id` = ? and `buildings`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `buildings` where `area_id` = ? and `buildings`.`deleted_at` is null  
+[2018-06-15 17:48:26] local.INFO: select * from `buildings` where `area_id` = ? and `buildings`.`deleted_at` is null  
+[2018-06-15 17:49:21] local.INFO: select * from `oauth_access_tokens` where `oauth_access_tokens`.`id` = ? limit 1  
+[2018-06-15 17:49:21] local.INFO: select * from `users` where `id` = ? limit 1  
+[2018-06-15 17:49:21] local.INFO: select * from `oauth_access_tokens` where `oauth_access_tokens`.`id` = ? limit 1  
+[2018-06-15 17:49:21] local.INFO: select * from `oauth_clients` where `oauth_clients`.`id` = ? limit 1  
+[2018-06-15 17:49:21] local.INFO: select * from `building_blocks` where `building_blocks`.`deleted_at` is null  
+[2018-06-15 17:49:21] local.INFO: select `permissions`.*, `model_has_permissions`.`model_id` as `pivot_model_id`, `model_has_permissions`.`permission_id` as `pivot_permission_id` from `permissions` inner join `model_has_permissions` on `permissions`.`id` = `model_has_permissions`.`permission_id` where `model_has_permissions`.`model_id` = ? and `model_has_permissions`.`model_type` = ?  
+[2018-06-15 17:49:21] local.INFO: select `roles`.*, `model_has_roles`.`model_id` as `pivot_model_id`, `model_has_roles`.`role_id` as `pivot_role_id` from `roles` inner join `model_has_roles` on `roles`.`id` = `model_has_roles`.`role_id` where `model_has_roles`.`model_id` = ? and `model_has_roles`.`model_type` = ?  
+[2018-06-15 17:49:21] local.INFO: select `house_number` from `office_building_houses` where (`building_block_id` = ? and `floor` = ?) and `office_building_houses`.`deleted_at` is null  
+[2018-06-15 17:50:42] local.INFO: select * from `oauth_access_tokens` where `oauth_access_tokens`.`id` = ? limit 1  
+[2018-06-15 17:50:42] local.INFO: select * from `users` where `id` = ? limit 1  
+[2018-06-15 17:50:42] local.INFO: select * from `oauth_access_tokens` where `oauth_access_tokens`.`id` = ? limit 1  
+[2018-06-15 17:50:42] local.INFO: select * from `oauth_clients` where `oauth_clients`.`id` = ? limit 1  
+[2018-06-15 17:50:42] local.INFO: select `house_number` from `office_building_houses` where (`building_block_id` = ? and `floor` = ?) and `office_building_houses`.`deleted_at` is null  
+[2018-06-15 17:50:59] local.INFO: select * from `oauth_access_tokens` where `oauth_access_tokens`.`id` = ? limit 1  
+[2018-06-15 17:50:59] local.INFO: select * from `users` where `id` = ? limit 1  
+[2018-06-15 17:50:59] local.INFO: select * from `oauth_access_tokens` where `oauth_access_tokens`.`id` = ? limit 1  
+[2018-06-15 17:50:59] local.INFO: select * from `oauth_clients` where `oauth_clients`.`id` = ? limit 1  
+[2018-06-15 17:50:59] local.INFO: select `house_number` from `office_building_houses` where (`building_block_id` = ? and `floor` = ?) and `office_building_houses`.`deleted_at` is null  
+[2018-06-15 17:51:20] local.INFO: select * from `oauth_access_tokens` where `oauth_access_tokens`.`id` = ? limit 1  
+[2018-06-15 17:51:20] local.INFO: select * from `users` where `id` = ? limit 1  
+[2018-06-15 17:51:20] local.INFO: select * from `oauth_access_tokens` where `oauth_access_tokens`.`id` = ? limit 1  
+[2018-06-15 17:51:20] local.INFO: select * from `oauth_clients` where `oauth_clients`.`id` = ? limit 1  
+[2018-06-15 17:51:20] local.INFO: select `house_number` from `office_building_houses` where (`building_block_id` = ? and `floor` = ?) and `office_building_houses`.`deleted_at` is null  
+[2018-06-15 17:51:38] local.INFO: select * from `oauth_access_tokens` where `oauth_access_tokens`.`id` = ? limit 1  
+[2018-06-15 17:51:38] local.INFO: select * from `users` where `id` = ? limit 1  
+[2018-06-15 17:51:38] local.INFO: select * from `oauth_access_tokens` where `oauth_access_tokens`.`id` = ? limit 1  
+[2018-06-15 17:51:38] local.INFO: select * from `oauth_clients` where `oauth_clients`.`id` = ? limit 1  
+[2018-06-15 17:51:38] local.INFO: select `house_number` from `office_building_houses` where (`building_block_id` = ? and `floor` = ?) and `office_building_houses`.`deleted_at` is null  
+[2018-06-15 17:52:07] local.INFO: select * from `oauth_access_tokens` where `oauth_access_tokens`.`id` = ? limit 1  
+[2018-06-15 17:52:07] local.INFO: select * from `users` where `id` = ? limit 1  
+[2018-06-15 17:52:07] local.INFO: select * from `oauth_access_tokens` where `oauth_access_tokens`.`id` = ? limit 1  
+[2018-06-15 17:52:07] local.INFO: select * from `oauth_clients` where `oauth_clients`.`id` = ? limit 1  
+[2018-06-15 17:52:07] local.INFO: select `house_number` from `office_building_houses` where (`building_block_id` = ? and `floor` = ?) and `office_building_houses`.`deleted_at` is null  
+[2018-06-15 17:52:14] local.INFO: select * from `oauth_access_tokens` where `oauth_access_tokens`.`id` = ? limit 1  
+[2018-06-15 17:52:14] local.INFO: select * from `users` where `id` = ? limit 1  
+[2018-06-15 17:52:14] local.INFO: select * from `oauth_access_tokens` where `oauth_access_tokens`.`id` = ? limit 1  
+[2018-06-15 17:52:14] local.INFO: select * from `oauth_clients` where `oauth_clients`.`id` = ? limit 1  
+[2018-06-15 17:52:14] local.INFO: select `house_number` from `office_building_houses` where (`building_block_id` = ? and `floor` = ?) and `office_building_houses`.`deleted_at` is null  
+[2018-06-15 17:52:19] local.INFO: select * from `oauth_access_tokens` where `oauth_access_tokens`.`id` = ? limit 1  
+[2018-06-15 17:52:19] local.INFO: select * from `users` where `id` = ? limit 1  
+[2018-06-15 17:52:19] local.INFO: select * from `oauth_access_tokens` where `oauth_access_tokens`.`id` = ? limit 1  
+[2018-06-15 17:52:19] local.INFO: select * from `oauth_clients` where `oauth_clients`.`id` = ? limit 1  
+[2018-06-15 17:52:19] local.INFO: select `house_number` from `office_building_houses` where (`building_block_id` = ? and `floor` = ?) and `office_building_houses`.`deleted_at` is null  
+[2018-06-15 17:52:44] local.INFO: select * from `oauth_access_tokens` where `oauth_access_tokens`.`id` = ? limit 1  
+[2018-06-15 17:52:44] local.INFO: select * from `users` where `id` = ? limit 1  
+[2018-06-15 17:52:44] local.INFO: select * from `oauth_access_tokens` where `oauth_access_tokens`.`id` = ? limit 1  
+[2018-06-15 17:52:44] local.INFO: select * from `oauth_clients` where `oauth_clients`.`id` = ? limit 1  
+[2018-06-15 17:52:44] local.INFO: select `house_number` from `office_building_houses` where (`building_block_id` = ? and `floor` = ?) and `office_building_houses`.`deleted_at` is null  
+[2018-06-15 17:55:26] local.INFO: select * from `oauth_access_tokens` where `oauth_access_tokens`.`id` = ? limit 1  
+[2018-06-15 17:55:26] local.INFO: select * from `users` where `id` = ? limit 1  
+[2018-06-15 17:55:26] local.INFO: select * from `oauth_access_tokens` where `oauth_access_tokens`.`id` = ? limit 1  
+[2018-06-15 17:55:26] local.INFO: select * from `oauth_clients` where `oauth_clients`.`id` = ? limit 1  
+[2018-06-15 17:55:29] local.INFO: select * from `oauth_access_tokens` where `oauth_access_tokens`.`id` = ? limit 1  
+[2018-06-15 17:55:29] local.INFO: select * from `users` where `id` = ? limit 1  
+[2018-06-15 17:55:29] local.INFO: select * from `oauth_access_tokens` where `oauth_access_tokens`.`id` = ? limit 1  
+[2018-06-15 17:55:29] local.INFO: select * from `oauth_clients` where `oauth_clients`.`id` = ? limit 1  
+[2018-06-15 17:56:46] local.INFO: select * from `oauth_access_tokens` where `oauth_access_tokens`.`id` = ? limit 1  
+[2018-06-15 17:56:46] local.INFO: select * from `users` where `id` = ? limit 1  
+[2018-06-15 17:56:46] local.INFO: select * from `oauth_access_tokens` where `oauth_access_tokens`.`id` = ? limit 1  
+[2018-06-15 17:56:46] local.INFO: select * from `oauth_clients` where `oauth_clients`.`id` = ? limit 1  
+[2018-06-15 17:56:46] local.INFO: select `house_number` from `office_building_houses` where (`building_block_id` = ? and `floor` = ?) and `office_building_houses`.`deleted_at` is null  
+[2018-06-15 17:56:57] local.INFO: select * from `oauth_access_tokens` where `oauth_access_tokens`.`id` = ? limit 1  
+[2018-06-15 17:56:57] local.INFO: select * from `users` where `id` = ? limit 1  
+[2018-06-15 17:56:57] local.INFO: select * from `oauth_access_tokens` where `oauth_access_tokens`.`id` = ? limit 1  
+[2018-06-15 17:56:57] local.INFO: select * from `oauth_clients` where `oauth_clients`.`id` = ? limit 1  
+[2018-06-15 17:56:57] local.INFO: select `house_number` from `office_building_houses` where (`building_block_id` = ? and `floor` = ?) and `office_building_houses`.`deleted_at` is null  
+[2018-06-15 18:02:43] local.INFO: select * from `oauth_access_tokens` where `oauth_access_tokens`.`id` = ? limit 1  
+[2018-06-15 18:02:43] local.INFO: select * from `users` where `id` = ? limit 1  
+[2018-06-15 18:02:43] local.INFO: select * from `oauth_access_tokens` where `oauth_access_tokens`.`id` = ? limit 1  
+[2018-06-15 18:02:43] local.INFO: select * from `oauth_clients` where `oauth_clients`.`id` = ? limit 1  
+[2018-06-15 18:02:43] local.INFO: select `house_number` from `office_building_houses` where (`building_block_id` = ? and `floor` = ?) and `office_building_houses`.`deleted_at` is null  
+[2018-06-15 18:02:43] local.INFO: select `id`, `house_number` from `office_building_houses` where (`building_block_id` = ? and `floor` = ?) and `office_building_houses`.`deleted_at` is null  
+[2018-06-15 18:02:43] local.INFO: select * from `building_blocks` where `building_blocks`.`id` is null and `building_blocks`.`deleted_at` is null limit 1  
+[2018-06-15 18:02:43] local.ERROR: Trying to get property of non-object {"userId":7,"exception":"[object] (ErrorException(code: 0): Trying to get property of non-object at /luozhen/agency/app/Traits/HouseTraits.php:362)
+[stacktrace]
+#0 /luozhen/agency/app/Traits/HouseTraits.php(362): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError(8, 'Trying to get p...', '/luozhen/agency...', 362, Array)
+#1 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Concerns/HasAttributes.php(438): App\\Models\\OfficeBuildingHouse->getAddressAttribute(NULL)
+#2 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Concerns/HasAttributes.php(450): Illuminate\\Database\\Eloquent\\Model->mutateAttribute('address', NULL)
+#3 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Concerns/HasAttributes.php(109): Illuminate\\Database\\Eloquent\\Model->mutateAttributeForArray('address', NULL)
+#4 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(970): Illuminate\\Database\\Eloquent\\Model->attributesToArray()
+#5 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Support/Collection.php(1611): Illuminate\\Database\\Eloquent\\Model->toArray()
+#6 [internal function]: Illuminate\\Support\\Collection->Illuminate\\Support\\{closure}(Object(App\\Models\\OfficeBuildingHouse))
+#7 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Support/Collection.php(1612): array_map(Object(Closure), Array)
+#8 /luozhen/agency/app/Services/HousesService.php(180): Illuminate\\Support\\Collection->toArray()
+#9 /luozhen/agency/app/Http/Controllers/API/HousesController.php(175): App\\Services\\HousesService->houseNumValidate(Object(Illuminate\\Http\\Request))
+#10 [internal function]: App\\Http\\Controllers\\API\\HousesController->roomNumberValidate(Object(App\\Services\\HousesService), Object(Illuminate\\Http\\Request))
+#11 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Routing/Controller.php(54): call_user_func_array(Array, Array)
+#12 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Routing/ControllerDispatcher.php(45): Illuminate\\Routing\\Controller->callAction('roomNumberValid...', Array)
+#13 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Routing/Route.php(212): Illuminate\\Routing\\ControllerDispatcher->dispatch(Object(Illuminate\\Routing\\Route), Object(App\\Http\\Controllers\\API\\HousesController), 'roomNumberValid...')
+#14 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Routing/Route.php(169): Illuminate\\Routing\\Route->runController()
+#15 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Routing/Router.php(658): Illuminate\\Routing\\Route->run()
+#16 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php(30): Illuminate\\Routing\\Router->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))
+#17 /luozhen/agency/app/Http/Middleware/TokenInvalid.php(48): Illuminate\\Routing\\Pipeline->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))
+#18 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(149): App\\Http\\Middleware\\TokenInvalid->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#19 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php(53): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#20 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Routing/Middleware/SubstituteBindings.php(41): Illuminate\\Routing\\Pipeline->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))
+#21 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(149): Illuminate\\Routing\\Middleware\\SubstituteBindings->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#22 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php(53): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#23 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Auth/Middleware/Authenticate.php(43): Illuminate\\Routing\\Pipeline->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))
+#24 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(149): Illuminate\\Auth\\Middleware\\Authenticate->handle(Object(Illuminate\\Http\\Request), Object(Closure), 'api')
+#25 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php(53): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#26 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Routing/Middleware/ThrottleRequests.php(57): Illuminate\\Routing\\Pipeline->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))
+#27 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(149): Illuminate\\Routing\\Middleware\\ThrottleRequests->handle(Object(Illuminate\\Http\\Request), Object(Closure), 1200, '1')
+#28 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php(53): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#29 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(102): Illuminate\\Routing\\Pipeline->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))
+#30 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Routing/Router.php(660): Illuminate\\Pipeline\\Pipeline->then(Object(Closure))
+#31 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Routing/Router.php(635): Illuminate\\Routing\\Router->runRouteWithinStack(Object(Illuminate\\Routing\\Route), Object(Illuminate\\Http\\Request))
+#32 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Routing/Router.php(601): Illuminate\\Routing\\Router->runRoute(Object(Illuminate\\Http\\Request), Object(Illuminate\\Routing\\Route))
+#33 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Routing/Router.php(590): Illuminate\\Routing\\Router->dispatchToRoute(Object(Illuminate\\Http\\Request))
+#34 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(176): Illuminate\\Routing\\Router->dispatch(Object(Illuminate\\Http\\Request))
+#35 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php(30): Illuminate\\Foundation\\Http\\Kernel->Illuminate\\Foundation\\Http\\{closure}(Object(Illuminate\\Http\\Request))
+#36 /luozhen/agency/vendor/fideloper/proxy/src/TrustProxies.php(56): Illuminate\\Routing\\Pipeline->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))
+#37 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(149): Fideloper\\Proxy\\TrustProxies->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#38 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php(53): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#39 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php(30): Illuminate\\Routing\\Pipeline->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))
+#40 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(149): Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#41 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php(53): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#42 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php(30): Illuminate\\Routing\\Pipeline->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))
+#43 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(149): Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#44 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php(53): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#45 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/ValidatePostSize.php(27): Illuminate\\Routing\\Pipeline->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))
+#46 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(149): Illuminate\\Foundation\\Http\\Middleware\\ValidatePostSize->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#47 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php(53): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#48 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/CheckForMaintenanceMode.php(46): Illuminate\\Routing\\Pipeline->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))
+#49 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(149): Illuminate\\Foundation\\Http\\Middleware\\CheckForMaintenanceMode->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#50 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php(53): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#51 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(102): Illuminate\\Routing\\Pipeline->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))
+#52 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(151): Illuminate\\Pipeline\\Pipeline->then(Object(Closure))
+#53 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(116): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter(Object(Illuminate\\Http\\Request))
+#54 /luozhen/agency/public/index.php(55): Illuminate\\Foundation\\Http\\Kernel->handle(Object(Illuminate\\Http\\Request))
+#55 {main}
+"} 
+[2018-06-15 18:02:51] local.INFO: select * from `oauth_access_tokens` where `oauth_access_tokens`.`id` = ? limit 1  
+[2018-06-15 18:02:51] local.INFO: select * from `users` where `id` = ? limit 1  
+[2018-06-15 18:02:51] local.INFO: select * from `oauth_access_tokens` where `oauth_access_tokens`.`id` = ? limit 1  
+[2018-06-15 18:02:51] local.INFO: select * from `oauth_clients` where `oauth_clients`.`id` = ? limit 1  
+[2018-06-15 18:02:51] local.INFO: select `house_number` from `office_building_houses` where (`building_block_id` = ? and `floor` = ?) and `office_building_houses`.`deleted_at` is null  
+[2018-06-15 18:02:51] local.INFO: select `id`, `house_number` from `office_building_houses` where (`building_block_id` = ? and `floor` = ?) and `office_building_houses`.`deleted_at` is null  
+[2018-06-15 18:03:21] local.INFO: select * from `oauth_access_tokens` where `oauth_access_tokens`.`id` = ? limit 1  
+[2018-06-15 18:03:21] local.INFO: select * from `users` where `id` = ? limit 1  
+[2018-06-15 18:03:21] local.INFO: select * from `oauth_access_tokens` where `oauth_access_tokens`.`id` = ? limit 1  
+[2018-06-15 18:03:21] local.INFO: select * from `oauth_clients` where `oauth_clients`.`id` = ? limit 1  
+[2018-06-15 18:03:21] local.INFO: select `house_number` from `office_building_houses` where (`building_block_id` = ? and `floor` = ?) and `office_building_houses`.`deleted_at` is null  
+[2018-06-15 18:03:21] local.INFO: select `id`, `house_number` from `office_building_houses` where (`building_block_id` = ? and `floor` = ?) and `office_building_houses`.`deleted_at` is null  
+[2018-06-15 18:03:21] local.INFO: select * from `building_blocks` where `building_blocks`.`id` is null and `building_blocks`.`deleted_at` is null limit 1  
+[2018-06-15 18:03:21] local.ERROR: Trying to get property of non-object {"userId":7,"exception":"[object] (ErrorException(code: 0): Trying to get property of non-object at /luozhen/agency/app/Traits/HouseTraits.php:362)
+[stacktrace]
+#0 /luozhen/agency/app/Traits/HouseTraits.php(362): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError(8, 'Trying to get p...', '/luozhen/agency...', 362, Array)
+#1 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Concerns/HasAttributes.php(438): App\\Models\\OfficeBuildingHouse->getAddressAttribute(NULL)
+#2 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Concerns/HasAttributes.php(450): Illuminate\\Database\\Eloquent\\Model->mutateAttribute('address', NULL)
+#3 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Concerns/HasAttributes.php(109): Illuminate\\Database\\Eloquent\\Model->mutateAttributeForArray('address', NULL)
+#4 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Model.php(970): Illuminate\\Database\\Eloquent\\Model->attributesToArray()
+#5 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Support/Collection.php(1611): Illuminate\\Database\\Eloquent\\Model->toArray()
+#6 [internal function]: Illuminate\\Support\\Collection->Illuminate\\Support\\{closure}(Object(App\\Models\\OfficeBuildingHouse))
+#7 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Support/Collection.php(1612): array_map(Object(Closure), Array)
+#8 /luozhen/agency/app/Services/HousesService.php(180): Illuminate\\Support\\Collection->toArray()
+#9 /luozhen/agency/app/Http/Controllers/API/HousesController.php(175): App\\Services\\HousesService->houseNumValidate(Object(Illuminate\\Http\\Request))
+#10 [internal function]: App\\Http\\Controllers\\API\\HousesController->roomNumberValidate(Object(App\\Services\\HousesService), Object(Illuminate\\Http\\Request))
+#11 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Routing/Controller.php(54): call_user_func_array(Array, Array)
+#12 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Routing/ControllerDispatcher.php(45): Illuminate\\Routing\\Controller->callAction('roomNumberValid...', Array)
+#13 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Routing/Route.php(212): Illuminate\\Routing\\ControllerDispatcher->dispatch(Object(Illuminate\\Routing\\Route), Object(App\\Http\\Controllers\\API\\HousesController), 'roomNumberValid...')
+#14 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Routing/Route.php(169): Illuminate\\Routing\\Route->runController()
+#15 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Routing/Router.php(658): Illuminate\\Routing\\Route->run()
+#16 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php(30): Illuminate\\Routing\\Router->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))
+#17 /luozhen/agency/app/Http/Middleware/TokenInvalid.php(48): Illuminate\\Routing\\Pipeline->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))
+#18 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(149): App\\Http\\Middleware\\TokenInvalid->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#19 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php(53): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#20 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Routing/Middleware/SubstituteBindings.php(41): Illuminate\\Routing\\Pipeline->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))
+#21 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(149): Illuminate\\Routing\\Middleware\\SubstituteBindings->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#22 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php(53): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#23 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Auth/Middleware/Authenticate.php(43): Illuminate\\Routing\\Pipeline->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))
+#24 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(149): Illuminate\\Auth\\Middleware\\Authenticate->handle(Object(Illuminate\\Http\\Request), Object(Closure), 'api')
+#25 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php(53): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#26 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Routing/Middleware/ThrottleRequests.php(57): Illuminate\\Routing\\Pipeline->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))
+#27 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(149): Illuminate\\Routing\\Middleware\\ThrottleRequests->handle(Object(Illuminate\\Http\\Request), Object(Closure), 1200, '1')
+#28 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php(53): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#29 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(102): Illuminate\\Routing\\Pipeline->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))
+#30 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Routing/Router.php(660): Illuminate\\Pipeline\\Pipeline->then(Object(Closure))
+#31 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Routing/Router.php(635): Illuminate\\Routing\\Router->runRouteWithinStack(Object(Illuminate\\Routing\\Route), Object(Illuminate\\Http\\Request))
+#32 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Routing/Router.php(601): Illuminate\\Routing\\Router->runRoute(Object(Illuminate\\Http\\Request), Object(Illuminate\\Routing\\Route))
+#33 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Routing/Router.php(590): Illuminate\\Routing\\Router->dispatchToRoute(Object(Illuminate\\Http\\Request))
+#34 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(176): Illuminate\\Routing\\Router->dispatch(Object(Illuminate\\Http\\Request))
+#35 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php(30): Illuminate\\Foundation\\Http\\Kernel->Illuminate\\Foundation\\Http\\{closure}(Object(Illuminate\\Http\\Request))
+#36 /luozhen/agency/vendor/fideloper/proxy/src/TrustProxies.php(56): Illuminate\\Routing\\Pipeline->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))
+#37 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(149): Fideloper\\Proxy\\TrustProxies->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#38 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php(53): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#39 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php(30): Illuminate\\Routing\\Pipeline->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))
+#40 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(149): Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#41 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php(53): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#42 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php(30): Illuminate\\Routing\\Pipeline->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))
+#43 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(149): Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#44 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php(53): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#45 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/ValidatePostSize.php(27): Illuminate\\Routing\\Pipeline->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))
+#46 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(149): Illuminate\\Foundation\\Http\\Middleware\\ValidatePostSize->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#47 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php(53): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#48 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/CheckForMaintenanceMode.php(46): Illuminate\\Routing\\Pipeline->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))
+#49 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(149): Illuminate\\Foundation\\Http\\Middleware\\CheckForMaintenanceMode->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#50 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php(53): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#51 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(102): Illuminate\\Routing\\Pipeline->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))
+#52 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(151): Illuminate\\Pipeline\\Pipeline->then(Object(Closure))
+#53 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(116): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter(Object(Illuminate\\Http\\Request))
+#54 /luozhen/agency/public/index.php(55): Illuminate\\Foundation\\Http\\Kernel->handle(Object(Illuminate\\Http\\Request))
+#55 {main}
+"} 
+[2018-06-15 18:03:36] local.INFO: select * from `oauth_access_tokens` where `oauth_access_tokens`.`id` = ? limit 1  
+[2018-06-15 18:03:36] local.INFO: select * from `users` where `id` = ? limit 1  
+[2018-06-15 18:03:36] local.INFO: select * from `oauth_access_tokens` where `oauth_access_tokens`.`id` = ? limit 1  
+[2018-06-15 18:03:36] local.INFO: select * from `oauth_clients` where `oauth_clients`.`id` = ? limit 1  
+[2018-06-15 18:03:36] local.INFO: select `house_number` from `office_building_houses` where (`building_block_id` = ? and `floor` = ?) and `office_building_houses`.`deleted_at` is null  
+[2018-06-15 18:03:36] local.INFO: select `id`, `house_number` from `office_building_houses` where (`building_block_id` = ? and `floor` = ?) and `office_building_houses`.`deleted_at` is null  
+[2018-06-15 18:03:58] local.INFO: select * from `oauth_access_tokens` where `oauth_access_tokens`.`id` = ? limit 1  
+[2018-06-15 18:03:58] local.INFO: select * from `users` where `id` = ? limit 1  
+[2018-06-15 18:03:58] local.INFO: select * from `oauth_access_tokens` where `oauth_access_tokens`.`id` = ? limit 1  
+[2018-06-15 18:03:58] local.INFO: select * from `oauth_clients` where `oauth_clients`.`id` = ? limit 1  
+[2018-06-15 18:03:58] local.INFO: select `house_number` from `office_building_houses` where (`building_block_id` = ? and `floor` = ?) and `office_building_houses`.`deleted_at` is null  
+[2018-06-15 18:03:58] local.INFO: select `id`, `house_number` from `office_building_houses` where (`building_block_id` = ? and `floor` = ?) and `office_building_houses`.`deleted_at` is null  
+[2018-06-15 18:03:58] local.INFO: select `house_number` from `office_building_houses` where (`building_block_id` = ? and `floor` = ?) and `office_building_houses`.`deleted_at` is null  
+[2018-06-15 18:03:58] local.INFO: select `id`, `house_number` from `office_building_houses` where (`building_block_id` = ? and `floor` = ?) and `office_building_houses`.`deleted_at` is null  
+[2018-06-15 18:05:07] local.INFO: select * from `oauth_access_tokens` where `oauth_access_tokens`.`id` = ? limit 1  
+[2018-06-15 18:05:07] local.INFO: select * from `users` where `id` = ? limit 1  
+[2018-06-15 18:05:07] local.INFO: select * from `oauth_access_tokens` where `oauth_access_tokens`.`id` = ? limit 1  
+[2018-06-15 18:05:07] local.INFO: select * from `oauth_clients` where `oauth_clients`.`id` = ? limit 1  
+[2018-06-15 18:05:07] local.INFO: select `house_number` from `office_building_houses` where (`building_block_id` = ? and `floor` = ?) and `office_building_houses`.`deleted_at` is null  
+[2018-06-15 18:05:07] local.ERROR: Type error: Argument 1 passed to Illuminate\Database\Grammar::columnize() must be of the type array, string given, called in /luozhen/agency/vendor/laravel/framework/src/Illuminate/Database/Query/Grammars/Grammar.php on line 131 {"userId":7,"exception":"[object] (Symfony\\Component\\Debug\\Exception\\FatalThrowableError(code: 0): Type error: Argument 1 passed to Illuminate\\Database\\Grammar::columnize() must be of the type array, string given, called in /luozhen/agency/vendor/laravel/framework/src/Illuminate/Database/Query/Grammars/Grammar.php on line 131 at /luozhen/agency/vendor/laravel/framework/src/Illuminate/Database/Grammar.php:124)
+[stacktrace]
+#0 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Database/Query/Grammars/Grammar.php(131): Illuminate\\Database\\Grammar->columnize('id')
+#1 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Database/Query/Grammars/Grammar.php(85): Illuminate\\Database\\Query\\Grammars\\Grammar->compileColumns(Object(Illuminate\\Database\\Query\\Builder), 'id')
+#2 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Database/Query/Grammars/Grammar.php(60): Illuminate\\Database\\Query\\Grammars\\Grammar->compileComponents(Object(Illuminate\\Database\\Query\\Builder))
+#3 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Database/Query/Grammars/MySqlGrammar.php(39): Illuminate\\Database\\Query\\Grammars\\Grammar->compileSelect(Object(Illuminate\\Database\\Query\\Builder))
+#4 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Database/Query/Builder.php(1662): Illuminate\\Database\\Query\\Grammars\\MySqlGrammar->compileSelect(Object(Illuminate\\Database\\Query\\Builder))
+#5 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Database/Query/Builder.php(1719): Illuminate\\Database\\Query\\Builder->toSql()
+#6 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Database/Query/Builder.php(1704): Illuminate\\Database\\Query\\Builder->runSelect()
+#7 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Builder.php(483): Illuminate\\Database\\Query\\Builder->get('id')
+#8 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Database/Eloquent/Builder.php(467): Illuminate\\Database\\Eloquent\\Builder->getModels('id')
+#9 /luozhen/agency/app/Services/HousesService.php(180): Illuminate\\Database\\Eloquent\\Builder->get('id', 'house_number')
+#10 /luozhen/agency/app/Http/Controllers/API/HousesController.php(175): App\\Services\\HousesService->houseNumValidate(Object(Illuminate\\Http\\Request))
+#11 [internal function]: App\\Http\\Controllers\\API\\HousesController->roomNumberValidate(Object(App\\Services\\HousesService), Object(Illuminate\\Http\\Request))
+#12 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Routing/Controller.php(54): call_user_func_array(Array, Array)
+#13 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Routing/ControllerDispatcher.php(45): Illuminate\\Routing\\Controller->callAction('roomNumberValid...', Array)
+#14 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Routing/Route.php(212): Illuminate\\Routing\\ControllerDispatcher->dispatch(Object(Illuminate\\Routing\\Route), Object(App\\Http\\Controllers\\API\\HousesController), 'roomNumberValid...')
+#15 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Routing/Route.php(169): Illuminate\\Routing\\Route->runController()
+#16 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Routing/Router.php(658): Illuminate\\Routing\\Route->run()
+#17 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php(30): Illuminate\\Routing\\Router->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))
+#18 /luozhen/agency/app/Http/Middleware/TokenInvalid.php(48): Illuminate\\Routing\\Pipeline->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))
+#19 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(149): App\\Http\\Middleware\\TokenInvalid->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#20 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php(53): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#21 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Routing/Middleware/SubstituteBindings.php(41): Illuminate\\Routing\\Pipeline->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))
+#22 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(149): Illuminate\\Routing\\Middleware\\SubstituteBindings->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#23 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php(53): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#24 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Auth/Middleware/Authenticate.php(43): Illuminate\\Routing\\Pipeline->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))
+#25 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(149): Illuminate\\Auth\\Middleware\\Authenticate->handle(Object(Illuminate\\Http\\Request), Object(Closure), 'api')
+#26 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php(53): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#27 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Routing/Middleware/ThrottleRequests.php(57): Illuminate\\Routing\\Pipeline->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))
+#28 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(149): Illuminate\\Routing\\Middleware\\ThrottleRequests->handle(Object(Illuminate\\Http\\Request), Object(Closure), 1200, '1')
+#29 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php(53): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#30 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(102): Illuminate\\Routing\\Pipeline->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))
+#31 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Routing/Router.php(660): Illuminate\\Pipeline\\Pipeline->then(Object(Closure))
+#32 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Routing/Router.php(635): Illuminate\\Routing\\Router->runRouteWithinStack(Object(Illuminate\\Routing\\Route), Object(Illuminate\\Http\\Request))
+#33 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Routing/Router.php(601): Illuminate\\Routing\\Router->runRoute(Object(Illuminate\\Http\\Request), Object(Illuminate\\Routing\\Route))
+#34 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Routing/Router.php(590): Illuminate\\Routing\\Router->dispatchToRoute(Object(Illuminate\\Http\\Request))
+#35 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(176): Illuminate\\Routing\\Router->dispatch(Object(Illuminate\\Http\\Request))
+#36 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php(30): Illuminate\\Foundation\\Http\\Kernel->Illuminate\\Foundation\\Http\\{closure}(Object(Illuminate\\Http\\Request))
+#37 /luozhen/agency/vendor/fideloper/proxy/src/TrustProxies.php(56): Illuminate\\Routing\\Pipeline->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))
+#38 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(149): Fideloper\\Proxy\\TrustProxies->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#39 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php(53): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#40 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php(30): Illuminate\\Routing\\Pipeline->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))
+#41 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(149): Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#42 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php(53): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#43 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/TransformsRequest.php(30): Illuminate\\Routing\\Pipeline->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))
+#44 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(149): Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#45 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php(53): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#46 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/ValidatePostSize.php(27): Illuminate\\Routing\\Pipeline->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))
+#47 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(149): Illuminate\\Foundation\\Http\\Middleware\\ValidatePostSize->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#48 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php(53): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#49 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Foundation/Http/Middleware/CheckForMaintenanceMode.php(46): Illuminate\\Routing\\Pipeline->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))
+#50 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(149): Illuminate\\Foundation\\Http\\Middleware\\CheckForMaintenanceMode->handle(Object(Illuminate\\Http\\Request), Object(Closure))
+#51 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Routing/Pipeline.php(53): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Http\\Request))
+#52 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(102): Illuminate\\Routing\\Pipeline->Illuminate\\Routing\\{closure}(Object(Illuminate\\Http\\Request))
+#53 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(151): Illuminate\\Pipeline\\Pipeline->then(Object(Closure))
+#54 /luozhen/agency/vendor/laravel/framework/src/Illuminate/Foundation/Http/Kernel.php(116): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter(Object(Illuminate\\Http\\Request))
+#55 /luozhen/agency/public/index.php(55): Illuminate\\Foundation\\Http\\Kernel->handle(Object(Illuminate\\Http\\Request))
+#56 {main}
+"} 
+[2018-06-15 18:05:18] local.INFO: select * from `oauth_access_tokens` where `oauth_access_tokens`.`id` = ? limit 1  
+[2018-06-15 18:05:18] local.INFO: select * from `users` where `id` = ? limit 1  
+[2018-06-15 18:05:18] local.INFO: select * from `oauth_access_tokens` where `oauth_access_tokens`.`id` = ? limit 1  
+[2018-06-15 18:05:18] local.INFO: select * from `oauth_clients` where `oauth_clients`.`id` = ? limit 1  
+[2018-06-15 18:05:18] local.INFO: select `house_number` from `office_building_houses` where (`building_block_id` = ? and `floor` = ?) and `office_building_houses`.`deleted_at` is null  
+[2018-06-15 18:05:18] local.INFO: select `id`, `house_number` from `office_building_houses` where (`building_block_id` = ? and `floor` = ?) and `office_building_houses`.`deleted_at` is null  
+[2018-06-15 18:05:18] local.INFO: select `house_number` from `office_building_houses` where (`building_block_id` = ? and `floor` = ?) and `office_building_houses`.`deleted_at` is null  
+[2018-06-15 18:05:18] local.INFO: select `id`, `house_number` from `office_building_houses` where (`building_block_id` = ? and `floor` = ?) and `office_building_houses`.`deleted_at` is null  
+[2018-06-15 18:05:48] local.INFO: select * from `oauth_access_tokens` where `oauth_access_tokens`.`id` = ? limit 1  
+[2018-06-15 18:05:48] local.INFO: select * from `users` where `id` = ? limit 1  
+[2018-06-15 18:05:48] local.INFO: select * from `oauth_access_tokens` where `oauth_access_tokens`.`id` = ? limit 1  
+[2018-06-15 18:05:48] local.INFO: select * from `oauth_clients` where `oauth_clients`.`id` = ? limit 1  
+[2018-06-15 18:05:48] local.INFO: select `house_number` from `office_building_houses` where (`building_block_id` = ? and `floor` = ?) and `office_building_houses`.`deleted_at` is null  
+[2018-06-15 18:06:18] local.INFO: select * from `oauth_access_tokens` where `oauth_access_tokens`.`id` = ? limit 1  
+[2018-06-15 18:06:18] local.INFO: select * from `users` where `id` = ? limit 1  
+[2018-06-15 18:06:18] local.INFO: select * from `oauth_access_tokens` where `oauth_access_tokens`.`id` = ? limit 1  
+[2018-06-15 18:06:18] local.INFO: select * from `oauth_clients` where `oauth_clients`.`id` = ? limit 1  
+[2018-06-15 18:06:18] local.INFO: select `house_number` from `office_building_houses` where (`building_block_id` = ? and `floor` = ?) and `office_building_houses`.`deleted_at` is null  
+[2018-06-15 18:06:24] local.INFO: select * from `oauth_access_tokens` where `oauth_access_tokens`.`id` = ? limit 1  
+[2018-06-15 18:06:24] local.INFO: select * from `users` where `id` = ? limit 1  
+[2018-06-15 18:06:24] local.INFO: select * from `oauth_access_tokens` where `oauth_access_tokens`.`id` = ? limit 1  
+[2018-06-15 18:06:24] local.INFO: select * from `oauth_clients` where `oauth_clients`.`id` = ? limit 1  
+[2018-06-15 18:06:24] local.INFO: select `house_number` from `office_building_houses` where (`building_block_id` = ? and `floor` = ?) and `office_building_houses`.`deleted_at` is null  
