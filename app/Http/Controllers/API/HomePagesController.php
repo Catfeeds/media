@@ -127,6 +127,7 @@ class HomePagesController extends APIBaseController
         return $this->sendResponse($res, '获取成功');
     }
 
+    // TODO
     public function runCommand(
     )
     {

@@ -25,11 +25,8 @@ class User extends Authenticatable
         'password', 'remember_token'
     ];
 
-//    protected $appends = [
-//        'level_cn', 'store_name'
-//    ];
     protected $appends = [
-        'level_cn'
+        'level_cn', 'store_name'
     ];
 
     public function storefront()
