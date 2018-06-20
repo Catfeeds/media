@@ -25,11 +25,8 @@ class User extends Authenticatable
         'password', 'remember_token'
     ];
 
-//    protected $appends = [
-//        'level_cn', 'store_name'
-//    ];
     protected $appends = [
-        'level_cn'
+        'level_cn', 'store_name'
     ];
 
     public function storefront()
@@ -82,15 +79,15 @@ class User extends Authenticatable
     public function getLevelCnAttribute()
     {
         if ($this->level == 1) {
-            return '总经理';
+            return '市场总监';
         } elseif ($this->level == 2) {
             return '区域经理';
         } elseif ($this->level == 3) {
-            return '店长';
+            return '商圈经理';
         } elseif ($this->level == 4) {
-            return '业务员';
+            return '业务经理';
         } elseif ($this->level == 5) {
-            return '组长';
+            return '门店经理';
         }
     }
 

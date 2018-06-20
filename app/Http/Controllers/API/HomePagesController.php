@@ -126,4 +126,13 @@ class HomePagesController extends APIBaseController
         $res = $service->getSalesmanData($request);
         return $this->sendResponse($res, '获取成功');
     }
+
+    // TODO
+    public function runCommand(
+    )
+    {
+
+        \Log::info('成功过');
+        system('php artisan cache:forget spatie.permission.cache');
+    }
 }

@@ -13,6 +13,12 @@ header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
 Route::resource('/logs', 'LogController');
 //Route::group(['domain' => 'admin.agency.com', 'namespace' => 'API'], function () {
 Route::group(['namespace' => 'API'], function () {
+    /*
+    |--------------------------------------------------------------------------
+    | clw平台权限管理操作成功运行系统命令
+    |--------------------------------------------------------------------------
+    */
+    Route::post('/run_command', 'HomePagesController@runCommand');
 
     /*
     |--------------------------------------------------------------------------
@@ -34,8 +40,8 @@ Route::group(['namespace' => 'API'], function () {
 
     // 更新房源照片
     Route::get('/house_img_update/{token}', 'HousesController@houseImgUpdateView');
-     // 更新房源照片操作
-     Route::post('/house_img_update', 'HousesController@houseImgUpdate');
+    // 更新房源照片操作
+    Route::post('/house_img_update', 'HousesController@houseImgUpdate');
     // 生成二维码
     Route::get('/make_qr_code', 'HousesController@makeQrCode');
     /*
@@ -69,6 +75,10 @@ Route::group(['namespace' => 'API'], function () {
         // 通过门店获取组信息
         Route::post('adopt_storefronts_get_group', 'UserController@adoptStorefrontsGetGroup');
 
+        // 获取下级成员
+        Route::get('get_subordinate_user', 'UserController@getSubordinateUser');
+        // 获取门店下门店经理(组长)
+        Route::get('get_group_and_storefronts', 'UserController@getGroupAndStorefronts');
 
         /*
         |--------------------------------------------------------------------------
