@@ -39,7 +39,7 @@ class UserRepository extends BaseRepository
         }
 
         if ($user->level == 5) {
-            $result = User::where(['group' => $user->id, 'level' => 4]);
+            $result = User::where(['group_id' => $user->id, 'level' => 4]);
         }
 
         if (!empty($request->shopId)) {
