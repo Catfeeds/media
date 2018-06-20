@@ -38,6 +38,10 @@ class UserRepository extends BaseRepository
             $result = User::where('ascription_store', $user->ascription_store)->where('id', '!=', $user->id)->whereIn('level',[4,5]);
         }
 
+        if ($user->level == 5) {
+            $result = User::where(['group' => $user->id, 'level' => 4]);
+        }
+
         if (!empty($request->shopId)) {
             $result = $result->where('ascription_store', $request->shopId);
         }

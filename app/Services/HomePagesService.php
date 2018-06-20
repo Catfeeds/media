@@ -602,9 +602,7 @@ class HomePagesService
      */
     public function getGroup($id)
     {
-        $groupAssociation = GroupAssociation::where('group_leader_id', $id)->pluck('id');
-
-        return User::where('group_id', $groupAssociation)->pluck('id')->toArray();
+        return User::where('group_id', $id)->pluck('id')->toArray();
     }
 
 }
