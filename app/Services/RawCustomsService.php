@@ -33,9 +33,9 @@ class RawCustomsService
     }
 
     //获取店长下属业务员信息
-    public function getStaff()
+    public function getStaff($id)
     {
-        $id = 3;
+
         //获取门店id
         $storefront_id = Storefront::where('user_id', $id)->value('id');
         //根据门店id获取所有人员
@@ -98,12 +98,18 @@ class RawCustomsService
     }
 
     //发送微信消息
-    public function send($openid, $name, $tel)
+    public function send($openid, $name, $tel, $level)
     {
         $data['openid'] = json_encode(array($openid));
         $data['name'] = $name;
         $data['tel'] = $tel;
+        $data['level'] = $level;
         curl(config('setting.wechat_url').'/new_custom_notice','post', $data);
+    }
+
+    public function getId($tel)
+    {
+        return User::where('tel', $tel)->value('id');
     }
 
 

@@ -71,30 +71,30 @@ class RawCustomsRepository extends BaseRepository
     }
 
     //手机端店长处理工单界面
-    public function shopkeeperList($request, $service)
+    public function shopkeeperList($request, $service, $id)
     {
         switch ($request->status) {
             //待处理页面
             case 1 :
-                return $this->model->where(['shopkeeper_id' => 3, 'shopkeeper_deal' => null])->get();
+                return $this->model->where(['shopkeeper_id' => $id, 'shopkeeper_deal' => null])->get();
                 break;
             //已处理
             case 2:
-                $item = $this->model->with('staffUser')->where('shopkeeper_id', 3)->where('shopkeeper_deal','!=', null)->get();
+                $item = $this->model->with('staffUser')->where('shopkeeper_id', $id)->where('shopkeeper_deal','!=', null)->get();
                 return $service->getInfo($item);
                 break;
         }
     }
 
     //业务员处理页面
-    public function staffList($request, $service)
+    public function staffList($request, $service, $id)
     {
         switch ($request->status) {
             case 1:
-                return $this->model->where(['staff_deal' => null, 'staff_id' => 3])->get();
+                return $this->model->where(['staff_deal' => null, 'staff_id' => $id])->get();
                 break;
             case 2:
-                $item = $this->model->with('custom')->where('staff_deal', '!=', null)->where('staff_id', 3)->get();
+                $item = $this->model->with('custom')->where('staff_deal', '!=', null)->where('staff_id', $id)->get();
                 return $service->getStaffInfo($item);
                 break;
         }

@@ -34,7 +34,7 @@ class RawCustomsController extends APIBaseController
         $res = $repository->addRawCustom($request, $service);
         //通过店长id查手机号,curl查微信openid,发送微信消息
         $openid = $rawCustomsService->getOpenid($request->shopkeeper_id);
-        if ($res) $rawCustomsService->send($openid,$res->name,$res->tel);
+        if ($res) $rawCustomsService->send($openid,$res->name,$res->tel,3);
         //发送微信消息
         return $this->sendResponse($res, '客户录入成功');
     }
@@ -47,9 +47,14 @@ class RawCustomsController extends APIBaseController
     }
 
     //获取店长下面的业务员
-    public function getStaff(RawCustomsService $service)
+    public function getStaff
+    (
+        RawCustomsService $service,
+        RawCustomsRequest $request
+    )
     {
-        $res = $service->getStaff();
+        $id = $service->getId($request->tel);
+        $res = $service->getStaff($id);
         return $this->sendResponse($res, '业务员信息获取成功');
     }
 
@@ -66,7 +71,7 @@ class RawCustomsController extends APIBaseController
         $openid = $service->getOpenid($request->staff_id);
         //获取该记录的客户名称和电话
         $item = RawCustom::where('id', $request->id)->first();
-        if ($res) $service->send($openid,$item->name,$item->tel);
+        if ($res) $service->send($openid,$item->name,$item->tel, 4);
         return $this->sendResponse($res, '工单分配成功');
     }
 
@@ -89,7 +94,9 @@ class RawCustomsController extends APIBaseController
         RawCustomsService $service
     )
     {
-        $res = $repository->shopkeeperList($request, $service);
+        //通过电话查询id
+        $id = $service->getId($request->tel);
+        $res = $repository->shopkeeperList($request, $service, $id);
         return $this->sendResponse($res, '店长处理页面获取成功');
     }
 
@@ -101,7 +108,8 @@ class RawCustomsController extends APIBaseController
         RawCustomsService $service
     )
     {
-        $res = $repository->staffList($request, $service);
+        $id = $service->getId($request->tel);
+        $res = $repository->staffList($request, $service, $id);
         return $this->sendResponse($res, '业务员处理页面获取成功');
     }
     
