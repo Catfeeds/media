@@ -15,6 +15,10 @@ return [
     'qiniu_url' => env('QINIU_URL'),
     //慢查询请求地址
     'http_url'  => env('HTTP_URL'),
+    //获取微信id请求地址
+    'we_url' => env('GET_WECHAT_OPENID_URL'),
+    //获取发送微信消息地址
+    'wechat_url' => env('WECHAT_URL'),
 
     /*
     |--------------------------------------------------------------------------

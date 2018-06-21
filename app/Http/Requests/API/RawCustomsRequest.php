@@ -23,19 +23,24 @@ class RawCustomsRequest extends FormRequest
      */
     public function rules()
     {
-        switch ($this->method()) {
-//            case 'POST':
-//                return [
-//                    'name' => 'required|max:32',
-//                    'tel' =>  'required|max:16',
-//                    'source' => 'required|between:1,4|integer',
-//                    'demand' => 'required|between:1,3|integer',
-//                    'position' => 'nullable',
-//                    'acreage' => 'nullable|numeric',
-//                    'price' => 'nullable|numeric',
-//                    'shopkeeper_id' => 'required|exists:storefronts,user_id',
-//                    'remark' => 'nullable',
-//                ];
+        switch ($this->route()->getActionMethod()) {
+            case 'store':
+                return [
+                    'name' => 'required|max:32',
+                    'tel' =>  'required|max:16',
+                    'source' => 'required|between:1,4|integer',
+                    'demand' => 'required|between:1,2|integer',
+                    'position' => 'nullable',
+                    'acreage' => 'nullable|numeric',
+                    'price' => 'nullable|numeric',
+                    'shopkeeper_id' => 'required|exists:storefronts,user_id',
+                    'remark' => 'nullable',
+                    'recorder' => 'required'
+                ];
+            case 'distribution':
+                return [
+                    'staff_id' => 'required|exists:users,id'
+                ];
             case 'PUT':
                 return [
 

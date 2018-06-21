@@ -10,12 +10,10 @@ class RawCustomsRepository extends BaseRepository
 
     private $model;
 
-    private $user;
 
     public function __construct(RawCustom $model)
     {
         $this->model = $model;
-//        $this->user = Common::user();
     }
 
     public function addRawCustom($request, $service)
@@ -32,13 +30,13 @@ class RawCustomsRepository extends BaseRepository
                 'price' => $request->price,
                 'shopkeeper_id' => $request->shopkeeper_id,
                 'remark' => $request->remark,
-                'user_id' => $this->user->id
+                'recorder' => $request->recorder
             ]);
             if (!$custom) throw new \Exception('客户信息录入失败');
             $custom->identifier = $service->setHouseIdentifier('gd',$custom->id);
             if (!$custom->save()) throw new \Exception('客户信息录入失败');
             \DB::commit();
-            return true;
+            return $custom;
         } catch (\Exception $e) {
             \DB::rollback();
             \Log::error('客户信息录入失败'. $e->getMessage());
@@ -50,7 +48,7 @@ class RawCustomsRepository extends BaseRepository
     //工单列表
     public function getList($request, $service)
     {
-        $model = $this->model->with('shopkeeperUser','staffUser')->where('user_id', 3);
+        $model = $this->model->with('shopkeeperUser','staffUser');
         if ($request->tel) $model = $model->where('tel', $request->tel);
         if ($request->demand) $model = $model->where('demand', $request->demand);
         if ($request->time) $model = $model->whereBetween('created_at', $request->time);
@@ -62,6 +60,8 @@ class RawCustomsRepository extends BaseRepository
     public function distribution($request)
     {
         return $this->model->where('id', $request->id)->update(['staff_id'=> $request->staff_id, 'shopkeeper_deal' => time()]);
+
+
     }
 
     //店员确认工单
