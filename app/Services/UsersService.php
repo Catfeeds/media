@@ -81,58 +81,6 @@ class UsersService
     }
 
     /**
-     * 说明: 获取本店可以指定的组长id
-     *
-     * @param $request
-     * @return mixed
-     * @author 罗振
-     */
-    public function getGroupLeader(
-        $request
-    )
-    {
-        // 获取所属店
-        if (!empty($request->id)) {
-            $user = User::find($request->id);
-        } else {
-            $user = Common::user();
-        }
-
-        // 获取已经指定组长
-        $groupAssociation = GroupAssociation::where(['storefronts_id' => $user->storefront->id])->pluck('group_leader_id')->toArray();
-
-        if (!empty($request->id)) {
-            unset($groupAssociation[array_search($user->id,$groupAssociation)]);
-        }
-
-        // 获取用户表组长
-        $groupLeader = User::where(['level' => 5, 'ascription_store' => $user->storefront->id])->whereNotIn('id', $groupAssociation)->get();
-
-        return $groupLeader;
-    }
-
-    /**
-     * 说明: 通过门店获取组信息
-     *
-     * @param $request
-     * @return mixed
-     * @author 罗振
-     */
-    public function adoptStorefrontsGetGroup(
-        $request
-    )
-    {
-        if (!empty($request->storefronts_id)) {
-            $storefrontsId = $request->storefronts_id;
-        } else {
-            $user = Common::user();
-            $storefrontsId = $user->storefront->id;
-        }
-
-        return GroupAssociation::where(['storefronts_id' => $storefrontsId])->get();
-    }
-
-    /**
      * 说明: 获取下级信息
      *
      * @return array

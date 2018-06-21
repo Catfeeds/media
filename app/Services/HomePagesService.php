@@ -583,6 +583,7 @@ class HomePagesService
                 break;
             case 5:
                 $user_id = $this->getGroup($id);
+                $user_id[] = $id;
                 $user = $this->getUserData($user_id,$request->time,$request->name,null,$request->per_page);
                 break;
             case 4:

@@ -18,7 +18,7 @@ Route::group(['namespace' => 'API'], function () {
     | clw平台权限管理操作成功运行系统命令
     |--------------------------------------------------------------------------
     */
-    Route::post('/run_command', 'HomePagesController@runCommand');
+    Route::get('/run_command', 'HomePagesController@runCommand');
 
     /*
     |--------------------------------------------------------------------------
@@ -70,11 +70,6 @@ Route::group(['namespace' => 'API'], function () {
         // 业务统计
         Route::post('business_statistics','UserController@businessStatistics');
 
-        // 获取组长
-        Route::get('get_group_leader', 'UserController@getGroupLeader');
-        // 通过门店获取组信息
-        Route::post('adopt_storefronts_get_group', 'UserController@adoptStorefrontsGetGroup');
-
         // 获取下级成员
         Route::get('get_subordinate_user', 'UserController@getSubordinateUser');
         // 获取门店下门店经理(组长)
@@ -124,13 +119,6 @@ Route::group(['namespace' => 'API'], function () {
         Route::get('get', 'TracksController@get');
         Route::get('customs_tracks_list', 'TracksController@customsTracksList');
         Route::post('add_customs_tracks', 'TracksController@addCustomsTracks');
-
-        /*
-        |--------------------------------------------------------------------------
-        | 组管理
-        |--------------------------------------------------------------------------
-        */
-        Route::resource('group_associations', 'GroupAssociationsController');
 
     });
 
