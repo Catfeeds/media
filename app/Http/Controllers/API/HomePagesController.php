@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Services\HomePagesService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 
 class HomePagesController extends APIBaseController
 {
@@ -125,5 +126,11 @@ class HomePagesController extends APIBaseController
     {
         $res = $service->getSalesmanData($request);
         return $this->sendResponse($res, '获取成功');
+    }
+
+    // 清除权限缓存
+    public function runCommand()
+    {
+        app()['cache']->forget('spatie.permission.cache');
     }
 }

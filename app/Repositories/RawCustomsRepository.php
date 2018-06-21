@@ -94,7 +94,7 @@ class RawCustomsRepository extends BaseRepository
                 return $this->model->where(['staff_deal' => null, 'staff_id' => 3])->get();
                 break;
             case 2:
-                $item = $this->model->with('custom')->where('staff_deal', '!=', null)->where('staff_id', $this->user->id)->get();
+                $item = $this->model->with('custom')->where('staff_deal', '!=', null)->where('staff_id', 3)->get();
                 return $service->getStaffInfo($item);
                 break;
         }

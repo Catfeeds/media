@@ -583,6 +583,7 @@ class HomePagesService
                 break;
             case 5:
                 $user_id = $this->getGroup($id);
+                $user_id[] = $id;
                 $user = $this->getUserData($user_id,$request->time,$request->name,null,$request->per_page);
                 break;
             case 4:
@@ -602,9 +603,7 @@ class HomePagesService
      */
     public function getGroup($id)
     {
-        $groupAssociation = GroupAssociation::where('group_leader_id', $id)->pluck('id');
-
-        return User::where('group_id', $groupAssociation)->pluck('id')->toArray();
+        return User::where('group_id', $id)->pluck('id')->toArray();
     }
 
 }

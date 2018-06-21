@@ -17,7 +17,7 @@ class RolesSeeder extends Seeder
         $model = Permission::where('guard_name','web');
 
         $role= Role::create([
-            'name_cn' => '总经理',
+            'name_cn' => '市场总监',
             'name' => 'manager',
             'name_en' => 'manager',
             'guard_name' => 'web',
@@ -43,7 +43,7 @@ class RolesSeeder extends Seeder
 
         // 店长
         $shopOwner = Role::create([
-            'name_cn' => '店长',
+            'name_cn' => '商圈经理',
             'name' => 'shop_owner',
             'name_en' => 'shop_owner',
             'guard_name' => 'web',

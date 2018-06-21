@@ -52,8 +52,7 @@ class OfficeBuildingHousesRepository extends BaseRepository
                     $result = $result->where('guardian', $user->id);
                 } elseif ($user->level == 5) {
                     // 组长
-                    $groupAssociation = GroupAssociation::where('group_leader_id', $user->id)->pluck('id');
-                    $userId = User::where('group_id', $groupAssociation)->pluck('id')->toArray();
+                    $userId = User::where('group_id', $user->id)->pluck('id')->toArray();
                     $userId[] = $user->id;
                     $result = $result->whereIn('guardian', $userId);
                 }

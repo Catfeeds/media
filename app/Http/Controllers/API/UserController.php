@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Handler\Common;
 use App\Http\Requests\API\UsersRequest;
 use App\Models\OwnerViewRecord;
+use App\Models\Storefront;
 use App\Repositories\UserRepository;
 use App\Services\UsersService;
 use App\User;
@@ -72,19 +73,19 @@ class UserController extends APIBaseController
         // 用户的称呼逻辑
         switch ($user->level) {
             case 1:
-                $result['user_info'] = '总经理:' . $user->real_name;
+                $result['user_info'] = '市场总监:' . $user->real_name;
                 break;
             case 2:
                 $result['user_info'] = '区域经理:' . $user->real_name;
                 break;
             case 3:
-                $result['user_info'] = '（' . $user->storefront->storefront_name . ')' . '店长:' . $user->real_name;
+                $result['user_info'] = '（' . $user->storefront->storefront_name . ')' . '商圈经理:' . $user->real_name;
                 break;
             case 4:
-                $result['user_info'] = '（' . $user->storefront->storefront_name . ')' . '业务员:' . $user->real_name;
+                $result['user_info'] = '（' . $user->storefront->storefront_name . ')' . '业务经理:' . $user->real_name;
                 break;
             case 5:
-                $result['user_info'] = '（' . $user->storefront->storefront_name . ')' . '组长:' . $user->real_name;
+                $result['user_info'] = '（' . $user->storefront->storefront_name . ')' . '门店经理:' . $user->real_name;
                 break;
         }
 
@@ -128,6 +129,14 @@ class UserController extends APIBaseController
      */
     public function edit(User $user)
     {
+        if ($user->level == 3) {
+            // 获取原始门店数据
+            $storefront = Storefront::where('user_id', $user->id)->first();
+            $data['value'] = $storefront->id;
+            $data['label'] = $storefront->storefront_name;
+            $user->storefrontInfo = $data;
+        }
+
         return $this->sendResponse($user, '成员修改之前原始数据');
     }
 
@@ -147,14 +156,10 @@ class UserController extends APIBaseController
         UsersRequest $request
     )
     {
-        if (empty(Common::user()->can('update_user'))) {
-            return $this->sendError('无修改成员权限', '403');
-        }
+        if (empty(Common::user()->can('update_user'))) return $this->sendError('无修改成员权限', '403');
 
         $res = $userRepository->updateUser($user, $request);
-        if ($res) {
-            return $this->sendResponse($res, '修改成员成功');
-        }
+        if ($res) return $this->sendResponse($res, '修改成员成功');
         return $this->sendError('修改成员失败');
     }
 
@@ -243,6 +248,7 @@ class UserController extends APIBaseController
         UsersService $usersService
     )
     {
+
         $result = $usersService->getInfo($request)->map(function ($v) {
             return [
                 'label' => $v->storefront_name,
@@ -253,48 +259,33 @@ class UserController extends APIBaseController
     }
 
     /**
-     * 说明: 获取可指定组长信息
+     * 说明: 获取下级信息
      *
-     * @param Request $request
      * @param UsersService $usersService
      * @return \Illuminate\Http\JsonResponse
      * @author 罗振
      */
-    public function getGroupLeader(
-        Request $request,
+    public function getSubordinateUser(
         UsersService $usersService
     )
     {
-        $result = $usersService->getGroupLeader($request)->map(function ($v) {
-            return [
-                'label' => $v->real_name,
-                'value' => $v->id
-            ];
-        });
-
-        return $this->sendResponse($result, '获取可指定组长信息成功');
+        $res = $usersService->getSubordinateUser();
+        return $this->sendResponse($res, '获取下级信息成功');
     }
 
     /**
-     * 说明: 通过门店获取组信息
+     * 说明: 获取门店及门店经理信息
      *
-     * @param Request $request
      * @param UsersService $usersService
      * @return \Illuminate\Http\JsonResponse
      * @author 罗振
      */
-    public function adoptStorefrontsGetGroup(
-        Request $request,
+    public function getGroupAndStorefronts(
         UsersService $usersService
     )
     {
-        $result = $usersService->adoptStorefrontsGetGroup($request)->map(function ($v) {
-            return [
-                'label' => $v->name,
-                'value' => $v->id
-            ];
-        });
-
-        return $this->sendResponse($result, '获取门店下组信息成功');
+        $res = $usersService->getGroupAndStorefronts();
+        return $this->sendResponse($res, '获取门店下所有门店经理');
     }
+
 }
