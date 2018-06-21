@@ -51,6 +51,13 @@ class CustomRepository extends BaseRepository
                 //如果当前登录的是业务员
                 $query = $query->where('guardian',$user->id)->Orwhere('guardian',null);
                 break;
+            case 5:
+                // 获取下面组长下面的业务员
+                $users = User::where('group_id', $user->id)->pluck('id')->toArray();
+                $users[] = $user->id;
+                //如果当前登录的是业务员
+                $query = $query->whereIn('guardian', $users);
+                break;
             default;
                 break;
         }

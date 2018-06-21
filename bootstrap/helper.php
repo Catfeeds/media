@@ -33,7 +33,7 @@ if (!function_exists('include_route_files')) {
 }
 
 if (!function_exists('curl')) {
-    function curl($url, $method, $data)
+    function curl($url, $method, $data = null)
     {
         $ch = curl_init();
 

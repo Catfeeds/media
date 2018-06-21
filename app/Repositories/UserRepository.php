@@ -98,6 +98,11 @@ class UserRepository extends BaseRepository
                 $request->level = 4;
             }
 
+            // 店秘跟店长权限暂定一样  TODO
+            if ($request->level == 6) {
+                $request->level = 3;
+            }
+
             $user->assignRole($request->level);
             \DB::commit();
             return true;

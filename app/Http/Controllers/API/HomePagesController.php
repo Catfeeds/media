@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Services\HomePagesService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 
 class HomePagesController extends APIBaseController
 {
@@ -127,12 +128,9 @@ class HomePagesController extends APIBaseController
         return $this->sendResponse($res, '获取成功');
     }
 
-    // TODO
-    public function runCommand(
-    )
+    // 清除权限缓存
+    public function runCommand()
     {
-
-        \Log::info('成功过');
-        system('php artisan cache:forget spatie.permission.cache');
+        app()['cache']->forget('spatie.permission.cache');
     }
 }
