@@ -88,6 +88,8 @@ class User extends Authenticatable
             return '业务经理';
         } elseif ($this->level == 5) {
             return '门店经理';
+        } elseif ($this->level == 6) {
+            return '店秘';
         }
     }
 

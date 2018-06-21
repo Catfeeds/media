@@ -95,6 +95,10 @@ class UsersService
                 'label' => '区域经理'
             ],
             [
+                'value' => 6,
+                'label' => '店秘'
+            ],
+            [
                 'value' => 3,
                 'label' => '商圈经理'
             ],
@@ -118,6 +122,7 @@ class UsersService
         } elseif ($user->level == 3) {
             unset($data[0]);
             unset($data[1]);
+            unset($data[2]);
             return $data;
         }
     }

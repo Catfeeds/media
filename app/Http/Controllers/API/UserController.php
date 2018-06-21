@@ -87,6 +87,9 @@ class UserController extends APIBaseController
             case 5:
                 $result['user_info'] = '（' . $user->storefront->storefront_name . ')' . '门店经理:' . $user->real_name;
                 break;
+            case 6:
+                $result['user_info'] = '店秘:' . $user->real_name;
+                break;
         }
 
 
