@@ -1,0 +1,203 @@
+[2018-06-21 16:02:41] local.INFO: select * from `oauth_access_tokens` where `oauth_access_tokens`.`id` = ? limit 1  
+[2018-06-21 16:02:41] local.INFO: select * from `users` where `id` = ? limit 1  
+[2018-06-21 16:02:41] local.INFO: select * from `oauth_access_tokens` where `oauth_access_tokens`.`id` = ? limit 1  
+[2018-06-21 16:02:41] local.INFO: select * from `oauth_clients` where `oauth_clients`.`id` = ? limit 1  
+[2018-06-21 16:02:41] local.INFO: select `permissions`.*, `model_has_permissions`.`model_id` as `pivot_model_id`, `model_has_permissions`.`permission_id` as `pivot_permission_id` from `permissions` inner join `model_has_permissions` on `permissions`.`id` = `model_has_permissions`.`permission_id` where `model_has_permissions`.`model_id` = ? and `model_has_permissions`.`model_type` = ?  
+[2018-06-21 16:02:41] local.INFO: select `roles`.*, `model_has_roles`.`model_id` as `pivot_model_id`, `model_has_roles`.`role_id` as `pivot_role_id` from `roles` inner join `model_has_roles` on `roles`.`id` = `model_has_roles`.`role_id` where `model_has_roles`.`model_id` in (?) and `model_has_roles`.`model_type` = ?  
+[2018-06-21 16:02:41] local.INFO: select `permissions`.*, `role_has_permissions`.`role_id` as `pivot_role_id`, `role_has_permissions`.`permission_id` as `pivot_permission_id` from `permissions` inner join `role_has_permissions` on `permissions`.`id` = `role_has_permissions`.`permission_id` where `role_has_permissions`.`role_id` in (?)  
+[2018-06-21 16:02:41] local.INFO: select * from `owner_view_records` where (`user_id` = ? and `status` = ?) limit 1  
+[2018-06-21 16:02:41] local.INFO: select * from `cities` where `cities`.`deleted_at` is null  
+[2018-06-21 16:02:41] local.INFO: select * from `areas` where `city_id` = ? and `areas`.`deleted_at` is null  
+[2018-06-21 16:02:41] local.INFO: select * from `buildings` where `area_id` = ? and `buildings`.`deleted_at` is null  
+[2018-06-21 16:02:41] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:41] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:41] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:41] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:41] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:41] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:41] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:41] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:41] local.INFO: select * from `oauth_access_tokens` where `oauth_access_tokens`.`id` = ? limit 1  
+[2018-06-21 16:02:41] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:41] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:41] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:41] local.INFO: select * from `users` where `id` = ? limit 1  
+[2018-06-21 16:02:41] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:41] local.INFO: select * from `oauth_access_tokens` where `oauth_access_tokens`.`id` = ? limit 1  
+[2018-06-21 16:02:41] local.INFO: select * from `oauth_clients` where `oauth_clients`.`id` = ? limit 1  
+[2018-06-21 16:02:41] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:41] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:41] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:41] local.INFO: select count(*) as aggregate from `office_building_houses` where `guardian` = ? and `created_at` between ? and ? and `office_building_houses`.`deleted_at` is null  
+[2018-06-21 16:02:41] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:41] local.INFO: select count(*) as aggregate from `customs` where `guardian` = ? and `created_at` between ? and ? and `customs`.`deleted_at` is null  
+[2018-06-21 16:02:41] local.INFO: select count(*) as aggregate from `tracks` where (`user_id` = ? and `house_model` = ?) and `created_at` between ? and ? and `tracks`.`deleted_at` is null  
+[2018-06-21 16:02:41] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:41] local.INFO: select count(*) as aggregate from `tracks` where (`house_model` is null and `user_id` = ?) and `created_at` between ? and ? and `tracks`.`deleted_at` is null  
+[2018-06-21 16:02:41] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:41] local.INFO: select count(*) as aggregate from `tracks` where (`house_model` = ? and `tracks_mode` = ? and `user_id` = ?) and `created_at` between ? and ? and `tracks`.`deleted_at` is null  
+[2018-06-21 16:02:41] local.INFO: select count(*) as aggregate from `tracks` where (`house_model` is null and `tracks_mode` = ? and `user_id` = ?) and `created_at` between ? and ? and `tracks`.`deleted_at` is null  
+[2018-06-21 16:02:41] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:41] local.INFO: select count(*) as aggregate from `house_img_records` where (`user_id` = ? and `status` = ?) and `created_at` between ? and ?  
+[2018-06-21 16:02:41] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:41] local.INFO: select count(*) as aggregate from `owner_view_records` where `user_id` = ? and `created_at` between ? and ?  
+[2018-06-21 16:02:41] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:41] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:41] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:41] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:41] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:41] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:41] local.INFO: select * from `buildings` where `area_id` = ? and `buildings`.`deleted_at` is null  
+[2018-06-21 16:02:41] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:41] local.INFO: select * from `buildings` where `area_id` = ? and `buildings`.`deleted_at` is null  
+[2018-06-21 16:02:41] local.INFO: select * from `buildings` where `area_id` = ? and `buildings`.`deleted_at` is null  
+[2018-06-21 16:02:41] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:41] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:41] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:41] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:41] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:41] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:41] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:41] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:41] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:41] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:41] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `oauth_access_tokens` where `oauth_access_tokens`.`id` = ? limit 1  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `users` where `id` = ? limit 1  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `oauth_access_tokens` where `oauth_access_tokens`.`id` = ? limit 1  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `oauth_clients` where `oauth_clients`.`id` = ? limit 1  
+[2018-06-21 16:02:42] local.INFO: select `house_id` from `owner_view_records` where (`user_id` = ? and `status` = ? and `house_model` = ?)  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `oauth_access_tokens` where `oauth_access_tokens`.`id` = ? limit 1  
+[2018-06-21 16:02:42] local.INFO: select * from `office_building_houses` where `id` in (?, ?) and `end_track_time` > ? and `end_track_time` <= ? and `office_building_houses`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `users` where `id` = ? limit 1  
+[2018-06-21 16:02:42] local.INFO: select * from `oauth_access_tokens` where `oauth_access_tokens`.`id` = ? limit 1  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `oauth_clients` where `oauth_clients`.`id` = ? limit 1  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `customs` where `end_track_time` > ? and `end_track_time` <= ? and `guardian` = ? and `customs`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select count(*) as aggregate from `customs` where `created_at` between ? and ? and `customs`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select count(*) as aggregate from `customs` where `created_at` between ? and ? and `customs`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select count(*) as aggregate from `customs` where `created_at` between ? and ? and `customs`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select count(*) as aggregate from `customs` where `customs`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `buildings` where `area_id` = ? and `buildings`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `buildings` where `area_id` = ? and `buildings`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `buildings` where `area_id` = ? and `buildings`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `buildings` where `area_id` = ? and `buildings`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `buildings` where `area_id` = ? and `buildings`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `building_blocks` where `building_id` = ? and `building_blocks`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `buildings` where `area_id` = ? and `buildings`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `buildings` where `area_id` = ? and `buildings`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `buildings` where `area_id` = ? and `buildings`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select * from `buildings` where `area_id` = ? and `buildings`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select count(*) as aggregate from `office_building_houses` where `created_at` between ? and ? and `office_building_houses`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select count(*) as aggregate from `office_building_houses` where `created_at` between ? and ? and `office_building_houses`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select count(*) as aggregate from `office_building_houses` where `created_at` between ? and ? and `office_building_houses`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select count(*) as aggregate from `office_building_houses` where `created_at` between ? and ? and `office_building_houses`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select count(*) as aggregate from `office_building_houses` where `created_at` between ? and ? and `office_building_houses`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select count(*) as aggregate from `office_building_houses` where `office_building_houses`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select count(*) as aggregate from `office_building_houses` where `created_at` between ? and ? and `office_building_houses`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select count(*) as aggregate from `office_building_houses` where `created_at` between ? and ? and `office_building_houses`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select count(*) as aggregate from `customs` where `created_at` between ? and ? and `customs`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select count(*) as aggregate from `customs` where `created_at` between ? and ? and `customs`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select count(*) as aggregate from `customs` where `created_at` between ? and ? and `customs`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select count(*) as aggregate from `customs` where `created_at` between ? and ? and `customs`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select count(*) as aggregate from `customs` where `created_at` between ? and ? and `customs`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select count(*) as aggregate from `customs` where `created_at` between ? and ? and `customs`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select count(*) as aggregate from `customs` where `created_at` between ? and ? and `customs`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select count(*) as aggregate from `office_building_houses` where `created_at` between ? and ? and `office_building_houses`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select count(*) as aggregate from `customs` where `created_at` between ? and ? and `customs`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select count(*) as aggregate from `customs` where `created_at` between ? and ? and `customs`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select count(*) as aggregate from `office_building_houses` where `created_at` between ? and ? and `office_building_houses`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select count(*) as aggregate from `customs` where `created_at` between ? and ? and `customs`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select count(*) as aggregate from `customs` where `created_at` between ? and ? and `customs`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select count(*) as aggregate from `office_building_houses` where `created_at` between ? and ? and `office_building_houses`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select count(*) as aggregate from `customs` where `created_at` between ? and ? and `customs`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select count(*) as aggregate from `office_building_houses` where `created_at` between ? and ? and `office_building_houses`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select count(*) as aggregate from `office_building_houses` where `created_at` between ? and ? and `office_building_houses`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select count(*) as aggregate from `office_building_houses` where `created_at` between ? and ? and `office_building_houses`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select count(*) as aggregate from `office_building_houses` where `created_at` between ? and ? and `office_building_houses`.`deleted_at` is null  
+[2018-06-21 16:02:42] local.INFO: select count(*) as aggregate from `office_building_houses` where `created_at` between ? and ? and `office_building_houses`.`deleted_at` is null  
