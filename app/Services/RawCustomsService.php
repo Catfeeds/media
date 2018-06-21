@@ -53,8 +53,6 @@ class RawCustomsService
     public function getGdInfo($item)
     {
         foreach($item as $v) {
-//            $v->real_name = $this->user->real_name;
-            $v->real_name = '浩哥';
             if (!$v->shopkeeper_deal) $v->status = '已发送给组长'.'('.$v->shopkeeperUser->real_name.')';
             if ($v->staff_id) $v->status = '组长'.'('.$v->shopkeeperUser->real_name.')'.'已收到转交给'.$v->staffUser->real_name;
             if ($v->staff_deal) $v->status = $v->staffUser->real_name.'已收到';
@@ -91,6 +89,22 @@ class RawCustomsService
         return $item;
     }
 
+    //通过用户id查询电话,获取该用户微信openid
+    public function getOpenid($id)
+    {
+        $tel = User::where('id', $id)->value('tel');
+        $openid = curl(config('setting.we_url').'?tel='.$tel,'get');
+        return $openid;
+    }
+
+    //发送微信消息
+    public function send($openid, $name, $tel)
+    {
+        $data['openid'] = json_encode(array($openid));
+        $data['name'] = $name;
+        $data['tel'] = $tel;
+        curl(config('setting.wechat_url').'/new_custom_notice','post', $data);
+    }
 
 
 

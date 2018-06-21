@@ -28,7 +28,7 @@ class CreateRawCustomsTable extends Migration
             $table->integer('staff_id')->nullable()->comment('员工id');
             $table->integer('staff_deal')->nullable()->comment('员工确定时间');
             $table->text('remark')->nullable()->comment('备注');
-            $table->integer('user_id')->nullable()->comment('录入人id');
+            $table->string('recorder','32')->nullable()->comment('录入人');
             $table->timestamps();
         });
         \DB::statement("alter table `raw_customs` comment'原始客源表'");

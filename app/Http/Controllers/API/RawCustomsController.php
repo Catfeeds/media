@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 
 use App\Http\Requests\API\RawCustomsRequest;
+use App\Models\RawCustom;
 use App\Repositories\RawCustomsRepository;
 use App\Services\HousesService;
 use App\Services\RawCustomsService;
@@ -21,27 +22,20 @@ class RawCustomsController extends APIBaseController
         return $this->sendResponse($res,'工单列表获取成功');
     }
 
+    //添加工单
     public function store
     (
         RawCustomsRepository $repository,
         RawCustomsRequest $request,
-        HousesService $service
+        HousesService $service,
+        RawCustomsService $rawCustomsService
     )
     {
         $res = $repository->addRawCustom($request, $service);
-//        $url= 'http://www.baidu.com';
-//        $data = array(
-//            'first' => array('您好,您有新的客户', '#555555'),
-//            'keyword1' => array('贾456456464','#336699') ,
-//            'keyword2' => array('110','#ff0000'),
-//            'keyword3' => array('写字楼租赁','#888888'),
-//            'keyword4' => array(date('Y-m-d H:i:s',time()),'#888888'),
-//            'remark'   => array('感谢您的使用','#5599ff')
-//        );
-//        $arr['url'] = $url;
-//        $arr['data'] = $data;
-//        $arr['openid'] = 'oPRyPwyGIy7pf2Ei-xG1lNjHdmo4';
-//        dd(getData('http://msg_manager.jacklin.club/weSend', 'post', json_encode($arr)));
+        //通过店长id查手机号,curl查微信openid,发送微信消息
+        $openid = $rawCustomsService->getOpenid($request->shopkeeper_id);
+        if ($res) $rawCustomsService->send($openid,$res->name,$res->tel);
+        //发送微信消息
         return $this->sendResponse($res, '客户录入成功');
     }
 
@@ -63,10 +57,16 @@ class RawCustomsController extends APIBaseController
     public function distribution
     (
         RawCustomsRequest $request,
-        RawCustomsRepository $repository
+        RawCustomsRepository $repository,
+        RawCustomsService $service
     )
     {
         $res = $repository->distribution($request);
+        //获取用户的openid
+        $openid = $service->getOpenid($request->staff_id);
+        //获取该记录的客户名称和电话
+        $item = RawCustom::where('id', $request->id)->first();
+        if ($res) $service->send($openid,$item->name,$item->tel);
         return $this->sendResponse($res, '工单分配成功');
     }
 
