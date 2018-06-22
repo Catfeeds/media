@@ -31,9 +31,9 @@ class RawCustomsRequest extends FormRequest
                     'source' => 'required|between:1,4|integer',
                     'demand' => 'required|between:1,2|integer',
                     'position' => 'nullable',
-                    'acreage' => 'nullable|numeric',
-                    'price' => 'nullable|numeric',
-                    'shopkeeper_id' => 'required|exists:storefronts,user_id',
+                    'acreage' => 'nullable',
+                    'price' => 'nullable',
+                    'shopkeeper_id' => 'required|exists:users,id',
                     'remark' => 'nullable',
                     'recorder' => 'required'
                 ];

@@ -2,7 +2,6 @@
 
 namespace App\Repositories;
 
-use App\Handler\Common;
 use App\Models\RawCustom;
 
 class RawCustomsRepository extends BaseRepository
@@ -48,7 +47,7 @@ class RawCustomsRepository extends BaseRepository
     //工单列表
     public function getList($request, $service)
     {
-        $model = $this->model->with('shopkeeperUser','staffUser');
+        $model = $this->model->with('shopkeeperUser','staffUser','custom','house');
         if ($request->tel) $model = $model->where('tel', $request->tel);
         if ($request->demand) $model = $model->where('demand', $request->demand);
         if ($request->time) $model = $model->whereBetween('created_at', $request->time);
@@ -76,11 +75,11 @@ class RawCustomsRepository extends BaseRepository
         switch ($request->status) {
             //待处理页面
             case 1 :
-                return $this->model->where(['shopkeeper_id' => $id, 'shopkeeper_deal' => null])->get();
+                return $this->model->where(['shopkeeper_id' => $id, 'shopkeeper_deal' => null])->latest()->paginate(6);
                 break;
             //已处理
             case 2:
-                $item = $this->model->with('staffUser')->where('shopkeeper_id', $id)->where('shopkeeper_deal','!=', null)->get();
+                $item = $this->model->with('staffUser')->where('shopkeeper_id', $id)->where('shopkeeper_deal','!=', null)->latest()->paginate(6);
                 return $service->getInfo($item);
                 break;
         }
@@ -91,10 +90,10 @@ class RawCustomsRepository extends BaseRepository
     {
         switch ($request->status) {
             case 1:
-                return $this->model->where(['staff_deal' => null, 'staff_id' => $id])->get();
+                return $this->model->where(['staff_deal' => null, 'staff_id' => $id])->latest()->paginate(6);
                 break;
             case 2:
-                $item = $this->model->with('custom')->where('staff_deal', '!=', null)->where('staff_id', $id)->get();
+                $item = $this->model->with('custom')->where('staff_deal', '!=', null)->where('staff_id', $id)->latest()->paginate(6);
                 return $service->getStaffInfo($item);
                 break;
         }

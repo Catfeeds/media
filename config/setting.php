@@ -16,8 +16,8 @@ return [
     //慢查询请求地址
     'http_url'  => env('HTTP_URL'),
     //获取微信id请求地址
-    'we_url' => env('GET_WECHAT_OPENID_URL'),
-    //获取发送微信消息地址
+    'clw_url' => env('CLW_URL'),
+    //获取发送微信消息地址 微信服务器
     'wechat_url' => env('WECHAT_URL'),
 
     /*
