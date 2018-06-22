@@ -590,6 +590,10 @@ class HomePagesService
                 $ids[] = $id;
                 $user = $this->getUserData($ids,$request->time,$request->name,null,$request->per_page);
                 break;
+            case 6:
+                // TODO
+                $user = [];
+                break;
         }
         return $user;
     }

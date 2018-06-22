@@ -42,6 +42,10 @@ class UserRepository extends BaseRepository
             $result = User::where(['group_id' => $user->id, 'level' => 4]);
         }
 
+        if ($user->level == 6) {
+            $result = User::where(['ascription_store' => $user->ascription_store])->where('id', '!=', $user->id)->whereIn('level',[4,5]);
+        }
+
         if (!empty($request->shopId)) {
             $result = $result->where('ascription_store', $request->shopId);
         }
@@ -157,6 +161,16 @@ class UserRepository extends BaseRepository
             }
 
             if (!$user->save()) throw new \Exception('用户修改失败');
+
+            // 组长权限跟业务员一样
+            if ($request->level == 5) {
+                $request->level = 4;
+            }
+
+            // 店秘跟店长权限暂定一样
+            if ($request->level == 6) {
+                $request->level = 3;
+            }
 
             $user->syncRoles($request->level);
             \DB::commit();
