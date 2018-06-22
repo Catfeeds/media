@@ -30,12 +30,12 @@ class UserRepository extends BaseRepository
         if ($user->level === 2) {
             // 获取该区域经理下的所有 门店
             $store = Storefront::where('area_manager_id', $user->id)->get()->pluck('id')->toArray();
-            $result = User::whereIn('ascription_store', $store)->whereIn('level', [3,4,5]);
+            $result = User::whereIn('ascription_store', $store)->whereIn('level', [3,4,5,6]);
         }
 
         if($user->level === 3) {
             // 获取当前门店 下 除了自己的员工
-            $result = User::where('ascription_store', $user->ascription_store)->where('id', '!=', $user->id)->whereIn('level',[4,5]);
+            $result = User::where('ascription_store', $user->ascription_store)->where('id', '!=', $user->id)->whereIn('level',[4,5,6]);
         }
 
         if ($user->level == 5) {
@@ -98,7 +98,7 @@ class UserRepository extends BaseRepository
                 $request->level = 4;
             }
 
-            // 店秘跟店长权限暂定一样  TODO
+            // 店秘跟店长权限暂定一样
             if ($request->level == 6) {
                 $request->level = 3;
             }
@@ -125,6 +125,20 @@ class UserRepository extends BaseRepository
     {
         \DB::beginTransaction();
         try {
+            if($request->level == 3) {
+                $storefront = Storefront::find($request->ascription_store);
+                $storefront->user_id = $user->id;
+                if (!($storefront->save())) throw new \Exception('店长修改失败');
+            } elseif ($user->level == 3 && $request->level != 3) {
+                $storefront = Storefront::where('user_id', $user->id)->first();
+                $storefront->user_id = null;
+                if (!($storefront->save())) throw new \Exception('店长修改失败');
+            } elseif ($user->level == 2 && $request->level != 2) {
+                $storefront = Storefront::where('area_manager_id', $user->id)->first();
+                $storefront->area_manager_id = null;
+                if (!($storefront->save())) throw new \Exception('清空区域经理失败');
+            }
+
             $user->real_name = $request->real_name;
             $user->level = $request->level;
             $user->remark = $request->remark;
@@ -143,12 +157,6 @@ class UserRepository extends BaseRepository
             }
 
             if (!$user->save()) throw new \Exception('用户修改失败');
-
-            if($request->level == 3) {
-                $storefront = Storefront::find($request->ascription_store);
-                $storefront->user_id = $user->id;
-                if (!($storefront->save())) throw new \Exception('店长修改失败');
-            }
 
             $user->syncRoles($request->level);
             \DB::commit();
