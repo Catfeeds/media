@@ -595,6 +595,7 @@ class HomePagesService
                 $user = [];
                 break;
         }
+        
         return $user;
     }
 
