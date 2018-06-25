@@ -591,11 +591,11 @@ class HomePagesService
                 $user = $this->getUserData($ids,$request->time,$request->name,null,$request->per_page);
                 break;
             case 6:
-                // TODO
-                $user = [];
+                $user_id = $this->adoptStorefrontGetUserId($this->getStorefrontId());
+                $user = $this->getUserData($user_id,$request->time,$request->name,null,$request->per_page);
                 break;
         }
-        
+
         return $user;
     }
 

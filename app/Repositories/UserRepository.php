@@ -33,17 +33,13 @@ class UserRepository extends BaseRepository
             $result = User::whereIn('ascription_store', $store)->whereIn('level', [3,4,5,6]);
         }
 
-        if($user->level === 3) {
+        if($user->level === 3 || $user->level == 6) {
             // 获取当前门店 下 除了自己的员工
-            $result = User::where('ascription_store', $user->ascription_store)->where('id', '!=', $user->id)->whereIn('level',[4,5,6]);
+            $result = User::where('ascription_store', $user->ascription_store)->where('id', '!=', $user->id);
         }
 
         if ($user->level == 5) {
             $result = User::where(['group_id' => $user->id, 'level' => 4]);
-        }
-
-        if ($user->level == 6) {
-            $result = User::where(['ascription_store' => $user->ascription_store])->where('id', '!=', $user->id)->whereIn('level',[4,5]);
         }
 
         if (!empty($request->shopId)) {

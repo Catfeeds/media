@@ -40,11 +40,7 @@ class CustomRepository extends BaseRepository
                 $query = $query->whereIn('guardian',$user_id)->Orwhere('guardian',null);
                 break;
             case 3:
-                //如果当前登录的是店长
-                //查询门店ID
-                $storefrontId = Storefront::where('user_id', $user->id)->pluck('id')->first();
-                //查询这些门店下员工ID
-                $user_id = User::where('ascription_store',$storefrontId)->pluck('id')->toArray();
+                $user_id = User::where('ascription_store',$user->ascription_store)->pluck('id')->toArray();
                 $query = $query->whereIn('guardian',$user_id);
                 break;
             case 4:
@@ -57,6 +53,10 @@ class CustomRepository extends BaseRepository
                 $users[] = $user->id;
                 //如果当前登录的是业务员
                 $query = $query->whereIn('guardian', $users);
+                break;
+            case 6:
+                $user_id = User::where('ascription_store',$user->ascription_store)->pluck('id')->toArray();
+                $query = $query->whereIn('guardian',$user_id);
                 break;
             default;
                 break;
