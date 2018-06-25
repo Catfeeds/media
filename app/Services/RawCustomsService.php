@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Handler\Common;
 use App\Models\Custom;
+use App\Models\OfficeBuildingHouse;
 use App\Models\RawCustom;
 use App\Models\Storefront;
 use App\User;
@@ -79,12 +80,12 @@ class RawCustomsService
     public function getStaffInfo($item)
     {
         foreach ($item as $v) {
-            $entry = Custom::where('identifier', $v->identifier)->first();
-            if ($entry) {
-                $v->entry = true;
+            if ($v->demand == 1) {
+                $data = OfficeBuildingHouse::where('gd_identifier', $v->identifier)->first();
             } else {
-                $v->entry = false;
+                $data = Custom::where('identifier', $v->identifier)->first();
             }
+            $v->entry = !empty($data)?true:false;
         }
         return $item;
     }

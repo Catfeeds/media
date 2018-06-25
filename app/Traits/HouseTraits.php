@@ -473,6 +473,7 @@ trait HouseTraits{
     {
         //如果当前登录人是总经理或者维护人是当前登录人
         $current_user = Common::user();
+        if (empty($current_user)) return false;
         //获取维护人心
         if (!empty($this->guardian)) {
             //如果是私盘,判断当前登录人是否有权利查看
