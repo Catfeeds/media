@@ -52,6 +52,6 @@ if (!function_exists('curl')) {
 
         $res = curl_exec($ch);
         curl_close($ch);
-        return $res;
+        return json_decode($res);
     }
 }

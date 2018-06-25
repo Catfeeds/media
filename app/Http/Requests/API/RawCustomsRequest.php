@@ -28,12 +28,12 @@ class RawCustomsRequest extends FormRequest
                 return [
                     'name' => 'required|max:32',
                     'tel' =>  'required|max:16',
-                    'source' => 'required|between:1,4|integer',
+                    'source' => 'required|between:1,7|integer',
                     'demand' => 'required|between:1,2|integer',
                     'position' => 'nullable',
-                    'acreage' => 'nullable|numeric',
-                    'price' => 'nullable|numeric',
-                    'shopkeeper_id' => 'required|exists:storefronts,user_id',
+                    'acreage' => 'nullable',
+                    'price' => 'nullable',
+                    'shopkeeper_id' => 'required|exists:users,id',
                     'remark' => 'nullable',
                     'recorder' => 'required'
                 ];

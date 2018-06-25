@@ -24,10 +24,15 @@ class RawCustom extends Model
         return $this->belongsTo(User::class,'staff_id', 'id');
     }
 
-    //关联工单hao
+    //关联客源
     public function custom()
     {
         return $this->hasOne(Custom::class,'identifier', 'identifier');
+    }
+
+    public function house()
+    {
+        return $this->hasOne(OfficeBuildingHouse::class,'gd_identifier', 'identifier');
     }
 
     public function getSourceCnAttribute()
@@ -43,6 +48,15 @@ class RawCustom extends Model
                 return '百度信息流';
             case 4:
                 return '今日头条信息流';
+                break;
+            case 5:
+                return 'app';
+                break;
+            case 6:
+                return 'PC';
+                break;
+            case 7:
+                return '微信';
                 break;
                 default;
                 break;

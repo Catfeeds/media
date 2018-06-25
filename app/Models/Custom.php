@@ -92,19 +92,35 @@ class Custom extends BaseModel
     {
         switch ($this->source) {
             case 1:
-                return '来电';
+                return '转介绍-朋友';
             case 2:
-                return '来访';
+                return '转介绍-客户';
             case 3:
-                return '中介';
+                return '转介绍-同行';
             case 4:
-                return '朋友';
+                return '端口-赶集';
             case 5:
-                return '广告';
+                return '端口-安居客';
             case 6:
-                return '扫街';
+                return '端口-58';
             case 7:
-                return '网络';
+                return '扫楼';
+            case 8:
+                return '来访';
+            case 9:
+                return '推广-百度信息流';
+            case 10:
+                return '推广-今日头条信息流';
+            case 11:
+                return '400电话';
+            case 12:
+                return '官网客服';
+            case 13:
+                return 'app';
+            case 14:
+                return 'PC';
+            case 15:
+                return '微信';
         }
     }
 

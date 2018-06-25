@@ -119,9 +119,8 @@ class UsersService
             return $data;
         } elseif ($user->level == 2) {
             unset($data[0]);
-            unset($data[2]);
             return $data;
-        } elseif ($user->level == 3) {
+        } elseif ($user->level == 3 || $user->level == 6) {
             unset($data[0]);
             unset($data[1]);
             return $data;
@@ -144,6 +143,8 @@ class UsersService
             $storefronts = Storefront::where(['user_id' => $user->id])->get();
         } elseif ($user->level == 1) {
             $storefronts = Storefront::where([])->get();
+        } elseif ($user->level == 6) {
+            $storefronts = Storefront::where('id', $user->ascription_store)->get();
         } else {
             $storefronts = collect();
         }
