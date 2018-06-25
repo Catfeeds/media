@@ -45,6 +45,9 @@ class RawCustomsService
                 $storefrontsId = Storefront::where('area_manager_id', $id)->pluck('id')->toArray();
                 $res = User::whereIn('ascription_store', $storefrontsId)->where('level',4)->orWhere('level',5)->get();
                 break;
+                default;
+                break;
+
         }
         return $res->map(function($v) {
             return [
