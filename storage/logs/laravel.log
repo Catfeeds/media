@@ -495,3 +495,10 @@
 [2018-06-22 17:59:42] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
 [2018-06-22 17:59:42] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
 [2018-06-22 17:59:42] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-25 17:17:58] local.INFO: select * from information_schema.tables where table_schema = ? and table_name = ?  
+[2018-06-25 17:17:58] local.INFO: select `migration` from `migrations` order by `batch` asc, `migration` asc  
+[2018-06-25 17:17:58] local.INFO: select max(`batch`) as aggregate from `migrations`  
+[2018-06-25 17:17:58] local.INFO: ALTER TABLE customs CHANGE source source INT DEFAULT 1 NOT NULL COMMENT '来源: 1: 朋友 2: 客户 3: 同行 4: 赶集 5: 安居客 6: 58 7: 扫楼 8: 来访 9: 百度信息流 10: 今日头条信息流 11: 400电话 12: 官网客服 13: app 14: pc 15: 微信'  
+[2018-06-25 17:17:58] local.INFO: insert into `migrations` (`migration`, `batch`) values (?, ?)  
+[2018-06-25 17:17:58] local.INFO: ALTER TABLE office_building_houses CHANGE source source INT DEFAULT 1 COMMENT '来源: 1: 朋友 2: 客户 3: 同行 4: 赶集 5: 安居客 6: 58 7: 扫楼 8: 来访 9: 百度信息流 10: 今日头条信息流 11: 400电话 12: 官网客服 13: app 14: pc 15: 微信'  
+[2018-06-25 17:17:58] local.INFO: insert into `migrations` (`migration`, `batch`) values (?, ?)  

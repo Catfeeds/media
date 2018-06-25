@@ -198,6 +198,7 @@ class OfficeBuildingHousesRepository extends BaseRepository
                 'end_track_time' => time() + config('setting.house_to_public')*24*60*60,
                 'rent_time' => strtotime($request->rent_time),  // 可租时间
                 'remarks' => $request->remarks, // 信息不明确备注
+                'gd_identifier' => $request->gd_identifier, //工单编号
             ]);
             if (empty($house)) {
                 throw new \Exception('写字楼房源添加失败');
