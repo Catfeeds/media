@@ -38,24 +38,21 @@ class OfficeBuildingHousesRepository extends BaseRepository
         $user = Common::user();
 
         if (!empty($request->validList)) {
-            if ($request->status == 7) {
-                if ($user->level == 2) {
-                    $storefront = Storefront::where(['area_manager_id' => $user->id])->first();
-                    $users = User::where(['ascription_store' => $storefront->id])->pluck('id')->toArray();
-                    $users[] = $user->id;
-                    $result = $result->whereIn('guardian', $users);
-                } elseif ($user->level == 3) {
-                    $storefront = Storefront::where('user_id', $user->id)->first();
-                    $users = User::where(['ascription_store' => $storefront->id])->pluck('id')->toArray();
-                    $result = $result->whereIn('guardian', $users);
-                } elseif ($user->level == 4) {
-                    $result = $result->where('guardian', $user->id);
-                } elseif ($user->level == 5) {
-                    // 组长
-                    $userId = User::where('group_id', $user->id)->pluck('id')->toArray();
-                    $userId[] = $user->id;
-                    $result = $result->whereIn('guardian', $userId);
-                }
+            if ($user->level == 2) {
+                $storefront = Storefront::where(['area_manager_id' => $user->id])->first();
+                $users = User::where(['ascription_store' => $storefront->id])->pluck('id')->toArray();
+                $users[] = $user->id;
+                $result = $result->whereIn('guardian', $users);
+            } elseif ($user->level == 3 || $user->level == 6) {
+                $users = User::where(['ascription_store' => $user->ascription_store])->pluck('id')->toArray();
+                $result = $result->whereIn('guardian', $users);
+            } elseif ($user->level == 4) {
+                $result = $result->where('guardian', $user->id);
+            } elseif ($user->level == 5) {
+                // 组长
+                $userId = User::where('group_id', $user->id)->pluck('id')->toArray();
+                $userId[] = $user->id;
+                $result = $result->whereIn('guardian', $userId);
             }
 
             if ($request->status == 1 || $request->status == 2) {
