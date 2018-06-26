@@ -2535,3 +2535,174 @@
 [2018-06-25 17:54:49] local.ERROR: 申请密码令牌失败：字段信息为：{"username":"18202799999","password":"123456","scope":"","client_id":"6","client_secret":"VMyf0l87gsHHnwIFrzdkJCieOCphszGX6qLDVNl1","grant_type":"password"}错误：Client error: `POST http://192.168.0.199/oauth/token` resulted in a `401 Unauthorized` response:
 {"error":"invalid_client","message":"Client authentication failed"}
   
+[2018-06-26 18:07:59] local.INFO: select count(*) as aggregate from `raw_customs`  
+[2018-06-26 18:07:59] local.INFO: select * from `raw_customs` order by `created_at` desc limit 15 offset 0  
+[2018-06-26 18:07:59] local.INFO: select * from `users` where `users`.`id` in (?)  
+[2018-06-26 18:07:59] local.INFO: select * from `users` where `users`.`id` in (?)  
+[2018-06-26 18:07:59] local.INFO: select * from `customs` where `customs`.`identifier` in (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) and `customs`.`deleted_at` is null  
+[2018-06-26 18:07:59] local.INFO: select * from `office_building_houses` where `office_building_houses`.`gd_identifier` in (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) and `office_building_houses`.`deleted_at` is null  
+[2018-06-26 18:07:59] local.INFO: select * from `storefronts` where `storefronts`.`id` = ? and `storefronts`.`deleted_at` is null limit 1  
+[2018-06-26 18:07:59] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:07:59] local.INFO: select * from `storefronts` where `storefronts`.`id` = ? and `storefronts`.`deleted_at` is null limit 1  
+[2018-06-26 18:07:59] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:07:59] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:07:59] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:07:59] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:07:59] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:07:59] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:07:59] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:07:59] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:07:59] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:07:59] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:07:59] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:07:59] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:07:59] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:07:59] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:07:59] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:07:59] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:07:59] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:07:59] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:07:59] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:07:59] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:07:59] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:07:59] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:07:59] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:07:59] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:07:59] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:07:59] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:07:59] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:07:59] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:07:59] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:10:40] local.INFO: select count(*) as aggregate from `raw_customs`  
+[2018-06-26 18:10:40] local.INFO: select * from `raw_customs` order by `created_at` desc limit 15 offset 0  
+[2018-06-26 18:10:40] local.INFO: select * from `users` where `users`.`id` in (?)  
+[2018-06-26 18:10:40] local.INFO: select * from `users` where `users`.`id` in (?)  
+[2018-06-26 18:10:40] local.INFO: select * from `customs` where `customs`.`identifier` in (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) and `customs`.`deleted_at` is null  
+[2018-06-26 18:10:40] local.INFO: select * from `office_building_houses` where `office_building_houses`.`gd_identifier` in (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) and `office_building_houses`.`deleted_at` is null  
+[2018-06-26 18:10:40] local.INFO: select * from `storefronts` where `storefronts`.`id` = ? and `storefronts`.`deleted_at` is null limit 1  
+[2018-06-26 18:10:40] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:10:40] local.INFO: select * from `storefronts` where `storefronts`.`id` = ? and `storefronts`.`deleted_at` is null limit 1  
+[2018-06-26 18:10:40] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:10:40] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:10:40] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:10:40] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:10:40] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:10:40] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:10:40] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:10:40] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:10:40] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:10:40] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:10:40] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:10:40] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:10:40] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:10:40] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:10:40] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:10:40] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:10:40] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:10:40] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:10:40] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:10:40] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:10:40] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:10:40] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:10:40] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:10:40] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:10:40] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:10:40] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:10:40] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:10:40] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:10:40] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:13:15] local.INFO: select count(*) as aggregate from `raw_customs`  
+[2018-06-26 18:13:15] local.INFO: select * from `raw_customs` order by `created_at` desc limit 15 offset 0  
+[2018-06-26 18:13:15] local.INFO: select * from `users` where `users`.`id` in (?)  
+[2018-06-26 18:13:15] local.INFO: select * from `users` where `users`.`id` in (?)  
+[2018-06-26 18:13:15] local.INFO: select * from `customs` where `customs`.`identifier` in (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) and `customs`.`deleted_at` is null  
+[2018-06-26 18:13:15] local.INFO: select * from `office_building_houses` where `office_building_houses`.`gd_identifier` in (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) and `office_building_houses`.`deleted_at` is null  
+[2018-06-26 18:13:15] local.INFO: select * from `storefronts` where `storefronts`.`id` = ? and `storefronts`.`deleted_at` is null limit 1  
+[2018-06-26 18:13:15] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:13:15] local.INFO: select * from `storefronts` where `storefronts`.`id` = ? and `storefronts`.`deleted_at` is null limit 1  
+[2018-06-26 18:13:15] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:13:15] local.INFO: select * from `areas` where `areas`.`id` is null and `areas`.`deleted_at` is null limit 1  
+[2018-06-26 18:13:15] local.INFO: select * from `custom_rel_buildings` where `custom_rel_buildings`.`custom_id` = ? and `custom_rel_buildings`.`custom_id` is not null  
+[2018-06-26 18:13:15] local.INFO: select * from `users` where `users`.`id` is null limit 1  
+[2018-06-26 18:13:15] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:13:15] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:13:15] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:13:15] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:13:15] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:13:15] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:13:15] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:13:15] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:13:15] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:13:15] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:13:15] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:13:15] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:13:15] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:13:15] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:13:15] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:13:15] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:13:15] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:13:15] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:13:15] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:13:15] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:13:15] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:13:15] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:13:15] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:13:15] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:13:15] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:13:15] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:13:15] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:13:15] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:13:59] local.INFO: select count(*) as aggregate from `raw_customs`  
+[2018-06-26 18:13:59] local.INFO: select * from `raw_customs` order by `created_at` desc limit 15 offset 0  
+[2018-06-26 18:13:59] local.INFO: select * from `users` where `users`.`id` in (?)  
+[2018-06-26 18:13:59] local.INFO: select * from `users` where `users`.`id` in (?)  
+[2018-06-26 18:13:59] local.INFO: select * from `customs` where `customs`.`identifier` in (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) and `customs`.`deleted_at` is null  
+[2018-06-26 18:13:59] local.INFO: select * from `office_building_houses` where `office_building_houses`.`gd_identifier` in (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) and `office_building_houses`.`deleted_at` is null  
+[2018-06-26 18:13:59] local.INFO: select * from `storefronts` where `storefronts`.`id` = ? and `storefronts`.`deleted_at` is null limit 1  
+[2018-06-26 18:13:59] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:13:59] local.INFO: select * from `storefronts` where `storefronts`.`id` = ? and `storefronts`.`deleted_at` is null limit 1  
+[2018-06-26 18:13:59] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:13:59] local.INFO: select * from `areas` where `areas`.`id` is null and `areas`.`deleted_at` is null limit 1  
+[2018-06-26 18:13:59] local.INFO: select * from `custom_rel_buildings` where `custom_rel_buildings`.`custom_id` = ? and `custom_rel_buildings`.`custom_id` is not null  
+[2018-06-26 18:13:59] local.INFO: select * from `users` where `users`.`id` is null limit 1  
+[2018-06-26 18:13:59] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:13:59] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:13:59] local.INFO: select * from `building_blocks` where `building_blocks`.`id` = ? and `building_blocks`.`deleted_at` is null limit 1  
+[2018-06-26 18:13:59] local.INFO: select * from `buildings` where `buildings`.`id` = ? and `buildings`.`deleted_at` is null limit 1  
+[2018-06-26 18:13:59] local.INFO: select * from `users` where `users`.`id` = ? and `users`.`id` is not null limit 1  
+[2018-06-26 18:13:59] local.INFO: select * from `users` where `users`.`id` = ? and `users`.`id` is not null limit 1  
+[2018-06-26 18:13:59] local.INFO: select * from `users` where `users`.`id` = ? and `users`.`id` is not null limit 1  
+[2018-06-26 18:13:59] local.INFO: select * from `users` where `users`.`id` = ? and `users`.`id` is not null limit 1  
+[2018-06-26 18:13:59] local.INFO: select * from `users` where `users`.`id` = ? and `users`.`id` is not null limit 1  
+[2018-06-26 18:13:59] local.INFO: select * from `storefronts` where `storefronts`.`id` = ? and `storefronts`.`deleted_at` is null limit 1  
+[2018-06-26 18:13:59] local.INFO: select * from `tracks` where `tracks`.`house_id` = ? and `tracks`.`house_id` is not null and `tracks`.`deleted_at` is null order by `id` desc limit 1  
+[2018-06-26 18:13:59] local.INFO: select * from `areas` where `areas`.`id` = ? and `areas`.`deleted_at` is null limit 1  
+[2018-06-26 18:13:59] local.INFO: select * from `blocks` where `blocks`.`id` = ? and `blocks`.`deleted_at` is null limit 1  
+[2018-06-26 18:13:59] local.INFO: select count(*) as aggregate from `building_blocks` where `building_blocks`.`building_id` = ? and `building_blocks`.`building_id` is not null and `building_blocks`.`deleted_at` is null  
+[2018-06-26 18:13:59] local.INFO: select * from `cities` where `cities`.`id` = ? and `cities`.`deleted_at` is null limit 1  
+[2018-06-26 18:13:59] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:13:59] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:13:59] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:13:59] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:13:59] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:13:59] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:13:59] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:13:59] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:13:59] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:13:59] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:13:59] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:13:59] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:13:59] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:13:59] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:13:59] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:13:59] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:13:59] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:13:59] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:13:59] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:13:59] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:13:59] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:13:59] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:13:59] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:13:59] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:13:59] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  
+[2018-06-26 18:13:59] local.INFO: select count(*) as aggregate from `users` where `ascription_store` = ?  

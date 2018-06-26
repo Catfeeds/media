@@ -65,13 +65,8 @@ class RawCustomsService
             if (!$v->shopkeeper_deal) $v->status = '已发送给组长'.'('.$v->shopkeeperUser->real_name.')';
             if ($v->staff_id) $v->status = '组长'.'('.$v->shopkeeperUser->real_name.')'.'已收到转交给'.$v->staffUser->real_name;
             if ($v->staff_deal) $v->status = $v->staffUser->real_name.'已收到';
-            if ($v->demand == 1) {
-                if ($v->house) $v->status = $v->staffUser->real_name.'已录入系统,房源编号'.$v->house->house_identifier;
-            }
-            if ($v->demand == 2) {
-                if ($v->custom) $v->status = $v->staffUser->real_name.'已录入系统,客源编号'.$v->custom->id;
-            }
-
+            if (!empty($v->house)) $v->status = $v->staffUser->real_name.'已录入系统,房源编号'.$v->house->house_identifier;
+            if (!empty($v->custom)) $v->status = $v->staffUser->real_name.'已录入系统,客源编号'.$v->custom->id;
         }
         return $item;
     }
@@ -95,12 +90,8 @@ class RawCustomsService
     public function getStaffInfo($item)
     {
         foreach ($item as $v) {
-            if ($v->demand == 1) {
-                $data = OfficeBuildingHouse::where('gd_identifier', $v->identifier)->first();
-            } else {
-                $data = Custom::where('identifier', $v->identifier)->first();
-            }
-            $v->entry = !empty($data)?true:false;
+           if (!empty($v->custom)) $v->entry = true;
+           if (!empty($v->house)) $v->entry = true;
         }
         return $item;
     }
