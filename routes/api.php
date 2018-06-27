@@ -258,4 +258,3 @@ Route::group(['namespace' => 'API'], function () {
     Route::get('staff_list', 'RawCustomsController@staffList');
 
 });
-
