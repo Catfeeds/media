@@ -51,16 +51,17 @@ class RawCustomsRepository extends BaseRepository
         if ($request->tel) $model = $model->where('tel', $request->tel);
         if ($request->demand) $model = $model->where('demand', $request->demand);
         if ($request->time) $model = $model->whereBetween('created_at', $request->time);
+        // 获取转换率
+        $conversionRate = $service->getConversionRate($model, $request);
         $item =  $model->latest()->paginate($request->per_page);
-        return  $service->getGdInfo($item);
+        $service->getStaffInfo($item);
+        return ['page' => $service->getGdInfo($item), 'conversionRate' => $conversionRate];
     }
 
     //店长分配工单
     public function distribution($request)
     {
         return $this->model->where('id', $request->id)->update(['staff_id'=> $request->staff_id, 'shopkeeper_deal' => time()]);
-
-
     }
 
     //店员确认工单
