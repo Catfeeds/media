@@ -123,17 +123,10 @@ class RawCustomsService
 
     // 获取转换率
     public function getConversionRate(
-        $model,
-        $request
+        $model
     )
     {
-        if (empty($request->source)) {
-            // 获取所有数量
-            $rawCustoms = $model->get();
-        } else {
-            // 获取选择工单来源总数
-            $rawCustoms = $model->where(['source' => $request->source])->get();
-        }
+        $rawCustoms = $model->get();
 
         $count = 0;
         foreach ($rawCustoms as $v) {

@@ -51,8 +51,9 @@ class RawCustomsRepository extends BaseRepository
         if ($request->tel) $model = $model->where('tel', $request->tel);
         if ($request->demand) $model = $model->where('demand', $request->demand);
         if ($request->time) $model = $model->whereBetween('created_at', $request->time);
+        if ($request->source) $model = $model->where('source', $request->source);
         // 获取转换率
-        $conversionRate = $service->getConversionRate($model, $request);
+        $conversionRate = $service->getConversionRate($model);
         $item =  $model->latest()->paginate($request->per_page);
         $service->getStaffInfo($item);
         return ['page' => $service->getGdInfo($item), 'conversionRate' => $conversionRate];
