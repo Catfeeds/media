@@ -49,6 +49,26 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        if (empty(config('app.debug', false))) {
+            $errorInfo = '';
+            if (!empty(method_exists($exception, 'getStatusCode'))) {
+                if ($exception->getStatusCode() != 404) {
+                    $errorInfo = $this->errorMessage($exception);
+                }
+            } else {
+                $errorInfo = $this->errorMessage($exception);
+            }
+            // 获取错误类型
+            $temp = explode('\\', get_class($exception));
+            $type = end($temp);
+            $openid = curl(config('setting.clw_url').'/api/admin/get_openid/3','get');
+            $data['type'] = $type;
+            $data['name'] = config('app.name');
+            $data['errorInfo'] = $errorInfo;
+            $data['openid'] = json_encode($openid);
+            curl(config('setting.wechat_url').'/waring_notice','post',$data);
+        }
+
         if ($exception instanceof ValidationException) {
             $error = array(
                 'success' => false,
@@ -57,5 +77,21 @@ class Handler extends ExceptionHandler
             return response($error, 422);
         }
         return parent::render($request, $exception);
+    }
+
+    /**
+     * 说明: 错误信息拼接
+     *
+     * @param $exception
+     * @return string
+     * @author 罗振
+     */
+    public function errorMessage($exception)
+    {
+        $file = $exception->getFile(); // 报错文件
+        $line = $exception->getLine(); // 报错行数
+        $message = $exception->getMessage();    // 报错信息
+
+        return $file.'文件的'.$line.'行报错,报错信息为:'.$message;
     }
 }
