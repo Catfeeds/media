@@ -90,8 +90,8 @@ class RawCustomsService
     public function getStaffInfo($item)
     {
         foreach ($item as $v) {
-           if (!empty($v->custom)) $v->entry = true;
-           if (!empty($v->house)) $v->entry = true;
+            if (!empty($v->custom)) $v->entry = true;
+            if (!empty($v->house)) $v->entry = true;
         }
         return $item;
     }
@@ -109,6 +109,7 @@ class RawCustomsService
     {
         $data['openid'] = json_encode(array($openid));
         $data['name'] = $name;
+
         $data['tel'] = $tel;
         $data['staff'] = $staff;
         curl(config('setting.wechat_url').'/new_custom_notice','post', $data);
@@ -120,6 +121,25 @@ class RawCustomsService
         return User::where('tel', $tel)->value('id');
     }
 
+    // 获取转换率
+    public function getConversionRate(
+        $model
+    )
+    {
+        $rawCustoms = $model->get();
 
+        $count = 0;
+        foreach ($rawCustoms as $v) {
+            if (!empty($v->custom)) $count++;
+            if (!empty($v->house)) $count++;
+        }
+
+        // 返回百分比
+        if (!empty($count) && !empty($rawCustoms->count())) {
+            return $count / $rawCustoms->count() * 100 .'%';
+        } else {
+            return '0%';
+        }
+    }
 
 }
