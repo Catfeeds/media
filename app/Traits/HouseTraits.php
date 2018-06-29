@@ -443,7 +443,7 @@ trait HouseTraits{
         return collect(array_merge($arr1, $arr2))->map(function ($img) {
             return [
                 'name' => $img,
-                'url' => config('setting.qiniu_url') . $img . config('setting.static')
+                'url' => config('setting.qiniu_url') . $img . config('setting.qiniu_suffix')
             ];
         })->values();
     }
