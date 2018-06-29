@@ -18,7 +18,6 @@ class RawCustomsController extends APIBaseController
         RawCustomsService $service
     )
     {
-        dr(123);
         $res= $repository->getList($request, $service);
         return $this->sendResponse($res,'工单列表获取成功');
     }

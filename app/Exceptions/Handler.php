@@ -52,16 +52,14 @@ class Handler extends ExceptionHandler
         if (empty(config('app.debug', false))) {
             if (!empty(method_exists($exception, 'getStatusCode'))) {
                 if ($exception->getStatusCode() !== 404) {
-                    $errorInfo = $this->errorMessage($exception);
+                    $errorInfo = $this->errorMessage($exception, $request);
                 } else {
                     //如果报错为404,直接结束,不发送消息
                     return parent::render($request, $exception);
                 }
             } else {
-                $errorInfo = $this->errorMessage($exception);
+                $errorInfo = $this->errorMessage($exception, $request);
             }
-            \Log::info($exception->getFile());
-            \Log::info($exception->getIterator());
             // 获取错误类型
             $temp = explode('\\', get_class($exception));
             $type = end($temp);
@@ -90,12 +88,14 @@ class Handler extends ExceptionHandler
      * @return string
      * @author 罗振
      */
-    public function errorMessage($exception)
+    public function errorMessage($exception, $request)
     {
         $file = $exception->getFile(); // 报错文件
         $line = $exception->getLine(); // 报错行数
         $message = $exception->getMessage();    // 报错信息
-
-        return $file.'文件的'.$line.'行报错,报错信息为:'.$message;
+        $uri = $request->getRequestUri(); //接口
+        return 'api:'.$uri.",line:".$file.$line.'行'."info:".$message;
     }
+
+
 }
