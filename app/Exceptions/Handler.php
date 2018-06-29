@@ -50,14 +50,18 @@ class Handler extends ExceptionHandler
     public function render($request, Exception $exception)
     {
         if (empty(config('app.debug', false))) {
-            $errorInfo = '';
             if (!empty(method_exists($exception, 'getStatusCode'))) {
-                if ($exception->getStatusCode() != 404) {
+                if ($exception->getStatusCode() !== 404) {
                     $errorInfo = $this->errorMessage($exception);
+                } else {
+                    //如果报错为404,直接结束,不发送消息
+                    return parent::render($request, $exception);
                 }
             } else {
                 $errorInfo = $this->errorMessage($exception);
             }
+            \Log::info($exception->getFile());
+            \Log::info($exception->getIterator());
             // 获取错误类型
             $temp = explode('\\', get_class($exception));
             $type = end($temp);
