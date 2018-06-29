@@ -220,7 +220,7 @@ class OfficeBuildingHouse extends BaseModel
         return collect($this->house_type_img)->map(function ($img) {
             return [
                 'name' => $img,
-                'url' => config('setting.qiniu_url') . $img . config('setting.static')
+                'url' => config('setting.qiniu_url') . $img . config('setting.qiniu_suffix'),
             ];
         })->values();
     }
@@ -237,7 +237,7 @@ class OfficeBuildingHouse extends BaseModel
         return collect($this->indoor_img)->map(function ($img) {
             return [
                 'name' => $img,
-                'url' => config('setting.qiniu_url') . $img . config('setting.static')
+                'url' => config('setting.qiniu_url') . $img . config('setting.qiniu_suffix')
             ];
         })->values();
     }
