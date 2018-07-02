@@ -5,10 +5,12 @@ header('Access-Control-Allow-Headers:X-Token,Content-Type,Authorization,safeStri
 header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
 
 Route::resource('/logs', 'LogController');
-//Route::group(['domain' => 'admin.agency.com', 'namespace' => 'API'], function () {
 Route::group(['namespace' => 'API'], function () {
     // 登录
     Route::resource('login', 'LoginController');
+
+    // 月度统计
+    Route::resource('monthly_statistics', 'MonthlyStatisticsController');
 
     Route::group(['middleware' => 'safe.validate'], function () {
         /*
@@ -44,97 +46,40 @@ Route::group(['namespace' => 'API'], function () {
         // 七牛token
         Route::resource('/qiniu', 'QiNiuController');
 
+        /*
+        |--------------------------------------------------------------------------
+        | 权限管理
+        |--------------------------------------------------------------------------
+        */
+        Route::resource('permissions', 'PermissionsController');
+
+        /*
+        |--------------------------------------------------------------------------
+        | 角色管理
+        |--------------------------------------------------------------------------
+        */
+        Route::resource('roles', 'RolesController');
+
+
+        // 某区下的所有楼楼盘
+        Route::get('/area_buildings', 'BuildingController@areaBuildings');
+
+        //客服工单
+        Route::resource('raw_custom', 'RawCustomsController');
+        //获取店长信息
+        Route::get('get_shopkeeper', 'RawCustomsController@getShopkeeper');
+        //获取店长下属业务员
+        Route::get('get_staff', 'RawCustomsController@getStaff');
+        //店长分配工单
+        Route::post('distribution', 'RawCustomsController@distribution');
+        //业务员确定工单
+        Route::post('determine', 'RawCustomsController@determine');
+        //店长处理页面
+        Route::get('shopkeeper_list', 'RawCustomsController@shopkeeperList');
+        //业务员处理页面
+        Route::get('staff_list', 'RawCustomsController@staffList');
+
     });
-
-    /*
-    |--------------------------------------------------------------------------
-    | 城市管理
-    |--------------------------------------------------------------------------
-    */
-    // 城市一级下拉数据
-    Route::resource('/cities', 'CityController');
-
-    /*
-    |--------------------------------------------------------------------------
-    | 区域管理
-    |--------------------------------------------------------------------------
-    */
-    // 区域二级下拉数据
-    Route::resource('/areas', 'AreaController');
-    Route::get('/areas_of_city', 'AreaController@areasOfCity');
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | 商圈管理
-    |--------------------------------------------------------------------------
-    */
-    Route::resource('/blocks', 'BlockController');
-    // 商圈三级下拉数据
-    Route::get('/city_blocks', 'BlockController@cityBlocks');
-
-
-
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | 权限管理
-    |--------------------------------------------------------------------------
-    */
-    Route::resource('permissions', 'PermissionsController');
-
-    /*
-    |--------------------------------------------------------------------------
-    | 角色管理
-    |--------------------------------------------------------------------------
-    */
-    Route::resource('roles', 'RolesController');
-
-
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | element下拉格式数据
-    |--------------------------------------------------------------------------
-    */
-    Route::get('/select_block_houses', 'SelectDataController@blockHouses');
-    Route::get('/select_customs', 'SelectDataController@selectCustoms');
-
-    /*
-    |--------------------------------------------------------------------------
-    | 后台首页管理
-    |--------------------------------------------------------------------------
-    */
-    Route::resource('home_page', 'HomePagesController');
-    //待跟进房源数据
-    Route::get('wait_track_house', 'HomePagesController@waitTrackHouse');
-    //待跟进客户数据
-    Route::get('wait_track_customer', 'HomePagesController@waitTrackCustomer');
-    //写字楼统或客户计数据
-    Route::get('statistic_data', 'HomePagesController@statisticData');
-    //获取环比数据
-    Route::get('get_ring_than_data', 'HomePagesController@getRingThanData');
-    //根据本周或者本月获取房源、客户X轴数据
-    Route::get('get_chart_data', 'HomePagesController@getChartData');
-    //根据登录人级别获取对应业务员数据
-    Route::get('get_salesman_data', 'HomePagesController@getSalesmanData');
-
-    //客服工单
-    Route::resource('raw_custom', 'RawCustomsController');
-    //获取店长信息
-    Route::get('get_shopkeeper', 'RawCustomsController@getShopkeeper');
-    //获取店长下属业务员
-    Route::get('get_staff', 'RawCustomsController@getStaff');
-    //店长分配工单
-    Route::post('distribution', 'RawCustomsController@distribution');
-    //业务员确定工单
-    Route::post('determine', 'RawCustomsController@determine');
-    //店长处理页面
-    Route::get('shopkeeper_list', 'RawCustomsController@shopkeeperList');
-    //业务员处理页面
-    Route::get('staff_list', 'RawCustomsController@staffList');
 
     /*
     |--------------------------------------------------------------------------
@@ -145,6 +90,25 @@ Route::group(['namespace' => 'API'], function () {
 
         // 退出登录
         Route::post('/logout', 'LoginController@logout');
+
+        /*
+        |--------------------------------------------------------------------------
+        | 后台首页管理
+        |--------------------------------------------------------------------------
+        */
+        Route::resource('home_page', 'HomePagesController');
+        //待跟进房源数据
+        Route::get('wait_track_house', 'HomePagesController@waitTrackHouse');
+        //待跟进客户数据
+        Route::get('wait_track_customer', 'HomePagesController@waitTrackCustomer');
+        //写字楼统或客户计数据
+        Route::get('statistic_data', 'HomePagesController@statisticData');
+        //获取环比数据
+        Route::get('get_ring_than_data', 'HomePagesController@getRingThanData');
+        //根据本周或者本月获取房源、客户X轴数据
+        Route::get('get_chart_data', 'HomePagesController@getChartData');
+        //根据登录人级别获取对应业务员数据
+        Route::get('get_salesman_data', 'HomePagesController@getSalesmanData');
 
         /*
         |--------------------------------------------------------------------------
@@ -185,15 +149,12 @@ Route::group(['namespace' => 'API'], function () {
         Route::post('update_shops_business_state', 'ShopsHousesController@updateShopsBusinessState');
         // 写字楼房源
         Route::resource('office_building_houses', 'OfficeBuildingHousesController');
-
         // 写字楼房源业务状态修改
         Route::post('update_office_business_state', 'OfficeBuildingHousesController@updateOfficeBusinessState');
         // 上线房源
         Route::post('update_shelf', 'OfficeBuildingHousesController@updateShelf');
-
         // 三个房源获取业主信息和查看记录
         Route::get('get_owner_info', 'HousesController@getOwnerInfo');
-
         // 房号验证
         Route::post('room_number_validate','HousesController@roomNumberValidate');
 
@@ -218,8 +179,6 @@ Route::group(['namespace' => 'API'], function () {
         |--------------------------------------------------------------------------
         */
         Route::resource('/buildings', 'BuildingController');
-        // 某区下的所有楼楼盘
-        Route::get('/area_buildings', 'BuildingController@areaBuildings');
 
         /*
         |--------------------------------------------------------------------------
@@ -259,6 +218,39 @@ Route::group(['namespace' => 'API'], function () {
         Route::post('/custom_status/{custom}', 'CustomController@updateStatus');
         Route::get('my_custom_list', 'CustomController@myCustomList');
 
-    });
+        /*
+        |--------------------------------------------------------------------------
+        | 城市管理
+        |--------------------------------------------------------------------------
+        */
+        // 城市一级下拉数据
+        Route::resource('/cities', 'CityController');
 
+        /*
+        |--------------------------------------------------------------------------
+        | 区域管理
+        |--------------------------------------------------------------------------
+        */
+        // 区域二级下拉数据
+        Route::resource('/areas', 'AreaController');
+        Route::get('/areas_of_city', 'AreaController@areasOfCity');
+
+
+        /*
+        |--------------------------------------------------------------------------
+        | 商圈管理
+        |--------------------------------------------------------------------------
+        */
+        Route::resource('/blocks', 'BlockController');
+        // 商圈三级下拉数据
+        Route::get('/city_blocks', 'BlockController@cityBlocks');
+
+        /*
+        |--------------------------------------------------------------------------
+        | element下拉格式数据
+        |--------------------------------------------------------------------------
+        */
+        Route::get('/select_block_houses', 'SelectDataController@blockHouses');
+        Route::get('/select_customs', 'SelectDataController@selectCustoms');
+    });
 });
