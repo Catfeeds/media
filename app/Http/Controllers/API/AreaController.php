@@ -18,6 +18,8 @@ class AreaController extends APIBaseController
      */
     public function index(Request $request)
     {
+
+        dd(Common::user()->can('area_list'));
         if (empty(Common::user()->can('area_list'))) {
             return $this->sendError('无区域列表权限','403');
         }

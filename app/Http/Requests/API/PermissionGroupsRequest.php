@@ -2,9 +2,11 @@
 
 namespace App\Http\Requests\API;
 
+use App\Models\PermissionGroup;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class RolesRequest extends FormRequest
+class PermissionGroupsRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,11 +29,7 @@ class RolesRequest extends FormRequest
         switch ($this->route()->getActionMethod()) {
             case 'store':
                 return [
-                    'permissions.*.in' => '请勿添加不存在的权限'
-                ];
-            case 'update':
-                return [
-
+                    'group_name.not_in' => '权限组名称不能重复',
                 ];
             default;
                 return [
@@ -51,11 +49,13 @@ class RolesRequest extends FormRequest
         switch ($this->route()->getActionMethod()) {
             case 'store':
                 return [
-                    'name_cn' => 'required|max:255',
-                    'name_en' => 'required|max:255|regex:/^[a-z\d\_]*$/i|unique:roles,name',
-                ];
-            case 'update':
-                return [
+                    'group_name' => [
+                        'required',
+                        'max:32',
+                        Rule::notIn(
+                            PermissionGroup::all()->pluck('group_name')->toArray()
+                        )
+                    ],
                 ];
             default;
                 return [

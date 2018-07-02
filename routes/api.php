@@ -44,6 +44,18 @@ Route::group(['namespace' => 'API'], function () {
     Route::post('/house_img_update', 'HousesController@houseImgUpdate');
     // 生成二维码
     Route::get('/make_qr_code', 'HousesController@makeQrCode');
+
+
+    // 权限组管理
+    Route::resource('permission_groups','PermissionGroupsController');
+    // 权限管理
+    Route::resource('permissions','PermissionsController');
+    Route::get('permissions_group', 'PermissionsController@permissionsGroup');
+
+    // 角色管理
+    Route::resource('roles','RolesController');
+    Route::get('get_all_permissions', 'RolesController@getAllPermissions');
+
     /*
     |--------------------------------------------------------------------------
     | 登录后的操作

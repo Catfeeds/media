@@ -1,100 +1,65 @@
 <?php
-
 namespace App\Http\Controllers\API;
 
 use App\Http\Requests\API\RolesRequest;
+use App\Models\Permission;
+use App\Models\Role;
 use App\Repositories\RolesRepository;
-use Illuminate\Http\Request;
-use Spatie\Permission\Models\Role;
 
 class RolesController extends APIBaseController
 {
-    /**
-     * 说明:角色列表
-     *
-     * @param Request $request
-     * @param RolesRepository $rolesRepository
-     * @return \Illuminate\Http\JsonResponse
-     * @author 刘坤涛
-     */
-    public function index
-    (
-        Request $request,
-        RolesRepository $rolesRepository
+    public function index(
+        RolesRepository $repository
     )
     {
-        $res = $rolesRepository->rolesList($request);
-        return $this->sendResponse($res, '角色列表获取成功');
+        $res = $repository->roleList();
+        return $this->sendResponse($res,'获取角色列表成功');
     }
 
-    /**
-     * 说明:添加角色
-     *
-     * @param RolesRepository $rolesRepository
-     * @param RolesRequest $request
-     * @return \Illuminate\Http\JsonResponse
-     * @author 刘坤涛
-     */
-    public function store
-    (
-        RolesRepository $rolesRepository,
-        RolesRequest $request
+    public function store(
+        RolesRequest $request,
+        RolesRepository $repository
     )
     {
-        $res = $rolesRepository->addRoles($request);
-        if ($res) {
-            return $this->sendResponse($res, '角色信息添加成功');
+
+        if (!is_array($request->permissions)) $request->permissions = json_decode($request->permissions);
+        $item = Permission::all()->pluck('name')->toArray();
+        foreach ($request->permissions as $value) {
+            if (!in_array($value, $item)) return $this->sendError('权限必须存在');
         }
-        return $this->sendError('角色信息添加失败');
+        $res = $repository->addRole($request);
+        if (empty($res)) return $this->sendError('角色添加失败');
+        return $this->sendResponse($res,'角色添加成功');
     }
 
-    /**
-     * 说明:角色修改之前原始数据
-     *
-     * @param Role $role
-     * @return \Illuminate\Http\JsonResponse
-     * @author 刘坤涛
-     */
-    public function edit(Role $role)
+    public function edit(
+        Role $role
+    )
     {
-        // TODO 还有获取角色下所有权限
-        return $this->sendResponse($role, '角色修改之前原始数据');
+        // 角色所有权限
+        $role->oldPermissions = $role->permissions()->pluck('name')->toArray();
+        return $this->sendResponse($role,'获取角色原始数据成功');
     }
 
-    /**
-     * 说明:跟新角色信息
-     *
-     * @param Role $role
-     * @param RolesRequest $request
-     * @param RolesRepository $rolesRepository
-     * @return \Illuminate\Http\JsonResponse
-     * @author 刘坤涛
-     */
-    public function update
-    (
+    public function update(
         Role $role,
         RolesRequest $request,
-        RolesRepository $rolesRepository
+        RolesRepository $repository
     )
     {
-        $res = $rolesRepository->updateRoles($role, $request);
-        if ($res) {
-            return $this->sendResponse($res, '更新成功');
-        }
-        return $this->sendError('更新失败');
+        if (!is_array($request->permissions)) $request->permissions = json_decode($request->permissions);
+        $res = $repository->updateRole($request, $role);
+        if (empty($res)) return $this->sendError('角色修改失败');
+        return $this->sendResponse($res,'角色修改成功');
     }
 
-    /**
-     * 说明:删除角色
-     *
-     * @param Role $role
-     * @return \Illuminate\Http\JsonResponse
-     * @throws \Exception
-     * @author 刘坤涛
-     */
-    public function destroy(Role $role)
+    // 获取所有权限
+    public function getAllPermissions(
+        RolesRepository $repository
+    )
     {
-        $res = $role->delete();
-        return $this->sendResponse($res, '角色删除成功');
+        $res = $repository->getAllPermissions();
+        return $this->sendResponse($res,'获取所有权限数据成功');
     }
+
 }
