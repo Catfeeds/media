@@ -59,7 +59,6 @@ class Kernel extends HttpKernel
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'token_invalid' => \App\Http\Middleware\TokenInvalid::class,
-
-
+        'safe.validate' => \App\Http\Middleware\SafeValidate::class,
     ];
 }
