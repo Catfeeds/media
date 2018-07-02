@@ -298,7 +298,5 @@ class PermissionSeeder extends Seeder
             'label' => '删除成员',
             'group_id' => 6,
         ]);
-
-
     }
 }

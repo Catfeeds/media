@@ -2,63 +2,44 @@
 
 namespace App\Repositories;
 
+use App\Models\MediaPermissionGroup;
 use App\Models\Permission;
+use Illuminate\Database\Eloquent\Model;
 
-class PermissionsRepository extends BaseRepository
+class PermissionsRepository extends Model
 {
-
-    private $model;
-
-    public function __construct(Permission $model)
+    public function mediaPermissionsList()
     {
-        $this->model = $model;
+        return Permission::where(['guard_name' => 'web'])->paginate(10);
     }
 
-    /**
-     * 说明:权限列表
-     *
-     * @param $request
-     * @return mixed
-     * @author 刘坤涛
-     */
-    public function permissionsList($request)
+    public function addPermissions(
+        $request
+    )
     {
-        return $this->model->paginate(10);
-    }
-
-    /**
-     * 说明:添加权限
-     *
-     * @param $request
-     * @return $this|\Illuminate\Database\Eloquent\Model
-     * @author 刘坤涛
-     */
-    public function addPermissions($request)
-    {
-        return $this->model->create([
+        return Permission::create([
             'name' => $request->name,
             'label' => $request->label,
-            'group_id' => $request->group_id
+            'group_id' => $request->group_id,
+            'guard_name' => 'web'
         ]);
     }
 
-    /**
-     * 说明:权限修改
-     *
-     * @param $permission
-     * @param $request
-     * @return bool
-     * @author 刘坤涛
-     */
-    public function updatePermissions($permission, $request)
+    public function updatePermissions(
+        $request,
+        Permission $permission
+    )
     {
         $permission->name = $request->name;
         $permission->label = $request->label;
         $permission->group_id = $request->group_id;
 
-        if (!$permission->save()) {
-            return false;
-        }
+        if (!$permission->save()) return false;
         return true;
+    }
+
+    public function permissionsGroup()
+    {
+        return MediaPermissionGroup::where(['stage' => 1])->get();
     }
 }

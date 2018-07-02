@@ -2,87 +2,90 @@
 
 namespace App\Repositories;
 
-use Spatie\Permission\Models\Role;
+use App\Models\MediaPermissionGroup;
+use App\Models\Role;
+use Illuminate\Database\Eloquent\Model;
 
-class RolesRepository extends BaseRepository
+class RolesRepository extends Model
 {
-
-    private $model;
-
-    public function __construct(Role $model)
+    public function roleList()
     {
-        $this->model = $model;
+        return Role::where(['guard_name' => 'web'])->paginate(10);
     }
 
-    /**
-     * 说明:角色列表
-     *
-     * @param $request
-     * @return mixed
-     * @author 刘坤涛
-     */
-    public function rolesList($request)
-    {
-        return $this->model->paginate(10);
-
-    }
-
-    /**
-     * 说明:添加角色和该角色权限
-     *
-     * @param $request
-     * @return bool
-     * @author 刘坤涛
-     */
-    public function addRoles($request)
+    public function addRole(
+        $request
+    )
     {
         \DB::beginTransaction();
         try {
+            // 添加角色表
             $role = Role::create([
-                'name' => $request->name,
-                'name_en' => $request->name_en,
+                'name' => $request->name_en,
                 'name_cn' => $request->name_cn,
-                'guard_name' => 'web'
+                'name_en' => $request->name_en,
+                'guard_name' => 'web',
             ]);
-            if (empty($role)) {
-                throw new \Exception('角色信息添加失败');
-            }
+            // 添加关联表
             $role->givePermissionTo($request->permissions);
             \DB::commit();
             return true;
         } catch (\Exception $e) {
             \DB::rollBack();
-            \Log::error('添加'.$request->name_cn.'角色失败'.$e->getMessage());
+            \Log::error('添加角色失败：' . $e->getFile() . $e->getLine() . $e->getMessage());
             return false;
         }
     }
 
-    /**
-     * 说明:更新角色和该角色权限
-     *
-     * @param $role
-     * @param $request
-     * @return bool
-     * @author 刘坤涛
-     */
-    public function updateRoles($role, $request)
+    public function updateRole(
+        $request,
+        Role $role
+    )
     {
         \DB::beginTransaction();
         try {
-            $role->name = $request->name;
-            $role->name_en = $request->name_en;
+            $role->name = $request->name_en;
             $role->name_cn = $request->name_cn;
-            $res = $role->save();
-            if (empty($res)) {
-                throw new \Exception('角色信息更新失败');
-            }
+            $role->name_en = $request->name_en;
+            if (!$role->save()) throw new \Exception('修改角色信息失败!');
+
+            // 修改关联表
             $role->syncPermissions($request->permissions);
+
+            curl(config('setting.agency_host').'/api/run_command', 'get',true);
+
             \DB::commit();
             return true;
         } catch (\Exception $e) {
-            \DB::rollback();
-            \Log::error('更新角色'.$request->name_cn.'失败'.$e->getMessage());
+            \DB::rollBack();
+            \Log::error('修改角色失败：' . $e->getFile() . $e->getLine() . $e->getMessage());
             return false;
         }
+    }
+
+    public function getAllPermissions()
+    {
+        // 获取所有权限组
+        $groups = MediaPermissionGroup::where(['stage' => 1])->get();
+
+        $data = array();
+        foreach ($groups as $k => $v) {
+            $data['group'.$v->id]['title'] = $v->group_name;
+            $permissions = $v->permission;
+
+            $allPermissions = array();  // 所有权限信息
+            $allPermissionId = array(); // 所有权限id
+            foreach ($permissions as $key => $val) {
+                $allPermissions[$key]['key'] = $val->name;
+                $allPermissions[$key]['label'] = $val->label;
+                $allPermissions[$key]['disable'] = true;
+                $allPermissionId[] = $val->name;
+            }
+
+            $data['group'.$v->id]['permission'] = $allPermissions;
+            $data['group'.$v->id]['allPermissionId'] = $allPermissionId;
+        }
+
+        return $data;
     }
 }

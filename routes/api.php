@@ -46,19 +46,15 @@ Route::group(['namespace' => 'API'], function () {
         // 七牛token
         Route::resource('/qiniu', 'QiNiuController');
 
-        /*
-        |--------------------------------------------------------------------------
-        | 权限管理
-        |--------------------------------------------------------------------------
-        */
-        Route::resource('permissions', 'PermissionsController');
+        // 权限组管理
+        Route::resource('permission_groups','PermissionGroupsController');
+        // 权限管理
+        Route::resource('permissions','PermissionsController');
+        Route::get('permissions_group', 'PermissionsController@permissionsGroup');
 
-        /*
-        |--------------------------------------------------------------------------
-        | 角色管理
-        |--------------------------------------------------------------------------
-        */
-        Route::resource('roles', 'RolesController');
+        // 角色管理
+        Route::resource('roles','RolesController');
+        Route::get('get_all_permissions', 'RolesController@getAllPermissions');
 
 
         // 某区下的所有楼楼盘

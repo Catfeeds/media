@@ -7,7 +7,6 @@
  */
 namespace App\Handler;
 
-use App\Models\OfficeBuildingHouse;
 use Illuminate\Support\Facades\Auth;
 use Qiniu\Storage\UploadManager;
 
