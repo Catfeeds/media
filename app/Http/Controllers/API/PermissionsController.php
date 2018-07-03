@@ -1,96 +1,60 @@
 <?php
-
 namespace App\Http\Controllers\API;
 
 use App\Http\Requests\API\PermissionsRequest;
 use App\Models\Permission;
 use App\Repositories\PermissionsRepository;
-use Illuminate\Http\Request;
 
 class PermissionsController extends APIBaseController
 {
-
-    /**
-     * 说明:权限列表
-     *
-     * @param PermissionsRepository $permissionsRepository
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     * @author 刘坤涛
-     */
-	public function index
-    (
-        PermissionsRepository $permissionsRepository,
-        Request $request
-    )
-	{
-        $res = $permissionsRepository->permissionsList($request);
-        return $this->sendResponse($res,'权限列表获取成功');
-	}
-
-    /**
-     * 说明:添加权限
-     *
-     * @param PermissionsRequest $request
-     * @param PermissionsRepository $permissionsRepository
-     * @return \Illuminate\Http\JsonResponse
-     * @author 刘坤涛
-     */
-    public function store
-    (
-        PermissionsRequest $request,
-        PermissionsRepository $permissionsRepository
+    public function index(
+        PermissionsRepository $repository
     )
     {
-        $res = $permissionsRepository->addPermissions($request);
-        return $this->sendResponse($res,'权限信息添加成功');
-
+        $res = $repository->mediaPermissionsList();
+        return $this->sendResponse($res,'中介权限列表获取成功');
     }
 
-    /**
-     * 说明:权限修改之前原始数据
-     *
-     * @param Permission $permission
-     * @return \Illuminate\Http\JsonResponse
-     * @author 刘坤涛
-     */
+    public function store(
+        PermissionsRequest $request,
+        PermissionsRepository $repository
+    )
+    {
+        $res = $repository->addPermissions($request);
+        return $this->sendResponse($res,'中介权限添加成功');
+    }
+
     public function edit(Permission $permission)
     {
-        return $this->sendResponse($permission,'权限修改之前原始数据');
+        return $this->sendResponse($permission, '获取权限原始数据成功');
     }
 
-    /**
-     * 说明:权限修改
-     *
-     * @param Permission $permission
-     * @param PermissionsRequest $request
-     * @param PermissionsRepository $permissionsRepository
-     * @return \Illuminate\Http\JsonResponse
-     * @author 刘坤涛
-     */
-    public function update
-    (
-        Permission $permission,
+    public function update(
         PermissionsRequest $request,
-        PermissionsRepository $permissionsRepository
+        Permission $permission,
+        PermissionsRepository $repository
     )
     {
-        $res = $permissionsRepository->updatePermissions($permission, $request);
-        return $this->sendResponse($res,'更新成功');
+        $res = $repository->updatePermissions($request, $permission);
+        if (empty($res)) return $this->sendError('修改失败');
+        return $this->sendResponse($res,'修改成功');
     }
 
-    /**
-     * 说明: 删除权限
-     *
-     * @param Permission $permission
-     * @return \Illuminate\Http\JsonResponse
-     * @throws \Exception
-     * @author 刘坤涛
-     */
     public function destroy(Permission $permission)
     {
         $res = $permission->delete();
-        return $this->sendResponse($res,'删除成功');
+        return $this->sendResponse($res,'删除权限成功');
+    }
+
+    public function permissionsGroup(PermissionsRepository $repository)
+    {
+        $res = $repository->permissionsGroup();
+
+        return $this->sendResponse($res->map(function ($v) {
+            return [
+                'value' => $v->id,
+                'label' => $v->group_name
+            ];
+        }), '获取权限组成功');
     }
 }
-

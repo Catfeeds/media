@@ -6,10 +6,10 @@ use App\Handler\Common;
 use App\Http\Requests\API\BuildingRequest;
 use App\Models\Area;
 use App\Models\Building;
-use App\Models\BuildingBlock;
 use App\Models\City;
-use App\Models\Street;
 use App\Repositories\BuildingRepository;
+use Fukuball\Jieba\Jieba;
+use Fukuball\Jieba\Finalseg;
 use Illuminate\Http\Request;
 
 class BuildingController extends APIBaseController
@@ -244,5 +244,36 @@ class BuildingController extends APIBaseController
         }
         return $this->sendResponse($city_box, '获取成功');
     }
+
+    public function buildingKeyword(
+
+    )
+    {
+        $buildings = Building::with('block', 'area.city')->get();
+
+        $datas = array();
+        foreach ($buildings as $key => $v) {
+            $buildingName = $v->name;   // 楼盘名
+            $blockName = empty($v->block)?'':$v->block->name;   // 商圈名
+            $areaName = $v->area->name; // 区域名
+            $cityName = $v->area->city->name;   // 城市名
+
+            $datas[$key]['keyWord'] = $buildingName.$blockName.$areaName.$cityName;
+            $datas[$key]['buildingId'] = $v->id;
+        }
+
+        dd($datas);
+
+
+
+        ini_set('memory_limit', '512M');
+
+        Jieba::init();
+        Finalseg::init();
+        $res = Jieba::cutForSearch('武汉武昌区光谷总部时代武汉市江夏区光谷大道武汉武昌区光谷总部时代武汉市江夏区光谷大道武汉武昌区光谷总部时代武汉市江夏区光谷大道武汉武昌区光谷总部时代武汉市江夏区光谷大道武汉武昌区光谷总部时代武汉市江夏区光谷大道武汉武昌区光谷总部时代武汉市江夏区光谷大道武汉武昌区光谷总部时代武汉市江夏区光谷大道武汉武昌区光谷总部时代武汉市江夏区光谷大道武汉武昌区光谷总部时代武汉市江夏区光谷大道');
+        dump(array_unique($res));
+
+    }
+
 
 }
