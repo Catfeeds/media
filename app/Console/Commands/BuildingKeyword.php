@@ -61,9 +61,21 @@ class BuildingKeyword extends Command
             $blockName = empty($v->block)?'':$v->block->name;   // 商圈名
             $areaName = $v->area->name; // 区域名
             $cityName = $v->area->city->name;   // 城市名
+            $string = $buildingName.$blockName.$areaName.$cityName;
 
-            // 关键词拼接
-            $string = implode(' ', array_unique(Jieba::cutForSearch($buildingName.$blockName.$areaName.$cityName)));
+            // 切词之后的字符串
+            $jbArray = Jieba::cutForSearch($string);
+
+            // 字符串长度
+            $length = mb_strlen($string, 'utf-8');
+            $array = [];
+            for ($i=0; $i<$length; $i++) {
+                $array[] = mb_substr($string, $i, 1, 'utf-8');
+            }
+
+            $endString = array_unique(array_merge($array, $jbArray));
+
+            $string = implode(' ', $endString);
 
             $res = BuildingKeywords::create([
                 'building_id' => $v->id,
