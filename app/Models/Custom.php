@@ -203,11 +203,11 @@ class Custom extends BaseModel
     {
         switch ($this->need_type) {
             case 1:
-                return '商铺';
-            case 2:
                 return '住宅';
-            case 3:
+            case 2:
                 return '写字楼';
+            case 3:
+                return '商铺';
         }
     }
 
