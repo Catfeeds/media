@@ -1,4 +1,5 @@
 <?php
+use \Illuminate\Support\Facades\Hash;
 
 /**
  * 全局辅助函数 放置处
@@ -36,7 +37,7 @@ if (!function_exists('curl')) {
     function curl($url, $method, $data = null)
     {
         $ch = curl_init();
-
+        curl_setopt($ch, CURLOPT_HTTPHEADER, ['safeString'.':'.Hash::make('chulouwang'.date('Y-m-d',time()))]);
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 
