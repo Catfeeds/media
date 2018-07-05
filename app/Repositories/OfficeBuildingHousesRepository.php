@@ -278,6 +278,8 @@ class OfficeBuildingHousesRepository extends BaseRepository
         $officeBuildingHouse->shelf = $request->shelf;
         $officeBuildingHouse->rent_time = strtotime($request->rent_time);  // 可租时间
         $officeBuildingHouse->remarks = $request->remarks;  // 信息不明确备注
+        $officeBuildingHouse->gd_identifier = $request->gd_identifier;  // 修改工单
+
 
         if (!$officeBuildingHouse->save()) {
             return false;
