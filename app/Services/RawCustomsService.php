@@ -109,7 +109,6 @@ class RawCustomsService
     {
         $data['openid'] = json_encode(array($openid));
         $data['name'] = $name;
-
         $data['tel'] = $tel;
         $data['staff'] = $staff;
         curl(config('setting.wechat_url').'/new_custom_notice','post', $data);
