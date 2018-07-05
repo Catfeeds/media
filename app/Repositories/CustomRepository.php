@@ -187,7 +187,8 @@ class CustomRepository extends BaseRepository
                 'not_like' => $request->not_like,
                 'like' => $request->like,
                 'area_id' => $request->area_id,
-                'other' => $request->other
+                'other' => $request->other,
+                'identifier' => $request->identifier
             ]);
 
             // 得到新老意向楼盘
