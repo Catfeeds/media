@@ -67,8 +67,10 @@ class Handler extends ExceptionHandler
             $data['type'] = $type;
             $data['name'] = config('app.name');
             $data['errorInfo'] = $errorInfo;
-            $data['openid'] = json_encode($openid);
-            curl(config('setting.wechat_url').'/waring_notice','post',$data);
+            if ($openid) {
+                $data['openid'] = json_encode($openid);
+                curl(config('setting.wechat_url').'/waring_notice','post', $data);
+            }
         }
 
         if ($exception instanceof ValidationException) {
