@@ -6,15 +6,10 @@ header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
 
 Route::resource('/logs', 'LogController');
 Route::group(['namespace' => 'API'], function () {
-
     Route::get('/building_keyword', 'BuildingController@buildingKeyword');
-
 
     // 登录
     Route::resource('login', 'LoginController');
-
-    // 月度统计
-    Route::resource('monthly_statistics', 'MonthlyStatisticsController');
 
     Route::group(['middleware' => 'safe.validate'], function () {
         /*
