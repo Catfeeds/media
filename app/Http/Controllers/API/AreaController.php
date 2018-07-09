@@ -18,8 +18,6 @@ class AreaController extends APIBaseController
      */
     public function index(Request $request)
     {
-
-        dd(Common::user()->can('area_list'));
         if (empty(Common::user()->can('area_list'))) {
             return $this->sendError('无区域列表权限','403');
         }
@@ -80,6 +78,40 @@ class AreaController extends APIBaseController
             );
             $city_box[] = $city_item; // 所有城市
         }
+        return $this->sendResponse($city_box, '获取成功');
+    }
+
+    // 城市,区域,商圈三级下拉
+    public function citiesAreasBlocksSelect()
+    {
+        $cities = City::with('area.block')->get();
+        $city_box = array();
+        foreach ($cities as $index => $city) {
+            $area_box = array();
+            foreach ($city->area as $area) {
+                $block_box = array();
+                foreach ($area->block as $block) {
+                    $item = array(
+                        'value' => $block->id,
+                        'label' => $block->name,
+                    );
+                    $block_box[] = $item;
+                }
+                $item = array(
+                    'value' => $area->id,
+                    'label' => $area->name,
+                    'children' => $block_box
+                );
+                $area_box[] = $item; // 城市下的区
+            }
+            $city_item = array(
+                'value' => $city->id,
+                'label' => $city->name,
+                'children' => $area_box
+            );
+            $city_box[] = $city_item; // 所有城市
+        }
+
         return $this->sendResponse($city_box, '获取成功');
     }
 

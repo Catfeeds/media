@@ -34,6 +34,8 @@ Route::group(['namespace' => 'API'], function () {
         Route::get('/building_search_select', 'BuildingController@buildingSearchSelect');
         Route::get('/cities_select', 'CityController@citiesSelect');
         Route::get('/areas_select', 'AreaController@areasSelect');
+        // 城市,区域,商圈三级下拉
+        Route::get('/cities_areas_blocks_select', 'AreaController@citiesAreasBlocksSelect');
 
         // 更新房源照片
         Route::get('/house_img_update/{token}', 'HousesController@houseImgUpdateView');
