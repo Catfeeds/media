@@ -51,17 +51,18 @@ class GetFtxBlock extends Command
         $res = curl('http://192.168.0.188:8866/mock/5b19f300152f4405081fd865/map/detailArea', 'GET')->data;
 
         // 获取商圈所有数据
-        $blocks = Block::where([])->pluck('name','id')->toArray();
-        foreach ($blocks as $k => $blockName) {
-            foreach ($res as $v) {
-                if (stristr($blockName, $v->name)) {
+        $blocks = Block::withCount('building')->get();
+        foreach ($blocks as $k => $v) {
+            foreach ($res as $val) {
+                if (stristr($v->name, $val->name)) {
                     $addBlockLocation = BlockLocation::create([
-                        'block_id' => $k,
-                        'x' => $v->x,
-                        'y' => $v->y,
-                        'scope' => $v->baidu_coord
+                        'block_id' => $v->id,
+                        'x' => $val->x,
+                        'y' => $val->y,
+                        'scope' => $val->baidu_coord,
+                        'building_num' => $v->building_count
                     ]);
-                    if (empty($addBlockLocation)) \Log::error('商圈名为:'.$blockName.'的商圈添加失败');
+                    if (empty($addBlockLocation)) \Log::error('商圈名为:'.$v->name.'的商圈添加失败');
                 }
             }
         }

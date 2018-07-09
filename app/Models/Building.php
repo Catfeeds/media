@@ -48,6 +48,12 @@ class Building extends BaseModel
         return $this->belongsTo('App\Models\Area');
     }
 
+    // 楼盘关联房源
+    public function house()
+    {
+        return $this->hasManyThrough(OfficeBuildingHouse::class,BuildingBlock::class);
+    }
+
     /**
      * 说明：楼盘类型信息
      *
