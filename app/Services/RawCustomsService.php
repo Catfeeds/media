@@ -78,10 +78,11 @@ class RawCustomsService
             $v->staff = $v->staffUser->real_name;
             $staff_deal = RawCustom::where('id', $v->id)->value('staff_deal');
             if ($staff_deal) {
-                $v->determine = true;
+                $v->determine = 1;
             } else {
-                $v->determine = false;
+                $v->determine = 2;
             }
+            if ($v->feedback) $v->determine = 3;
         }
         return $item;
     }

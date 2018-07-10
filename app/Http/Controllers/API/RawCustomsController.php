@@ -93,6 +93,17 @@ class RawCustomsController extends APIBaseController
         return $this->sendResponse($res, '工单确认成功');
     }
 
+    //员工反馈工单信息
+    public function feedback
+    (
+        RawCustomsRequest $request,
+        RawCustomsRepository $repository
+    )
+    {
+        $res = $repository->feedback($request);
+        return $this->sendResponse($res, '信息反馈成功');
+    }
+
     //手机端店长处理工单界面
     public function shopkeeperList
     (
@@ -107,7 +118,7 @@ class RawCustomsController extends APIBaseController
         return $this->sendResponse($res, '店长处理页面获取成功');
     }
 
-    //业务员能处理页面
+    //业务员处理页面
     public function staffList
     (
         RawCustomsRequest $request,
