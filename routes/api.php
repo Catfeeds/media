@@ -71,6 +71,9 @@ Route::group(['namespace' => 'API'], function () {
         Route::post('distribution', 'RawCustomsController@distribution');
         //业务员确定工单
         Route::post('determine', 'RawCustomsController@determine');
+        //业务员反馈信息
+        Route::post('feedback', 'RawCustomsController@feedback');
+
         //店长处理页面
         Route::get('shopkeeper_list', 'RawCustomsController@shopkeeperList');
         //业务员处理页面
