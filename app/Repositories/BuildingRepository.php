@@ -73,6 +73,7 @@ class BuildingRepository extends Building
 
                 'company' => $request->company,
                 'album' => $request->album,
+                'big_album' => $request->big_album,
 
                 'describe' => $request->describe,
             ]);
@@ -127,6 +128,7 @@ class BuildingRepository extends Building
 
             'company' => $request->company,
             'album' => $request->album,
+            'big_album' => $request->big_album,
 
             'describe' => $request->describe,
         ]);
