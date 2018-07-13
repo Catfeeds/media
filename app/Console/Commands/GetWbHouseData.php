@@ -129,7 +129,6 @@ class GetWbHouseData extends Command
                     Storage::put('public/' . $imgName . $imgType, file_get_contents($img[0]));
                     $keyNew = 'houseImg/' . $imgName . $imgType;
                     $res = Common::QiniuUpload(storage_path() . '/app/public/' . $imgName . $imgType, $keyNew);
-                    dump($res);
 
                     // 上传成功删除
                     if ($res['status'] == false) {

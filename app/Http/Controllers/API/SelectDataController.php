@@ -24,7 +24,7 @@ class SelectDataController extends APIBaseController
      * @return \Illuminate\Http\JsonResponse
      * @author jacklin
      */
-    public function areaBuildings()
+    public function areaBuilding()
     {
         $city = 1;
         $areas = Area::where('city_id', $city)->get()->pluck('id')->toArray();
@@ -38,7 +38,6 @@ class SelectDataController extends APIBaseController
             );
             $res[] = $item;
         }
-
         return $this->sendResponse($res, '获取成功');
     }
 

@@ -71,6 +71,12 @@ class RawCustomsRepository extends BaseRepository
         return $this->model->where('id', $request->id)->update(['staff_deal' => time()]);
     }
 
+    //业务员反馈信息
+    public function feedback($request)
+    {
+        return $this->model->where('id', $request->id)->update(['feedback' => $request->feedback]);
+    }
+
     //手机端店长处理工单界面
     public function shopkeeperList($request, $service, $id)
     {

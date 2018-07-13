@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateBlockLocationsTable extends Migration
+class CreateAreaLocationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateBlockLocationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('block_locations', function (Blueprint $table) {
+        Schema::create('area_locations', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('block_id')->nullable()->comment('商圈id');
+            $table->integer('area_id')->nullable()->comment('区域id');
             $table->string('x',32)->nullable()->comment('经度');
             $table->string('y',32)->nullable()->comment('纬度');
             $table->text('scope')->nullable()->comment('商圈范围');
@@ -23,7 +23,7 @@ class CreateBlockLocationsTable extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
-        \DB::statement("alter table `block_locations` comment'商圈地理范围基础数据表'");
+        \DB::statement("alter table `area_locations` comment'区域地理范围基础数据表'");
     }
 
     /**
@@ -33,6 +33,6 @@ class CreateBlockLocationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('block_locations');
+        Schema::dropIfExists('area_locations');
     }
 }

@@ -73,6 +73,9 @@ class BuildingKeyword extends Command
                 $array[] = mb_substr($string, $i, 1, 'utf-8');
             }
 
+            // 楼盘名
+            $array[] = $buildingName;
+
             $endString = array_unique(array_merge($array, $jbArray));
 
             $string = implode(' ', $endString);

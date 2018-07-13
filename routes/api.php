@@ -6,15 +6,10 @@ header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
 
 Route::resource('/logs', 'LogController');
 Route::group(['namespace' => 'API'], function () {
-
     Route::get('/building_keyword', 'BuildingController@buildingKeyword');
-
 
     // 登录
     Route::resource('login', 'LoginController');
-
-    // 月度统计
-    Route::resource('monthly_statistics', 'MonthlyStatisticsController');
 
     Route::group(['middleware' => 'safe.validate'], function () {
         /*
@@ -39,6 +34,8 @@ Route::group(['namespace' => 'API'], function () {
         Route::get('/building_search_select', 'BuildingController@buildingSearchSelect');
         Route::get('/cities_select', 'CityController@citiesSelect');
         Route::get('/areas_select', 'AreaController@areasSelect');
+        // 城市,区域,商圈三级下拉
+        Route::get('/cities_areas_blocks_select', 'AreaController@citiesAreasBlocksSelect');
 
         // 更新房源照片
         Route::get('/house_img_update/{token}', 'HousesController@houseImgUpdateView');
@@ -74,6 +71,9 @@ Route::group(['namespace' => 'API'], function () {
         Route::post('distribution', 'RawCustomsController@distribution');
         //业务员确定工单
         Route::post('determine', 'RawCustomsController@determine');
+        //业务员反馈信息
+        Route::post('feedback', 'RawCustomsController@feedback');
+
         //店长处理页面
         Route::get('shopkeeper_list', 'RawCustomsController@shopkeeperList');
         //业务员处理页面

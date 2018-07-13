@@ -32,7 +32,6 @@ class BuildingController extends APIBaseController
         if (empty(Common::user()->can('building_list'))) {
             return $this->sendError('没有楼盘列表权限','403');
         }
-
         $res = $repository->getList($request->per_page, json_decode($request->condition));
         return $this->sendResponse($res, '获取成功');
     }
