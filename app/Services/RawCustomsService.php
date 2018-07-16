@@ -44,7 +44,7 @@ class RawCustomsService
                 break;
             case 2:
                 $storefrontsId = Storefront::where('area_manager_id', $id)->pluck('id')->toArray();
-                $res = User::whereIn('ascription_store', $storefrontsId)->where('level',4)->orWhere('level',5)->get();
+                $res = User::whereIn('ascription_store', $storefrontsId)->whereIn('level',  [4, 5])->get();
                 break;
             case 1:
                 //总经理  查询所有
