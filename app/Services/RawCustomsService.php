@@ -136,7 +136,8 @@ class RawCustomsService
 
         // 返回百分比
         if (!empty($count) && !empty($rawCustoms->count())) {
-            return $count / $rawCustoms->count() * 100 .'%';
+            $res = round($count / $rawCustoms->count(),3) * 100 . '%';
+            return $res;
         } else {
             return '0%';
         }
