@@ -23,7 +23,7 @@ class RawCustomsService
     //获取店长名称
     public function getShopkeeper()
     {
-        $res = User::where('level', 2)->orWhere('level', 3)->get();
+        $res = User::where('level', 2)->orWhere('level', 3)->orWhere('level', 1)->get();
         return $res->map(function ($v) {
             return [
                 'label' => $v->real_name,
@@ -44,7 +44,11 @@ class RawCustomsService
                 break;
             case 2:
                 $storefrontsId = Storefront::where('area_manager_id', $id)->pluck('id')->toArray();
-                $res = User::whereIn('ascription_store', $storefrontsId)->where('level',4)->orWhere('level',5)->get();
+                $res = User::whereIn('ascription_store', $storefrontsId)->whereIn('level',  [4, 5])->get();
+                break;
+            case 1:
+                //总经理  查询所有
+                $res = User::all();
                 break;
                 default;
                 break;
