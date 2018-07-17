@@ -83,11 +83,11 @@ class RawCustomsRepository extends BaseRepository
         switch ($request->status) {
             //待处理页面
             case 1 :
-                return $this->model->where(['shopkeeper_id' => $id, 'shopkeeper_deal' => null])->latest()->paginate(6);
+                return $this->model->where(['shopkeeper_id' => $id, 'shopkeeper_deal' => null])->latest('updated_at')->paginate(6);
                 break;
             //已处理
             case 2:
-                $item = $this->model->with('staffUser')->where('shopkeeper_id', $id)->where('shopkeeper_deal','!=', null)->latest()->paginate(6);
+                $item = $this->model->with('staffUser')->where('shopkeeper_id', $id)->where('shopkeeper_deal','!=', null)->latest('updated_at')->paginate(6);
                 return $service->getInfo($item);
                 break;
         }
@@ -98,10 +98,10 @@ class RawCustomsRepository extends BaseRepository
     {
         switch ($request->status) {
             case 1:
-                return $this->model->where(['staff_deal' => null, 'staff_id' => $id])->latest()->paginate(6);
+                return $this->model->where(['staff_deal' => null, 'staff_id' => $id])->latest('updated_at')->paginate(6);
                 break;
             case 2:
-                $item = $this->model->with('custom')->where('staff_deal', '!=', null)->where('staff_id', $id)->latest()->paginate(6);
+                $item = $this->model->with('custom')->where('staff_deal', '!=', null)->where('staff_id', $id)->latest('updated_at')->paginate(6);
                 return $service->getStaffInfo($item);
                 break;
         }

@@ -24,7 +24,7 @@ class SelectDataController extends APIBaseController
      * @return \Illuminate\Http\JsonResponse
      * @author jacklin
      */
-    public function areaBuilding()
+    public function areaBuildings()
     {
         $city = 1;
         $areas = Area::where('city_id', $city)->get()->pluck('id')->toArray();
