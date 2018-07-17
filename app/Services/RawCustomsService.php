@@ -52,7 +52,6 @@ class RawCustomsService
                 break;
                 default;
                 break;
-
         }
         return $res->map(function($v) {
             return [
