@@ -359,7 +359,7 @@ trait HouseTraits{
      */
     public function getAddressAttribute()
     {
-        return $this->buildingBlock->building->address;
+        if (!empty($this->buildingBlock)) return $this->buildingBlock->building->address;
     }
 
     /**

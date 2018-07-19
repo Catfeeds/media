@@ -124,7 +124,7 @@ class OfficeBuildingHousesRepository extends BaseRepository
         if (!empty($request->house_identifier)) {
             $result = $result->where('house_identifier', $request->house_identifier);
         }
-
+//       dd($result);
         return $result->paginate($per_page??10);
     }
 
@@ -279,7 +279,6 @@ class OfficeBuildingHousesRepository extends BaseRepository
         $officeBuildingHouse->rent_time = strtotime($request->rent_time);  // 可租时间
         $officeBuildingHouse->remarks = $request->remarks;  // 信息不明确备注
         $officeBuildingHouse->gd_identifier = $request->gd_identifier;  // 修改工单
-
 
         if (!$officeBuildingHouse->save()) {
             return false;
