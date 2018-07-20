@@ -32,7 +32,7 @@ class OfficeBuildingHouse extends BaseModel
         'constru_acreage_cn', 'rent_price_cn', 'increasing_situation_cn',
         'min_acreage_cn', 'guardian_cn', 'storefronts_cn',
         'tracks_time','house_img_cn','disc_type_cn','see_power_cn', 'new_house', 'start_track_time_cn',
-        'created_at_cn', 'rent_time_cn'
+        'created_at_cn', 'rent_time_cn','int_unit_price'
     ];
 
     protected $hidden = ['owner_info'];
@@ -290,6 +290,10 @@ class OfficeBuildingHouse extends BaseModel
         return $this->unit_price.'元/㎡';
     }
 
+    public function getIntUnitPriceAttribute()
+    {
+        return (int)$this->unit_price;
+    }
     /**
      * 说明: 递增情况
      *

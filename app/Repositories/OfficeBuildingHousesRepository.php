@@ -124,7 +124,9 @@ class OfficeBuildingHousesRepository extends BaseRepository
         if (!empty($request->house_identifier)) {
             $result = $result->where('house_identifier', $request->house_identifier);
         }
-//       dd($result);
+
+//        $result = $result->orderBy('created_at','desc')->orderBy('start_track_time','desc');
+
         return $result->paginate($per_page??10);
     }
 
