@@ -10,7 +10,7 @@ class RawCustom extends Model
     protected $guarded = [];
     protected $connection = 'mysql';
 
-    protected $appends = ['source_cn', 'demand_cn'];
+    protected $appends = ['source_cn', 'demand_cn', 'valid_cn', 'clinch_cn'];
 
     //店长关联user表
     public function shopkeeperUser()
@@ -74,6 +74,26 @@ class RawCustom extends Model
                 break;
                 default;
                 break;
+        }
+    }
+
+    //工单状态
+    public function getValidCnAttribute()
+    {
+        if ($this->valid == 1) {
+            return '有效';
+        } else {
+            return '无效';
+        }
+    }
+    
+    //工单是否成交
+    public function getClinchCnAttribute()
+    {
+        if ($this->clinch == 1) {
+            return '成交';
+        } else {
+            return '未成交';
         }
     }
 

@@ -33,7 +33,7 @@ class RawCustomsRequest extends FormRequest
                     'position' => 'nullable',
                     'acreage' => 'nullable',
                     'price' => 'nullable',
-                    'shopkeeper_id' => 'required|exists:users,id',
+                    'shopkeeper_id' => 'nullable|exists:users,id',
                     'remark' => 'nullable',
                     'recorder' => 'required'
                 ];
