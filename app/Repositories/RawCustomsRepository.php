@@ -74,7 +74,7 @@ class RawCustomsRepository extends BaseRepository
     //业务员反馈信息
     public function feedback($request)
     {
-        return $this->model->where('id', $request->id)->update(['feedback' => $request->feedback]);
+        return $this->model->where('id', $request->id)->update(['feedback' => $request->feedback, 'valid' => $request->valid]);
     }
 
     //手机端店长处理工单界面

@@ -40,15 +40,18 @@ class RawCustomsService
         switch ($level) {
             case 3:
                 $storefront_id = Storefront::where('user_id', $id)->value('id');
-                $res = User::where(['ascription_store' => $storefront_id, 'level' => 4])->get();
+                $res = User::where(['ascription_store' => $storefront_id, 'level' => 4])
+                            ->where('openid', '!=', null)->get();
                 break;
             case 2:
                 $storefrontsId = Storefront::where('area_manager_id', $id)->pluck('id')->toArray();
-                $res = User::whereIn('ascription_store', $storefrontsId)->whereIn('level',  [4, 5])->get();
+                $res = User::whereIn('ascription_store', $storefrontsId)
+                            ->whereIn('level',  [4, 5])
+                            ->where('openid', '!=', null)->get();
                 break;
             case 1:
                 //总经理  查询所有
-                $res = User::all();
+                $res = User::where('openid', '!=' , null)->get();
                 break;
                 default;
                 break;
@@ -103,9 +106,11 @@ class RawCustomsService
     //通过用户id查询电话,获取该用户微信openid
     public function getOpenid($id)
     {
-        $tel = User::where('id', $id)->value('tel');
-        $data = curl(config('setting.clw_url').'/api/admin/get_openid_by_tel?tel='.$tel,'get');
-        return $data->data;
+//        $tel = User::where('id', $id)->value('tel');
+//        $data = curl(config('setting.clw_url').'/api/admin/get_openid_by_tel?tel='.$tel,'get');
+//        return $data->data;
+        $openid = User::where('id', $id)->value('openid');
+        return $openid;
     }
 
     //发送微信消息

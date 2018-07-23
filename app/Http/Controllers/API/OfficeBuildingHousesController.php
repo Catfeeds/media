@@ -132,7 +132,6 @@ class OfficeBuildingHousesController extends APIBaseController
         if (empty($houseNumValidate['status'])) {
             return $this->sendError($houseNumValidate['message']);
         }
-
         $result = $officeBuildingHousesRepository->updateOfficeBuildingHouses($officeBuildingHouse, $request);
         return $this->sendResponse($result, '写字楼房源修改成功');
     }

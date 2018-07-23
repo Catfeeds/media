@@ -5,6 +5,7 @@ use App\Handler\Common;
 use App\Models\Building;
 use App\Models\GroupAssociation;
 use App\Models\OfficeBuildingHouse;
+use App\Models\RawCustom;
 use App\Models\Storefront;
 use App\Services\HousesService;
 use App\User;
@@ -235,57 +236,64 @@ class OfficeBuildingHousesRepository extends BaseRepository
         // 获取房源名称
         $housesService = new HousesService();
         $title = $housesService->getTitle($request);
+        \DB::beginTransaction();
+        try {
+            $officeBuildingHouse->building_block_id = $request->building_block_id;
+            $officeBuildingHouse->house_number = $request->house_number;
+            $officeBuildingHouse->title = $title;
+            $officeBuildingHouse->owner_info = $request->owner_info;
+            $officeBuildingHouse->room = $request->room;
+            $officeBuildingHouse->hall = $request->hall;
+            $officeBuildingHouse->constru_acreage = $request->constru_acreage;
+            $officeBuildingHouse->split = $request->split;
+            $officeBuildingHouse->min_acreage = $request->min_acreage;
+            $officeBuildingHouse->floor = $request->floor;
+            $officeBuildingHouse->station_number = $request->station_number;
+            $officeBuildingHouse->office_building_type = $request->office_building_type;
+            $officeBuildingHouse->register_company = $request->register_company;
+            $officeBuildingHouse->open_bill = $request->open_bill;
+            $officeBuildingHouse->renovation = $request->renovation;
+            $officeBuildingHouse->orientation = $request->orientation;
+            $officeBuildingHouse->support_facilities = $request->support_facilities??array();
+            $officeBuildingHouse->house_description = $request->house_description;
+            $officeBuildingHouse->unit_price = $request->unit_price; // 单价
+            $officeBuildingHouse->total_price = $request->unit_price * $request->constru_acreage;   // 总价
+            $officeBuildingHouse->payment_type = $request->payment_type;
+            $officeBuildingHouse->check_in_time = $request->check_in_time;
+            $officeBuildingHouse->shortest_lease = $request->shortest_lease;
+            $officeBuildingHouse->rent_free = $request->rent_free;
+            $officeBuildingHouse->increasing_situation = $request->increasing_situation;
+            $officeBuildingHouse->increasing_situation_remark = $request->increasing_situation_remark;
+            $officeBuildingHouse->cost_detail = $request->cost_detail??array();
+            $officeBuildingHouse->house_busine_state = $request->house_busine_state;
+            $officeBuildingHouse->pay_commission = $request->pay_commission;
+            $officeBuildingHouse->pay_commission_unit = $request->pay_commission_unit;
+            $officeBuildingHouse->prospecting = $request->prospecting;
+            $officeBuildingHouse->source = $request->source;
+            $officeBuildingHouse->house_key = $request->house_key;
+            $officeBuildingHouse->see_house_time = $request->see_house_time;
+            $officeBuildingHouse->see_house_time_remark = $request->see_house_time_remark;
+            $officeBuildingHouse->certificate_type = $request->certificate_type;
+            $officeBuildingHouse->house_proxy_type = $request->house_proxy_type;
+            $officeBuildingHouse->house_type_img = $request->house_type_img;
+            $officeBuildingHouse->indoor_img = $request->indoor_img;
+            $officeBuildingHouse->shelf = $request->shelf;
+            $officeBuildingHouse->rent_time = strtotime($request->rent_time);  // 可租时间
+            $officeBuildingHouse->remarks = $request->remarks;  // 信息不明确备注
+            $officeBuildingHouse->gd_identifier = $request->gd_identifier;  // 修改工单
 
-        $officeBuildingHouse->building_block_id = $request->building_block_id;
-        $officeBuildingHouse->house_number = $request->house_number;
-        $officeBuildingHouse->title = $title;
-        $officeBuildingHouse->owner_info = $request->owner_info;
-        $officeBuildingHouse->room = $request->room;
-        $officeBuildingHouse->hall = $request->hall;
-        $officeBuildingHouse->constru_acreage = $request->constru_acreage;
-        $officeBuildingHouse->split = $request->split;
-        $officeBuildingHouse->min_acreage = $request->min_acreage;
-        $officeBuildingHouse->floor = $request->floor;
-        $officeBuildingHouse->station_number = $request->station_number;
-        $officeBuildingHouse->office_building_type = $request->office_building_type;
-        $officeBuildingHouse->register_company = $request->register_company;
-        $officeBuildingHouse->open_bill = $request->open_bill;
-        $officeBuildingHouse->renovation = $request->renovation;
-        $officeBuildingHouse->orientation = $request->orientation;
-        $officeBuildingHouse->support_facilities = $request->support_facilities??array();
-        $officeBuildingHouse->house_description = $request->house_description;
-        $officeBuildingHouse->unit_price = $request->unit_price; // 单价
-        $officeBuildingHouse->total_price = $request->unit_price * $request->constru_acreage;   // 总价
-        $officeBuildingHouse->payment_type = $request->payment_type;
-        $officeBuildingHouse->check_in_time = $request->check_in_time;
-        $officeBuildingHouse->shortest_lease = $request->shortest_lease;
-        $officeBuildingHouse->rent_free = $request->rent_free;
-        $officeBuildingHouse->increasing_situation = $request->increasing_situation;
-        $officeBuildingHouse->increasing_situation_remark = $request->increasing_situation_remark;
-        $officeBuildingHouse->cost_detail = $request->cost_detail??array();
-        $officeBuildingHouse->house_busine_state = $request->house_busine_state;
-        $officeBuildingHouse->pay_commission = $request->pay_commission;
-        $officeBuildingHouse->pay_commission_unit = $request->pay_commission_unit;
-        $officeBuildingHouse->prospecting = $request->prospecting;
-        $officeBuildingHouse->source = $request->source;
-        $officeBuildingHouse->house_key = $request->house_key;
-        $officeBuildingHouse->see_house_time = $request->see_house_time;
-        $officeBuildingHouse->see_house_time_remark = $request->see_house_time_remark;
-        $officeBuildingHouse->certificate_type = $request->certificate_type;
-        $officeBuildingHouse->house_proxy_type = $request->house_proxy_type;
-        $officeBuildingHouse->house_type_img = $request->house_type_img;
-        $officeBuildingHouse->indoor_img = $request->indoor_img;
-        $officeBuildingHouse->shelf = $request->shelf;
-        $officeBuildingHouse->rent_time = strtotime($request->rent_time);  // 可租时间
-        $officeBuildingHouse->remarks = $request->remarks;  // 信息不明确备注
-        $officeBuildingHouse->gd_identifier = $request->gd_identifier;  // 修改工单
-
-
-        if (!$officeBuildingHouse->save()) {
+            if (!$officeBuildingHouse->save()) throw new \Exception('写字楼房源修改失败');
+            if ($request->gd_identifier && $request->house_busine_state == 3) {
+                $res = RawCustom::where('identifier', $request->gd_identifier)->update(['clinch' => 1]);
+                if (!$res) throw new \Exception('工单成交状态修改失败');
+            }
+            \DB::commit();
+            return true;
+        } catch(\Exception $exception) {
+            \DB::rollback();
+            \Log::error('写字楼房源修改失败'. $exception->getMessage());
             return false;
         }
-
-        return true;
     }
 
     /**
@@ -297,9 +305,25 @@ class OfficeBuildingHousesRepository extends BaseRepository
      */
     public function updateState($request)
     {
-        return $this->model->where('id', $request->id)->update([
-            'house_busine_state' => $request->house_busine_state
-        ]);
+        \DB::beginTransaction();
+        try {
+            $model = $this->model->where('id', $request->id)->first();
+            $model->house_busine_state = $request->house_busine_state;
+            if (!$model->save()) throw new \Exception('状态修改失败');
+
+            if ($request->house_busine_state == 3 && !empty($model->gd_identifier)) {
+                $res = RawCustom::where('identifier', $model->gd_identifier)->update(['clinch' => 1]);
+                if (!$res) throw new \Exception('工单成交状态修改失败');
+            }
+
+            \DB::commit();
+            return true;
+        } catch(\Exception $exception) {
+            \DB::rollback();
+            \Log::error('房源状态修改失败'.$exception->getMessage());
+            return false;
+        }
+
     }
 
     /**

@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Handler\Common;
 use App\Models\Custom;
 use App\Models\CustomRelBuilding;
+use App\Models\RawCustom;
 use App\Models\Storefront;
 use App\User;
 
@@ -191,6 +192,12 @@ class CustomRepository extends BaseRepository
                 'identifier' => $request->identifier
             ]);
 
+            if ($request->status == 3 && !empty($request->identifier)) {
+                //修改工单成交状态
+                $suc = RawCustom::where('identifier', $request->identifier)->update(['clinch' => 1]);
+                if (!$suc) Throw new \Exception('工单成交状态修改失败');
+            }
+
             // 得到新老意向楼盘
             $buildings = $request->buildings;
             $buildingsOld = $custom->buildings->pluck('id')->toArray();
@@ -228,8 +235,21 @@ class CustomRepository extends BaseRepository
      */
     public function updateStatus($model, $request)
     {
-        $model->status = $request->status;
-        return $model->save();
+        \DB::beginTransaction();
+        try {
+            $model->status = $request->status;
+            if (!$model->save()) throw new \Exception('客户状态修改失败');
+            if ($request->status == 3 && !empty($model->identifier)) {
+                $res = RawCustom::where('identifier', $model->identifier)->update(['clinch'=> 1]);
+                if (!$res) throw new \Exception('工单修改失败');
+            }
+            \DB::commit();
+            return true;
+        } catch (\Exception $exception) {
+            \DB::rollback();
+            \Log::error('客户状态修改失败'.$exception->getMessage());
+            return false;
+        }
     }
 
     /**

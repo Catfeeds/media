@@ -102,6 +102,7 @@ class CustomController extends APIBaseController
     )
     {
         $res = $repository->updateStatus($custom, $request);
+        if (!$res) return $this->sendError('修改失败');
         return $this->sendResponse($res, '修改成功');
     }
 

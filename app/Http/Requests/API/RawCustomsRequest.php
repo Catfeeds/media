@@ -41,9 +41,10 @@ class RawCustomsRequest extends FormRequest
                 return [
                     'staff_id' => 'required|exists:users,id'
                 ];
-            case 'PUT':
+            case 'feedback':
                 return [
-
+                    'feedback' => 'required',
+                    'valid' => 'required'
                 ];
             case 'PATCH':
             case 'GET':
