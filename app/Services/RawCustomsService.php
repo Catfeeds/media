@@ -52,7 +52,6 @@ class RawCustomsService
                 break;
                 default;
                 break;
-
         }
         return $res->map(function($v) {
             return [
@@ -81,12 +80,12 @@ class RawCustomsService
         foreach ($item as $v) {
             $v->staff = $v->staffUser->real_name;
             $staff_deal = RawCustom::where('id', $v->id)->value('staff_deal');
-            if ($staff_deal) {
-                $v->determine = 1;
+            if (!$staff_deal) {
+                $v->determine = 1; //为确定
             } else {
-                $v->determine = 2;
+                $v->determine = 2; //已确定
             }
-            if ($v->feedback) $v->determine = 3;
+            if ($v->feedback) $v->determine = 3; //已反馈
         }
         return $item;
     }
