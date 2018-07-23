@@ -27,9 +27,7 @@ class OfficeBuildingHousesController extends APIBaseController
         if (empty(Common::user()->can('house_list'))) {
             return $this->sendError('没有房源列表权限', '403');
         }
-
         $result = $officeBuildingHousesRepository->officeBuildingHousesList($request->per_page??null, $request);
-
         return $this->sendResponse($result, '写字楼房源列表获取成功');
     }
 

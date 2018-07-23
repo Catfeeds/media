@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddUserGroupIdTable extends Migration
+class AddCustomerNoteCustomsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddUserGroupIdTable extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->integer('group_id')->nullable()->comment('组id')->after('last_login_time');
+        Schema::table('customs', function (Blueprint $table) {
+            $table->text('customer_note')->nullable()->comment('客户备注')->after('identifier');
         });
     }
 
@@ -25,8 +25,8 @@ class AddUserGroupIdTable extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('group_id');
+        Schema::table('customs', function (Blueprint $table) {
+            $table->dropColumn('customer_note');
         });
     }
 }
