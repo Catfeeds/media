@@ -119,7 +119,8 @@ class CustomRepository extends BaseRepository
                 'not_like' => $request->not_like,
                 'area_id' => $request->area_id,
                 'other' => $request->other,
-                'identifier' => $request->identifier
+                'identifier' => $request->identifier,
+                'customer_note' => $request->customer_note
             ]);
 
             if (!empty($request->buildings)) {
@@ -188,7 +189,8 @@ class CustomRepository extends BaseRepository
                 'like' => $request->like,
                 'area_id' => $request->area_id,
                 'other' => $request->other,
-                'identifier' => $request->identifier
+                'identifier' => $request->identifier,
+                'customer_note' => $request->customer_note
             ]);
 
             // 得到新老意向楼盘

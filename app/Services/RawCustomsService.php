@@ -23,7 +23,7 @@ class RawCustomsService
     //获取店长名称
     public function getShopkeeper()
     {
-        $res = User::where('level', 2)->orWhere('level', 3)->get();
+        $res = User::where('level', 2)->orWhere('level', 3)->orWhere('level', 1)->get();
         return $res->map(function ($v) {
             return [
                 'label' => $v->real_name,
@@ -44,11 +44,14 @@ class RawCustomsService
                 break;
             case 2:
                 $storefrontsId = Storefront::where('area_manager_id', $id)->pluck('id')->toArray();
-                $res = User::whereIn('ascription_store', $storefrontsId)->where('level',4)->orWhere('level',5)->get();
+                $res = User::whereIn('ascription_store', $storefrontsId)->whereIn('level',  [4, 5])->get();
+                break;
+            case 1:
+                //总经理  查询所有
+                $res = User::all();
                 break;
                 default;
                 break;
-
         }
         return $res->map(function($v) {
             return [
@@ -77,12 +80,12 @@ class RawCustomsService
         foreach ($item as $v) {
             $v->staff = $v->staffUser->real_name;
             $staff_deal = RawCustom::where('id', $v->id)->value('staff_deal');
-            if ($staff_deal) {
-                $v->determine = 1;
+            if (!$staff_deal) {
+                $v->determine = 1; //为确定
             } else {
-                $v->determine = 2;
+                $v->determine = 2; //已确定
             }
-            if ($v->feedback) $v->determine = 3;
+            if ($v->feedback) $v->determine = 3; //已反馈
         }
         return $item;
     }
@@ -136,7 +139,8 @@ class RawCustomsService
 
         // 返回百分比
         if (!empty($count) && !empty($rawCustoms->count())) {
-            return $count / $rawCustoms->count() * 100 .'%';
+            $res = round($count / $rawCustoms->count(),3) * 100 . '%';
+            return $res;
         } else {
             return '0%';
         }

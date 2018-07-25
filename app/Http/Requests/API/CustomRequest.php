@@ -61,7 +61,7 @@ class CustomRequest extends FormRequest
                     'like' => 'max:256',
                     'not_like' => 'max:256',
                     'area_id' => 'nullable|numeric|max:99999999999',
-
+                    'customer_note' => 'nullable|max:99999999999',
                     'buildings' => 'nullable|array',
                     'areas' => 'nullable|array',
                     'other' => 'nullable|array'
