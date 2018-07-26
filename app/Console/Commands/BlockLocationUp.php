@@ -39,16 +39,40 @@ class BlockLocationUp extends Command
      */
     public function handle()
     {
-        $block_locations = [];
         $blocks = Block::all();
+        $count1 = 0;
+        $count2 = 0;
+        $this->info('开始执行维护商圈经纬度...');
         foreach ($blocks as $block) {
-            if (BlockLocation::where(['block_id' => $block->id])->get()->count()) {
-                $json = self::curl('http://api.map.baidu.com/geocoder/v2/?address=' . $block->name . '&output=json&ak=sQSt44MuNRcHxRGeKICqkzwoSiLrStQB&c&city=武汉');
-                array_push($block_locations, ['block_id' => $block->id, 'x' => $json->result->location->lng, 'y' => $json->result->location->lat]);
+            if (!BlockLocation::where(['block_id' => $block->id])->get()->count()) {
+                if (empty($block->id) || empty($block->name)) {
+                    $this->info('商圈id获取失败');
+                    ++$count2;
+                    continue;
+                }
+                $name = $block -> name;
+                $name = $name === '中南' ? $name . '路' : $name;
+                $name = $name === '宝通寺' ? '宝通禅寺' : $name;
+                $json = self::curl('http://api.map.baidu.com/geocoder/v2/?address=' . $name . '&output=json&ak=sQSt44MuNRcHxRGeKICqkzwoSiLrStQB&c&city=武汉');
+                if ($json->status) {
+                    $this->info('商圈 - ' . $block->name . ' - 坐标信息获取失败');
+                    ++$count2;
+                    continue;
+                }
+                $res = BlockLocation::create(['block_id' => $block->id, 'x' => $json->result->location->lng, 'y' => $json->result->location->lat]);
+                if (empty($res)) {
+                    $this->info($block->name . ' - 坐标信息添加失败');
+                    ++$count2;
+                } else {
+                    $this->info($block->name . ' - 坐标信息添加成功');
+                    ++$count1;
+                }
             }
         }
-        // 拿到经纬度
-        dump($block_locations);
+        $this->info('结束');
+        $this->info('共添加成功' . $count1 . '个');
+        $this->info('失败' . $count2 . '个');
+
     }
 
     public function curl($url)
