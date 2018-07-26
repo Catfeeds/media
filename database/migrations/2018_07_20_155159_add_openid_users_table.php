@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddUserGroupIdTable extends Migration
+class AddOpenidUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class AddUserGroupIdTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->integer('group_id')->nullable()->comment('组id')->after('last_login_time');
+            $table->string('openid','128')->nullable()->comment('员工微信id')->after('remember_token');
         });
     }
 
@@ -26,7 +26,7 @@ class AddUserGroupIdTable extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('group_id');
+            $table->dropColumn('openid');
         });
     }
 }

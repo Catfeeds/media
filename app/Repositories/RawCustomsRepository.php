@@ -29,7 +29,8 @@ class RawCustomsRepository extends BaseRepository
                 'price' => $request->price,
                 'shopkeeper_id' => $request->shopkeeper_id,
                 'remark' => $request->remark,
-                'recorder' => $request->recorder
+                'recorder' => $request->recorder,
+                'created_at' => $request->created_at ? $request->created_at : date('Y-m-d H:i:s', time())
             ]);
             if (!$custom) throw new \Exception('客户信息录入失败');
             $custom->identifier = $service->setHouseIdentifier('gd',$custom->id);
@@ -41,7 +42,6 @@ class RawCustomsRepository extends BaseRepository
             \Log::error('客户信息录入失败'. $e->getMessage());
             return false;
         }
-
     }
 
     //工单列表
@@ -74,7 +74,7 @@ class RawCustomsRepository extends BaseRepository
     //业务员反馈信息
     public function feedback($request)
     {
-        return $this->model->where('id', $request->id)->update(['feedback' => $request->feedback]);
+        return $this->model->where('id', $request->id)->update(['feedback' => $request->feedback, 'valid' => $request->valid]);
     }
 
     //手机端店长处理工单界面

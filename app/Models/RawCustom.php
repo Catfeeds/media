@@ -10,7 +10,7 @@ class RawCustom extends Model
     protected $guarded = [];
     protected $connection = 'mysql';
 
-    protected $appends = ['source_cn', 'demand_cn'];
+    protected $appends = ['source_cn', 'demand_cn', 'valid_cn', 'clinch_cn'];
 
     //店长关联user表
     public function shopkeeperUser()
@@ -57,6 +57,10 @@ class RawCustom extends Model
                 break;
             case 7:
                 return '微信';
+            case 8:
+                return '小程序';
+            case 9:
+                return '58同城';
                 break;
                 default;
                 break;
@@ -72,8 +76,33 @@ class RawCustom extends Model
             case 2:
                 return '委托找房';
                 break;
+            case 3:
+                return '企业服务';
+                break;
+            case 4:
+                return '其他';
                 default;
                 break;
+        }
+    }
+
+    //工单状态
+    public function getValidCnAttribute()
+    {
+        if ($this->valid == 1) {
+            return '有效';
+        } else {
+            return '无效';
+        }
+    }
+    
+    //工单是否成交
+    public function getClinchCnAttribute()
+    {
+        if ($this->clinch == 1) {
+            return '成交';
+        } else {
+            return '未成交';
         }
     }
 

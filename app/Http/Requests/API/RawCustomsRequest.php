@@ -33,7 +33,7 @@ class RawCustomsRequest extends FormRequest
                     'position' => 'nullable',
                     'acreage' => 'nullable',
                     'price' => 'nullable',
-                    'shopkeeper_id' => 'required|exists:users,id',
+                    'shopkeeper_id' => 'nullable|exists:users,id',
                     'remark' => 'nullable',
                     'recorder' => 'required'
                 ];
@@ -41,9 +41,10 @@ class RawCustomsRequest extends FormRequest
                 return [
                     'staff_id' => 'required|exists:users,id'
                 ];
-            case 'PUT':
+            case 'feedback':
                 return [
-
+                    'feedback' => 'required',
+                    'valid' => 'required'
                 ];
             case 'PATCH':
             case 'GET':
