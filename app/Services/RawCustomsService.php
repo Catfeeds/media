@@ -23,7 +23,7 @@ class RawCustomsService
     //获取店长名称
     public function getShopkeeper()
     {
-        $res = User::where('level', 2)->orWhere('level', 3)->orWhere('level', 1)->get();
+        $res = User::where('openid', '!=', null)->whereIn('level',[1, 2, 3])->get();
         return $res->map(function ($v) {
             return [
                 'label' => $v->real_name,

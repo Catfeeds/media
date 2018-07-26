@@ -57,6 +57,10 @@ class RawCustom extends Model
                 break;
             case 7:
                 return '微信';
+            case 8:
+                return '小程序';
+            case 9:
+                return '58同城';
                 break;
                 default;
                 break;
@@ -72,6 +76,11 @@ class RawCustom extends Model
             case 2:
                 return '委托找房';
                 break;
+            case 3:
+                return '企业服务';
+                break;
+            case 4:
+                return '其他';
                 default;
                 break;
         }
