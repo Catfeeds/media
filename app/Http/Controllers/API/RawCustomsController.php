@@ -57,7 +57,7 @@ class RawCustomsController extends APIBaseController
         RawCustomsRequest $request
     )
     {
-        $id = $service->getId($request->tel);
+        $id = $service->getId($request->openid);
         $res = $service->getStaff($id);
         return $this->sendResponse($res, '业务员信息获取成功');
     }

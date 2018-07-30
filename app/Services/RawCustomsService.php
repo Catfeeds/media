@@ -142,4 +142,11 @@ class RawCustomsService
         }
     }
 
+
+    //通过openid获取id
+    public function getId($openid)
+    {
+        return User::where('openid', $openid)->value('id');
+    }
+
 }
