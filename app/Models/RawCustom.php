@@ -91,7 +91,7 @@ class RawCustom extends Model
     {
         if ($this->valid == 1) {
             return '有效';
-        } else {
+        } elseif ($this->valid == 2) {
             return '无效';
         }
     }
@@ -101,7 +101,7 @@ class RawCustom extends Model
     {
         if ($this->clinch == 1) {
             return '成交';
-        } else {
+        } elseif ($this->clinch == 2) {
             return '未成交';
         }
     }

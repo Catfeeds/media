@@ -28,8 +28,8 @@ class RawCustomsRequest extends FormRequest
                 return [
                     'name' => 'required|max:32',
                     'tel' =>  'required|max:16',
-                    'source' => 'required|between:1,7|integer',
-                    'demand' => 'nullable|between:1,2|integer',
+                    'source' => 'required|integer',
+                    'demand' => 'nullable|integer',
                     'position' => 'nullable',
                     'acreage' => 'nullable',
                     'price' => 'nullable',
