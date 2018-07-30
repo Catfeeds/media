@@ -131,7 +131,15 @@ class OfficeBuildingHousesRequest extends FormRequest
                       // 房源照片
                       'house_type_img' => 'max:1024',
                       'indoor_img' => 'max:1024',
-                      'shelf' => 'nullable|integer|between:1,2'
+                      'shelf' => 'nullable|integer|between:1,2',
+
+                      // 企业
+                      'company_name' => 'max:32',
+                      'company_tel' => 'nullable|integer|max:9999999999999999',
+                      'charge_name' => 'max:32',
+                      'charge_tel' => 'nullable|integer|max:9999999999999999',
+                      'landlord_name' => 'max:32',
+                      'landlord_tel' => 'nullable|integer|max:9999999999999999',
                   ];
               case 'update':
                   return [
@@ -177,7 +185,15 @@ class OfficeBuildingHousesRequest extends FormRequest
                       // 房源照片
                       'house_type_img' => 'max:1024',
                       'indoor_img' => 'max:1024',
-                      'shelf' => 'nullable|integer|between:1,2'
+                      'shelf' => 'nullable|integer|between:1,2',
+
+                      // 企业
+                      'company_name' => 'max:32',
+                      'company_tel' => 'nullable|integer|max:9999999999999999',
+                      'charge_name' => 'max:32',
+                      'charge_tel' => 'nullable|integer|max:9999999999999999',
+                      'landlord_name' => 'max:32',
+                      'landlord_tel' => 'nullable|integer|max:9999999999999999',
                   ];
               default:
                   {
