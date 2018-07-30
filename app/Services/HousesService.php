@@ -6,6 +6,7 @@ use App\Models\BrowseRecord;
 use App\Models\Building;
 use App\Models\BuildingBlock;
 use App\Models\Collection;
+use App\Models\HouseHasCompany;
 use App\Models\HouseImgRecord;
 use App\Models\OfficeBuildingHouse;
 use App\Models\OwnerViewRecord;
@@ -342,6 +343,9 @@ class HousesService
         try {
             $delHouse = $officeBuildingHouse->delete();
             if (empty($delHouse)) throw new \Exception('删除写字楼房源失败');
+
+            // 删除原始关联数据
+            HouseHasCompany::where('house_id', $officeBuildingHouse->id)->delete();
 
             // 获取房源相关的浏览记录
             $browseRecordId = $officeBuildingHouse->BrowseRecord->pluck('id')->toArray();

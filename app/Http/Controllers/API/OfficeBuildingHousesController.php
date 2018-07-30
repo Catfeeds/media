@@ -101,6 +101,8 @@ class OfficeBuildingHousesController extends APIBaseController
         $officeBuildingHouse->makeVisible('owner_info');
         $officeBuildingHouse->allId = $housesService->adoptBuildingBlockGetCity($officeBuildingHouse->building_block_id);
 
+        // 房源企业关联表数据
+        $officeBuildingHouse->houseHasCompany = $officeBuildingHouse->houseHasCompany->toArray();
         return $this->sendResponse($officeBuildingHouse, '写字楼修改之前原始数据!');
     }
 
