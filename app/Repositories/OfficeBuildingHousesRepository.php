@@ -211,21 +211,10 @@ class OfficeBuildingHousesRepository extends BaseRepository
             $house->house_identifier = $housesService->setHouseIdentifier('X', $house->id);
             if (empty($house->save())) throw new \Exception('写字楼房源编号添加失败');
 
-            // 添加企业入驻信息
-            $houseHasCompany = HouseHasCompany::create([
-                'house_id' => $house->id,
-                'company_name' => $request->company_name,
-                'company_tel' => $request->company_tel,
-                'charge_name' => $request->charge_name,
-                'charge_tel' => $request->charge_tel,
-                'landlord_name' => $request->landlord_name,
-                'landlord_tel' => $request->landlord_tel,
-            ]);
-            if (empty($houseHasCompany)) throw new \Exception('房源公司关联表添加失败');
-
             \DB::commit();
             return ['status' => true, 'message' => '写字楼房源添加成功'];
         } catch (\Exception $e) {
+            \DB::rollback();
             \Log::error('写字楼房源添加失败：' . $e->getFile() . $e->getLine() . $e->getMessage());
             return ['status' => false, 'message' => '写字楼房源添加失败'];
         }
@@ -298,22 +287,6 @@ class OfficeBuildingHousesRepository extends BaseRepository
                 $res = RawCustom::where('identifier', $request->gd_identifier)->update(['clinch' => 1]);
                 if (!$res) throw new \Exception('工单成交状态修改失败');
             }
-
-            // 修改企业入驻信息
-            // 1. 删除原始关联数据
-            HouseHasCompany::where('house_id', $officeBuildingHouse->id)->delete();
-
-            // 2. 添加企业信息
-            $houseHasCompany = HouseHasCompany::create([
-                'house_id' => $officeBuildingHouse->id,
-                'company_name' => $request->company_name,
-                'company_tel' => $request->company_tel,
-                'charge_name' => $request->charge_name,
-                'charge_tel' => $request->charge_tel,
-                'landlord_name' => $request->landlord_name,
-                'landlord_tel' => $request->landlord_tel,
-            ]);
-            if (empty($houseHasCompany)) throw new \Exception('房源公司关联表添加失败');
 
             \DB::commit();
             return true;

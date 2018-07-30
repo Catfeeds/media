@@ -48,12 +48,6 @@ class OfficeBuildingHouse extends BaseModel
         return $this->belongsTo('App\Models\BuildingBlock');
     }
 
-    // 房源企业关联
-    public function houseHasCompany()
-    {
-        return $this->belongsTo('App\Models\HouseHasCompany','id','house_id');
-    }
-
     /**
      * 说明: 户型拼接
      *
