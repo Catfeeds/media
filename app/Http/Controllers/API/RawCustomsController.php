@@ -112,9 +112,7 @@ class RawCustomsController extends APIBaseController
         RawCustomsService $service
     )
     {
-        //通过电话查询id
-        $id = $service->getId($request->tel);
-        $res = $repository->shopkeeperList($request, $service, $id);
+        $res = $repository->shopkeeperList($request, $service);
         return $this->sendResponse($res, '店长处理页面获取成功');
     }
 
@@ -126,8 +124,7 @@ class RawCustomsController extends APIBaseController
         RawCustomsService $service
     )
     {
-        $id = $service->getId($request->tel);
-        $res = $repository->staffList($request, $service, $id);
+        $res = $repository->staffList($request, $service);
         return $this->sendResponse($res, '业务员处理页面获取成功');
     }
     

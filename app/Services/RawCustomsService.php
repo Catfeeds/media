@@ -68,8 +68,8 @@ class RawCustomsService
     public function getGdInfo($item)
     {
         foreach($item as $v) {
-            if (!$v->shopkeeper_deal) $v->status = '已发送给组长'.'('.$v->shopkeeperUser->real_name.')';
-            if ($v->staff_id) $v->status = '组长'.'('.$v->shopkeeperUser->real_name.')'.'已收到转交给'.$v->staffUser->real_name;
+            if (!$v->shopkeeper_deal && !empty($v->shopkeeperUser)) $v->status = '已发送给组长'.'('.$v->shopkeeperUser->real_name.')';
+            if ($v->staff_id && !empty($v->shopkeeperUser)) $v->status = '组长'.'('.$v->shopkeeperUser->real_name.')'.'已收到转交给'.$v->staffUser->real_name;
             if ($v->staff_deal) $v->status = $v->staffUser->real_name.'已收到';
             if (!empty($v->house)) $v->status = $v->staffUser->real_name.'已录入系统,房源编号'.$v->house->house_identifier;
             if (!empty($v->custom)) $v->status = $v->staffUser->real_name.'已录入系统,客源编号'.$v->custom->id;
@@ -106,9 +106,6 @@ class RawCustomsService
     //通过用户id查询电话,获取该用户微信openid
     public function getOpenid($id)
     {
-//        $tel = User::where('id', $id)->value('tel');
-//        $data = curl(config('setting.clw_url').'/api/admin/get_openid_by_tel?tel='.$tel,'get');
-//        return $data->data;
         $openid = User::where('id', $id)->value('openid');
         return $openid;
     }
@@ -121,12 +118,6 @@ class RawCustomsService
         $data['tel'] = $tel;
         $data['staff'] = $staff;
         curl(config('setting.wechat_url').'/new_custom_notice','post', $data);
-    }
-
-    //通过电话获取用户id
-    public function getId($tel)
-    {
-        return User::where('tel', $tel)->value('id');
     }
 
     // 获取转换率

@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\RawCustom;
+use App\User;
 
 class RawCustomsRepository extends BaseRepository
 {
@@ -78,8 +79,9 @@ class RawCustomsRepository extends BaseRepository
     }
 
     //手机端店长处理工单界面
-    public function shopkeeperList($request, $service, $id)
+    public function shopkeeperList($request, $service)
     {
+        $id = $this->getId($request->openid);
         switch ($request->status) {
             //待处理页面
             case 1 :
@@ -94,8 +96,9 @@ class RawCustomsRepository extends BaseRepository
     }
 
     //业务员处理页面
-    public function staffList($request, $service, $id)
+    public function staffList($request, $service)
     {
+        $id = $this->getId($request->openid);
         switch ($request->status) {
             case 1:
                 return $this->model->where(['staff_deal' => null, 'staff_id' => $id])->latest('updated_at')->paginate(6);
@@ -105,5 +108,11 @@ class RawCustomsRepository extends BaseRepository
                 return $service->getStaffInfo($item);
                 break;
         }
+    }
+
+    //获取id
+    public function getId($openid)
+    {
+        return User::where('openid', $openid)->value('id');
     }
 }
