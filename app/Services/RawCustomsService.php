@@ -19,11 +19,10 @@ class RawCustomsService
         $this->user = Common::user();
     }
 
-
     //获取店长名称
     public function getShopkeeper()
     {
-        $res = User::where('openid', '!=', null)->whereIn('level',[1, 2, 3])->get();
+        $res = User::where('openid', '!=', '')->whereIn('level',[1, 2, 3])->get();
         return $res->map(function ($v) {
             return [
                 'label' => $v->real_name,
@@ -41,17 +40,17 @@ class RawCustomsService
             case 3:
                 $storefront_id = Storefront::where('user_id', $id)->value('id');
                 $res = User::where(['ascription_store' => $storefront_id, 'level' => 4])
-                            ->where('openid', '!=', null)->get();
+                            ->where('openid', '!=', '')->get();
                 break;
             case 2:
                 $storefrontsId = Storefront::where('area_manager_id', $id)->pluck('id')->toArray();
                 $res = User::whereIn('ascription_store', $storefrontsId)
                             ->whereIn('level',  [4, 5])
-                            ->where('openid', '!=', null)->get();
+                            ->where('openid', '!=', '')->get();
                 break;
             case 1:
                 //总经理  查询所有
-                $res = User::where('openid', '!=' , null)->get();
+                $res = User::where('openid', '!=' , '')->get();
                 break;
                 default;
                 break;
@@ -69,10 +68,10 @@ class RawCustomsService
     {
         foreach($item as $v) {
             if (!$v->shopkeeper_deal && !empty($v->shopkeeperUser)) $v->status = '已发送给组长'.'('.$v->shopkeeperUser->real_name.')';
-            if ($v->staff_id && !empty($v->shopkeeperUser)) $v->status = '组长'.'('.$v->shopkeeperUser->real_name.')'.'已收到转交给'.$v->staffUser->real_name;
-            if ($v->staff_deal) $v->status = $v->staffUser->real_name.'已收到';
-            if (!empty($v->house)) $v->status = $v->staffUser->real_name.'已录入系统,房源编号'.$v->house->house_identifier;
-            if (!empty($v->custom)) $v->status = $v->staffUser->real_name.'已录入系统,客源编号'.$v->custom->id;
+            if ($v->staff_id && !empty($v->shopkeeperUser) && !empty($v->staffUser)) $v->status = '组长'.'('.$v->shopkeeperUser->real_name.')'.'已收到转交给'.$v->staffUser->real_name;
+            if ($v->staff_deal && !empty($v->staffUser)) $v->status = $v->staffUser->real_name.'已收到';
+            if (!empty($v->house) && !empty($v->staffUser) ) $v->status = $v->staffUser->real_name.'已录入系统,房源编号'.$v->house->house_identifier;
+            if (!empty($v->custom) && !empty($v->staffUser)) $v->status = $v->staffUser->real_name.'已录入系统,客源编号'.$v->custom->id;
         }
         return $item;
     }
