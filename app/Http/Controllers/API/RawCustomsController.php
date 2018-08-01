@@ -33,7 +33,9 @@ class RawCustomsController extends APIBaseController
     {
         $res = $repository->addRawCustom($request, $service);
         //通过店长id查手机号,curl查微信openid,发送微信消息
-        $openid = $rawCustomsService->getOpenid($request->shopkeeper_id);
+        if (!empty($request->shopkeeper_id)) {
+            $openid = $rawCustomsService->getOpenid($request->shopkeeper_id);
+        }
         if (empty($openid)) {
             return $this->sendError('该人员未绑定微信');
         }
