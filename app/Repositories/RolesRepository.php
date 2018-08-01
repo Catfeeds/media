@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class RolesRepository extends Model
 {
-    public function roleList()
+    public function roleList($request)
     {
-        return Role::where(['guard_name' => 'web'])->paginate(10);
+        return Role::where(['guard_name' => 'web'])->paginate($request->per_page??10);
     }
 
     public function addRole(

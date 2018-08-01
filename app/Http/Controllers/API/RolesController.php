@@ -9,10 +9,11 @@ use App\Repositories\RolesRepository;
 class RolesController extends APIBaseController
 {
     public function index(
+        RolesRequest $request,
         RolesRepository $repository
     )
     {
-        $res = $repository->roleList();
+        $res = $repository->roleList($request);
         return $this->sendResponse($res,'获取角色列表成功');
     }
 

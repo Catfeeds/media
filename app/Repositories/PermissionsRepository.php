@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class PermissionsRepository extends Model
 {
-    public function mediaPermissionsList()
+    public function mediaPermissionsList($request)
     {
-        return Permission::where(['guard_name' => 'web'])->paginate(10);
+        return Permission::where(['guard_name' => 'web'])->paginate($request->per_page??10);
     }
 
     public function addPermissions(

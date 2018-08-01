@@ -8,10 +8,11 @@ use App\Repositories\PermissionsRepository;
 class PermissionsController extends APIBaseController
 {
     public function index(
+        PermissionsRequest $request,
         PermissionsRepository $repository
     )
     {
-        $res = $repository->mediaPermissionsList();
+        $res = $repository->mediaPermissionsList($request);
         return $this->sendResponse($res,'中介权限列表获取成功');
     }
 
