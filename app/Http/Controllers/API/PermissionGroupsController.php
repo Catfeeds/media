@@ -12,7 +12,7 @@ class PermissionGroupsController extends APIBaseController
         PermissionGroupsRepository $repository
     )
     {
-        $res = $repository->permissionGroupsList($request->per_page);
+        $res = $repository->permissionGroupsList($request);
         return $this->sendResponse($res,'权限组列表成功');
     }
 

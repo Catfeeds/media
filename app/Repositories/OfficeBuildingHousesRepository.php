@@ -129,7 +129,11 @@ class OfficeBuildingHousesRepository extends BaseRepository
 
 //        $result = $result->orderBy('created_at','desc')->orderBy('start_track_time','desc');
 
-        return $result->paginate($per_page??10);
+        $res = $result->paginate($per_page??10);
+        $res11 = $service->funciton($res);
+
+        return $res;
+
     }
 
 

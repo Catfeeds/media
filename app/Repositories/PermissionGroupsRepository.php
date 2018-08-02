@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class PermissionGroupsRepository extends Model
 {
-    public function permissionGroupsList($per_page)
+    public function permissionGroupsList($request)
     {
-        return PermissionGroup::where(['stage' => 1])->paginate($per_page??10);
+        return PermissionGroup::where(['stage' => 1])->paginate($request->per_page??10);
     }
     
     public function addPermissionGroups(
