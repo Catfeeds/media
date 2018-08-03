@@ -20,14 +20,15 @@ class OfficeBuildingHousesController extends APIBaseController
      */
     public function index(
         Request $request,
-        OfficeBuildingHousesRepository $officeBuildingHousesRepository
+        OfficeBuildingHousesRepository $officeBuildingHousesRepository,
+        HousesService $service
     )
     {
         // 判断用户权限
         if (empty(Common::user()->can('house_list'))) {
             return $this->sendError('没有房源列表权限', '403');
         }
-        $result = $officeBuildingHousesRepository->officeBuildingHousesList($request->per_page??null, $request);
+        $result = $officeBuildingHousesRepository->officeBuildingHousesList($request->per_page??null, $request,$service);
         return $this->sendResponse($result, '写字楼房源列表获取成功');
     }
 

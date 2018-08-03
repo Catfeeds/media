@@ -37,6 +37,11 @@ class OfficeBuildingHouse extends BaseModel
 
     protected $hidden = ['owner_info'];
 
+    public function track()
+    {
+        return $this->hasMany('App\Models\Track','house_id','id');
+    }
+
     /**
      * 说明: 楼座
      *

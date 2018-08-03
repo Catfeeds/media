@@ -32,7 +32,8 @@ class OfficeBuildingHousesRepository extends BaseRepository
      */
     public function officeBuildingHousesList(
         $per_page,
-        $request
+        $request,
+        $service
     )
     {
         $result = $this->model->where('house_busine_state', $request->status);
@@ -126,8 +127,13 @@ class OfficeBuildingHousesRepository extends BaseRepository
         if (!empty($request->house_identifier)) {
             $result = $result->where('house_identifier', $request->house_identifier);
         }
+        
+        $res = $result->with('track')->paginate($per_page??10);
+        foreach ($res as $v) {
+            $service->trackContent($v);
+        }
+        return $res;
 
-        return $result->paginate($per_page??10);
     }
 
 
