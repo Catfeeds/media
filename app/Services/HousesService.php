@@ -10,6 +10,7 @@ use App\Models\HouseHasCompany;
 use App\Models\HouseImgRecord;
 use App\Models\OfficeBuildingHouse;
 use App\Models\OwnerViewRecord;
+use App\Models\Track;
 use App\User;
 
 class HousesService
@@ -476,5 +477,15 @@ class HousesService
             \Log::error($exception->getMessage());
             return false;
         }
+    }
+
+    public function trackContent($res)
+    {
+        $model = get_class($res);
+        if (!$res->track->isEmpty()) {
+            $res->content = $res->track()->where('house_model', $model)->orderBy('created_at', 'desc')
+                    ->first()->content;
+        }
+         return $res;
     }
 }
