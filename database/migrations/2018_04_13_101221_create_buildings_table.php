@@ -27,7 +27,7 @@ class CreateBuildingsTable extends Migration
 
             $table->string('developer', 128)->nullable()->comment('开发商');
             $table->integer('years')->nullable()->comment('年代 --年');
-            $table->decimal('acreage')->nullable()->comment('建筑面积 --㎡');
+            $table->decimal('acreage',20,2)->nullable()->comment('建筑面积 --㎡');
             $table->integer('building_block_num')->nullable()->comment('楼栋数量 --栋');
             $table->integer('parking_num')->nullable()->comment('车位数量 --个');
             $table->decimal('parking_fee')->nullable()->comment('停车费 --元/月');
