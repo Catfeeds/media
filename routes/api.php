@@ -11,7 +11,7 @@ Route::group(['namespace' => 'API'], function () {
     // 登录
     Route::resource('login', 'LoginController');
 
-    Route::group(['middleware' => 'safe.validate'], function () {
+    Route::group(['middleware' => 'safe.  '], function () {
         /*
         |--------------------------------------------------------------------------
         | clw平台权限管理操作成功运行系统命令
