@@ -434,7 +434,10 @@ class HousesService
         $request
     )
     {
-        $houseImgRecord = HouseImgRecord::where(['model' => 'App\Models\OfficeBuildingHouse', 'id' => $request->id])->with('officeBuildingHouse.buildingBlock.building.area.city')->first();
+        $houseImgRecord = HouseImgRecord::where([
+            'model' => 'App\Models\OfficeBuildingHouse',
+            'id' => $request->id
+        ])->with('officeBuildingHouse.buildingBlock.building.area.city')->first();
 
         $houseImgRecord->applicant = $houseImgRecord->user->real_name;
         $houseImgRecord->houseName = $houseImgRecord->officeBuildingHouse->house_number;

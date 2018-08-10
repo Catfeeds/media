@@ -148,6 +148,8 @@ class HousesController extends APIBaseController
         } elseif ($temp->guardian != (int)$request->user_id && strtotime($temp->created_at->format('Y-m-d H:i:s')) + 12*60*60 > time()) {
             return $this->sendError('该房源还处于保护期');
         } elseif (strtotime($temp->created_at->format('Y-m-d H:i:s')) + 12*60*60 < time()) {
+            // 判断图片是否异常
+            if (in_array(null,$request->indoor_img)) $this->sendError('图片异常,请联系技术');
             // 写入修改记录
             $result = HouseImgRecord::create([
                 'user_id' => $request->user_id,
