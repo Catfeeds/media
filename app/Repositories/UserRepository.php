@@ -142,6 +142,7 @@ class UserRepository extends BaseRepository
             $user->real_name = $request->real_name;
             $user->level = $request->level;
             $user->remark = $request->remark;
+            $user->tel = $request->user;
 
             if (empty($request->ascription_store)) {
                 $user->ascription_store = null;
