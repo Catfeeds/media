@@ -184,7 +184,10 @@ return [
         // 权限
         Spatie\Permission\PermissionServiceProvider::class,
         // 二维码
-        SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class
+        SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
+
+        // 汉子转拼音
+        Overtrue\LaravelPinyin\ServiceProvider::class,
     ],
 
     /*
@@ -234,7 +237,8 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'wechat' => Overtrue\LaravelWeChat\Facade::class,
         'View' => Illuminate\Support\Facades\View::class,
-        'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class
+        'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
+        'Pinyin' => Overtrue\LaravelPinyin\Facades\Pinyin::class,
     ],
 
 ];
