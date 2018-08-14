@@ -53,12 +53,14 @@ class Handler extends ExceptionHandler
         // NotFoundHttpException 404
         // AuthenticationException 401
         // ValidationException 字段验证错误
-        // MethonNotFound
+        // MethodNotFound //方法不存在
+        // ModelNotFoundException // 模型不存在
+        $errorType = ['NotFoundHttpException', 'AuthenticationException', 'ValidationException', 'MethodNotFound', 'ModelNotFoundException'];
         $temp = explode('\\', get_class($exception));
         $type = end($temp);
         if (empty(config('app.debug', false))) {
             //如果错误类型不等于以下类型,则报错
-            if ($type == 'NotFoundHttpException' || $type == 'AuthenticationException' || $type == 'ValidationException'|| $type == 'MethonNotFound') {
+            if (in_array($type, $errorType)) {
                     //如果报错为以上错误类型,直接结束,不发送消息
                     return parent::render($request, $exception);
             } else {
