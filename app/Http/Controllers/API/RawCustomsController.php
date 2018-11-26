@@ -31,7 +31,7 @@ class RawCustomsController extends APIBaseController
         RawCustomsService $rawCustomsService
     )
     {
-        $res = $repository->addRawCustom($request, $service);
+        $res = $repository->addRawCustom($request, $$service);
         //通过店长id查手机号,curl查微信openid,发送微信消息
         if (!empty($request->shopkeeper_id)) {
             $openid = $rawCustomsService->getOpenid($request->shopkeeper_id);
@@ -118,7 +118,7 @@ class RawCustomsController extends APIBaseController
         return $this->sendResponse($res, '店长处理页面获取成功');
     }
 
-    //业务员处理页面
+    // 业务员处理页面
     public function staffList
     (
         RawCustomsRequest $request,
@@ -129,5 +129,7 @@ class RawCustomsController extends APIBaseController
         $res = $repository->staffList($request, $service);
         return $this->sendResponse($res, '业务员处理页面获取成功');
     }
+
+
     
 }

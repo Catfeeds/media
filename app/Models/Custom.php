@@ -10,6 +10,7 @@ class Custom extends BaseModel
     protected $casts = [
         'other' => 'array'
     ];
+
     protected $appends = [
         'status_label', 'status_label', 'class_label', 'source_label',
         'belong_label', 'pay_type_label', 'commission_label', 'need_type_label',
